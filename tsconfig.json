@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@redux/*": ["./redux/*"],
+      "@utils/*": ["./utils/*"],
+      "@type/*": ["./type/*"],
+      "@api/*": ["./api/*"],
+      "@atoms/*": ["./components/atoms/*"],
+      "@molecules/*": ["./components/molecules/*"],
+      "@organisms/*": ["./components/organisms/*"],
+      "@constants/*": ["./constants/*"],
+      "@templates/*": ["./components/templates/*"]
+    }
+  },
+  "extends": "expo/tsconfig.base"
+}
