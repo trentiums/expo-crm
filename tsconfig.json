@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
     "paths": {
-      "@redux/*": ["./redux/*"],
-      "@utils/*": ["./utils/*"],
-      "@type/*": ["./type/*"],
-      "@api/*": ["./api/*"],
-      "@atoms/*": ["./components/atoms/*"],
-      "@molecules/*": ["./components/molecules/*"],
-      "@organisms/*": ["./components/organisms/*"],
-      "@constants/*": ["./constants/*"],
-      "@templates/*": ["./components/templates/*"]
+      "@redux/*": ["./src/redux/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@type/*": ["./src/type/*"],
+      "@api/*": ["./src/api/*"],
+      "@atoms/*": ["./src/components/atoms/*"],
+      "@molecules/*": ["./src/components/molecules/*"],
+      "@organisms/*": ["./src/components/organisms/*"],
+      "@constants/*": ["./src/constants/*"],
+      "@templates/*": ["./src/components/templates/*"]
     }
   },
   "extends": "expo/tsconfig.base"
