@@ -1,7 +1,7 @@
 export enum userRole {
-  'Admin' = 1,
-  'CompanyAdmin' = 2,
-  'CompanyStaff' = 3,
+  "Admin" = 1,
+  "CompanyAdmin" = 2,
+  "CompanyStaff" = 3,
 }
 
 export interface LoginParams {
@@ -21,4 +21,25 @@ export interface LoginResponse {
   status: boolean;
   message?: string;
   data: LoginDataResponse;
+}
+export interface BasicInfoFormValuesType {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: number;
+}
+export interface CompanyInformationFromValueTypes {
+  companyName: string;
+  companySize?: number;
+  webSite: string;
+}
+export interface LeadInformationFromValuesType {
+  source?: number;
+  product: string;
+  budget?: number;
+  timeFrame?: string;
+  comments: string;
+  dealAmount: string;
+  winCloseReason: string;
+  dealCloseDate: Date;
 }

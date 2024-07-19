@@ -8,7 +8,7 @@ const products = () => {
   return (
     <ScreenTemplate
       addButtonText="Products"
-      onAddButtonPress={() => router.navigate("/addProduct")}>
+      onAddButtonPress={() => router.navigate("/add-product")}>
       <View>
         <Text>Products Listing</Text>
       </View>

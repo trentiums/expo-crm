@@ -7,7 +7,7 @@ const Index = () => {
   return (
     <>
       {token ? (
-        <Redirect href="/(protected)/(drawer)/(tabs)/leads" />
+        <Redirect href="/(protected)/(drawer)/(tabs)/dashboard" />
       ) : (
         <Redirect href="/(public)/login" />
       )}

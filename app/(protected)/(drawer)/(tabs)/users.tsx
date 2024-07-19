@@ -1,14 +1,11 @@
 import { useAppTheme } from "@constants/theme";
 import { ToastTypeProps } from "@molecules/Toast/Toast.props";
-import LeadDetailCard from "@organisms/LeadDetailCard/LeadDetailCard";
-import { ModalType } from "@organisms/LeadDetailCard/LeadDetailCard.props";
-import { deleteLeadAction, getLeadListAction } from "@redux/actions/lead";
-import { setLeadsInformation } from "@redux/slices/leads";
+import UserDetailCard from "@organisms/UserDetailCard/UserDetailCard";
+import { UserDetailCardProps } from "@organisms/UserDetailCard/UserDetailCard.props";
+import { deleteUserAction, getUserListAction } from "@redux/actions/user";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { LeadListState } from "@type/api/lead";
-import { initialModalType } from "@utils/constant";
-import { router, useNavigation } from "expo-router";
+import { router } from "expo-router";
 import moment from "moment";
 import React, { RefObject, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -27,52 +24,33 @@ import Loader from "@atoms/Loader/Loader";
 import ActionModal from "@molecules/ActionModal/ActionModal";
 import { Actions } from "@molecules/ActionModal/ActionModal.props";
 import Trash from "@atoms/Illustrations/Trash";
-import Text from "@atoms/Text/Text";
 
-const settings = () => {
+const Users = () => {
   const { t } = useTranslation("modalText");
-  const { t: td } = useTranslation("dashBoard");
   const { t: ts } = useTranslation("addData");
-  const { colors } = useAppTheme();
-  const leadsData = useSelector(
-    (state: RootState) => state.leads.leadList?.leads
-  );
-  const leadListData = useSelector((state: RootState) => state.leads.leadList);
-  const toast = useToast();
-  const general = useSelector((state: RootState) => state.general);
+  const { t: td } = useTranslation("dashBoard");
   const [showModal, setShowModal] = useState(false);
-  const [deleteCardId, setDeleteCardId] = useState<number | null>();
-  const [selectedCard, setSelectedCard] = useState<number | null>(null);
-  const [modalType, setModalType] = useState<ModalType>(initialModalType);
-  const [leadId, setLeadId] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [moreLoading, setMoreLoading] = useState(false);
-  const [leadsLoading, setLeadsLoading] = useState(false);
+  const { colors } = useAppTheme();
   const dispatch = useAppDispatch();
-  const [refreshing, setRefreshing] = useState(false);
+  const toast = useToast();
+  const userList = useSelector((state: RootState) => state.user?.userList);
   const [openSwipeAbleRef, setOpenSwipeAbleRef] =
     useState<RefObject<Swipeable> | null>(null);
-  const [modal, setModal] = useState(false);
-  const [currentId, setCurrentId] = useState<number>(0);
-  const handleDelete = async (slug: number) => {
-    setShowModal(true);
-    setDeleteCardId(slug);
-  };
+  const [deleteId, setDeleteId] = useState<number | string>(0);
+  const [selectedCard, setSelectedCard] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [moreLoading, setMoreLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const onDeleteActionPress = async (slug: number) => {
-    setLoading(true);
+  const handleDelete = (slug: string | number) => {
+    setShowModal(true);
+    setDeleteId(slug);
+  };
+  const handleGetUserList = async () => {
     try {
-      const response = await dispatch(
-        deleteLeadAction({ lead_id: slug })
-      ).unwrap();
-      toast.show(response?.message, {
-        type: "customToast",
-        data: {
-          type: ToastTypeProps.Success,
-        },
-      });
-      setShowModal(false);
-      setDeleteCardId(null);
+      setLoading(true);
+      await dispatch(getUserListAction({})).unwrap();
     } catch (error: any) {
       toast.show(error, {
         type: "customToast",
@@ -81,15 +59,39 @@ const settings = () => {
         },
       });
     }
-    setShowModal(false);
     setLoading(false);
-    setModal(false);
+  };
+  const handleDeleteUser = async () => {
+    try {
+      setDeleteLoading(true);
+      const response = await dispatch(
+        deleteUserAction({ user_id: deleteId })
+      ).unwrap();
+      toast.show(response?.message, {
+        type: "customToast",
+        data: {
+          type: ToastTypeProps.Success,
+        },
+      });
+    } catch (error: any) {
+      toast.show(error, {
+        type: "customToast",
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
+    setDeleteLoading(false);
     openSwipeAbleRef?.current?.close();
   };
 
   const handleEdit = (slug: string | number) => {
-    dispatch(setLeadsInformation());
-    router.navigate("/add-lead", { slug: slug });
+    // navigate('AddUser', { slug: slug });
+  };
+
+  const onDeleteActionPress = async () => {
+    await handleDeleteUser();
+    setShowModal(false);
   };
 
   const closeSwipeAble = () => {
@@ -101,23 +103,30 @@ const settings = () => {
   const setSwipeAbleRef = (ref: RefObject<Swipeable>) => {
     setOpenSwipeAbleRef(ref);
   };
-  const getLeadListData = async () => {
-    try {
-      setLeadsLoading(true);
-      await dispatch(getLeadListAction({})).unwrap();
-    } catch (error) {
-      console.log(error);
+  const handleGetMoreUserData = async () => {
+    if (userList?.currentPage !== userList?.lastPage) {
+      try {
+        setMoreLoading(true);
+        await dispatch(
+          getUserListAction({ page: userList?.currentPage + 1 })
+        ).unwrap();
+      } catch (error: any) {
+        toast.show(error, {
+          type: "customToast",
+          data: {
+            type: ToastTypeProps.Error,
+          },
+        });
+      }
+      setMoreLoading(false);
     }
-    setLeadsLoading(false);
   };
-  useEffect(() => {
-    openSwipeAbleRef?.current?.close();
-  }, []);
+
   const RenderComponent = ({
     item,
     index,
   }: {
-    item: LeadListState;
+    item: UserDetailCardProps;
     index: number;
   }) => (
     <Pressable
@@ -125,102 +134,64 @@ const settings = () => {
       onPress={() => {
         console.log("pressCard", item.id);
       }}>
-      <LeadDetailCard
+      <UserDetailCard
         key={`${item.id}-${index}`}
         onDelete={() => handleDelete(item?.id)}
         onEdit={() => handleEdit(item?.id)}
-        whatsAppNumber={item.phone}
-        phoneNumber={item.phone}
-        channelList={general.leadChannelList}
-        leadList={general.leadStatusList}
-        StageList={general.leadConversionList}
-        LeadDetails={item.productService.map((item) => item.name)}
-        title={item.name}
         mailID={item.email}
-        dateTime={moment(item?.updatedAt || item?.createdAt).format(
-          "DD MMM YYYY, hh:mm A"
-        )}
+        title={item.name}
+        dateTime={moment(item?.createdAt).format("DD MMM YYYY, hh:mm A")}
         closeSwipeAble={closeSwipeAble}
         setSwipeAbleRef={setSwipeAbleRef}
         selectedCard={selectedCard}
         setSelectedCard={setSelectedCard}
         cardIndex={index}
-        setModal={setModal}
-        modal={modal}
-        setModalType={setModalType}
-        modalType={modalType}
-        leadStatusId={item?.leadStatusId}
-        leadChannelId={item?.leadChannelId}
-        leadConversionId={item?.leadConversionId}
-        leadCardId={item?.id}
-        setCurrentId={setCurrentId}
-        currentId={currentId}
-        handleGetLeadsData={getLeadListData}
-        setLeadId={setLeadId}
-        leadId={leadId}
       />
     </Pressable>
   );
-  const handleGetMoreData = async () => {
-    if (
-      leadListData &&
-      leadListData?.lastPage > 1 &&
-      leadListData?.currentPage !== leadListData?.lastPage
-    ) {
-      try {
-        setMoreLoading(true);
-        await dispatch(
-          getLeadListAction({
-            page: leadListData?.currentPage + 1,
-          })
-        ).unwrap();
-      } catch (error) {
-        console.log(error);
-      }
-      setMoreLoading(false);
-    }
-  };
-  const onRefreshLeadList = async () => {
+  const onRefreshUserList = async () => {
     try {
       setRefreshing(true);
-      await dispatch(getLeadListAction({}));
+      await dispatch(getUserListAction({}));
     } catch (error) {
       console.log(error);
     }
     setRefreshing(false);
   };
+  useEffect(() => {
+    openSwipeAbleRef?.current?.close();
+  }, []);
   return (
     <ScreenTemplate
-      addButtonText={ts("lead")}
+      addButtonText={ts("user")}
       onAddButtonPress={() => {
-        dispatch(setLeadsInformation());
-        router.navigate("/add-lead");
+        router.navigate("/add-user");
       }}>
-      {leadsLoading ? (
+      {loading ? (
         <LoaderView>
           <ActivityIndicator color={colors.primaryColor} />
         </LoaderView>
       ) : (
         <PaddingSpace>
-          {leadsData?.length > 0 ? (
+          {userList?.users?.length > 0 ? (
             <FlatListCon
-              data={leadsData}
-              keyExtractor={(item: any, index: number) => `${item.id}-${index}`}
+              data={userList?.users}
+              keyExtractor={(item, index) => `${item.id}-${index}`}
               renderItem={RenderComponent}
               showsVerticalScrollIndicator={false}
-              onEndReached={handleGetMoreData}
+              onEndReached={handleGetMoreUserData}
               ListFooterComponent={moreLoading ? <Loader size={24} /> : null}
               refreshControl={
                 <RefreshControl
                   refreshing={refreshing}
-                  onRefresh={onRefreshLeadList}
+                  onRefresh={onRefreshUserList}
                   colors={[colors.primaryColor]}
                 />
               }
             />
           ) : (
             <NoLeadsFoundContainer>
-              <NoDataFoundText>{td("noLeadsFound")}</NoDataFoundText>
+              <NoDataFoundText>{td("noUsersFound")}</NoDataFoundText>
             </NoLeadsFoundContainer>
           )}
           {showModal && (
@@ -228,7 +199,6 @@ const settings = () => {
               isModal
               onBackdropPress={() => {
                 setShowModal(false);
-                setDeleteCardId(null);
                 closeSwipeAble();
               }}
               heading={t("discardMedia")}
@@ -238,12 +208,11 @@ const settings = () => {
               actiontext={t("cancel")}
               onCancelPress={() => {
                 setShowModal(false);
-                setDeleteCardId(null);
                 closeSwipeAble();
               }}
-              onActionPress={() => onDeleteActionPress(deleteCardId || 0)}
+              onActionPress={() => onDeleteActionPress()}
               icon={<Trash color={colors?.deleteColor} />}
-              loading={loading}
+              loading={deleteLoading}
             />
           )}
         </PaddingSpace>
@@ -252,4 +221,4 @@ const settings = () => {
   );
 };
 
-export default settings;
+export default Users;

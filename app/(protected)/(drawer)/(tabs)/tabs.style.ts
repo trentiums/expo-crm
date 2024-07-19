@@ -53,3 +53,7 @@ export const NoLeadsFoundContainer = styled(View)`
   align-items: center;
   height: 100%;
 `;
+export const AddLeadContainer = styled(View)`
+  padding: 16px;
+  flex: 1;
+`;

@@ -1,18 +1,19 @@
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 import {
   LeadDetailCardContainer,
   RenderRightView,
   SwipeText,
   TouchableOpacityContainer,
   ViewContainer,
-} from './DashBoardLeadCard.styles';
-import { Spacer } from '@atoms/common/common.styles';
-import { Swipeable } from 'react-native-gesture-handler';
-import Trash from '@atoms/Illustrations/Trash';
-import { DashBoardLeadCardProps } from './DashBoardLeadCard.props';
-import { useTranslation } from 'react-i18next';
-import { useAppTheme } from '@constants/theme';
-import LeadDetail from '@molecules/LeadDetail/LeadDetail';
+} from "./DashBoardLeadCard.styles";
+import { Spacer } from "@atoms/common/common.styles";
+import { Swipeable } from "react-native-gesture-handler";
+import Trash from "@atoms/Illustrations/Trash";
+import { DashBoardLeadCardProps } from "./DashBoardLeadCard.props";
+import { useTranslation } from "react-i18next";
+import { useAppTheme } from "@constants/theme";
+import LeadDetail from "@molecules/LeadDetail/LeadDetail";
+import Text from "@atoms/Text/Text";
 
 const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
   whatsAppNumber,
@@ -27,7 +28,7 @@ const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
   selectedCard,
   setSelectedCard,
 }) => {
-  const { t } = useTranslation('leadDetailCardDetails');
+  const { t } = useTranslation("leadDetailCardDetails");
   const { colors } = useAppTheme();
   const swipeAbleRef = useRef(null);
   const renderRightActions = () => (
@@ -39,7 +40,7 @@ const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
           <Trash />
         </ViewContainer>
         <Spacer size={10} />
-        <SwipeText>{t('delete')}</SwipeText>
+        <SwipeText>{t("delete")}</SwipeText>
       </TouchableOpacityContainer>
     </RenderRightView>
   );

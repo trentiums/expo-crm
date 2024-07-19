@@ -1,42 +1,42 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState } from "react";
 import {
   LeadDetailCardContainer,
   RenderRightView,
   SwipeText,
   TouchableOpacityContainer,
   ViewContainer,
-} from './LeadDetailCard.styles';
-import { Spacer } from '@atoms/common/common.styles';
-import LeadDetailsList from '@molecules/LeadDetailsList/LeadDetailsList';
-import { Swipeable } from 'react-native-gesture-handler';
-import Trash from '@atoms/Illustrations/Trash';
-import EditIcon from '@atoms/Illustrations/EditIcon';
-import LeadSelect from '@molecules/LeadSelect/LeadSelect';
+} from "./LeadDetailCard.styles";
+import { Spacer } from "@atoms/common/common.styles";
+import LeadDetailsList from "@molecules/LeadDetailsList/LeadDetailsList";
+import { Swipeable } from "react-native-gesture-handler";
+import Trash from "@atoms/Illustrations/Trash";
+import EditIcon from "@atoms/Illustrations/EditIcon";
+import LeadSelect from "@molecules/LeadSelect/LeadSelect";
 import {
   LeadDetailCardProps,
   LeadStageType,
   LeadStatusTypes,
   ModalType,
-} from './LeadDetailCard.props';
-import { useTranslation } from 'react-i18next';
-import { useAppTheme } from '@constants/theme';
-import { View } from 'react-native';
-import { RootState, useAppDispatch, useSelector } from '@redux/store';
-import Modal from '@atoms/Modal/Modal';
-import LeadStatusChangeForm from '@organisms/LeadStatusChangeForm/LeadStatusChangeForm';
-import FormTemplate from '@templates/FormTemplate/FormTemplate';
-import { LeadStatusChangeFormValues } from '@organisms/LeadStatusChangeForm/LeadStatusChangeForm.props';
-import { ModalFormContainer } from '@screens/LeadListScreen/LeadListScreen.styles';
-import DealCloseWinForm from '@organisms/DealCloseWinForm/DealCloseWinForm';
-import { DealWinCloseFormValues } from '@organisms/DealCloseWinForm/DealCloseWinForm.props';
-import LeadProposalNegotiationForm from '@organisms/LeadProposolNagotioationForm/LeadProposolNagotioationForm';
-import { LeadProposalNegotiationValues } from '@organisms/LeadProposolNagotioationForm/LeadProposolNegotiationForm.props';
-import { initialModalType } from '@utils/constant';
-import LeadDetail from '@molecules/LeadDetail/LeadDetail';
-import { getLeadDetailsAction, updateLeadAction } from '@redux/actions/lead';
-import { useToast } from 'react-native-toast-notifications';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
-import { useAppNavigation } from '@navigation/hooks';
+} from "./LeadDetailCard.props";
+import { useTranslation } from "react-i18next";
+import { useAppTheme } from "@constants/theme";
+import { View } from "react-native";
+import { RootState, useAppDispatch, useSelector } from "@redux/store";
+import Modal from "@atoms/Modal/Modal";
+import LeadStatusChangeForm from "@organisms/LeadStatusChangeForm/LeadStatusChangeForm";
+import FormTemplate from "@templates/FormTemplate/FormTemplate";
+import { LeadStatusChangeFormValues } from "@organisms/LeadStatusChangeForm/LeadStatusChangeForm.props";
+import DealCloseWinForm from "@organisms/DealCloseWinForm/DealCloseWinForm";
+import { DealWinCloseFormValues } from "@organisms/DealCloseWinForm/DealCloseWinForm.props";
+import LeadProposalNegotiationForm from "@organisms/LeadProposolNagotioationForm/LeadProposolNagotioationForm";
+import { LeadProposalNegotiationValues } from "@organisms/LeadProposolNagotioationForm/LeadProposolNegotiationForm.props";
+import { initialModalType } from "@utils/constant";
+import LeadDetail from "@molecules/LeadDetail/LeadDetail";
+import { getLeadDetailsAction, updateLeadAction } from "@redux/actions/lead";
+import { useToast } from "react-native-toast-notifications";
+import { ToastTypeProps } from "@molecules/Toast/Toast.props";
+import { ModalFormContainer } from "../../../app/(protected)/(drawer)/(tabs)/tabs.style";
+import { router } from "expo-router";
 
 const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
   whatsAppNumber,
@@ -69,17 +69,16 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
   setLeadId,
   leadId,
 }) => {
-  const { t } = useTranslation('leadDetailCardDetails');
+  const { t } = useTranslation("leadDetailCardDetails");
   const { colors } = useAppTheme();
   const swipeAbleRef = useRef(null);
   const dispatch = useAppDispatch();
   const toast = useToast();
-  const { navigate } = useAppNavigation();
   const leadsData = useSelector(
-    (state: RootState) => state.leads.leadList.leads,
+    (state: RootState) => state.leads.leadList.leads
   );
   const countryList = useSelector(
-    (state: RootState) => state.general.countryList,
+    (state: RootState) => state.general.countryList
   );
 
   const [loading, setLoading] = useState(false);
@@ -97,7 +96,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
           <EditIcon />
         </ViewContainer>
         <Spacer size={10} />
-        <SwipeText>{t('edit')}</SwipeText>
+        <SwipeText>{t("edit")}</SwipeText>
       </TouchableOpacityContainer>
       <TouchableOpacityContainer
         backgroundColor={colors?.deleteColor}
@@ -106,7 +105,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
           <Trash />
         </ViewContainer>
         <Spacer size={10} />
-        <SwipeText>{t('delete')}</SwipeText>
+        <SwipeText>{t("delete")}</SwipeText>
       </TouchableOpacityContainer>
     </RenderRightView>
   );
@@ -118,7 +117,10 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       value !== leadStatusId
     ) {
       value !== leadStatusId &&
-        navigate('leadStatusChange', { leadId: leadId, leadStatusId: value });
+        router.navigate("lead-status-change", {
+          leadId: leadId,
+          leadStatusId: value,
+        });
     } else {
       const data = leadsData?.filter((item) => item?.id === leadId)?.[0];
       if (leadStatusId !== value) {
@@ -127,7 +129,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
           leadCardId,
           data?.leadChannelId,
           value,
-          data?.leadConversionId,
+          data?.leadConversionId
         );
       }
     }
@@ -141,7 +143,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
         leadCardId,
         value,
         data?.leadStatusId,
-        data?.leadConversionId,
+        data?.leadConversionId
       );
     }
   };
@@ -151,7 +153,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       (value === LeadStageType.CLOSELOST || value === LeadStageType.CLOSEWON) &&
       value !== leadConversionId
     ) {
-      navigate('leadStageCloseWon', {
+      router.navigate("/lead-close-won", {
         leadId: leadId,
         leadConversionId: value,
       });
@@ -159,7 +161,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       value === LeadStageType?.NEGOTIATION &&
       leadConversionId !== value
     ) {
-      navigate('leadStageNegotiation', {
+      router.navigate("/lead-negotiation", {
         leadId: leadId,
         leadConversionId: value,
       });
@@ -171,7 +173,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
           leadCardId,
           data?.leadChannelId,
           data?.leadStatusId,
-          value,
+          value
         );
       }
     }
@@ -186,69 +188,69 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
     currentLeadId: number,
     leadChannelId?: number,
     leadStageId?: number,
-    leadConversionId?: number,
+    leadConversionId?: number
   ) => {
     const data = leadsData?.filter((item) => item?.id === currentLeadId)?.[0];
     const selectedDataServices = data.productService?.map((item) => item?.id);
     try {
       setLoading(true);
       let formData = new FormData();
-      formData.append('lead_id', currentLeadId || leadId);
+      formData.append("lead_id", currentLeadId || leadId);
       if (data?.email) {
-        formData.append('email', data?.email);
+        formData.append("email", data?.email);
       }
       formData.append(
-        'lead_channel_id',
-        leadChannelId || data?.leadChannelId || '',
+        "lead_channel_id",
+        leadChannelId || data?.leadChannelId || ""
       );
       formData.append(
-        'lead_conversion_id',
+        "lead_conversion_id",
         modalType?.closeWinLost || modalType?.negotiation
           ? currentId
-          : leadConversionId || data?.leadConversionId,
+          : leadConversionId || data?.leadConversionId
       );
       formData.append(
-        'lead_status_id',
-        modalType?.leadChange ? currentId : leadStageId || data?.leadStatusId,
+        "lead_status_id",
+        modalType?.leadChange ? currentId : leadStageId || data?.leadStatusId
       );
-      formData.append('name', data?.name);
+      formData.append("name", data?.name);
       selectedDataServices.forEach((service, index) => {
         formData.append(`product_services[${index}]`, service);
       });
       formData.append(
-        'company_name',
-        values?.companyName || data?.companyName || '',
+        "company_name",
+        values?.companyName || data?.companyName || ""
       );
-      formData.append('budget', values?.budget || data?.budget || '');
+      formData.append("budget", values?.budget || data?.budget || "");
       if (data?.companySize) {
-        formData.append('company_size', data?.companySize);
+        formData.append("company_size", data?.companySize);
       }
 
       formData.append(
-        'company_website',
-        values?.webSite || data?.webSite || '',
+        "company_website",
+        values?.webSite || data?.webSite || ""
       );
-      formData.append('time_line', values?.timeFrame || data?.timeLine || '');
+      formData.append("time_line", values?.timeFrame || data?.timeLine || "");
       formData.append(
-        'description',
-        values?.description || values?.comments || data?.description || '',
+        "description",
+        values?.description || values?.comments || data?.description || ""
       );
       if (values?.dealAmount || data?.dealAmount) {
-        formData.append('deal_amount', values?.dealAmount || data?.dealAmount);
+        formData.append("deal_amount", values?.dealAmount || data?.dealAmount);
       }
       if (data?.dealCloseDate) {
-        formData.append('deal_close_date', data?.dealCloseDate);
+        formData.append("deal_close_date", data?.dealCloseDate);
       }
       formData.append(
-        'win_close_reason',
-        values?.reason || data?.winCloseReason || '',
+        "win_close_reason",
+        values?.reason || data?.winCloseReason || ""
       );
       const countryCodeAlpha = countryList?.filter(
-        (item) => item?.id === data?.countryId,
+        (item) => item?.id === data?.countryId
       )?.[0]?.countryCodeAlpha;
       if (countryCodeAlpha && data?.phone) {
-        formData.append('country_code_alpha', countryCodeAlpha);
-        formData.append('phone', values?.phoneNumber || data?.phone);
+        formData.append("country_code_alpha", countryCodeAlpha);
+        formData.append("phone", values?.phoneNumber || data?.phone);
       }
       if (documents?.length > 0) {
         documents.forEach((document, index) => {
@@ -258,18 +260,18 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       const response = await dispatch(updateLeadAction(formData)).unwrap();
       setDocuments([]);
       toast.show(response?.message, {
-        type: 'customToast',
+        type: "customToast",
         data: {
           type: ToastTypeProps.Success,
         },
       });
-      console.log(currentLeadId, leadId, 'currentLeadId', 'leadId');
+      console.log(currentLeadId, leadId, "currentLeadId", "leadId");
       await dispatch(
-        getLeadDetailsAction({ lead_id: currentLeadId || leadId }),
+        getLeadDetailsAction({ lead_id: currentLeadId || leadId })
       );
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: "customToast",
         data: {
           type: ToastTypeProps.Error,
         },
@@ -306,7 +308,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
           <View>
             <LeadDetailsList LeadDetails={LeadDetails} />
           </View>
-          <LeadSelect
+          {/* <LeadSelect
             channelList={channelList}
             leadList={leadList}
             StageList={StageList}
@@ -321,52 +323,9 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
               handleChangeLeadStage(leadId, value)
             }
             leadCardId={leadCardId}
-          />
+          /> */}
         </LeadDetailCardContainer>
       </Swipeable>
-      <Spacer size={16} />
-      <Modal isVisible={modal} onBackdropPress={handleCloseModal}>
-        <ModalFormContainer>
-          {modalType.leadChange && (
-            <FormTemplate
-              Component={LeadStatusChangeForm}
-              loading={loading}
-              onSubmit={(values: LeadStatusChangeFormValues) => {
-                handleSaveLeadsStatusChange(values, leadId);
-                setModal(false);
-              }}
-              leadCardId={leadId}
-              onCancelPress={handleCloseModal}
-              setDocuments={setDocuments}
-              documents={documents}
-            />
-          )}
-          {modalType.closeWinLost && (
-            <FormTemplate
-              Component={DealCloseWinForm}
-              loading={loading}
-              onSubmit={(values: DealWinCloseFormValues) => {
-                handleSaveLeadsStatusChange(values, leadId);
-                setModal(false);
-              }}
-              onCancelPress={handleCloseModal}
-              isDealClose={currentId === LeadStageType.CLOSELOST}
-              leadCardId={leadId}
-            />
-          )}
-          {modalType.negotiation && (
-            <FormTemplate
-              Component={LeadProposalNegotiationForm}
-              loading={loading}
-              onSubmit={(values: LeadProposalNegotiationValues) => {
-                handleSaveLeadsStatusChange(values, leadId);
-                setModal(false);
-              }}
-              onCancelPress={handleCloseModal}
-            />
-          )}
-        </ModalFormContainer>
-      </Modal>
     </>
   );
 };

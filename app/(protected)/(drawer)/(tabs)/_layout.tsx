@@ -4,9 +4,13 @@ import Dashboard from "@atoms/Illustrations/Dashboard";
 import { useAppTheme } from "@constants/theme";
 import Leads from "@atoms/Illustrations/Leads";
 import { styles } from "./tabs.style";
+import Users from "@atoms/Illustrations/Users";
+import { RootState, useSelector } from "@redux/store";
+import { userRole } from "@type/api/auth";
 
 const TabsLayout = () => {
   const { colors } = useAppTheme();
+  const user = useSelector((state: RootState) => state.auth.user);
   return (
     <Tabs
       initialRouteName="dashboard"
@@ -39,6 +43,17 @@ const TabsLayout = () => {
           ),
         }}
       />
+      {user.userRole === userRole.Admin && (
+        <Tabs.Screen
+          name="users"
+          options={{
+            title: "Users",
+            tabBarIcon: ({ focused }) => (
+              <Users color={focused ? colors.lightGreen : colors.white} />
+            ),
+          }}
+        />
+      )}
     </Tabs>
   );
 };

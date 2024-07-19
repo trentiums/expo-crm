@@ -1,12 +1,84 @@
-import Text from "@atoms/Text/Text";
-import View from "@atoms/View/View";
-import React from "react";
+import { PaddingSpace, Spacer } from "@atoms/common/common.styles";
+import { ToastTypeProps } from "@molecules/Toast/Toast.props";
+import UserInformationForm from "@organisms/UserInformationForm/UserInformationForm";
+import { UserInformationFormValues } from "@organisms/UserInformationForm/UserInformationForm.props";
+import {
+  addUserAction,
+  getUserDetailAction,
+  getUserListAction,
+  updateUserAction,
+} from "@redux/actions/user";
+import { useAppDispatch } from "@redux/store";
+import FormTemplate from "@templates/FormTemplate/FormTemplate";
+import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
+import { router } from "expo-router";
+import React, { useState } from "react";
+import { useToast } from "react-native-toast-notifications";
 
 const addUser = () => {
+  const toast = useToast();
+  const dispatch = useAppDispatch();
+
+  // const [slug] = useState(route?.params?.slug);
+  const [loading, setLoading] = useState(false);
+  const onUserInformationSubmitPress = async (
+    values: UserInformationFormValues
+  ) => {
+    const slug = "xyz";
+    try {
+      setLoading(true);
+      const response = slug
+        ? await dispatch(
+            updateUserAction({
+              user_id: slug,
+              name: values?.name,
+              email: values?.email,
+              password: values?.password,
+            })
+          ).unwrap()
+        : await dispatch(
+            addUserAction({
+              email: values?.email,
+              name: values?.name,
+              password: values?.password,
+            })
+          ).unwrap();
+      if (slug) {
+        await dispatch(getUserDetailAction({ user_id: slug })).unwrap();
+      } else {
+        await dispatch(getUserListAction({}));
+      }
+      toast.show(response?.message, {
+        type: "customToast",
+        data: {
+          type: ToastTypeProps.Success,
+        },
+      });
+
+      router.navigate("/users");
+    } catch (error: any) {
+      toast.show(error, {
+        type: "customToast",
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
+    setLoading(false);
+  };
   return (
-    <View>
-      <Text>Add User Screen</Text>
-    </View>
+    <ScreenTemplate>
+      <PaddingSpace>
+        <Spacer size={16} />
+        <FormTemplate
+          Component={UserInformationForm}
+          loading={loading}
+          onSubmit={onUserInformationSubmitPress}
+          isSave
+        />
+        <Spacer size={32} />
+      </PaddingSpace>
+    </ScreenTemplate>
   );
 };
 

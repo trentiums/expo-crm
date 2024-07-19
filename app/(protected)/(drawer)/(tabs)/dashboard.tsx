@@ -1,36 +1,37 @@
-import { Spacer } from "@atoms/common/common.styles";
-import Trash from "@atoms/Illustrations/Trash";
 import Loader from "@atoms/Loader/Loader";
-import { dateTimeFormate } from "@constants/common";
-import { useAppTheme } from "@constants/theme";
-import ActionModal from "@molecules/ActionModal/ActionModal";
-import { Actions } from "@molecules/ActionModal/ActionModal.props";
-import DashboardLeadsCard from "@molecules/DashboardLeadsCard/DashboardLeadsCard";
-import { ToastTypeProps } from "@molecules/Toast/Toast.props";
-import DashBoardLeadCard from "@organisms/DashBoardLeadCard/DashBoardLeadCard";
-import {
-  dashboardLeadListAction,
-  dashboardLeadStageCountAction,
-} from "@redux/actions/dashboard";
-import { deleteLeadAction } from "@redux/actions/lead";
-import { setLeadsInformation } from "@redux/slices/leads";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import {
-  DashboardLeadList,
-  LeadStageCountLeadList,
-} from "@type/redux/slices/dashboard";
-import moment from "moment";
-import React, { RefObject, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Pressable } from "react-native";
-import { FlatList, Swipeable } from "react-native-gesture-handler";
-import { useToast } from "react-native-toast-notifications";
+import { Text } from "react-native-paper";
 import {
   DashboardScreenContainer,
   NoDataFoundText,
   TitleText,
 } from "./tabs.style";
+import { FlatList, Swipeable } from "react-native-gesture-handler";
+import { Spacer } from "@atoms/common/common.styles";
+import ActionModal from "@molecules/ActionModal/ActionModal";
+import { RefObject, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useToast } from "react-native-toast-notifications";
+import { useAppTheme } from "@constants/theme";
+import {
+  DashboardLeadList,
+  LeadStageCountLeadList,
+} from "@type/redux/slices/dashboard";
+import DashboardLeadsCard from "@molecules/DashboardLeadsCard/DashboardLeadsCard";
+import {
+  dashboardLeadListAction,
+  dashboardLeadStageCountAction,
+} from "@redux/actions/dashboard";
+import { setLeadsInformation } from "@redux/slices/leads";
+import DashBoardLeadCard from "@organisms/DashBoardLeadCard/DashBoardLeadCard";
+import moment from "moment";
+import { dateTimeFormate } from "@constants/common";
+import { Pressable } from "react-native";
+import { ToastTypeProps } from "@molecules/Toast/Toast.props";
+import { deleteLeadAction } from "@redux/actions/lead";
+import { Actions } from "@molecules/ActionModal/ActionModal.props";
+import Trash from "@atoms/Illustrations/Trash";
 
 const Dashboard = () => {
   const { colors } = useAppTheme();
@@ -41,10 +42,10 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
-  const [deletedId, setDeletedId] = useState<number | undefined>();
-  const dashboardLeadList = useSelector((state: RootState) => state.dashboard);
+  const [deletedId, setDeletedId] = useState();
   const [openSwipeAbleRef, setOpenSwipeAbleRef] =
     useState<RefObject<Swipeable> | null>(null);
+  const dashboardLeadList = useSelector((state: RootState) => state.dashboard);
   const [leadListData, setLeadListData] = useState<DashboardLeadList[]>(
     dashboardLeadList.leadList
   );
@@ -70,19 +71,24 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    setLeadListData(dashboardLeadList.leadList);
     handelFetchLead();
+  }, []);
+
+  useEffect(() => {
+    setLeadListData(dashboardLeadList.leadList);
   }, [dashboardLeadList]);
 
   const handleDelete = (id: number) => {
     setShowModal(true);
     setDeletedId(id);
   };
+
   const closeSwipeAble = () => {
     if (openSwipeAbleRef && openSwipeAbleRef.current) {
       openSwipeAbleRef.current.close();
     }
   };
+
   const onDeleteActionPress = async () => {
     setDeleteLoading(true);
     try {
@@ -111,6 +117,7 @@ const Dashboard = () => {
   const setSwipeAbleRef = (ref: RefObject<Swipeable>) => {
     setOpenSwipeAbleRef(ref);
   };
+
   const RenderComponent = ({
     item,
     index,
@@ -122,7 +129,6 @@ const Dashboard = () => {
       key={`${item.id}-${index}`}
       onPress={() => {
         dispatch(setLeadsInformation());
-        // navigate('AddLead', { slug: item?.id });
       }}>
       <DashBoardLeadCard
         key={`${item.id}-${index}`}
@@ -140,6 +146,7 @@ const Dashboard = () => {
       />
     </Pressable>
   );
+
   const dashboardCardColors = [
     colors.primaryColor,
     colors.white,
@@ -164,6 +171,7 @@ const Dashboard = () => {
       <Spacer size={index % 2 === 0 ? 16 : 0} />
     </>
   );
+
   return (
     <ScreenTemplate>
       {loading ? (

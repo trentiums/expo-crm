@@ -20,6 +20,7 @@ import {
 } from "@redux/actions/general";
 import { getProductServiceListAction } from "@redux/actions/productService";
 import { router, useNavigation } from "expo-router";
+import { getLeadListAction } from "@redux/actions/lead";
 
 const LoginScreen = () => {
   const { t } = useTranslation("login");
@@ -50,16 +51,17 @@ const LoginScreen = () => {
           dispatch(leadStatusListAction()),
           dispatch(countryListAction()),
           dispatch(getProductServiceListAction({})),
+          dispatch(getLeadListAction({})),
         ]);
       }
       router.replace("/(protected)/(drawer)/(tabs)/dashboard");
     } catch (error: any) {
-      toast.show(error, {
-        type: "customToast",
-        data: {
-          type: ToastTypeProps.Error,
-        },
-      });
+      // toast.show(error, {
+      //   type: "customToast",
+      //   data: {
+      //     type: ToastTypeProps.Error,
+      //   },
+      // });
     }
     setLoading(false);
   };

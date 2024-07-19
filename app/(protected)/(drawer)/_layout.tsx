@@ -7,7 +7,6 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import { useRouter } from "expo-router";
-import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
 import { useAppTheme } from "@constants/theme";
 import Dashboard from "@atoms/Illustrations/Dashboard";
 import Leads from "@atoms/Illustrations/Leads";
@@ -26,15 +25,17 @@ import {
   UserInfoSection,
   UserName,
 } from "./drawer.style";
+import Users from "@atoms/Illustrations/Users";
+import { userRole } from "@type/api/auth";
 
 const DrawerLayout = () => {
   const { colors } = useAppTheme();
   const { t } = useTranslation("drawer");
   const dispatch = useAppDispatch();
-  const { user } = useSelector((state: RootState) => state.auth);
+  const user = useSelector((state: RootState) => state.auth.user);
   const router = useRouter();
   const userData = {
-    name: user?.name,
+    name: user.name,
     image:
       "https://media.istockphoto.com/id/587805156/vector/profile-picture-vector-illustration.jpg?s=2048x2048&w=is&k=20&c=QjqBIsnahW5txrKJeIqLq53-b1PeYuSlG-zTAD1xsu4=",
   };
@@ -48,7 +49,7 @@ const DrawerLayout = () => {
             <DrawerNavigationView>
               <UserInfoSection>
                 <UserImage source={{ uri: userData.image }} />
-                <UserName>{user?.name ?? ""}</UserName>
+                <UserName>{userData.name}</UserName>
               </UserInfoSection>
               <DrawerItem
                 label="Dashboard"
@@ -65,6 +66,24 @@ const DrawerLayout = () => {
                 }}
                 labelStyle={{ color: colors.white }}
                 icon={() => <Leads color={colors.white} />}
+              />
+              {user.userRole === userRole.Admin && (
+                <DrawerItem
+                  label="Users"
+                  onPress={() => {
+                    router.navigate("(tabs)/users");
+                  }}
+                  labelStyle={{ color: colors.white }}
+                  icon={() => <Users color={colors.white} />}
+                />
+              )}
+              <DrawerItem
+                label="Products"
+                onPress={() => {
+                  router.navigate("/products");
+                }}
+                labelStyle={{ color: colors.white }}
+                icon={() => <Users color={colors.white} />}
               />
               <DrawerBottomSection>
                 <Pressable

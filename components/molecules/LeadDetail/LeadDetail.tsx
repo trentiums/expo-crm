@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   DateTimeText,
   DetailContainer,
@@ -12,20 +12,20 @@ import {
   TextView,
   TitleView,
   WhatsAppIcon,
-} from './LeadDetail.styles';
-import { Linking, Pressable } from 'react-native';
-import { Spacer } from '@atoms/common/common.styles';
-import { useTranslation } from 'react-i18next';
-import PhoneIcon from '@atoms/Illustrations/PhoneIcon';
-import MailIcon from '@atoms/Illustrations/MailIcon';
-import View from '@atoms/View/View';
-import { callToAction } from '@utils/common';
-import WhatsApp from '@atoms/Illustrations/WhatsApp';
-import Clipboard from '@react-native-clipboard/clipboard';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
-import { useToast } from 'react-native-toast-notifications';
-import { telLink, whatsAppLink } from '@utils/config';
-import { LeadDetailsProps } from './LeadDetail.props';
+} from "./LeadDetail.styles";
+import { Linking, Pressable } from "react-native";
+import { Spacer } from "@atoms/common/common.styles";
+import { useTranslation } from "react-i18next";
+import PhoneIcon from "@atoms/Illustrations/PhoneIcon";
+import MailIcon from "@atoms/Illustrations/MailIcon";
+import View from "@atoms/View/View";
+import { callToAction } from "@utils/common";
+import WhatsApp from "@atoms/Illustrations/WhatsApp";
+import Clipboard from "@react-native-clipboard/clipboard";
+import { ToastTypeProps } from "@molecules/Toast/Toast.props";
+import { useToast } from "react-native-toast-notifications";
+import { telLink, whatsAppLink } from "@utils/config";
+import { LeadDetailsProps } from "./LeadDetail.props";
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
   phoneNumber,
@@ -34,22 +34,22 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   title,
   dateTime,
 }) => {
-  const { t } = useTranslation('errorMessage');
+  const { t } = useTranslation("errorMessage");
   const toast = useToast();
   const handleWhatsApp = (phoneNumber: number | string) => {
-    Linking.canOpenURL(whatsAppLink + phoneNumber)
-      .then((supported) => {
-        if (supported) {
-          callToAction(whatsAppLink + phoneNumber);
-        } else {
-          callToAction(
-            `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Join WhatsApp using this link: https://whatsapp.com/dl/')}`,
-          );
-        }
-      })
-      .catch((err) => {
-        console.error('An error occurred', err);
-      });
+    // Linking.canOpenURL(whatsAppLink + phoneNumber)
+    //   .then((supported) => {
+    //     if (supported) {
+    //       callToAction(whatsAppLink + phoneNumber);
+    //     } else {
+    //       callToAction(
+    //         `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Join WhatsApp using this link: https://whatsapp.com/dl/')}`,
+    //       );
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.error('An error occurred', err);
+    //   });
   };
 
   return (
@@ -90,16 +90,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           )}
           {mailID && (
             <EmailView>
-              <PressAbleContainer
-                onPress={() => {
-                  Clipboard.setString(mailID);
-                  toast.show(t('copyText'), {
-                    type: 'customToast',
-                    data: {
-                      type: ToastTypeProps.Copy,
-                    },
-                  });
-                }}>
+              <PressAbleContainer>
                 <View>
                   <Spacer size={2} />
                   <MailIcon />
