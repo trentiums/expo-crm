@@ -3,14 +3,8 @@ import RootStack from "./app/_layout";
 import { useEffect, useState } from "react";
 import React from "react";
 import { GestureHandlerRootContainer } from "./App.styles";
-import { Provider as ReduxProvider } from "react-redux";
-import store, { persistor } from "./redux/store";
-import { PersistGate } from "redux-persist/integration/react";
-import ThemeProvider from "./containers/ThemeProvider";
-import ToastProviderContainer from "./components/molecules/Toast/Toast";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import NetInfo from "@react-native-community/netinfo";
-import NoInternet from "@molecules/NoInternet/NoInternet";
+import NoInternet from "./src/components/molecules/NoInternet/NoInternet";
 import "./i18n/i18n";
 
 SplashScreen.preventAutoHideAsync();
@@ -40,23 +34,12 @@ export default function App() {
 
     return () => {
       unsubscribe();
-      console.log("hello", store);
     };
   }, []);
 
   return (
     <GestureHandlerRootContainer>
-      {/* <ReduxProvider store={store}> */}
-      {/* <PersistGate loading={null} persistor={persistor}>
-          <ThemeProvider>
-            <ToastProviderContainer> */}
-      {/* <BottomSheetModalProvider>
-        {isConnected ? <RootStack /> : <NoInternet />}
-      </BottomSheetModalProvider> */}
-      {/* </ToastProviderContainer>
-          </ThemeProvider>
-        </PersistGate> */}
-      {/* </ReduxProvider> */}
+      {isConnected ? <RootStack /> : <NoInternet />}
     </GestureHandlerRootContainer>
   );
 }

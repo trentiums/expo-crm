@@ -1,28 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Redirect } from "expo-router";
-import { token } from "../constant";
-import ThemeProvider from "../src/containers/ThemeProvider";
-import { Provider as ReduxProvider } from "react-redux";
-import store from "@redux/store";
+import { RootState, useSelector } from "@redux/store";
 
 const Index = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    if (token) {
-      setIsLoggedIn(true);
-    }
-    console.log("hello from token");
-  }, [token]);
-
+  const token = useSelector((state: RootState) => state.auth.user.token);
   return (
-    <ReduxProvider store={store}>
-      {isLoggedIn ? (
-        <Redirect href="/(protected)/(drawer)/(tabs)/dashboard" />
+    <>
+      {token ? (
+        <Redirect href="/(protected)/(drawer)/(tabs)/leads" />
       ) : (
         <Redirect href="/(public)/login" />
       )}
-    </ReduxProvider>
+    </>
   );
 };
 
