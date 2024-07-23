@@ -1,5 +1,4 @@
 import { PaddingSpace, Spacer } from "@atoms/common/common.styles";
-import { ToastTypeProps } from "@molecules/Toast/Toast.props";
 import UserInformationForm from "@organisms/UserInformationForm/UserInformationForm";
 import { UserInformationFormValues } from "@organisms/UserInformationForm/UserInformationForm.props";
 import {
@@ -11,26 +10,28 @@ import {
 import { useAppDispatch } from "@redux/store";
 import FormTemplate from "@templates/FormTemplate/FormTemplate";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 
 const addUser = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
-
-  // const [slug] = useState(route?.params?.slug);
+  const params = useLocalSearchParams();
+  console.log(params, "params");
+  const [slug] = useState(params?.slug);
+  console.log(slug, "slug");
   const [loading, setLoading] = useState(false);
   const onUserInformationSubmitPress = async (
     values: UserInformationFormValues
   ) => {
-    const slug = "xyz";
+    console.log(slug, "slug");
     try {
       setLoading(true);
       const response = slug
         ? await dispatch(
             updateUserAction({
-              user_id: slug,
+              user_id: +slug,
               name: values?.name,
               email: values?.email,
               password: values?.password,
@@ -54,9 +55,9 @@ const addUser = () => {
           type: ToastTypeProps.Success,
         },
       });
-
       router.navigate("/users");
     } catch (error: any) {
+      console.log(error, "error");
       toast.show(error, {
         type: "customToast",
         data: {

@@ -4,9 +4,9 @@ import Dashboard from "@atoms/Illustrations/Dashboard";
 import { useAppTheme } from "@constants/theme";
 import Leads from "@atoms/Illustrations/Leads";
 import { styles } from "./tabs.style";
-import Users from "@atoms/Illustrations/Users";
 import { RootState, useSelector } from "@redux/store";
 import { userRole } from "@type/api/auth";
+import Users from "@atoms/Illustrations/Users";
 
 const TabsLayout = () => {
   const { colors } = useAppTheme();
@@ -43,7 +43,7 @@ const TabsLayout = () => {
           ),
         }}
       />
-      {user.userRole === userRole.Admin && (
+      {user.userRole !== userRole.CompanyStaff && (
         <Tabs.Screen
           name="users"
           options={{

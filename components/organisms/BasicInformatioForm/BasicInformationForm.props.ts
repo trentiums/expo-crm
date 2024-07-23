@@ -1,4 +1,4 @@
-import { FormRenderProps } from 'react-final-form';
+import { FormRenderProps } from "react-final-form";
 
 export type BasicInfoFormValues = {
   firstName: string;

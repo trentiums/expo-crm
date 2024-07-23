@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Field, useFormState } from "react-final-form";
-import DocumentPicker from "react-native-document-picker";
+import * as DocumentPicker from "expo-document-picker";
 import Pdf from "react-native-pdf";
 import {
   AddIconButton,
@@ -67,6 +67,8 @@ import { ToastTypeProps } from "@molecules/Toast/Toast.props";
 import { MAX_FILE_SIZE } from "@utils/constant";
 import { SvgUri } from "react-native-svg";
 import { addLeadInformation } from "@redux/slices/leads";
+import { useLocalSearchParams } from "expo-router";
+import Text from "@atoms/Text/Text";
 
 const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   loading,
@@ -77,6 +79,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   documentArray,
   setDocumentArray,
 }) => {
+  const params = useLocalSearchParams();
   const { colors } = useAppTheme();
   const { t } = useTranslation("BasicInformation");
   const { t: tb } = useTranslation("formButtonName");
@@ -85,8 +88,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
     (state: RootState) => state.leads.addLead
   );
 
-  const route = useRoute();
-  const [id] = useState(route?.params?.slug);
+  const [id] = useState(params?.slug);
   const dispatch = useAppDispatch();
   const toast = useToast();
   const [selectedData, setSelectedData] = useState<LeadListState | undefined>();
@@ -94,7 +96,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   const [countryCodeError, setCountryCodeError] = useState("");
   const [ImageURI, setImageURI] = useState<{
     name?: string;
-    fileCopyUri?: string;
+    uri?: string;
   }>({});
   const [deleteShowModal, setDeleteShowModal] = useState<Boolean>(false);
   const addLeadData = useSelector((state: RootState) => state.leads.addLead);
@@ -116,7 +118,6 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   }, [id]);
   const [deleteDocumentUrl, setDeleteDocumentUrl] = useState(null);
   useEffect(() => {
-    console.log(values.phoneNumber, selectedCountryCodeValue);
     if (values.phoneNumber && !selectedCountryCodeValue) {
       setCountryCodeError(t("countryCodeError"));
     } else if (!values.phoneNumber && selectedCountryCodeValue) {
@@ -127,37 +128,37 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
       setCountryCodeError("");
     }
   }, [values, selectedCountryCodeValue]);
-  const requestPermissions = async () => {
-    if (Platform.OS === "android") {
-      try {
-        const result = await request(
-          PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-          {
-            title: "Storage Permission",
-            message: "App needs access to your storage to function properly.",
-            buttonNeutral: "Ask Later",
-            buttonNegative: "Cancel",
-            buttonPositive: "OK",
-          }
-        );
-        return result === RESULTS.GRANTED;
-      } catch (error) {
-        console.error("Error requesting storage permission: ", error);
-        return false;
-      }
-    } else if (Platform.OS === "ios") {
-      const granted = await request(PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY, {
-        title: t("storagePermission"),
-        message: t("storagePermissionDesc"),
-        buttonNeutral: t("askLater"),
-        buttonNegative: t("cancel"),
-        buttonPositive: t("ok"),
-      });
-      return granted === RESULTS.GRANTED;
-    } else {
-      return false;
-    }
-  };
+  // const requestPermissions = async () => {
+  //   if (Platform.OS === "android") {
+  //     try {
+  //       const result = await request(
+  //         PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+  //         {
+  //           title: "Storage Permission",
+  //           message: "App needs access to your storage to function properly.",
+  //           buttonNeutral: "Ask Later",
+  //           buttonNegative: "Cancel",
+  //           buttonPositive: "OK",
+  //         }
+  //       );
+  //       return result === RESULTS.GRANTED;
+  //     } catch (error) {
+  //       console.error("Error requesting storage permission: ", error);
+  //       return false;
+  //     }
+  //   } else if (Platform.OS === "ios") {
+  //     const granted = await request(PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY, {
+  //       title: t("storagePermission"),
+  //       message: t("storagePermissionDesc"),
+  //       buttonNeutral: t("askLater"),
+  //       buttonNegative: t("cancel"),
+  //       buttonPositive: t("ok"),
+  //     });
+  //     return granted === RESULTS.GRANTED;
+  //   } else {
+  //     return false;
+  //   }
+  // };
 
   useEffect(() => {
     const initializePermissionsAndForm = async () => {
@@ -196,52 +197,42 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
     initializePermissionsAndForm();
   }, [id, selectedData]);
   const pickFile = async () => {
-    const permissionGranted = await requestPermissions();
-    if (permissionGranted) {
-      console.log("Storage permission granted");
-    } else {
-      console.log("Storage permission denied");
-    }
     try {
-      const res = await DocumentPicker.pick({
-        type: [
-          DocumentPicker.types.pdf,
-          DocumentPicker.types.images,
-          DocumentPicker.types.plainText,
-        ],
-        copyTo: "cachesDirectory",
-        allowMultiSelection: true,
+      const res = await DocumentPicker.getDocumentAsync({
+        type: ["application/pdf", "image/*", "text/plain"],
+        copyToCacheDirectory: true,
       });
+      console.log(res, "res");
 
-      res.forEach((file: any) => {
-        if (file.size > MAX_FILE_SIZE) {
-          toast.show(t("fileSizeLimitExceed"), {
-            type: "customToast",
-            data: {
-              type: ToastTypeProps.Error,
-            },
-          });
-        } else {
-          setDocumentArray((prevImages) => [...prevImages, file]);
-        }
-      });
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        console.log("cancelled");
+      if (!res.canceled) {
+        res.assets.forEach((file) => {
+          if (file.size > MAX_FILE_SIZE) {
+            toast.show("File size limit exceeded", {
+              type: "customToast",
+              data: {
+                type: ToastTypeProps.Error,
+              },
+            });
+          } else {
+            setDocumentArray((prevImages) => [...prevImages, file]);
+          }
+        });
       } else {
-        console.log("error", err);
-        throw err;
+        console.log("cancelled");
       }
+    } catch (err) {
+      console.log("error", err);
+      throw err;
     }
   };
 
   const onDeleteActionPress = async () => {
     const deletedDocument = documentArray?.filter(
-      (item) => item?.fileCopyUri === deleteDocumentUrl
+      (item) => item?.uri === deleteDocumentUrl
     );
 
     const updatedDocuments = documentArray?.filter(
-      (item) => item?.fileCopyUri !== deleteDocumentUrl
+      (item) => item?.uri !== deleteDocumentUrl
     );
 
     if (deletedDocument?.[0]?.id) {
@@ -271,7 +262,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   };
 
   const renderFilePreview = (file: any) => {
-    const type = file?.type;
+    const type = file?.mimeType;
     return (
       <PressAbleContainer
         onPress={() => {
@@ -281,12 +272,12 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
         <CrossIconContainer
           onPress={() => {
             setDeleteShowModal(true);
-            setDeleteDocumentUrl(file?.fileCopyUri);
+            setDeleteDocumentUrl(file?.uri);
           }}>
           <CrossIcon color={"#fff"} />
         </CrossIconContainer>
-        {type.includes("image") ? (
-          <ImagePreviewShow source={{ uri: file?.fileCopyUri }} />
+        {type?.includes("image") ? (
+          <ImagePreviewShow source={{ uri: file?.uri }} />
         ) : (
           <SvgShowContainer>
             <Document />
@@ -409,7 +400,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
           </NumberInput>
         </PhoneNumberFieldView>
         <Spacer size={8} />
-        {countryCodeError && <ErrorText>{countryCodeError}</ErrorText>}
+
         <Spacer size={16} />
         <PickerContainer onPress={pickFile}>
           <AddIconButton>
@@ -454,7 +445,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
           />
         )}
 
-        <StyledModal
+        {/* <StyledModal
           animationType="slide"
           transparent={true}
           onRequestClose={() => setShowModal(false)}
@@ -464,11 +455,11 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
               <CrossIcon color={colors.black} />
             </CloseButton>
             <Spacer size={64} />
-            {ImageURI && ImageURI?.fileCopyUri?.endsWith("pdf") ? (
+            {ImageURI && ImageURI?.uri?.endsWith("pdf") ? (
               <>
                 <Pdf
                   source={{
-                    uri: ImageURI?.fileCopyUri,
+                    uri: ImageURI?.uri,
                   }}
                   trustAllCerts={false}
                   style={{
@@ -481,10 +472,10 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
                 />
               </>
             ) : (
-              <PreviewImageView source={{ uri: ImageURI?.fileCopyUri }} />
+              <PreviewImageView source={{ uri: ImageURI?.uri }} />
             )}
           </ModalView>
-        </StyledModal>
+        </StyledModal> */}
         <Spacer size={70} />
       </KeyboardAwareScrollViewContainer>
       <ButtonSubmit

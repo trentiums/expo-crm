@@ -14,46 +14,46 @@ import {
   StyledModal,
   SvgShowContainer,
   UploadText,
-} from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
+} from "@organisms/BasicInformatioForm/BasicInformationForm.styles";
 import {
   ContainerView,
   FormButtonText,
   SubContainerView,
-} from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Field, useFormState } from 'react-final-form';
-import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
-import DocumentPicker from 'react-native-document-picker';
-import { Spacer } from '@atoms/common/common.styles';
-import { ButtonSubmit } from '@organisms/LoginForm/LoginForm.styles';
-import { LeadStatusChangeFormProps } from './LeadStatusChangeForm.props';
+} from "@organisms/LeadDetailsForm/LeadDetailsForm.styles";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Field, useFormState } from "react-final-form";
+import FieldTextInput from "@molecules/FieldTextInput/FieldTextInput";
+import DocumentPicker from "expo-document-picker";
+import { Spacer } from "@atoms/common/common.styles";
+import { ButtonSubmit } from "@organisms/LoginForm/LoginForm.styles";
+import { LeadStatusChangeFormProps } from "./LeadStatusChangeForm.props";
 import {
   CancelButtonView,
   CancelText,
   FormsView,
-} from './LeadStatusChangeForm.styles';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { RootState, useAppDispatch, useSelector } from '@redux/store';
-import AddIcon from '@atoms/Illustrations/AddIcon';
-import { MAX_FILE_SIZE } from '@utils/constant';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
-import { useToast } from 'react-native-toast-notifications';
-import Document from '@atoms/Illustrations/Document';
-import CrossIcon from '@atoms/Illustrations/Cross';
-import Pdf from 'react-native-pdf';
-import { useAppTheme } from '@constants/theme';
-import ActionModal from '@molecules/ActionModal/ActionModal';
-import Trash from '@atoms/Illustrations/Trash';
-import { Actions } from '@molecules/ActionModal/ActionModal.props';
+} from "./LeadStatusChangeForm.styles";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { RootState, useAppDispatch, useSelector } from "@redux/store";
+import AddIcon from "@atoms/Illustrations/AddIcon";
+import { MAX_FILE_SIZE } from "@utils/constant";
+import { ToastTypeProps } from "@molecules/Toast/Toast.props";
+import { useToast } from "react-native-toast-notifications";
+import Document from "@atoms/Illustrations/Document";
+import CrossIcon from "@atoms/Illustrations/Cross";
+import Pdf from "react-native-pdf";
+import { useAppTheme } from "@constants/theme";
+import ActionModal from "@molecules/ActionModal/ActionModal";
+import Trash from "@atoms/Illustrations/Trash";
+import { Actions } from "@molecules/ActionModal/ActionModal.props";
 import {
   deleteLeadDocumentsAction,
   getLeadDetailsAction,
-} from '@redux/actions/lead';
+} from "@redux/actions/lead";
 import {
   composeValidators,
   numberAndFractionalNumberValidator,
-} from '@utils/formValidators';
+} from "@utils/formValidators";
 
 const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
   form,
@@ -64,16 +64,16 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
   documents,
 }) => {
   const { colors } = useAppTheme();
-  const { t: tm } = useTranslation('modalText');
-  const { t } = useTranslation('companyInformation');
-  const { t: tl } = useTranslation('leadDetails');
-  const { t: tb } = useTranslation('formButtonName');
-  const { t: tbb } = useTranslation('BasicInformation');
+  const { t: tm } = useTranslation("modalText");
+  const { t } = useTranslation("companyInformation");
+  const { t: tl } = useTranslation("leadDetails");
+  const { t: tb } = useTranslation("formButtonName");
+  const { t: tbb } = useTranslation("BasicInformation");
   const toast = useToast();
   const dispatch = useAppDispatch();
   const { valid } = useFormState({ subscription: { valid: true } });
   const leadsData = useSelector(
-    (state: RootState) => state.leads.leadList.leads,
+    (state: RootState) => state.leads.leadList.leads
   );
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteDocumentUrl, setDeleteDocumentUrl] = useState(null);
@@ -81,7 +81,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
   const [showModal, setShowModal] = useState<Boolean>(false);
   const [ImageURI, setImageURI] = useState<{
     name?: string;
-    fileCopyUri?: string;
+    uri?: string;
   }>({});
   const data = leadsData?.filter((item) => item?.id === leadCardId);
   const handleGetLeadsDetails = async () => {
@@ -89,37 +89,37 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
   };
   useEffect(() => {
     setDocuments(data?.[0]?.documents);
-    form.change('budget', data?.[0]?.budget);
-    form.change('budget', `${data?.[0]?.budget || ''}`);
-    form.change('companyName', data?.[0]?.companyName || '');
-    form.change('timeFrame', data?.[0]?.timeLine || '');
-    form.change('webSite', data?.[0]?.webSite || '');
+    form.change("budget", data?.[0]?.budget);
+    form.change("budget", `${data?.[0]?.budget || ""}`);
+    form.change("companyName", data?.[0]?.companyName || "");
+    form.change("timeFrame", data?.[0]?.timeLine || "");
+    form.change("webSite", data?.[0]?.webSite || "");
     handleGetLeadsDetails();
   }, []);
   const onDeleteActionPress = async () => {
     const deletedDocument = documents?.filter(
-      (item) => item?.fileCopyUri === deleteDocumentUrl,
+      (item) => item?.uri === deleteDocumentUrl
     );
 
     const updatedDocuments = documents?.filter(
-      (item) => item?.fileCopyUri !== deleteDocumentUrl,
+      (item) => item?.uri !== deleteDocumentUrl
     );
 
     if (deletedDocument?.[0]?.id) {
       try {
         setDeleteLoading(true);
         const response = await dispatch(
-          deleteLeadDocumentsAction({ media_id: deletedDocument?.[0]?.id }),
+          deleteLeadDocumentsAction({ media_id: deletedDocument?.[0]?.id })
         ).unwrap();
         toast.show(response?.message, {
-          type: 'customToast',
+          type: "customToast",
           data: {
             type: ToastTypeProps.Success,
           },
         });
       } catch (error: any) {
         toast.show(error, {
-          type: 'customToast',
+          type: "customToast",
           data: {
             type: ToastTypeProps.Error,
           },
@@ -132,35 +132,29 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
   };
   const pickFile = async () => {
     try {
-      const res = await DocumentPicker.pick({
-        type: [
-          DocumentPicker.types.pdf,
-          DocumentPicker.types.images,
-          DocumentPicker.types.plainText,
-        ],
-        copyTo: 'cachesDirectory',
-        allowMultiSelection: true,
+      const res = await DocumentPicker.getDocumentAsync({
+        type: ["application/pdf", "image/*", "text/plain"],
+        copyToCacheDirectory: true,
       });
-
-      res.forEach((file: any) => {
-        if (file.size > MAX_FILE_SIZE) {
-          toast.show(t('fileSizeLimitExceed'), {
-            type: 'customToast',
-            data: {
-              type: ToastTypeProps.Error,
-            },
-          });
-        } else {
-          setDocuments((prevImages: any) => [...prevImages, file]);
-        }
-      });
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        console.log('cancelled');
-      } else {
-        console.log('error', err);
-        throw err;
+      if (!res.canceled) {
+        res.assets.forEach((file: any) => {
+          if (file.size > MAX_FILE_SIZE) {
+            toast.show(t("fileSizeLimitExceed"), {
+              type: "customToast",
+              data: {
+                type: ToastTypeProps.Error,
+              },
+            });
+          } else {
+            setDocuments((prevImages: any) => [...prevImages, file]);
+          }
+        });
+      } else if (res.type === "cancel") {
+        console.log("cancelled");
       }
+    } catch (err) {
+      console.log("error", err);
+      throw err;
     }
   };
   const renderFilePreview = (file: any) => {
@@ -174,12 +168,12 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
         <CrossIconContainer
           onPress={() => {
             setDeleteShowModal(true);
-            setDeleteDocumentUrl(file?.fileCopyUri);
+            setDeleteDocumentUrl(file?.uri);
           }}>
-          <CrossIcon color={'#fff'} />
+          <CrossIcon color={"#fff"} />
         </CrossIconContainer>
-        {type.includes('image') ? (
-          <ImagePreviewShow source={{ uri: file?.fileCopyUri }} />
+        {type.includes("image") ? (
+          <ImagePreviewShow source={{ uri: file?.uri }} />
         ) : (
           <SvgShowContainer>
             <Document />
@@ -194,53 +188,53 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always">
-        <Label>{t('companyNameLabel')}</Label>
+        <Label>{t("companyNameLabel")}</Label>
         <Field
           name="companyName"
-          placeholder={t('companyNameLabel')}
+          placeholder={t("companyNameLabel")}
           component={FieldTextInput}
         />
         <Spacer size={16} />
-        <Label>{t('websiteLabel')}</Label>
+        <Label>{t("websiteLabel")}</Label>
         <Field
           name="webSite"
-          placeholder={t('websiteLabel')}
+          placeholder={t("websiteLabel")}
           component={FieldTextInput}
         />
         <Spacer size={16} />
-        <Label>{tl('budgetLabel')}</Label>
+        <Label>{tl("budgetLabel")}</Label>
         <Field
           name="budget"
-          placeholder={tl('budgetLabel')}
+          placeholder={tl("budgetLabel")}
           component={FieldTextInput}
           keyboardType="numeric"
           isFloatValue
           validate={composeValidators(numberAndFractionalNumberValidator)}
         />
         <Spacer size={16} />
-        <Label>{tl('timeFrameToPurchaseLabel')}</Label>
+        <Label>{tl("timeFrameToPurchaseLabel")}</Label>
         <Field
           name="timeFrame"
-          placeholder={tl('timeFrameToPurchaseEg')}
+          placeholder={tl("timeFrameToPurchaseEg")}
           component={FieldTextInput}
         />
         <Spacer size={16} />
-        <Label>{tl('commentsLabel')}</Label>
+        <Label>{tl("commentsLabel")}</Label>
         <Field
           name="comments"
-          placeholder={tl('commentsLabel')}
+          placeholder={tl("commentsLabel")}
           component={FieldTextInput}
         />
         <Spacer size={16} />
         <PickerContainer onPress={pickFile}>
           <AddIconButton>
             <AddIcon />
-            <UploadText>{tbb('uploadDocuments')}</UploadText>
+            <UploadText>{tbb("uploadDocuments")}</UploadText>
           </AddIconButton>
         </PickerContainer>
         {documents?.length > 0 && (
           <>
-            <HeaderText>{tbb('attachments')}</HeaderText>
+            <HeaderText>{tbb("attachments")}</HeaderText>
             <Spacer size={8} />
             <FlatListCon
               data={documents}
@@ -258,11 +252,11 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
             onBackdropPress={() => {
               setDeleteShowModal(false);
             }}
-            heading={tm('discardMedia')}
-            description={tm('disCardDescription')}
-            label={tm('yesDiscard')}
+            heading={tm("discardMedia")}
+            description={tm("disCardDescription")}
+            label={tm("yesDiscard")}
             actionType={Actions.delete}
-            actiontext={tm('cancel')}
+            actiontext={tm("cancel")}
             onCancelPress={() => {
               setDeleteShowModal(false);
             }}
@@ -281,24 +275,24 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
               <CrossIcon color={colors.black} />
             </CloseButton>
             <Spacer size={64} />
-            {ImageURI && ImageURI?.fileCopyUri?.endsWith('pdf') ? (
+            {ImageURI && ImageURI?.uri?.endsWith("pdf") ? (
               <>
                 <Pdf
                   source={{
-                    uri: ImageURI?.fileCopyUri,
+                    uri: ImageURI?.uri,
                   }}
                   trustAllCerts={false}
                   style={{
                     flex: 1,
-                    width: '100%',
+                    width: "100%",
                   }}
                   onError={(error) => {
-                    console.error(error, 'error');
+                    console.error(error, "error");
                   }}
                 />
               </>
             ) : (
-              <PreviewImageView source={{ uri: ImageURI?.fileCopyUri }} />
+              <PreviewImageView source={{ uri: ImageURI?.uri }} />
             )}
           </ModalView>
         </StyledModal>
@@ -307,12 +301,12 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
       <ContainerView>
         <SubContainerView>
           <CancelButtonView onPress={() => onCancelPress?.()}>
-            <CancelText>{tb('cancel')}</CancelText>
+            <CancelText>{tb("cancel")}</CancelText>
           </CancelButtonView>
         </SubContainerView>
         <SubContainerView>
           <ButtonSubmit onPress={form.submit} loading={loading} valid={valid}>
-            <FormButtonText valid={valid}>{tb('save')}</FormButtonText>
+            <FormButtonText valid={valid}>{tb("save")}</FormButtonText>
           </ButtonSubmit>
         </SubContainerView>
       </ContainerView>

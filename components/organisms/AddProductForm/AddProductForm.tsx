@@ -1,7 +1,7 @@
-import AddIcon from '@atoms/Illustrations/AddIcon';
-import DocumentPicker from 'react-native-document-picker';
-import { Spacer } from '@atoms/common/common.styles';
-import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
+import AddIcon from "@atoms/Illustrations/AddIcon";
+import * as DocumentPicker from "expo-document-picker";
+import { Spacer } from "@atoms/common/common.styles";
+import FieldTextInput from "@molecules/FieldTextInput/FieldTextInput";
 import {
   AddIconButton,
   ButtonSubmit,
@@ -17,34 +17,34 @@ import {
   StyledModal,
   SvgShowContainer,
   UploadText,
-} from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
+} from "@organisms/BasicInformatioForm/BasicInformationForm.styles";
 import {
   FormsView,
   KeyboardAwareScrollViewContainer,
-} from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
-import { composeValidators, requiredValidator } from '@utils/formValidators';
-import React, { useEffect, useState } from 'react';
-import { Field, useFormState } from 'react-final-form';
-import { useTranslation } from 'react-i18next';
-import { MAX_FILE_SIZE } from '@utils/constant';
-import { useToast } from 'react-native-toast-notifications';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
-import { AddProductFormProps } from './AddProductForm.props';
-import { PermissionsAndroid, Platform } from 'react-native';
-import CrossIcon from '@atoms/Illustrations/Cross';
-import ActionModal from '@molecules/ActionModal/ActionModal';
-import Pdf from 'react-native-pdf';
-import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import Trash from '@atoms/Illustrations/Trash';
-import { useAppTheme } from '@constants/theme';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { RootState, useAppDispatch, useSelector } from '@redux/store';
-import ImageIcon from '@atoms/Illustrations/ImageIcone';
-import Document from '@atoms/Illustrations/Document';
-import { getProductServiceDetailAction } from '@redux/actions/productService';
-import Loader from '@atoms/Loader/Loader';
-import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
-import { ImagePreviewShow, LoaderView } from './AddProductForm.styles';
+} from "@organisms/LeadDetailsForm/LeadDetailsForm.styles";
+import { composeValidators, requiredValidator } from "@utils/formValidators";
+import React, { useEffect, useState } from "react";
+import { Field, useFormState } from "react-final-form";
+import { useTranslation } from "react-i18next";
+import { MAX_FILE_SIZE } from "@utils/constant";
+import { useToast } from "react-native-toast-notifications";
+import { ToastTypeProps } from "@molecules/Toast/Toast.props";
+import { AddProductFormProps } from "./AddProductForm.props";
+import { PermissionsAndroid, Platform } from "react-native";
+import CrossIcon from "@atoms/Illustrations/Cross";
+import ActionModal from "@molecules/ActionModal/ActionModal";
+import Pdf from "react-native-pdf";
+import { Actions } from "@molecules/ActionModal/ActionModal.props";
+import Trash from "@atoms/Illustrations/Trash";
+import { useAppTheme } from "@constants/theme";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { RootState, useAppDispatch, useSelector } from "@redux/store";
+import Document from "@atoms/Illustrations/Document";
+import { getProductServiceDetailAction } from "@redux/actions/productService";
+import Loader from "@atoms/Loader/Loader";
+import { PERMISSIONS, request, RESULTS } from "react-native-permissions";
+import { ImagePreviewShow, LoaderView } from "./AddProductForm.styles";
+import { useLocalSearchParams } from "expo-router";
 
 const AddProductForm: React.FC<AddProductFormProps> = ({
   form,
@@ -52,66 +52,65 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
   documentArray,
   setDocumentArray,
 }) => {
-  const route = useRoute();
-  const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  const { t } = useTranslation('addProduct');
+  const params = useLocalSearchParams();
+  const { t } = useTranslation("addProduct");
   const { values, valid } = useFormState();
-  const { t: tm } = useTranslation('modalText');
-  const { t: tb } = useTranslation('BasicInformation');
+  const { t: tm } = useTranslation("modalText");
+  const { t: tb } = useTranslation("BasicInformation");
   const toast = useToast();
   const { colors } = useAppTheme();
   const [showModal, setShowModal] = useState<Boolean>(false);
   const [ImageURI, setImageURI] = useState<{
     name?: string;
-    fileCopyUri?: string;
+    uri?: string;
   }>({});
   const productServiceDetail = useSelector(
-    (state: RootState) => state.productService.productServiceDetail,
+    (state: RootState) => state.productService.productServiceDetail
   );
   const [deleteShowModal, setDeleteShowModal] = useState<Boolean>(false);
   const [deleteDocumentUrl, setDeleteDocumentUrl] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [detailLoading, setDetailLoading] = useState(false);
   const [isDisable, setIsDisable] = useState(true);
-  const requestPermissions = async () => {
-    if (Platform.OS === 'android') {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-          {
-            title: t('storagePermission'),
-            message: t('storagePermissionDesc'),
-            buttonNeutral: t('askLater'),
-            buttonNegative: t('cancel'),
-            buttonPositive: t('ok'),
-          },
-        );
-        return granted === PermissionsAndroid.RESULTS.GRANTED;
-      } catch (err) {
-        console.error('Error requesting storage permission on Android:', err);
-        return false;
-      }
-    } else if (Platform.OS === 'ios') {
-      const granted = await request(PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY, {
-        title: t('storagePermission'),
-        message: t('storagePermissionDesc'),
-        buttonNeutral: t('askLater'),
-        buttonNegative: t('cancel'),
-        buttonPositive: t('ok'),
-      });
-      return granted === RESULTS.GRANTED;
-    } else {
-      return false;
-    }
-  };
+  // const requestPermissions = async () => {
+  //   if (Platform.OS === "android") {
+  //     try {
+  //       const granted = await PermissionsAndroid.request(
+  //         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+  //         {
+  //           title: t("storagePermission"),
+  //           message: t("storagePermissionDesc"),
+  //           buttonNeutral: t("askLater"),
+  //           buttonNegative: t("cancel"),
+  //           buttonPositive: t("ok"),
+  //         }
+  //       );
+  //       return granted === PermissionsAndroid.RESULTS.GRANTED;
+  //     } catch (err) {
+  //       console.error("Error requesting storage permission on Android:", err);
+  //       return false;
+  //     }
+  //   } else if (Platform.OS === "ios") {
+  //     const granted = await request(PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY, {
+  //       title: t("storagePermission"),
+  //       message: t("storagePermissionDesc"),
+  //       buttonNeutral: t("askLater"),
+  //       buttonNegative: t("cancel"),
+  //       buttonPositive: t("ok"),
+  //     });
+  //     return granted === RESULTS.GRANTED;
+  //   } else {
+  //     return false;
+  //   }
+  // };
   const handleGetProductServiceData = async () => {
     try {
       setDetailLoading(true);
       await dispatch(
         getProductServiceDetailAction({
-          product_service_id: route?.params?.slug,
-        }),
+          product_service_id: params?.slug,
+        })
       ).unwrap();
     } catch (error) {
       console.log(error);
@@ -119,59 +118,51 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
     setDetailLoading(false);
   };
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      if (route?.params?.slug) {
-        handleGetProductServiceData();
-      } else {
-        form.reset();
-      }
-    });
-    return unsubscribe;
-  }, [route?.params?.slug, navigation]);
+    if (params?.slug) {
+      handleGetProductServiceData();
+    } else {
+      form.reset();
+    }
+  }, [params?.slug]);
   useEffect(() => {
-    if (route?.params?.slug) {
-      form.change('name', productServiceDetail?.name);
-      form.change('description', productServiceDetail?.description);
+    if (params?.slug) {
+      form.change("name", productServiceDetail?.name);
+      form.change("description", productServiceDetail?.description);
       setDocumentArray(productServiceDetail?.documents);
     } else {
       setDocumentArray([]);
     }
-  }, [route?.params?.slug, productServiceDetail]);
+  }, [params?.slug, productServiceDetail]);
   const onDeleteActionPress = async () => {
     setDocumentArray(null);
     setDeleteShowModal(false);
   };
   const pickFile = async () => {
-    await requestPermissions();
     try {
-      const res = await DocumentPicker.pick({
-        type: [
-          DocumentPicker.types.pdf,
-          DocumentPicker.types.images,
-          DocumentPicker.types.plainText,
-        ],
-        copyTo: 'cachesDirectory',
+      const res = await DocumentPicker.getDocumentAsync({
+        type: ["application/pdf", "image/*", "text/plain"],
+        copyToCacheDirectory: true,
       });
-
-      res.forEach((file: any) => {
-        if (file.size > MAX_FILE_SIZE) {
-          toast.show(t('fileSizeLimitExceed'), {
-            type: 'customToast',
-            data: {
-              type: ToastTypeProps.Error,
-            },
-          });
-        } else {
-          setDocumentArray(file);
-        }
-      });
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        console.log('cancelled');
-      } else {
-        console.log('error', err);
-        throw err;
+      if (!res.canceled) {
+        res.assets.forEach((file) => {
+          const { size } = file;
+          if (size > MAX_FILE_SIZE) {
+            toast.show(t("fileSizeLimitExceed"), {
+              type: "customToast",
+              data: {
+                type: ToastTypeProps.Error,
+              },
+            });
+          } else {
+            setDocumentArray(file);
+          }
+        });
+      } else if (res.type === "cancel") {
+        console.log("cancelled");
       }
+    } catch (err) {
+      console.log("error", err);
+      throw err;
     }
   };
   useEffect(() => {
@@ -198,19 +189,19 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="always">
-            <Label>{t('name')}</Label>
+            <Label>{t("name")}</Label>
             <Field
               name="name"
-              placeholder={t('nameEg')}
+              placeholder={t("nameEg")}
               component={FieldTextInput}
               keyboardType="email-address"
               validate={composeValidators(requiredValidator)}
             />
             <Spacer size={16} />
-            <Label>{t('description')}</Label>
+            <Label>{t("description")}</Label>
             <Field
               name="description"
-              placeholder={t('description')}
+              placeholder={t("description")}
               component={FieldTextInput}
               numberOfLines={5}
               style={{
@@ -221,17 +212,17 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
               contentStyle={{ marginTop: -10 }}
             />
             <Spacer size={16} />
-            {!documentArray?.fileCopyUri && (
+            {!documentArray?.uri && (
               <PickerContainer onPress={pickFile}>
                 <AddIconButton>
                   <AddIcon />
-                  <UploadText>{t('uploadDocuments')}</UploadText>
+                  <UploadText>{t("uploadDocuments")}</UploadText>
                 </AddIconButton>
               </PickerContainer>
             )}
-            {documentArray?.fileCopyUri && (
+            {documentArray?.uri && (
               <>
-                <HeaderText>{tb('attachments')}</HeaderText>
+                <HeaderText>{tb("attachments")}</HeaderText>
                 <Spacer size={8} />
 
                 <PressAbleContainer
@@ -239,18 +230,16 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                     setImageURI(documentArray);
                     setShowModal(true);
                   }}
-                  style={{ width: '30%' }}>
+                  style={{ width: "30%" }}>
                   <CrossIconContainer
                     onPress={() => {
                       setDeleteShowModal(true);
-                      setDeleteDocumentUrl(documentArray?.fileCopyUri);
+                      setDeleteDocumentUrl(documentArray?.uri);
                     }}>
-                    <CrossIcon color={'#fff'} />
+                    <CrossIcon color={"#fff"} />
                   </CrossIconContainer>
-                  {documentArray?.type.includes?.('image') ? (
-                    <ImagePreviewShow
-                      source={{ uri: documentArray?.fileCopyUri }}
-                    />
+                  {documentArray?.mimeType?.includes?.("image") ? (
+                    <ImagePreviewShow source={{ uri: documentArray?.uri }} />
                   ) : (
                     <SvgShowContainer>
                       <Document />
@@ -265,11 +254,11 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                 onBackdropPress={() => {
                   setDeleteShowModal(false);
                 }}
-                heading={tm('discardMedia')}
-                description={tm('disCardDescription')}
-                label={tm('yesDiscard')}
+                heading={tm("discardMedia")}
+                description={tm("disCardDescription")}
+                label={tm("yesDiscard")}
                 actionType={Actions.delete}
-                actiontext={tm('cancel')}
+                actiontext={tm("cancel")}
                 onCancelPress={() => {
                   setDeleteShowModal(false);
                 }}
@@ -278,7 +267,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                 loading={deleteLoading}
               />
             )}
-            <StyledModal
+            {/* <StyledModal
               animationType="slide"
               transparent={true}
               onRequestClose={() => setShowModal(false)}
@@ -288,33 +277,33 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                   <CrossIcon color={colors.black} />
                 </CloseButton>
                 <Spacer size={64} />
-                {ImageURI && ImageURI?.fileCopyUri?.endsWith('pdf') ? (
+                {ImageURI && ImageURI?.uri?.endsWith("pdf") ? (
                   <>
                     <Pdf
                       source={{
-                        uri: ImageURI?.fileCopyUri,
+                        uri: ImageURI?.uri,
                       }}
                       trustAllCerts={false}
                       style={{
                         flex: 1,
-                        width: '100%',
+                        width: "100%",
                       }}
                       onError={(error) => {
-                        console.error(error, 'error');
+                        console.error(error, "error");
                       }}
                     />
                   </>
                 ) : (
-                  <PreviewImageView source={{ uri: ImageURI?.fileCopyUri }} />
+                  <PreviewImageView source={{ uri: ImageURI?.uri }} />
                 )}
               </ModalView>
-            </StyledModal>
+            </StyledModal> */}
           </KeyboardAwareScrollViewContainer>
           <ButtonSubmit
             onPress={handleAddProducts}
             loading={loading}
             valid={valid}>
-            <FormButtonText valid={valid}>{t('save')}</FormButtonText>
+            <FormButtonText valid={valid}>{t("save")}</FormButtonText>
           </ButtonSubmit>
         </FormsView>
       )}

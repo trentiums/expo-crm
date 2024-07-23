@@ -21,6 +21,7 @@ import {
 import { getProductServiceListAction } from "@redux/actions/productService";
 import { router, useNavigation } from "expo-router";
 import { getLeadListAction } from "@redux/actions/lead";
+import { getUserListAction } from "@redux/actions/user";
 
 const LoginScreen = () => {
   const { t } = useTranslation("login");
@@ -39,12 +40,12 @@ const LoginScreen = () => {
       ).unwrap();
       console.log(loginResponse, "loginResponse");
       if (await loginResponse.status) {
-        // toast.show(t("loginSuccess"), {
-        //   type: "customToast",
-        //   data: {
-        //     type: ToastTypeProps.Success,
-        //   },
-        // });
+        toast.show(t("loginSuccess"), {
+          type: "customToast",
+          data: {
+            type: ToastTypeProps.Success,
+          },
+        });
         await Promise.all([
           dispatch(leadChannelListAction()),
           dispatch(leadConversionListAction()),
@@ -52,16 +53,17 @@ const LoginScreen = () => {
           dispatch(countryListAction()),
           dispatch(getProductServiceListAction({})),
           dispatch(getLeadListAction({})),
+          dispatch(getUserListAction({})),
         ]);
       }
       router.replace("/(protected)/(drawer)/(tabs)/dashboard");
     } catch (error: any) {
-      // toast.show(error, {
-      //   type: "customToast",
-      //   data: {
-      //     type: ToastTypeProps.Error,
-      //   },
-      // });
+      toast.show(error, {
+        type: "customToast",
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
     }
     setLoading(false);
   };

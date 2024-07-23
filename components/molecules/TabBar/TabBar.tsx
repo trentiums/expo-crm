@@ -1,7 +1,7 @@
-import React from 'react';
-import { TabBarProps } from './TabBar.props';
-import { TabBarText, TabContainer, TabPress } from './TabBar.styles';
-import { useAppTheme } from '@constants/theme';
+import React from "react";
+import { TabBarProps } from "./TabBar.props";
+import { TabBarText, TabContainer, TabPress } from "./TabBar.styles";
+import { useAppTheme } from "@constants/theme";
 
 const TabBar: React.FC<TabBarProps> = ({
   tab,

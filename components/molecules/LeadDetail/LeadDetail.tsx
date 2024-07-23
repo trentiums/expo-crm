@@ -21,11 +21,11 @@ import MailIcon from "@atoms/Illustrations/MailIcon";
 import View from "@atoms/View/View";
 import { callToAction } from "@utils/common";
 import WhatsApp from "@atoms/Illustrations/WhatsApp";
-import Clipboard from "@react-native-clipboard/clipboard";
 import { ToastTypeProps } from "@molecules/Toast/Toast.props";
 import { useToast } from "react-native-toast-notifications";
 import { telLink, whatsAppLink } from "@utils/config";
 import { LeadDetailsProps } from "./LeadDetail.props";
+import * as Clipboard from "expo-clipboard";
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
   phoneNumber,
@@ -37,19 +37,21 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   const { t } = useTranslation("errorMessage");
   const toast = useToast();
   const handleWhatsApp = (phoneNumber: number | string) => {
-    // Linking.canOpenURL(whatsAppLink + phoneNumber)
-    //   .then((supported) => {
-    //     if (supported) {
-    //       callToAction(whatsAppLink + phoneNumber);
-    //     } else {
-    //       callToAction(
-    //         `https://wa.me/${phoneNumber}?text=${encodeURIComponent('Join WhatsApp using this link: https://whatsapp.com/dl/')}`,
-    //       );
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.error('An error occurred', err);
-    //   });
+    Linking.canOpenURL(whatsAppLink + phoneNumber)
+      .then((supported) => {
+        if (supported) {
+          callToAction(whatsAppLink + phoneNumber);
+        } else {
+          callToAction(
+            `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+              "Join WhatsApp using this link: https://whatsapp.com/dl/"
+            )}`
+          );
+        }
+      })
+      .catch((err) => {
+        console.error("An error occurred", err);
+      });
   };
 
   return (
@@ -90,7 +92,16 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           )}
           {mailID && (
             <EmailView>
-              <PressAbleContainer>
+              <PressAbleContainer
+                onPress={() => {
+                  Clipboard.setStringAsync(mailID);
+                  toast.show(t("copyText"), {
+                    type: "customToast",
+                    data: {
+                      type: ToastTypeProps.Copy,
+                    },
+                  });
+                }}>
                 <View>
                   <Spacer size={2} />
                   <MailIcon />

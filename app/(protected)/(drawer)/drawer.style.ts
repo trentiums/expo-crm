@@ -1,7 +1,7 @@
 import Text from "@atoms/Text/Text";
 import View from "@atoms/View/View";
 import { styled } from "@utils/styled";
-import { Dimensions, Image, TouchableOpacity } from "react-native";
+import { Dimensions, Image, Pressable, TouchableOpacity } from "react-native";
 
 export const DrawerNavigationView = styled(View)`
   display: flex;
@@ -65,4 +65,11 @@ export const CompanyText = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.transparent};
   text-align: center;
+`;
+export const ProductCardView = styled(Pressable)`
+  margin-left: 16px;
+  margin-right: 16px;
+`;
+export const AddProductContainer = styled(View)`
+  padding: 16px;
 `;

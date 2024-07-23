@@ -48,7 +48,6 @@ const DrawerLayout = () => {
           <DrawerContentScrollView {...props}>
             <DrawerNavigationView>
               <UserInfoSection>
-                <UserImage source={{ uri: userData.image }} />
                 <UserName>{userData.name}</UserName>
               </UserInfoSection>
               <DrawerItem
@@ -58,6 +57,10 @@ const DrawerLayout = () => {
                 }}
                 labelStyle={{ color: colors.white }}
                 icon={() => <Dashboard color={colors.white} />}
+                style={{
+                  borderColor: colors.gray,
+                  borderBottomWidth: 1,
+                }}
               />
               <DrawerItem
                 label="Leads"
@@ -66,8 +69,12 @@ const DrawerLayout = () => {
                 }}
                 labelStyle={{ color: colors.white }}
                 icon={() => <Leads color={colors.white} />}
+                style={{
+                  borderColor: colors.gray,
+                  borderBottomWidth: 1,
+                }}
               />
-              {user.userRole === userRole.Admin && (
+              {user.userRole !== userRole.CompanyStaff && (
                 <DrawerItem
                   label="Users"
                   onPress={() => {
@@ -75,6 +82,10 @@ const DrawerLayout = () => {
                   }}
                   labelStyle={{ color: colors.white }}
                   icon={() => <Users color={colors.white} />}
+                  style={{
+                    borderColor: colors.gray,
+                    borderBottomWidth: 1,
+                  }}
                 />
               )}
               <DrawerItem
@@ -84,6 +95,10 @@ const DrawerLayout = () => {
                 }}
                 labelStyle={{ color: colors.white }}
                 icon={() => <Users color={colors.white} />}
+                style={{
+                  borderColor: colors.gray,
+                  borderBottomWidth: 1,
+                }}
               />
               <DrawerBottomSection>
                 <Pressable

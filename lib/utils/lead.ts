@@ -1,4 +1,4 @@
-import { LeadListData } from '@type/api/lead';
+import { LeadListData } from "@type/api/lead";
 
 export const formatLeadList = (data: LeadListData[]) => {
   return data.map((item) => ({
@@ -33,10 +33,9 @@ export const formatLeadList = (data: LeadListData[]) => {
     })),
     documents: item?.documents?.map((item) => ({
       id: item?.id,
-      fileCopyUri: item?.original_url,
+      uri: item?.original_url,
       name: item?.name,
       size: item?.size,
-      uri: item?.original_url,
       type: item?.mime_type,
     })),
   }));
@@ -74,10 +73,9 @@ export const formatLeadDetails = (item: LeadListData) => {
     })),
     documents: item?.documents?.map((item) => ({
       id: item?.id,
-      fileCopyUri: item?.original_url,
+      uri: item?.original_url,
       name: item?.name,
       size: item?.size,
-      uri: item?.original_url,
       type: item?.mime_type,
     })),
   };

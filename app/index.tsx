@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect } from "expo-router";
 import { RootState, useSelector } from "@redux/store";
+import { setAuthenticationToken } from "@api/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Index = () => {
   const token = useSelector((state: RootState) => state.auth.user.token);
+  const handleSetToken = async () => {
+    const token = await AsyncStorage.getItem("token");
+    if (token) {
+      setAuthenticationToken(token);
+    }
+  };
+  useEffect(() => {
+    handleSetToken();
+  }, [token]);
   return (
     <>
       {token ? (

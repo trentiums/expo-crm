@@ -22,20 +22,11 @@ import { useTranslation } from "react-i18next";
 import { useAppTheme } from "@constants/theme";
 import { View } from "react-native";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
-import Modal from "@atoms/Modal/Modal";
-import LeadStatusChangeForm from "@organisms/LeadStatusChangeForm/LeadStatusChangeForm";
-import FormTemplate from "@templates/FormTemplate/FormTemplate";
-import { LeadStatusChangeFormValues } from "@organisms/LeadStatusChangeForm/LeadStatusChangeForm.props";
-import DealCloseWinForm from "@organisms/DealCloseWinForm/DealCloseWinForm";
-import { DealWinCloseFormValues } from "@organisms/DealCloseWinForm/DealCloseWinForm.props";
-import LeadProposalNegotiationForm from "@organisms/LeadProposolNagotioationForm/LeadProposolNagotioationForm";
-import { LeadProposalNegotiationValues } from "@organisms/LeadProposolNagotioationForm/LeadProposolNegotiationForm.props";
 import { initialModalType } from "@utils/constant";
 import LeadDetail from "@molecules/LeadDetail/LeadDetail";
 import { getLeadDetailsAction, updateLeadAction } from "@redux/actions/lead";
 import { useToast } from "react-native-toast-notifications";
 import { ToastTypeProps } from "@molecules/Toast/Toast.props";
-import { ModalFormContainer } from "../../../app/(protected)/(drawer)/(tabs)/tabs.style";
 import { router } from "expo-router";
 
 const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
@@ -116,11 +107,12 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
         value === LeadStatusTypes.UNQUALIFIED) &&
       value !== leadStatusId
     ) {
+      const slug = {
+        leadId: leadId,
+        leadStatusId: value,
+      };
       value !== leadStatusId &&
-        router.navigate("lead-status-change", {
-          leadId: leadId,
-          leadStatusId: value,
-        });
+        router.navigate(`/(protected)/lead-status-change/${slug}`);
     } else {
       const data = leadsData?.filter((item) => item?.id === leadId)?.[0];
       if (leadStatusId !== value) {
@@ -153,18 +145,17 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       (value === LeadStageType.CLOSELOST || value === LeadStageType.CLOSEWON) &&
       value !== leadConversionId
     ) {
-      router.navigate("/lead-close-won", {
-        leadId: leadId,
-        leadConversionId: value,
-      });
+      const slug = { leadId: leadId, leadConversionId: value };
+      router.navigate(`/(protected)/lead-close-won/${slug}`);
     } else if (
       value === LeadStageType?.NEGOTIATION &&
       leadConversionId !== value
     ) {
-      router.navigate("/lead-negotiation", {
+      const slug = {
         leadId: leadId,
         leadConversionId: value,
-      });
+      };
+      router.navigate(`/(protected)/lead-negotiation/${slug}`);
     } else {
       const data = leadsData?.filter((item) => item?.id === leadCardId)?.[0];
       if (leadConversionId !== value) {
@@ -308,7 +299,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
           <View>
             <LeadDetailsList LeadDetails={LeadDetails} />
           </View>
-          {/* <LeadSelect
+          <LeadSelect
             channelList={channelList}
             leadList={leadList}
             StageList={StageList}
@@ -323,7 +314,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
               handleChangeLeadStage(leadId, value)
             }
             leadCardId={leadCardId}
-          /> */}
+          />
         </LeadDetailCardContainer>
       </Swipeable>
     </>

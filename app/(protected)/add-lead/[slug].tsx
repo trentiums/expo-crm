@@ -25,17 +25,16 @@ import {
   LeadInformationFromValuesType,
 } from "@type/api/auth";
 import { LeadListState } from "@type/api/lead";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
-import { AddLeadContainer } from "./(drawer)/(tabs)/tabs.style";
+import { AddLeadContainer } from "../(drawer)/(tabs)/tabs.style";
 
 const AddLead = () => {
   const dispatch = useAppDispatch();
-  // const route = useRoute();
-
-  const id = 2;
+  const params = useLocalSearchParams();
+  const [id] = useState(params.slug);
   const [selectedTabNav, setSelectedTabNav] = useState(
     AddLeadTabBarData?.[0].title || ""
   );
@@ -69,8 +68,9 @@ const AddLead = () => {
       setDetailLoading(true);
       setDocumentArray([]);
       try {
-        await dispatch(getLeadDetailsAction({ lead_id: id })).unwrap();
+        await dispatch(getLeadDetailsAction({ lead_id: +id })).unwrap();
       } catch (error) {
+        console.log(error, "error");
         toast.show(error, {
           type: "customToast",
           data: {
@@ -90,7 +90,7 @@ const AddLead = () => {
   }, [leadsDetail]);
   const commonUpdateLead = async (
     values: any,
-    id: number,
+    id: any,
     navigationType: string
   ) => {
     const selectedDataServices = selectedData.productService?.map(
@@ -263,17 +263,6 @@ const AddLead = () => {
   ) => {
     if (id) {
       await commonUpdateLead(values, id, AddLeadTabBarData?.[0].title);
-    } else {
-      dispatch(
-        addLeadInformation({
-          ...addLeadData,
-          fullName: values.firstName,
-          email: values.email,
-          phoneNumber: values.phoneNumber,
-          countryCode: selectedCountryCodeValue,
-        })
-      );
-      setSelectedTabNav(AddLeadTabBarData?.[1].title);
     }
   };
   const handleSaveCompanyInformation = async (
@@ -281,16 +270,6 @@ const AddLead = () => {
   ) => {
     if (id) {
       await commonUpdateLead(values, id, AddLeadTabBarData?.[1].title);
-    } else {
-      dispatch(
-        addLeadInformation({
-          ...addLeadData,
-          companyName: values.companyName,
-          companySize: values.companySize,
-          webSite: values.webSite,
-        })
-      );
-      setSelectedTabNav(AddLeadTabBarData?.[2].title);
     }
   };
   const handleSaveLeadDetailsInformation = async (
@@ -298,98 +277,6 @@ const AddLead = () => {
   ) => {
     if (id) {
       await commonUpdateLead(values, id, AddLeadTabBarData?.[2].title);
-    } else {
-      dispatch(
-        addLeadInformation({
-          ...addLeadData,
-          comments: values.comments,
-          budget: values.budget,
-          timeFrame: values.timeFrame,
-          selectedChannel,
-          selectedLead,
-          selectedStage,
-          selectedServices: selectedService,
-          dealAmount: values.dealAmount,
-          winCloseReason: values.winCloseReason,
-          dealCloseDate: values?.dealCloseDate
-            ? moment(values.dealCloseDate).format("YYYY-MM-DD")
-            : "",
-          documents: documentArray,
-        })
-      );
-      try {
-        setLoading(true);
-        let formData = new FormData();
-        if (addLeadData?.email) {
-          formData.append("email", addLeadData?.email);
-        }
-        formData.append("lead_channel_id", selectedChannel);
-        formData.append("lead_conversion_id", selectedStage);
-        formData.append("lead_status_id", selectedLead);
-        selectedService.forEach((service, index) => {
-          formData.append(`product_services[${index}]`, service);
-        });
-        formData.append("name", `${addLeadData.fullName || ""}`);
-        formData.append("company_name", addLeadData?.companyName || "");
-        if (values?.budget) {
-          formData.append("budget", values?.budget);
-        }
-        if (addLeadData?.companySize) {
-          formData.append("company_size", addLeadData?.companySize);
-        }
-        formData.append("company_website", addLeadData?.webSite || "");
-        formData.append("time_line", values?.timeFrame || "");
-        formData.append("description", values?.comments || "");
-        if (values?.dealAmount) {
-          formData.append("deal_amount", values?.dealAmount);
-        }
-        formData.append(
-          "deal_close_date",
-          values?.dealCloseDate
-            ? moment(values.dealCloseDate).format("YYYY-MM-DD")
-            : ""
-        );
-        formData.append("win_close_reason", values?.winCloseReason || "");
-        const countryCodeAlpha = countryList?.filter(
-          (item) => item?.id === addLeadData?.countryCode
-        )?.[0]?.countryCodeAlpha;
-        if (!addLeadData?.email) {
-          formData.append("country_code_alpha", countryCodeAlpha);
-          formData.append("phone", addLeadData?.phoneNumber);
-        } else if (countryCodeAlpha && addLeadData?.phoneNumber) {
-          formData.append("country_code_alpha", countryCodeAlpha);
-          formData.append("phone", addLeadData?.phoneNumber);
-        }
-
-        if (documentArray?.length > 0) {
-          documentArray.forEach((document, index) => {
-            formData.append(`documents[${index}]`, document);
-          });
-        }
-        const response = await dispatch(saveLeadAction(formData)).unwrap();
-        await dispatch(getLeadListAction({}));
-        await dispatch(setLeadsInformation());
-        toast.show(response.message, {
-          type: "customToast",
-          data: {
-            type: ToastTypeProps.Success,
-          },
-        });
-        router.navigate("/(protected)/(drawer)/(tabs)/leads");
-        setDocumentArray([]);
-        setSelectedChannel(0);
-        setSelectedLead(0);
-        setSelectedStage(0);
-        setSelectedService([]);
-      } catch (error: string | any) {
-        toast.show(error, {
-          type: "customToast",
-          data: {
-            type: ToastTypeProps.Error,
-          },
-        });
-      }
-      setLoading(false);
     }
   };
   const renderForm = () => {
@@ -459,6 +346,8 @@ const AddLead = () => {
             isSave
             setSelectedCountryCodeValue={setSelectedCountryCodeValue}
             selectedCountryCodeValue={selectedCountryCodeValue}
+            documentArray={documentArray}
+            setDocumentArray={setDocumentArray}
           />
         );
     }

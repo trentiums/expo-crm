@@ -7,14 +7,15 @@ import { getLeadDetailsAction, updateLeadAction } from "@redux/actions/lead";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import FormTemplate from "@templates/FormTemplate/FormTemplate";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { router } from "expo-router";
+import { router, useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 
 const LeadStageCloseWonScreen = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
-  const route = useRoute();
+  const params = useLocalSearchParams();
+
   const leadsData = useSelector(
     (state: RootState) => state.leads.leadList.leads
   );
@@ -22,8 +23,8 @@ const LeadStageCloseWonScreen = () => {
     (state: RootState) => state.general.countryList
   );
   const [loading, setLoading] = useState(false);
-  const leadConversionId = route?.params?.leadConversionId;
-  const leadId = route?.params?.leadId;
+  const leadConversionId = params?.leadConversionId;
+  const leadId = params?.leadId;
   const handleGetLeadsDetails = async () => {
     await dispatch(getLeadDetailsAction({ lead_id: leadId }));
   };

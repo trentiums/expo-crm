@@ -1,14 +1,14 @@
-import CrossIcon from '@atoms/Illustrations/Cross';
-import { useAppTheme } from '@constants/theme';
-import React from 'react';
-import { Dropdown, MultiSelect } from 'react-native-element-dropdown';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import CrossIcon from "@atoms/Illustrations/Cross";
+import { useAppTheme } from "@constants/theme";
+import React from "react";
+import { Dropdown, MultiSelect } from "react-native-element-dropdown";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import {
   DropDownSelectedItemView,
   ExpandedSelectedText,
   SelectedText,
-} from './DropDown.styles';
-import { StyleSheet } from 'react-native';
+} from "./DropDown.styles";
+import { StyleSheet } from "react-native";
 
 const DropDown = ({
   isStaff,

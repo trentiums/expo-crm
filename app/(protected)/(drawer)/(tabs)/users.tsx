@@ -86,7 +86,7 @@ const Users = () => {
   };
 
   const handleEdit = (slug: string | number) => {
-    // navigate('AddUser', { slug: slug });
+    router.navigate(`/(protected)/add-user/${slug}`);
   };
 
   const onDeleteActionPress = async () => {
@@ -165,7 +165,7 @@ const Users = () => {
     <ScreenTemplate
       addButtonText={ts("user")}
       onAddButtonPress={() => {
-        router.navigate("/add-user");
+        router.navigate(`/(protected)/add-user/add`);
       }}>
       {loading ? (
         <LoaderView>

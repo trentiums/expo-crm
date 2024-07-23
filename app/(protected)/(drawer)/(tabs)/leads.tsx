@@ -8,7 +8,7 @@ import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
 import { LeadListState } from "@type/api/lead";
 import { initialModalType } from "@utils/constant";
-import { router, useNavigation } from "expo-router";
+import { router } from "expo-router";
 import moment from "moment";
 import React, { RefObject, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -22,12 +22,11 @@ import {
   NoLeadsFoundContainer,
 } from "./tabs.style";
 import { ActivityIndicator } from "react-native-paper";
-import { PaddingSpace } from "@atoms/common/common.styles";
+import { PaddingSpace, Spacer } from "@atoms/common/common.styles";
 import Loader from "@atoms/Loader/Loader";
 import ActionModal from "@molecules/ActionModal/ActionModal";
 import { Actions } from "@molecules/ActionModal/ActionModal.props";
 import Trash from "@atoms/Illustrations/Trash";
-import Text from "@atoms/Text/Text";
 
 const settings = () => {
   const { t } = useTranslation("modalText");
@@ -89,7 +88,7 @@ const settings = () => {
 
   const handleEdit = (slug: string | number) => {
     dispatch(setLeadsInformation());
-    router.navigate("/add-lead", { slug: slug });
+    router.navigate(`/(protected)/add-lead/${slug}`);
   };
 
   const closeSwipeAble = () => {
@@ -159,6 +158,7 @@ const settings = () => {
         setLeadId={setLeadId}
         leadId={leadId}
       />
+      <Spacer size={16} />
     </Pressable>
   );
   const handleGetMoreData = async () => {
@@ -194,7 +194,7 @@ const settings = () => {
       addButtonText={ts("lead")}
       onAddButtonPress={() => {
         dispatch(setLeadsInformation());
-        router.navigate("/add-lead");
+        router.navigate(`/(protected)/add-lead/add`);
       }}>
       {leadsLoading ? (
         <LoaderView>
