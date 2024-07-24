@@ -1,4 +1,4 @@
-import { User } from '@type/api/user';
+import { AssignUser, User } from "@type/api/user";
 
 export const formateUser = (data: User[]) => {
   return data?.map((item) => ({
@@ -17,4 +17,12 @@ export const formatUserDetail = (data: User) => {
     userRole: data?.user_role,
     createdAt: data?.created_at,
   };
+};
+export const formatAssignUser = (data: AssignUser[]) => {
+  return data.map((item) => {
+    return {
+      id: item.id,
+      title: item.name,
+    };
+  });
 };

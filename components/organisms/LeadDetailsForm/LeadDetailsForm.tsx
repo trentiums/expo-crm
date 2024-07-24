@@ -1,36 +1,36 @@
-import { Spacer } from '@atoms/common/common.styles';
-import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
-import { Label } from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
+import { Spacer } from "@atoms/common/common.styles";
+import FieldTextInput from "@molecules/FieldTextInput/FieldTextInput";
+import { Label } from "@organisms/BasicInformatioForm/BasicInformationForm.styles";
 import {
   composeValidators,
   numberAndFractionalNumberValidator,
-} from '@utils/formValidators';
-import React, { useEffect, useState } from 'react';
-import { Field, useFormState } from 'react-final-form';
-import { useTranslation } from 'react-i18next';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { IconDataType, LeadDetailsFormProps } from './LeadDetailsForm.props';
-import { FieldDropDownContainer, FormsView } from './LeadDetailsForm.styles';
-import View from '@atoms/View/View';
-import { dropdownData } from '@constants/dummyData';
-import { RootState, useAppDispatch, useSelector } from '@redux/store';
-import DropDown from '@atoms/DropDown/DropDown';
-import FieldDatePicker from '@molecules/FieldDatePicker/FieldDatePicker';
-import moment from 'moment';
-import { useRoute } from '@react-navigation/native';
-import { LeadListTypeState } from '@type/api/lead';
+} from "@utils/formValidators";
+import React, { useEffect, useState } from "react";
+import { Field, useFormState } from "react-final-form";
+import { useTranslation } from "react-i18next";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { IconDataType, LeadDetailsFormProps } from "./LeadDetailsForm.props";
+import { FieldDropDownContainer, FormsView } from "./LeadDetailsForm.styles";
+import View from "@atoms/View/View";
+import { dropdownData } from "@constants/dummyData";
+import { RootState, useAppDispatch, useSelector } from "@redux/store";
+import FieldDatePicker from "@molecules/FieldDatePicker/FieldDatePicker";
+import moment from "moment";
+import { useRoute } from "@react-navigation/native";
+import { LeadListTypeState } from "@type/api/lead";
 import {
   ButtonSubmit,
   ContainerView,
   FormButtonText,
   SubContainerView,
-} from '@organisms/CompanyInformationForm/CompanyInformationForm.styles';
-import { addLeadInformation } from '@redux/slices/leads';
-import { userRole } from '@type/api/auth';
-import { isNative } from '@constants/platform';
-import { useAppTheme } from '@constants/theme';
-import { LeadStageType } from '@organisms/LeadDetailCard/LeadDetailCard.props';
-import { getProductServiceListAction } from '@redux/actions/productService';
+} from "@organisms/CompanyInformationForm/CompanyInformationForm.styles";
+import { addLeadInformation } from "@redux/slices/leads";
+import { userRole } from "@type/api/auth";
+import { isNative } from "@constants/platform";
+import { useAppTheme } from "@constants/theme";
+import { LeadStageType } from "@organisms/LeadDetailCard/LeadDetailCard.props";
+import { getProductServiceListAction } from "@redux/actions/productService";
+import DropDown from "@molecules/DropDown/DropDown";
 
 const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   form,
@@ -47,35 +47,39 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   setSelectedStage,
   setSelectedService,
   selectedService,
+  assignTo,
+  setAssignTo,
 }) => {
-  const { t } = useTranslation('leadDetails');
-  const { t: tb } = useTranslation('formButtonName');
-  const { t: tl } = useTranslation('leadDetailList');
+  const { t } = useTranslation("leadDetails");
+  const { t: tb } = useTranslation("formButtonName");
+  const { t: tl } = useTranslation("leadDetailList");
   const route = useRoute();
   const { values, valid } = useFormState();
   const { colors } = useAppTheme();
   const dispatch = useAppDispatch();
   const addLeadFormData = useSelector(
-    (state: RootState) => state.leads.addLead,
+    (state: RootState) => state.leads.addLead
   );
   const general = useSelector((state: RootState) => state.general);
   const servicesData = useSelector(
-    (state: RootState) => state.productService.productServiceList?.serviceList,
+    (state: RootState) => state.productService.productServiceList?.serviceList
   );
   const productServiceListData = useSelector(
-    (state: RootState) => state.productService.productServiceList,
+    (state: RootState) => state.productService.productServiceList
   );
   const leadsData = useSelector(
-    (state: RootState) => state.leads.leadList?.leads,
+    (state: RootState) => state.leads.leadList?.leads
   );
   const leadsDetail = useSelector(
-    (state: RootState) => state.leads.leadsDetail,
+    (state: RootState) => state.leads.leadsDetail
   );
   const [id] = useState(route?.params?.slug);
   const [selectedData, setSelectedData] = useState<LeadListTypeState>(
-    leadsData?.[0],
+    leadsData?.[0]
   );
-
+  const leadAssignToData = useSelector(
+    (state: RootState) => state.user.assignUserList
+  );
   const handleGetMoreServices = async () => {
     if (
       productServiceListData?.currentPage !== productServiceListData?.lastPage
@@ -84,7 +88,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         await dispatch(
           getProductServiceListAction({
             page: productServiceListData?.currentPage + 1,
-          }),
+          })
         ).unwrap();
       } catch (error: any) {
         console.log(error);
@@ -113,63 +117,64 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         dealAmount: values.dealAmount,
         winCloseReason: values.winCloseReason,
         dealCloseDate: values?.dealCloseDate
-          ? moment(values.dealCloseDate).format('YYYY-MM-DD')
-          : '',
+          ? moment(values.dealCloseDate).format("YYYY-MM-DD")
+          : "",
         comments: values.comments,
-      }),
+      })
     );
   }, [values, selectedService, selectedChannel, selectedLead, selectedStage]);
 
   useEffect(() => {
     setSelectedChannel(
-      id ? leadsDetail?.leadChannelId : addLeadFormData?.selectedChannel,
+      id ? leadsDetail?.leadChannelId : addLeadFormData?.selectedChannel
     );
     setSelectedLead(
-      id ? leadsDetail?.leadStatusId : addLeadFormData?.selectedLead,
+      id ? leadsDetail?.leadStatusId : addLeadFormData?.selectedLead
     );
     setSelectedStage(
-      id ? leadsDetail?.leadConversionId : addLeadFormData?.selectedStage,
+      id ? leadsDetail?.leadConversionId : addLeadFormData?.selectedStage
     );
     setSelectedService(
       id
         ? leadsDetail?.productService?.map((item) => item?.id)
-        : addLeadFormData?.selectedServices,
+        : addLeadFormData?.selectedServices
     );
+    setAssignTo(id ? leadsDetail?.assignTo : addLeadFormData?.assignTo);
     setSourceValue(addLeadFormData?.source || dropdownData?.[0]?.id);
     console.log(
       leadsDetail?.budget,
-      'leadsDetail?.budget',
-      typeof leadsDetail?.budget,
+      "leadsDetail?.budget",
+      typeof leadsDetail?.budget
     );
 
     form.change(
-      'budget',
-      id ? `${leadsDetail?.budget || ''}` : `${addLeadFormData?.budget || ''}`,
+      "budget",
+      id ? `${leadsDetail?.budget || ""}` : `${addLeadFormData?.budget || ""}`
     );
     form.change(
-      'comments',
-      id ? leadsDetail?.description : addLeadFormData?.comments,
+      "comments",
+      id ? leadsDetail?.description : addLeadFormData?.comments
     );
 
     form.change(
-      'timeFrame',
-      id ? leadsDetail?.timeLine : addLeadFormData?.timeFrame,
+      "timeFrame",
+      id ? leadsDetail?.timeLine : addLeadFormData?.timeFrame
     );
     form.change(
-      'winCloseReason',
+      "winCloseReason",
       id
-        ? leadsDetail?.winCloseReason || ''
-        : addLeadFormData?.winCloseReason || '',
+        ? leadsDetail?.winCloseReason || ""
+        : addLeadFormData?.winCloseReason || ""
     );
     form.change(
-      'dealAmount',
+      "dealAmount",
       id
-        ? `${leadsDetail?.dealAmount || ''}`
-        : `${addLeadFormData?.dealAmount || ''}`,
+        ? `${leadsDetail?.dealAmount || ""}`
+        : `${addLeadFormData?.dealAmount || ""}`
     );
     form.change(
-      'dealCloseDate',
-      id ? leadsDetail?.dealCloseDate : addLeadFormData?.dealCloseDate,
+      "dealCloseDate",
+      id ? leadsDetail?.dealCloseDate : addLeadFormData?.dealCloseDate
     );
   }, [id]);
   const handleRemoveIcon = (item: IconDataType) => {
@@ -183,101 +188,131 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always">
         <View>
-          <Label>{t('sourceLabel')}</Label>
-          <FieldDropDownContainer isError={false}>
-            <DropDown
-              data={servicesData?.map((item: any) => {
-                return {
-                  value: item?.id,
-                  label: item?.name,
-                };
-              })}
-              value={selectedService || []}
-              onChange={(item: number[]) => {
-                setSelectedService(item);
-              }}
-              showsVerticalScrollIndicator={false}
-              isMultiple
-              handleRemoveIconPress={(item: IconDataType) =>
-                handleRemoveIcon(item)
+          <Label>{t("sourceLabel")}</Label>
+          <DropDown
+            data={servicesData?.map((item: any) => {
+              return {
+                id: item?.id,
+                title: item?.name,
+              };
+            })}
+            placeholder={t("sourceLabel")}
+            value={selectedService || []}
+            isMultiple
+            onChange={(item: number[]) => {
+              if (selectedService?.includes(item)) {
+                const updatedServices = selectedService.filter(
+                  (service) => service !== item
+                );
+                setSelectedService(updatedServices);
+              } else {
+                setSelectedService([...selectedService, item]);
               }
-            />
-          </FieldDropDownContainer>
-
+            }}
+            dropDownTitle={`${t("sourceLabel")} ${t("list")}`}
+          />
           <Spacer size={16} />
-          <Label>{`${tl('leadChannel')} *`}</Label>
-          <FieldDropDownContainer isError={false}>
-            <DropDown
-              data={general.leadChannelList?.map((item) => {
-                return {
-                  value: item.id,
-                  label: item?.name,
-                };
-              })}
-              placeholder={tl('leadChannel')}
-              value={selectedChannel}
-              onChange={(value: any) => {
-                setSelectedChannel(value.value);
-              }}
-              isStaff={!isAdmin && route?.params?.slug}
-            />
-          </FieldDropDownContainer>
+          <Label>{`${tl("leadChannel")} *`}</Label>
+          <DropDown
+            data={general.leadChannelList?.map((item) => {
+              return {
+                id: item.id,
+                title: item?.name,
+              };
+            })}
+            placeholder={tl("leadChannel")}
+            value={selectedChannel}
+            onChange={(value: any) => {
+              if (selectedChannel === value) {
+                setSelectedChannel();
+              } else {
+                setSelectedChannel(value);
+              }
+            }}
+            dropDownTitle={`${t("leadChannel")} ${t("list")}`}
+            isStaff={!isAdmin && route?.params?.slug}
+          />
           <Spacer size={16} />
-          <Label>{`${tl('leadStatus')} *`}</Label>
-          <FieldDropDownContainer isError={false}>
-            <DropDown
-              data={general.leadStatusList?.map((item) => {
-                return {
-                  value: item.id,
-                  label: item?.name,
-                };
-              })}
-              placeholder={tl('leadStatus')}
-              value={selectedLead}
-              onChange={(value: any) => {
-                setSelectedLead(value.value);
-              }}
-            />
-          </FieldDropDownContainer>
+          <Label>{`${tl("leadStatus")} *`}</Label>
+          <DropDown
+            data={general.leadStatusList?.map((item) => {
+              return {
+                id: item.id,
+                title: item?.name,
+              };
+            })}
+            placeholder={tl("leadStatus")}
+            value={selectedLead}
+            onChange={(value: any) => {
+              if (selectedStage === value) {
+                setSelectedStage();
+              } else {
+                setSelectedLead(value);
+              }
+            }}
+            dropDownTitle={`${t("leadStatus")} ${t("list")}`}
+          />
           <Spacer size={16} />
-          <Label>{`${tl('LeadStage')} *`}</Label>
-          <FieldDropDownContainer isError={false}>
-            <DropDown
-              data={general.leadConversionList?.map((item) => {
-                return {
-                  value: item.id,
-                  label: item?.name,
-                };
-              })}
-              placeholder={tl('LeadStage')}
-              value={selectedStage}
-              onChange={(value: any) => {
-                setSelectedStage(value.value);
-              }}
-            />
-          </FieldDropDownContainer>
+          <Label>{`${tl("LeadStage")} *`}</Label>
+          <DropDown
+            data={general.leadConversionList?.map((item) => {
+              return {
+                id: item.id,
+                title: item?.name,
+              };
+            })}
+            placeholder={tl("LeadStage")}
+            value={selectedStage}
+            onChange={(value: any) => {
+              if (selectedStage === value) {
+                setSelectedStage();
+              } else {
+                setSelectedStage(value);
+              }
+            }}
+            dropDownTitle={`${t("LeadStage")} ${t("list")}`}
+          />
           <Spacer size={16} />
-          <Label>{t('budgetLabel')}</Label>
+          <Label>{`${tl("assignTo")}`}</Label>
+          <DropDown
+            data={leadAssignToData}
+            placeholder={tl("assignTo")}
+            value={assignTo}
+            onChange={(value: any) => {
+              if (selectedStage === value) {
+                setAssignTo();
+              } else {
+                setAssignTo(value);
+              }
+            }}
+            dropDownTitle={`${t("assignTo")} ${t("list")}`}
+            dataToShow={leadAssignToData?.filter(
+              (item) => item.id !== assignTo
+            )}
+            isDataToShow
+          />
+          <Spacer size={16} />
+          <Label>{t("budgetLabel")}</Label>
           <Field
             name="budget"
-            placeholder={t('budgetLabelPlaceholder')}
+            placeholder={t("budgetLabelPlaceholder")}
             component={FieldTextInput}
             keyboardType="numeric"
             isFloatValue
             validate={composeValidators(numberAndFractionalNumberValidator)}
           />
           <Spacer size={16} />
-          <Label>{t('timeFrameToPurchaseLabel')}</Label>
+          <Label>{t("timeFrameToPurchaseLabel")}</Label>
           <Field
             name="timeFrame"
-            placeholder={t('timeFrameToPurchaseEg')}
+            placeholder={t("timeFrameToPurchaseEg")}
             component={FieldTextInput}
           />
           <Spacer size={16} />
-          <Label>{t('commentsLabel')}</Label>
+          <Label>{t("commentsLabel")}</Label>
           <Field
             name="comments"
-            placeholder={t('commentsLabel')}
+            placeholder={t("commentsLabel")}
             component={FieldTextInput}
             numberOfLines={5}
             style={{
@@ -291,24 +326,24 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
           {(selectedStage === LeadStageType.CLOSELOST ||
             selectedStage === LeadStageType.CLOSEWON) && (
             <>
-              <Label>{t('winCloseReason')}</Label>
+              <Label>{t("winCloseReason")}</Label>
               <Field
                 name="winCloseReason"
-                placeholder={t('winCloseReason')}
+                placeholder={t("winCloseReason")}
                 component={FieldTextInput}
               />
               <Spacer size={16} />
-              <Label>{t('dealCloseDate')}</Label>
+              <Label>{t("dealCloseDate")}</Label>
               <Field
                 name="dealCloseDate"
                 component={FieldDatePicker}
                 initialDate={values?.dealCloseDate || moment().clone().toDate()}
               />
               <Spacer size={16} />
-              <Label>{t('dealAmount')}</Label>
+              <Label>{t("dealAmount")}</Label>
               <Field
                 name="dealAmount"
-                placeholder={t('dealAmount')}
+                placeholder={t("dealAmount")}
                 component={FieldTextInput}
                 keyboardType="numeric"
                 isFloatValue
@@ -322,7 +357,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       <ContainerView>
         <SubContainerView>
           <ButtonSubmit onPress={() => onBackClick?.()} valid={true}>
-            <FormButtonText valid={true}>{tb('previous')}</FormButtonText>
+            <FormButtonText valid={true}>{tb("previous")}</FormButtonText>
           </ButtonSubmit>
         </SubContainerView>
         <SubContainerView>
@@ -351,7 +386,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 selectedLead &&
                 selectedStage
               }>
-              {id ? tb('save') : tb('next')}
+              {id ? tb("save") : tb("next")}
             </FormButtonText>
           </ButtonSubmit>
         </SubContainerView>

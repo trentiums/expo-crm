@@ -1,4 +1,4 @@
-import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
+import { fileSystemProps } from "@organisms/BasicInformatioForm/BasicInformationForm.props";
 
 export interface SaveLeadParams {
   name: string;
@@ -87,6 +87,8 @@ export interface LeadListData {
   created_at: string;
   updated_at: string;
   documents: DocumentTye[];
+  assign_from_user_id?: number;
+  assign_to_user_id?: number;
 }
 
 export interface DocumentTye {
@@ -142,6 +144,7 @@ export interface LeadListState {
   updatedAt: string;
   webSite: string;
   documents: fileSystemProps[];
+  assignTo?: number;
 }
 
 export interface DeleteLeadParams {

@@ -157,6 +157,7 @@ const settings = () => {
         handleGetLeadsData={getLeadListData}
         setLeadId={setLeadId}
         leadId={leadId}
+        assignTo={item.assignTo}
       />
       <Spacer size={16} />
     </Pressable>

@@ -8,7 +8,7 @@ import { getLeadDetailsAction, updateLeadAction } from "@redux/actions/lead";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import FormTemplate from "@templates/FormTemplate/FormTemplate";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 
@@ -19,12 +19,13 @@ const LeadStageNegotiationScreen = () => {
   const countryList = useSelector(
     (state: RootState) => state.general.countryList
   );
+  const slug = useLocalSearchParams();
   const toast = useToast();
   const dispatch = useAppDispatch();
   const route = useRoute();
   const [loading, setLoading] = useState(false);
-  const leadConversionId = route?.params?.leadConversionId;
-  const leadId = route?.params?.leadId;
+  const leadConversionId = slug?.leadConversionId;
+  const leadId = +slug?.leadId;
   const handleGetLeadsDetails = async () => {
     await dispatch(getLeadDetailsAction({ lead_id: leadId }));
   };

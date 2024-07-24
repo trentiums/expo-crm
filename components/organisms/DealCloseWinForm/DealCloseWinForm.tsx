@@ -38,7 +38,6 @@ const DealCloseWinForm: React.FC<DealWinCloseFormProps> = ({
   const leadsData = useSelector(
     (state: RootState) => state.leads.leadList.leads
   );
-  console.log(leadCardId, "leadCardId");
   const data = leadsData?.filter((item) => item?.id === leadCardId);
   const { colors } = useAppTheme();
   useEffect(() => {

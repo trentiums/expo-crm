@@ -1,4 +1,4 @@
-import { FormRenderProps } from 'react-final-form';
+import { FormRenderProps } from "react-final-form";
 
 export type LeadDetailsFormValues = {
   product: string;
@@ -24,6 +24,8 @@ export type LeadDetailsFormProps = FormRenderProps<LeadDetailsFormValues> & {
   selectedStage: number;
   selectedService: number[];
   setSelectedService: (value: number[]) => void;
+  assignTo: number;
+  setAssignTo: (value: number) => void;
 };
 export interface IconDataType {
   value: number;

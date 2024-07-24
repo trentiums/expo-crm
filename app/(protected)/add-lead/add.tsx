@@ -30,7 +30,6 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { AddLeadContainer } from "../(drawer)/(tabs)/tabs.style";
-import Text from "@atoms/Text/Text";
 
 const AddLead = () => {
   const dispatch = useAppDispatch();
@@ -62,6 +61,7 @@ const AddLead = () => {
   const [selectedData, setSelectedData] = useState<LeadListState>(
     leadsData?.[0]
   );
+  const [assignTo, setAssignTo] = useState();
 
   useEffect(() => {
     setSelectedData(leadsDetail);
@@ -175,7 +175,9 @@ const AddLead = () => {
           ? values?.winCloseReason || ""
           : selectedData.winCloseReason || ""
       );
-
+      if (assignTo) {
+        formData.append("assign_to_user_id", assignTo);
+      }
       if (
         navigationType === AddLeadNavigationType.BASIC &&
         values.phoneNumber &&
@@ -420,6 +422,8 @@ const AddLead = () => {
             selectedStage={selectedStage}
             setSelectedService={setSelectedService}
             selectedService={selectedService}
+            setAssignTo={setAssignTo}
+            assignTo={assignTo}
           />
         );
       default:

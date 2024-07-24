@@ -22,6 +22,7 @@ export const formatLeadList = (data: LeadListData[]) => {
     countryId: item?.country_id,
     createdAt: item?.created_at,
     updatedAt: item?.updated_at,
+    assignTo: item.assign_to_user_id,
     productService: item.product_services.map((item) => ({
       id: item?.id,
       companyUserId: item?.company_user_id,
@@ -41,6 +42,7 @@ export const formatLeadList = (data: LeadListData[]) => {
   }));
 };
 export const formatLeadDetails = (item: LeadListData) => {
+  console.log(item.assign_from_user_id, "assignTo UserId");
   return {
     id: item?.id,
     companyUserId: item?.company_user_id,
@@ -62,6 +64,7 @@ export const formatLeadDetails = (item: LeadListData) => {
     countryId: item?.country_id,
     createdAt: item?.created_at,
     updatedAt: item?.updated_at,
+    assignTo: item?.assign_to_user_id,
     productService: item.product_services.map((item) => ({
       id: item?.id,
       companyUserId: item?.company_user_id,

@@ -21,14 +21,16 @@ import {
 import { getProductServiceListAction } from "@redux/actions/productService";
 import { router, useNavigation } from "expo-router";
 import { getLeadListAction } from "@redux/actions/lead";
-import { getUserListAction } from "@redux/actions/user";
+import {
+  getAssignUserListAction,
+  getUserListAction,
+} from "@redux/actions/user";
 
 const LoginScreen = () => {
   const { t } = useTranslation("login");
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const toast = useToast();
-  const navigation = useNavigation();
   const onLoginPress = async (values: LoginFormData) => {
     try {
       setLoading(true);
@@ -54,6 +56,7 @@ const LoginScreen = () => {
           dispatch(getProductServiceListAction({})),
           dispatch(getLeadListAction({})),
           dispatch(getUserListAction({})),
+          dispatch(getAssignUserListAction()),
         ]);
       }
       router.replace("/(protected)/(drawer)/(tabs)/dashboard");

@@ -59,6 +59,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
   handleGetLeadsData,
   setLeadId,
   leadId,
+  assignTo,
 }) => {
   const { t } = useTranslation("leadDetailCardDetails");
   const { colors } = useAppTheme();
@@ -112,7 +113,10 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
         leadStatusId: value,
       };
       value !== leadStatusId &&
-        router.navigate(`/(protected)/lead-status-change/${slug}`);
+        router.push({
+          pathname: `/lead-status-change/${slug}`,
+          params: slug,
+        });
     } else {
       const data = leadsData?.filter((item) => item?.id === leadId)?.[0];
       if (leadStatusId !== value) {
@@ -146,7 +150,10 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       value !== leadConversionId
     ) {
       const slug = { leadId: leadId, leadConversionId: value };
-      router.navigate(`/(protected)/lead-close-won/${slug}`);
+      router.push({
+        pathname: `/(protected)/lead-close-won/${slug}`,
+        params: slug,
+      });
     } else if (
       value === LeadStageType?.NEGOTIATION &&
       leadConversionId !== value
@@ -155,7 +162,10 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
         leadId: leadId,
         leadConversionId: value,
       };
-      router.navigate(`/(protected)/lead-negotiation/${slug}`);
+      router.push({
+        pathname: `/(protected)/lead-negotiation/${slug}`,
+        params: slug,
+      });
     } else {
       const data = leadsData?.filter((item) => item?.id === leadCardId)?.[0];
       if (leadConversionId !== value) {
@@ -245,7 +255,11 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       }
       if (documents?.length > 0) {
         documents.forEach((document, index) => {
-          formData.append(`documents[${index}]`, document);
+          formData.append(`documents[${index}]`, {
+            uri: document.uri,
+            name: document.name,
+            type: document.mimeType,
+          });
         });
       }
       const response = await dispatch(updateLeadAction(formData)).unwrap();
@@ -260,6 +274,76 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       await dispatch(
         getLeadDetailsAction({ lead_id: currentLeadId || leadId })
       );
+    } catch (error: any) {
+      toast.show(error, {
+        type: "customToast",
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
+    setLoading(false);
+    setModalType(initialModalType);
+    setModal(false);
+  };
+  const handleChangeAssignTo = async (leadId, value) => {
+    const data = leadsData?.filter((item) => item?.id === +leadId)?.[0];
+    const selectedDataServices = data.productService?.map((item) => item?.id);
+    try {
+      setLoading(true);
+      let formData = new FormData();
+      formData.append("lead_id", leadId);
+      if (data?.email) {
+        formData.append("email", data?.email);
+      }
+      formData.append(
+        "lead_channel_id",
+        leadChannelId || data?.leadChannelId || ""
+      );
+      formData.append("lead_conversion_id", data?.leadConversionId);
+      if (value) {
+        console.log(value, "value");
+        formData.append("assign_to_user_id", value);
+      }
+      formData.append("lead_status_id", data?.leadStatusId);
+      formData.append("name", data?.name);
+      selectedDataServices.forEach((service, index) => {
+        formData.append(`product_services[${index}]`, service);
+      });
+      formData.append("company_name", data?.companyName || "");
+      formData.append("budget", data?.budget || "");
+      if (data?.companySize) {
+        formData.append("company_size", data?.companySize);
+      }
+
+      formData.append("company_website", data?.webSite || "");
+      formData.append("time_line", data?.timeLine || "");
+      formData.append("description", data?.description || "");
+      if (data?.dealAmount) {
+        formData.append("deal_amount", data?.dealAmount);
+      }
+      if (data?.dealCloseDate) {
+        formData.append("deal_close_date", data?.dealCloseDate);
+      }
+      formData.append("win_close_reason", data?.winCloseReason || "");
+      const countryCodeAlpha = countryList?.filter(
+        (item) => item?.id === data?.countryId
+      )?.[0]?.countryCodeAlpha;
+      if (countryCodeAlpha && data?.phone) {
+        formData.append("country_code_alpha", countryCodeAlpha);
+        formData.append("phone", data?.phone);
+      }
+
+      const response = await dispatch(updateLeadAction(formData)).unwrap();
+      setDocuments([]);
+      toast.show(response?.message, {
+        type: "customToast",
+        data: {
+          type: ToastTypeProps.Success,
+        },
+      });
+
+      await dispatch(getLeadDetailsAction({ lead_id: leadId }));
     } catch (error: any) {
       toast.show(error, {
         type: "customToast",
@@ -314,6 +398,8 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
               handleChangeLeadStage(leadId, value)
             }
             leadCardId={leadCardId}
+            assignTo={assignTo}
+            setAssignTo={(leadId, value) => handleChangeAssignTo(leadId, value)}
           />
         </LeadDetailCardContainer>
       </Swipeable>

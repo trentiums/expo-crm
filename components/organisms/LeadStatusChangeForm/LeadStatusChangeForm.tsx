@@ -24,7 +24,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Field, useFormState } from "react-final-form";
 import FieldTextInput from "@molecules/FieldTextInput/FieldTextInput";
-import DocumentPicker from "expo-document-picker";
+import * as DocumentPicker from "expo-document-picker";
 import { Spacer } from "@atoms/common/common.styles";
 import { ButtonSubmit } from "@organisms/LoginForm/LoginForm.styles";
 import { LeadStatusChangeFormProps } from "./LeadStatusChangeForm.props";
@@ -83,7 +83,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
     name?: string;
     uri?: string;
   }>({});
-  const data = leadsData?.filter((item) => item?.id === leadCardId);
+  const data = leadsData?.filter((item) => item?.id === +leadCardId);
   const handleGetLeadsDetails = async () => {
     await dispatch(getLeadDetailsAction({ lead_id: leadCardId }));
   };
@@ -265,7 +265,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
             loading={deleteLoading}
           />
         )}
-        <StyledModal
+        {/* <StyledModal
           animationType="slide"
           transparent={true}
           onRequestClose={() => setShowModal(false)}
@@ -295,7 +295,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
               <PreviewImageView source={{ uri: ImageURI?.uri }} />
             )}
           </ModalView>
-        </StyledModal>
+        </StyledModal> */}
       </KeyboardAwareScrollView>
 
       <ContainerView>

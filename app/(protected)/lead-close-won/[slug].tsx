@@ -14,7 +14,7 @@ import { useToast } from "react-native-toast-notifications";
 const LeadStageCloseWonScreen = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
-  const params = useLocalSearchParams();
+  const slug = useLocalSearchParams();
 
   const leadsData = useSelector(
     (state: RootState) => state.leads.leadList.leads
@@ -23,8 +23,8 @@ const LeadStageCloseWonScreen = () => {
     (state: RootState) => state.general.countryList
   );
   const [loading, setLoading] = useState(false);
-  const leadConversionId = params?.leadConversionId;
-  const leadId = params?.leadId;
+  const leadConversionId = slug?.leadConversionId;
+  const leadId = +slug?.leadId;
   const handleGetLeadsDetails = async () => {
     await dispatch(getLeadDetailsAction({ lead_id: leadId }));
   };
@@ -109,7 +109,7 @@ const LeadStageCloseWonScreen = () => {
         Component={DealCloseWinForm}
         loading={loading}
         onSubmit={(values: DealWinCloseFormValues) => {
-          handleSaveLeadsStatusChange(values, leadId);
+          handleSaveLeadsStatusChange(values, +leadId);
         }}
         onCancelPress={() =>
           router.navigate("/(protected)/(drawer)/(tabs)/leads")

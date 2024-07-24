@@ -1,6 +1,6 @@
-import { GeneralList } from '@type/redux/slices/general';
-import { RefObject } from 'react';
-import { Swipeable } from 'react-native-gesture-handler';
+import { GeneralList } from "@type/redux/slices/general";
+import { RefObject } from "react";
+import { Swipeable } from "react-native-gesture-handler";
 
 export interface LeadDetailCardProps {
   id?: number;
@@ -33,6 +33,7 @@ export interface LeadDetailCardProps {
   handleGetLeadsData: () => void;
   setLeadId: (value: number) => void;
   leadId: number;
+  assignTo?: number;
 }
 export enum LeadStatusTypes {
   CONTACTED = 2,

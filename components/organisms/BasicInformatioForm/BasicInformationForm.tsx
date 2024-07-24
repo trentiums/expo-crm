@@ -49,7 +49,6 @@ import { useAppTheme } from "@constants/theme";
 import ActionModal from "@molecules/ActionModal/ActionModal";
 import { Actions } from "@molecules/ActionModal/ActionModal.props";
 import Document from "@atoms/Illustrations/Document";
-import ImageIcon from "@atoms/Illustrations/ImageIcone";
 import CrossIcon from "@atoms/Illustrations/Cross";
 import {
   FieldDropDownContainer,
@@ -58,7 +57,6 @@ import {
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import { PermissionsAndroid, Platform } from "react-native";
 import { PERMISSIONS, RESULTS, request } from "react-native-permissions";
-import DropDown from "@atoms/DropDown/DropDown";
 import { useRoute } from "@react-navigation/native";
 import { LeadListState } from "@type/api/lead";
 import { deleteLeadDocumentsAction } from "@redux/actions/lead";
@@ -69,6 +67,7 @@ import { SvgUri } from "react-native-svg";
 import { addLeadInformation } from "@redux/slices/leads";
 import { useLocalSearchParams } from "expo-router";
 import Text from "@atoms/Text/Text";
+import DropDown from "@molecules/DropDown/DropDown";
 
 const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   loading,
@@ -360,31 +359,22 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
         <Label>{t("phoneNumberLabel")}</Label>
         <PhoneNumberFieldView>
           <CountryCodeInput>
-            <FieldDropDownContainer isError={false}>
-              <DropDown
-                data={countryListData?.map((item) => ({
-                  label: item?.dialCode,
-                  value: item?.id,
-                  flag: item?.flag,
-                }))}
-                placeholder={t("selectCountry")}
-                value={selectedCountryCodeValue}
-                onChange={(value: { label: string | number }) => {
-                  if (selectedCountryCodeValue !== value?.value) {
-                    setSelectedCountryCodeValue(value?.value);
-                  } else {
-                    setSelectedCountryCodeValue("");
-                  }
-                }}
-                placeholderStyle={{
-                  fontSize: 16,
-                  color: colors.placeholderTextColor,
-                  paddingLeft: 8,
-                }}
-                renderItem={renderCountryDialCode}
-                renderLeftIcon={renderLeftIcon}
-              />
-            </FieldDropDownContainer>
+            <DropDown
+              data={countryListData?.map((item) => ({
+                title: item?.dialCode,
+                id: item?.id,
+                image: item?.flag,
+              }))}
+              placeholder={t("selectCountry")}
+              value={selectedCountryCodeValue}
+              onChange={(value: { label: string | number }) => {
+                if (selectedCountryCodeValue !== value) {
+                  setSelectedCountryCodeValue(value);
+                } else {
+                  setSelectedCountryCodeValue("");
+                }
+              }}
+            />
           </CountryCodeInput>
           <NumberInput>
             <Field

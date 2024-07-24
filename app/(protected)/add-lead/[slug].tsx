@@ -63,6 +63,7 @@ const AddLead = () => {
   const [selectedData, setSelectedData] = useState<LeadListState>(
     leadsData?.[0]
   );
+  const [assignTo, setAssignTo] = useState();
   const getLeadDetails = async () => {
     if (id) {
       setDetailLoading(true);
@@ -183,6 +184,9 @@ const AddLead = () => {
             : selectedData.dealAmount || ""
         );
       }
+      if (assignTo) {
+        formData.append("assign_to_user_id", assignTo);
+      }
       if (values?.dealCloseDate || selectedData?.dealCloseDate) {
         formData.append(
           "deal_close_date",
@@ -226,7 +230,11 @@ const AddLead = () => {
       const newDocumentsArray = documentArray?.filter((item) => !item.id);
       if (newDocumentsArray?.length > 0) {
         newDocumentsArray.forEach((document, index) => {
-          formData.append(`documents[${index}]`, document);
+          formData.append(`documents[${index}]`, {
+            uri: document.uri,
+            name: document.name,
+            type: document.mimeType,
+          });
         });
       }
       const response = await dispatch(updateLeadAction(formData)).unwrap();
@@ -333,6 +341,8 @@ const AddLead = () => {
             selectedStage={selectedStage}
             setSelectedService={setSelectedService}
             selectedService={selectedService}
+            setAssignTo={setAssignTo}
+            assignTo={assignTo}
           />
         );
       default:

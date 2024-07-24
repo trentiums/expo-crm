@@ -6,24 +6,25 @@ import { getLeadDetailsAction, updateLeadAction } from "@redux/actions/lead";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import FormTemplate from "@templates/FormTemplate/FormTemplate";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 
 const LeadStatusChangeScreen = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
-  const route = useRoute();
   const leadsData = useSelector(
     (state: RootState) => state.leads.leadList.leads
   );
   const countryList = useSelector(
     (state: RootState) => state.general.countryList
   );
+  const slug = useLocalSearchParams();
+
   const [loading, setLoading] = useState(false);
   const [documents, setDocuments] = useState([]);
-  const leadStatusId = route?.params?.leadStatusId;
-  const leadId = route?.params?.leadId;
+  const leadStatusId = slug?.leadStatusId;
+  const leadId = +slug?.leadId;
 
   const handleSaveLeadsStatusChange = async (
     values: any,
@@ -76,7 +77,11 @@ const LeadStatusChangeScreen = () => {
       const newDocumentsArray = documents?.filter((item) => !item.id);
       if (newDocumentsArray?.length > 0) {
         newDocumentsArray.forEach((document, index) => {
-          formData.append(`documents[${index}]`, document);
+          formData.append(`documents[${index}]`, {
+            uri: document.uri,
+            name: document.name,
+            type: document.mimeType,
+          });
         });
       }
       const response = await dispatch(updateLeadAction(formData)).unwrap();
@@ -107,7 +112,7 @@ const LeadStatusChangeScreen = () => {
         onSubmit={(values: LeadStatusChangeFormValues) => {
           handleSaveLeadsStatusChange(values, leadId);
         }}
-        leadCardId={leadId}
+        leadCardId={slug?.leadId}
         setDocuments={setDocuments}
         documents={documents}
         onCancelPress={() =>

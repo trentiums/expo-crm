@@ -1,4 +1,4 @@
-import { userRole } from './auth';
+import { userRole } from "./auth";
 
 export interface UserListParams {
   page?: number;
@@ -49,4 +49,18 @@ export interface UserDetailsResponse {
   status: boolean;
   data: User;
   message: string;
+}
+export interface AssignUserListResponse {
+  status: boolean;
+  message: string;
+  data: AssignUser[];
+}
+
+export interface AssignUser {
+  id: number;
+  name: string;
+}
+export interface AssignUserState {
+  id: number;
+  title: string;
 }
