@@ -29,7 +29,7 @@ import { router } from "expo-router";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
-import { AddLeadContainer } from "../(drawer)/(tabs)/tabs.style";
+import { AddLeadContainer } from "../(drawer)/tabs.style";
 
 const AddLead = () => {
   const dispatch = useAppDispatch();

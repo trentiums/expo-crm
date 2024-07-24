@@ -7,7 +7,7 @@ import React, { RefObject, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Swipeable } from "react-native-gesture-handler";
 import { useToast } from "react-native-toast-notifications";
-import { FlatListCon } from "./(drawer)/(tabs)/tabs.style";
+import { FlatListCon } from "./(drawer)/tabs.style";
 import { RefreshControl } from "react-native";
 import { UserDetailCardProps } from "@organisms/UserDetailCard/UserDetailCard.props";
 import UserDetailCard from "@organisms/UserDetailCard/UserDetailCard";

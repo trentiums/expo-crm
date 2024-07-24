@@ -17,7 +17,7 @@ import {
   LoaderView,
   NoDataFoundText,
   NoLeadsFoundContainer,
-} from "./tabs.style";
+} from "../tabs.style";
 import { ActivityIndicator } from "react-native-paper";
 import { PaddingSpace } from "@atoms/common/common.styles";
 import Loader from "@atoms/Loader/Loader";

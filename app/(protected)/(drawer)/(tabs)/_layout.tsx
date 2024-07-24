@@ -3,7 +3,7 @@ import { Tabs } from "expo-router";
 import Dashboard from "@atoms/Illustrations/Dashboard";
 import { useAppTheme } from "@constants/theme";
 import Leads from "@atoms/Illustrations/Leads";
-import { styles } from "./tabs.style";
+import { styles } from "../tabs.style";
 import { RootState, useSelector } from "@redux/store";
 import { userRole } from "@type/api/auth";
 import Users from "@atoms/Illustrations/Users";
