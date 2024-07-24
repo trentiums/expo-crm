@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "expoRouter",
-    "slug": "expoRouter",
-    "scheme": "expoRouter",
+    "name": "CRM",
+    "slug": "CRM",
+    "scheme": "CRM",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/App_icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
