@@ -57,7 +57,9 @@ const LeadStageNegotiationScreen = () => {
       if (data?.companySize) {
         formData.append("company_size", data?.companySize);
       }
-
+      if (data?.assignTo) {
+        formData.append("assign_to_user_id", data?.assignTo);
+      }
       formData.append("company_website", data?.webSite || "");
       formData.append("time_line", data?.timeLine || "");
       formData.append("description", values?.description || "");

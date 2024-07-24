@@ -28,9 +28,13 @@ const addProducts = () => {
     try {
       setLoading(true);
       let formData = new FormData();
+      if (params?.slug) {
+        formData.append(`product_service_id`, +params?.slug);
+      }
       formData.append("name", values?.name || "");
       formData.append("description", values?.description || "");
       console.log(documentArray, "documents array");
+
       if (documentArray?.uri) {
         formData.append("documents", {
           uri: documentArray.uri,
@@ -38,9 +42,7 @@ const addProducts = () => {
           type: documentArray.mimeType,
         });
       }
-      if (params?.slug) {
-        formData.append(`product_service_id`, +params?.slug);
-      }
+
       let response;
       if (params?.slug) {
         response = await dispatch(editProductServiceAction(formData)).unwrap();

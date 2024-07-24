@@ -253,6 +253,9 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
         formData.append("country_code_alpha", countryCodeAlpha);
         formData.append("phone", values?.phoneNumber || data?.phone);
       }
+      if (data?.assignTo) {
+        formData.append("assign_to_user_id", data?.assignTo);
+      }
       if (documents?.length > 0) {
         documents.forEach((document, index) => {
           formData.append(`documents[${index}]`, {
@@ -270,7 +273,6 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
           type: ToastTypeProps.Success,
         },
       });
-      console.log(currentLeadId, leadId, "currentLeadId", "leadId");
       await dispatch(
         getLeadDetailsAction({ lead_id: currentLeadId || leadId })
       );
@@ -302,7 +304,6 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       );
       formData.append("lead_conversion_id", data?.leadConversionId);
       if (value) {
-        console.log(value, "value");
         formData.append("assign_to_user_id", value);
       }
       formData.append("lead_status_id", data?.leadStatusId);

@@ -68,6 +68,9 @@ const LeadStageCloseWonScreen = () => {
           ? values?.description || ""
           : data.description || ""
       );
+      if (data?.assignTo) {
+        formData.append("assign_to_user_id", data?.assignTo);
+      }
       if (values?.dealAmount) {
         formData.append("deal_amount", values?.dealAmount);
       }

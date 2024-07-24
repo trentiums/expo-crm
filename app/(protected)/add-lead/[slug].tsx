@@ -184,8 +184,8 @@ const AddLead = () => {
             : selectedData.dealAmount || ""
         );
       }
-      if (assignTo) {
-        formData.append("assign_to_user_id", assignTo);
+      if (assignTo || selectedData.assignTo) {
+        formData.append("assign_to_user_id", selectedData.assignTo || assignTo);
       }
       if (values?.dealCloseDate || selectedData?.dealCloseDate) {
         formData.append(

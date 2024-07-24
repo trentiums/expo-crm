@@ -1,4 +1,5 @@
 import { PaddingSpace, Spacer } from "@atoms/common/common.styles";
+import { ToastTypeProps } from "@molecules/Toast/Toast.props";
 import UserInformationForm from "@organisms/UserInformationForm/UserInformationForm";
 import { UserInformationFormValues } from "@organisms/UserInformationForm/UserInformationForm.props";
 import {
