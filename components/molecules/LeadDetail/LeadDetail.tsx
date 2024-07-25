@@ -9,6 +9,7 @@ import {
   NumberView,
   PressAbleContainer,
   SubNameText,
+  SubNumberText,
   TextView,
   TitleView,
   WhatsAppIcon,
@@ -86,7 +87,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
                   <PhoneIcon />
                 </View>
                 <TextView isFull={!mailID}>
-                  <SubNameText numberOfLines={1}>{phoneNumber}</SubNameText>
+                  <SubNumberText numberOfLines={1}>{phoneNumber}</SubNumberText>
                 </TextView>
               </PressAbleContainer>
               <Spacer size={8} />

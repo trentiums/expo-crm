@@ -32,6 +32,7 @@ const DropDown: React.FC<DropDownProps> = ({
   dropDownTitle,
   dataToShow,
   isDataToShow,
+  isLeadChange,
 }) => {
   const { colors } = useAppTheme();
   const { top } = useSafeAreaInsets();
@@ -70,7 +71,9 @@ const DropDown: React.FC<DropDownProps> = ({
   return (
     <>
       <DropDownContainer>
-        <PressableView onPress={() => setShowBottomSheet(true)}>
+        <PressableView
+          onPress={() => setShowBottomSheet(true)}
+          isLeadChange={isLeadChange}>
           <DropdownLeftView
             isImage={data?.filter((item) => item.id === value)[0]?.image}>
             {

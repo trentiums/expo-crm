@@ -55,6 +55,7 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
             }}
             isStaff={!isAdmin}
             dropDownTitle={`${t("leadChannel")} ${t("list")}`}
+            isLeadChange
           />
         </LeadSelectSubContainer>
         <LeadSelectSubContainer>
@@ -68,6 +69,7 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
               setSelectedLead(leadCardId, value);
             }}
             dropDownTitle={`${t("leadStatus")} ${t("list")}`}
+            isLeadChange
           />
         </LeadSelectSubContainer>
       </LeadSelectContainer>
@@ -82,6 +84,7 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
               setSelectedStage(leadCardId, value);
             }}
             dropDownTitle={`${t("LeadStage")} ${t("list")}`}
+            isLeadChange
           />
         </LeadSelectSubContainer>
         <LeadSelectSubContainer>
@@ -102,6 +105,7 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
               (item) => item.id !== assignTo
             )}
             isDataToShow
+            isLeadChange
           />
         </LeadSelectSubContainer>
       </LeadSelectContainer>

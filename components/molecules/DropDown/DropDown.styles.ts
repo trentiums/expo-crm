@@ -28,14 +28,17 @@ export const DropdownLeftView = styled(View)<{ isImage?: boolean }>`
   align-items: center;
   gap: 8px;
 `;
-export const PressableView = styled(Pressable)`
+export const PressableView = styled(Pressable)<{ isLeadChange?: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.transparent};
   border-width: 1px;
   border-color: ${({ theme }) => theme.colors.disabledTextColor};
-  padding: 14px 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: ${({ isLeadChange }) => (isLeadChange ? 4 : 14)}px;
+  padding-bottom: ${({ isLeadChange }) => (isLeadChange ? 4 : 14)}px;
   border-radius: 4px;
 `;
 export const SelectedText = styled(Text)`

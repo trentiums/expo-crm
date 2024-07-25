@@ -16,7 +16,6 @@ export const NameContainer = styled(View)`
   display: flex;
   flex-direction: row;
   flex: 1;
-  align-items: center;
   padding: 0px 8px;
   justify-content: space-between;
 `;
@@ -39,7 +38,9 @@ export const NumberEmailView = styled(View)<{ isFull?: boolean }>`
   justify-content: space-between;
 `;
 
-export const NumberView = styled(View)<{ isFullNumber?: boolean }>``;
+export const NumberView = styled(View)<{ isFullNumber?: boolean }>`
+  margin-right: auto;
+`;
 
 export const EmailView = styled(View)<{ isFullEmail?: boolean }>``;
 
@@ -72,4 +73,9 @@ export const DateTimeText = styled(Text)`
 `;
 export const WhatsAppIcon = styled(Pressable)`
   padding: 4px;
+`;
+export const SubNumberText = styled(Text)`
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 14px;
+  text-align: start;
 `;

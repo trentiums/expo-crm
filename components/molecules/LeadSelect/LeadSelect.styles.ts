@@ -3,13 +3,14 @@ import View from "@atoms/View/View";
 import styled from "styled-components";
 
 export const LeadSelectView = styled(View)`
-  margin-top: -16px;
+  margin-top: -8px;
 `;
 
 export const LeadSelectContainer = styled(View)`
   display: flex;
   gap: 8px;
   flex-direction: row;
+  padding: 0px 6px;
 `;
 
 export const SelectTitleText = styled(Text)<{ isStart?: boolean }>`
@@ -20,8 +21,7 @@ export const SelectTitleText = styled(Text)<{ isStart?: boolean }>`
 `;
 
 export const LeadSelectSubContainer = styled(View)`
-  margin-top: 16px;
-  width: 50%;
+  width: 49%;
 `;
 
 export const SwipeText = styled(Text)`
