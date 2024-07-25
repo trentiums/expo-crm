@@ -9,6 +9,7 @@ export const DrawerNavigationView = styled(View)`
   justify-content: space-between;
   padding-bottom: 16px;
   align-items: start;
+  flex: 1;
 `;
 
 export const UserInfoSection = styled(View)`
@@ -16,7 +17,6 @@ export const UserInfoSection = styled(View)`
   padding: 8px;
   align-items: center;
   border-radius: 8px;
-  flex: 1;
 `;
 
 export const UserImage = styled(Image)`
@@ -42,7 +42,6 @@ export const DrawerBottomSection = styled(View)`
   align-items: center;
   justify-content: center;
   padding: 8px;
-  flex: 1;
 `;
 
 export const LogoutText = styled(Text)`

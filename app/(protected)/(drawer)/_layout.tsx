@@ -18,15 +18,14 @@ import { Linking, Pressable } from "react-native";
 import {
   CompanyText,
   DrawerBottomSection,
-  DrawerItemSection,
   DrawerNavigationView,
   LogoutText,
-  UserImage,
   UserInfoSection,
   UserName,
 } from "./drawer.style";
 import Users from "@atoms/Illustrations/Users";
 import { userRole } from "@type/api/auth";
+import View from "@atoms/View/View";
 
 const DrawerLayout = () => {
   const { colors } = useAppTheme();
@@ -36,8 +35,6 @@ const DrawerLayout = () => {
   const router = useRouter();
   const userData = {
     name: user.name,
-    image:
-      "https://media.istockphoto.com/id/587805156/vector/profile-picture-vector-illustration.jpg?s=2048x2048&w=is&k=20&c=QjqBIsnahW5txrKJeIqLq53-b1PeYuSlG-zTAD1xsu4=",
   };
 
   return (
@@ -45,40 +42,56 @@ const DrawerLayout = () => {
       <Drawer
         initialRouteName="dashboard"
         drawerContent={(props) => (
-          <DrawerContentScrollView {...props}>
+          <DrawerContentScrollView
+            {...props}
+            contentContainerStyle={{ flex: 1 }}>
             <DrawerNavigationView>
-              <UserInfoSection>
-                <UserName>{userData.name}</UserName>
-              </UserInfoSection>
-              <DrawerItem
-                label="Dashboard"
-                onPress={() => {
-                  router.navigate("(tabs)/dashboard");
-                }}
-                labelStyle={{ color: colors.white }}
-                icon={() => <Dashboard color={colors.white} />}
-                style={{
-                  borderColor: colors.gray,
-                  borderBottomWidth: 1,
-                }}
-              />
-              <DrawerItem
-                label="Leads"
-                onPress={() => {
-                  router.navigate("(tabs)/leads");
-                }}
-                labelStyle={{ color: colors.white }}
-                icon={() => <Leads color={colors.white} />}
-                style={{
-                  borderColor: colors.gray,
-                  borderBottomWidth: 1,
-                }}
-              />
-              {user.userRole !== userRole.CompanyStaff && (
+              <View>
+                <UserInfoSection>
+                  <UserName>{userData.name}</UserName>
+                </UserInfoSection>
                 <DrawerItem
-                  label="Users"
+                  label="Dashboard"
                   onPress={() => {
-                    router.navigate("(tabs)/users");
+                    router.navigate("(tabs)/dashboard");
+                  }}
+                  labelStyle={{ color: colors.white }}
+                  icon={() => <Dashboard color={colors.white} />}
+                  style={{
+                    borderColor: colors.gray,
+                    borderBottomWidth: 1,
+                  }}
+                />
+                <DrawerItem
+                  label="Leads"
+                  onPress={() => {
+                    router.navigate("(tabs)/leads");
+                  }}
+                  labelStyle={{ color: colors.white }}
+                  icon={() => <Leads color={colors.white} />}
+                  style={{
+                    borderColor: colors.gray,
+                    borderBottomWidth: 1,
+                  }}
+                />
+                {user.userRole !== userRole.CompanyStaff && (
+                  <DrawerItem
+                    label="Users"
+                    onPress={() => {
+                      router.navigate("(tabs)/users");
+                    }}
+                    labelStyle={{ color: colors.white }}
+                    icon={() => <Users color={colors.white} />}
+                    style={{
+                      borderColor: colors.gray,
+                      borderBottomWidth: 1,
+                    }}
+                  />
+                )}
+                <DrawerItem
+                  label={t("products")}
+                  onPress={() => {
+                    router.navigate("/products");
                   }}
                   labelStyle={{ color: colors.white }}
                   icon={() => <Users color={colors.white} />}
@@ -87,19 +100,7 @@ const DrawerLayout = () => {
                     borderBottomWidth: 1,
                   }}
                 />
-              )}
-              <DrawerItem
-                label="Products"
-                onPress={() => {
-                  router.navigate("/products");
-                }}
-                labelStyle={{ color: colors.white }}
-                icon={() => <Users color={colors.white} />}
-                style={{
-                  borderColor: colors.gray,
-                  borderBottomWidth: 1,
-                }}
-              />
+              </View>
               <DrawerBottomSection>
                 <Pressable
                   onPress={async () => {
