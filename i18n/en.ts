@@ -94,6 +94,9 @@ const English = {
     selectAnOption: "Select an option",
     list: "List",
     assignTo: "Assign To",
+    channel: "Channel",
+    status: "Status",
+    stage: "Stage",
   },
   errorMessage: {
     failedOpenURL: "Failed to open URL:",

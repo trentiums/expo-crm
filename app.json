@@ -18,13 +18,13 @@
     "android": {
       "jsEngine": "hermes",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/App_icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.expoRouter"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/images/App_icon.png"
     },
     "plugins": [
       [

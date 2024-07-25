@@ -3,6 +3,7 @@ import {
   DateTimeText,
   DetailContainer,
   EmailView,
+  LeadInfoView,
   NameContainer,
   NameText,
   NumberEmailView,
@@ -58,13 +59,11 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
 
   return (
     <DetailContainer>
-      <NameContainer>
-        <TitleView>
-          <View>
-            <NameText numberOfLines={1}>{title}</NameText>
-            <DateTimeText>{dateTime}</DateTimeText>
-          </View>
-        </TitleView>
+      <LeadInfoView>
+        <View>
+          <NameText numberOfLines={1}>{title}</NameText>
+          <DateTimeText>{dateTime}</DateTimeText>
+        </View>
         <WhatsAppIconView isShow={whatsAppNumber}>
           {whatsAppNumber && (
             <WhatsAppIcon
@@ -75,6 +74,8 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
             </WhatsAppIcon>
           )}
         </WhatsAppIconView>
+      </LeadInfoView>
+      <NameContainer>
         <NumberEmailView isFull={!whatsAppNumber}>
           {phoneNumber && (
             <NumberView>

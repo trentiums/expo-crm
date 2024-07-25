@@ -45,7 +45,7 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
     <>
       <LeadSelectContainer>
         <LeadSelectSubContainer>
-          <SelectTitleText>{t("leadChannel")}</SelectTitleText>
+          <SelectTitleText>{t("channel")}</SelectTitleText>
           <DropDown
             data={channelListData}
             placeholder={t("leadChannel")}
@@ -59,7 +59,7 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
           />
         </LeadSelectSubContainer>
         <LeadSelectSubContainer>
-          <SelectTitleText>{t("leadStatus")}</SelectTitleText>
+          <SelectTitleText>{t("status")}</SelectTitleText>
 
           <DropDown
             data={leadListData}
@@ -75,7 +75,7 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
       </LeadSelectContainer>
       <LeadSelectContainer>
         <LeadSelectSubContainer>
-          <SelectTitleText>{t("LeadStage")}</SelectTitleText>
+          <SelectTitleText>{t("stage")}</SelectTitleText>
           <DropDown
             data={StageListData}
             placeholder={t("LeadStage")}

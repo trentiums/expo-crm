@@ -5,11 +5,18 @@ import styled from "styled-components";
 
 export const DetailContainer = styled(View)`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-content: flex-start;
   gap: 8px;
   width: 100%;
+`;
+
+export const LeadInfoView = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 8px;
 `;
 
 export const NameContainer = styled(View)`
@@ -26,14 +33,12 @@ export const TitleView = styled(View)`
   width: 40%;
 `;
 
-export const WhatsAppIconView = styled(View)<{ isShow?: boolean }>`
-  width: ${({ isShow }) => (isShow ? 20 : 0)}%;
-`;
+export const WhatsAppIconView = styled(View)<{ isShow?: boolean }>``;
 
 export const NumberEmailView = styled(View)<{ isFull?: boolean }>`
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex: 1;
   justify-content: space-between;
 `;
@@ -50,7 +55,6 @@ export const NameText = styled(Text)`
   color: ${({ theme }) => theme.colors.white};
   font-size: 20px;
   font-weight: 700;
-  padding-bottom: 12px;
 `;
 
 export const SubNameText = styled(Text)`

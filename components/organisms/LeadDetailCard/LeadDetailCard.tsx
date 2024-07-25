@@ -392,9 +392,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
             title={title}
             dateTime={dateTime}
           />
-          <Spacer size={8} />
           <LeadDetailsList LeadDetails={LeadDetails} />
-
           <LeadSelectView>
             <LeadSelect
               channelList={channelList}
