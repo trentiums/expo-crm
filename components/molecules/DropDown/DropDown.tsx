@@ -5,6 +5,7 @@ import {
   DropDownDataContainer,
   DropDownDataView,
   DropdownLeftView,
+  DropDownSelectedView,
   DropDownTitleText,
   ImageView,
   MultipleSelectedText,
@@ -82,7 +83,7 @@ const DropDown: React.FC<DropDownProps> = ({
                 contentFit="cover"
               />
             }
-            <View>
+            <DropDownSelectedView>
               {isMultiple && Array.isArray(value) ? (
                 <FlatList
                   data={value}
@@ -95,7 +96,7 @@ const DropDown: React.FC<DropDownProps> = ({
               ) : (
                 <>
                   {data?.filter((item) => item.id === value)?.[0]?.title ? (
-                    <SelectedText>
+                    <SelectedText numberOfLines={1}>
                       {data?.filter((item) => item.id === value)?.[0]?.title}
                     </SelectedText>
                   ) : (
@@ -103,7 +104,7 @@ const DropDown: React.FC<DropDownProps> = ({
                   )}
                 </>
               )}
-            </View>
+            </DropDownSelectedView>
           </DropdownLeftView>
           <ArrowDown />
         </PressableView>

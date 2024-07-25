@@ -44,6 +44,10 @@ export const PressableView = styled(Pressable)<{ isLeadChange?: boolean }>`
 export const SelectedText = styled(Text)`
   font-size: 16px;
 `;
+
+export const DropDownSelectedView = styled(View)`
+  width: 75%;
+`;
 export const DropDownDataView = styled(Pressable)`
   display: flex;
   flex-direction: row;
