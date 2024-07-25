@@ -4,35 +4,24 @@ import { AddProductFormValues } from "@organisms/AddProductForm/AddProductForm.p
 import { fileSystemProps } from "@organisms/BasicInformatioForm/BasicInformationForm.props";
 import {
   addProductServiceAction,
-  editProductServiceAction,
-  getProductServiceDetailAction,
   getProductServiceListAction,
 } from "@redux/actions/productService";
 import { useAppDispatch } from "@redux/store";
 import FormTemplate from "@templates/FormTemplate/FormTemplate";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Platform } from "react-native";
 import { useToast } from "react-native-toast-notifications";
 import { AddProductContainer } from "../(drawer)/drawer.style";
+import { useTranslation } from "react-i18next";
 
 const addProducts = () => {
   const dispatch = useAppDispatch();
   const toast = useToast();
+  const navigation = useNavigation();
+  const { t } = useTranslation("screenTitle");
   const [loading, setLoading] = useState(false);
   const [documentArray, setDocumentArray] = useState<fileSystemProps>();
-
-  useEffect(() => {
-    if (Platform.OS === "android") {
-      const backAction = () => {
-        router.navigate("/products");
-        return true;
-      };
-
-      backAction();
-    }
-  }, []);
 
   const handleAddServices = async (values: AddProductFormValues) => {
     try {
@@ -45,7 +34,7 @@ const addProducts = () => {
         formData.append("documents", {
           uri: documentArray.uri,
           name: documentArray.name,
-          type: documentArray.mimeType,
+          type: documentArray.mimeType || documentArray.type,
         });
       }
 
@@ -73,7 +62,9 @@ const addProducts = () => {
     }
     setLoading(false);
   };
-
+  useEffect(() => {
+    navigation.setOptions({ title: t("addProduct") });
+  }, [navigation]);
   return (
     <ScreenTemplate>
       <AddProductContainer>

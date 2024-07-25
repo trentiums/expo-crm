@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import {
   Container,
   FlatListContainer,
   Flexed,
   ListContainer,
   ShowLeadText,
-} from './LeadDetailsList.styles';
-import { LeadDetailsListProps } from './LeadDetailsList.props';
+} from "./LeadDetailsList.styles";
+import { LeadDetailsListProps } from "./LeadDetailsList.props";
 
 const LeadDetailsList: React.FC<LeadDetailsListProps> = ({ LeadDetails }) => {
   return (

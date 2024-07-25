@@ -2,8 +2,8 @@ import Loader from "@atoms/Loader/Loader";
 import { useAppTheme } from "@constants/theme";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { router, useLocalSearchParams } from "expo-router";
-import React, { RefObject, useState } from "react";
+import { router, useNavigation } from "expo-router";
+import React, { RefObject, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Swipeable } from "react-native-gesture-handler";
 import { useToast } from "react-native-toast-notifications";
@@ -23,9 +23,10 @@ import { ProductCardView } from "./(drawer)/drawer.style";
 
 const products = () => {
   const { colors } = useAppTheme();
+  const { t: ts } = useTranslation("screenTitle");
   const toast = useToast();
+  const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  const params = useLocalSearchParams();
   const { t } = useTranslation("modalText");
   const products = useSelector(
     (state: RootState) => state.productService?.productServiceList
@@ -137,33 +138,33 @@ const products = () => {
     }
     setRefreshing(false);
   };
+  useEffect(() => {
+    navigation.setOptions({ title: ts("products") });
+  }, [navigation]);
   return (
     <ScreenTemplate
-      addButtonText="Products"
+      addButtonText={t("addProduct")}
       onAddButtonPress={() => router.navigate(`/add-product/add`)}>
-      <ScreenTemplate
-        addButtonText={t("addProduct")}
-        onAddButtonPress={() => console.log("hello")}>
-        {loading ? (
-          <Loader />
-        ) : (
-          <FlatListCon
-            data={products?.serviceList}
-            keyExtractor={(item, index) => `${item.id}-${index}`}
-            renderItem={RenderComponent}
-            showsVerticalScrollIndicator={false}
-            onEndReached={handleGetMoreProductsData}
-            ListFooterComponent={moreLoading ? <Loader size={24} /> : null}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={onRefreshProductServiceList}
-                colors={[colors.primaryColor]}
-              />
-            }
-          />
-        )}
-      </ScreenTemplate>
+      {loading ? (
+        <Loader />
+      ) : (
+        <FlatListCon
+          data={products?.serviceList}
+          keyExtractor={(item, index) => `${item.id}-${index}`}
+          renderItem={RenderComponent}
+          showsVerticalScrollIndicator={false}
+          onEndReached={handleGetMoreProductsData}
+          ListFooterComponent={moreLoading ? <Loader size={24} /> : null}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefreshProductServiceList}
+              colors={[colors.primaryColor]}
+            />
+          }
+        />
+      )}
+
       {showModal && (
         <ActionModal
           isModal={showModal}

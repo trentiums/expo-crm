@@ -8,13 +8,7 @@ import BasicInformationForm from "@organisms/BasicInformatioForm/BasicInformatio
 import { fileSystemProps } from "@organisms/BasicInformatioForm/BasicInformationForm.props";
 import CompanyInformationForm from "@organisms/CompanyInformationForm/CompanyInformationForm";
 import LeadDetailsForm from "@organisms/LeadDetailsForm/LeadDetailsForm";
-import {
-  getLeadDetailsAction,
-  getLeadListAction,
-  saveLeadAction,
-  updateLeadAction,
-} from "@redux/actions/lead";
-import { addLeadInformation, setLeadsInformation } from "@redux/slices/leads";
+import { getLeadDetailsAction, updateLeadAction } from "@redux/actions/lead";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import FormTemplate from "@templates/FormTemplate/FormTemplate";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
@@ -25,14 +19,21 @@ import {
   LeadInformationFromValuesType,
 } from "@type/api/auth";
 import { LeadListState } from "@type/api/lead";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { AddLeadContainer } from "../(drawer)/tabs.style";
+import { useTranslation } from "react-i18next";
+import {
+  dashboardLeadListAction,
+  dashboardLeadStageCountAction,
+} from "@redux/actions/dashboard";
 
 const AddLead = () => {
   const dispatch = useAppDispatch();
+  const navigation = useNavigation();
+  const { t } = useTranslation("screenTitle");
   const params = useLocalSearchParams();
   const [id] = useState(params.slug);
   const [selectedTabNav, setSelectedTabNav] = useState(
@@ -86,6 +87,15 @@ const AddLead = () => {
   useEffect(() => {
     getLeadDetails();
   }, [id]);
+  useEffect(() => {
+    navigation.setOptions({ title: t("editLead") });
+  }, [navigation]);
+  const handelFetchLead = async () => {
+    setLoading(true);
+    await dispatch(dashboardLeadListAction({}));
+    await dispatch(dashboardLeadStageCountAction());
+    setLoading(false);
+  };
   useEffect(() => {
     setSelectedData(leadsDetail);
   }, [leadsDetail]);
@@ -185,7 +195,7 @@ const AddLead = () => {
         );
       }
       if (assignTo || selectedData.assignTo) {
-        formData.append("assign_to_user_id", selectedData.assignTo || assignTo);
+        formData.append("assign_to_user_id", assignTo || selectedData.assignTo);
       }
       if (values?.dealCloseDate || selectedData?.dealCloseDate) {
         formData.append(
@@ -256,6 +266,7 @@ const AddLead = () => {
           router.navigate("/(drawer)/(tabs)/leads");
         }
       }
+      await handelFetchLead();
     } catch (error: any) {
       toast.show(error, {
         type: "customToast",

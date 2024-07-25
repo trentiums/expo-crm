@@ -1,70 +1,69 @@
-import Text from '@atoms/Text/Text';
-import View from '@atoms/View/View';
-import { Pressable } from 'react-native';
-import styled from 'styled-components';
+import Text from "@atoms/Text/Text";
+import View from "@atoms/View/View";
+import { Pressable } from "react-native";
+import styled from "styled-components";
 
 export const DetailContainer = styled(View)`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-content: flex-start;
   gap: 8px;
   width: 100%;
-  padding: 0px 8px;
 `;
 
 export const NameContainer = styled(View)`
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-direction: row;
   flex: 1;
+  align-items: center;
+  padding: 0px 8px;
+  justify-content: space-between;
 `;
 export const TitleView = styled(View)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  flex: 1;
+  width: 40%;
 `;
 
-export const NumberEmailView = styled(View)`
+export const WhatsAppIconView = styled(View)<{ isShow?: boolean }>`
+  width: ${({ isShow }) => (isShow ? 20 : 0)}%;
+`;
+
+export const NumberEmailView = styled(View)<{ isFull?: boolean }>`
   width: 100%;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   flex: 1;
   justify-content: space-between;
 `;
 
-export const NumberView = styled(View)<{ isFullNumber?: boolean }>`
-  flex: ${({ isFullNumber }) => (isFullNumber ? 0.4 : 0.3)};
-`;
+export const NumberView = styled(View)<{ isFullNumber?: boolean }>``;
 
-export const EmailView = styled(View)<{ isFullEmail?: boolean }>`
-  flex: ${({ isFullEmail }) => (isFullEmail ? 0.6 : 0.4)};
-`;
+export const EmailView = styled(View)<{ isFullEmail?: boolean }>``;
 
-export const TextView = styled(View)<{ isFull: boolean }>`
-  width: ${({ isFull }) => (isFull ? '100%' : '90%')};
-`;
+export const TextView = styled(View)<{ isFull: boolean }>``;
 
 export const NameText = styled(Text)`
   color: ${({ theme }) => theme.colors.white};
   font-size: 20px;
   font-weight: 700;
+  padding-bottom: 12px;
 `;
 
 export const SubNameText = styled(Text)`
   color: ${({ theme }) => theme.colors.white};
   font-size: 14px;
-  font-weight: 500;
+  text-align: end;
+  margin-left: auto;
 `;
 
 export const PressAbleContainer = styled(Pressable)`
   display: flex;
   flex-direction: row;
   gap: 8px;
-  width: 100%;
-  flex: 1;
+  justify-content: flex-end;
 `;
 
 export const DateTimeText = styled(Text)`

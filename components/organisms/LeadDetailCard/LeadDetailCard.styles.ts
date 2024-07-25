@@ -1,7 +1,7 @@
-import Text from '@atoms/Text/Text';
-import View from '@atoms/View/View';
-import { TouchableOpacity } from 'react-native';
-import styled from 'styled-components';
+import Text from "@atoms/Text/Text";
+import View from "@atoms/View/View";
+import { TouchableOpacity } from "react-native";
+import styled from "styled-components";
 
 export const LeadDetailCardContainer = styled(View)<{
   isActive?: boolean;

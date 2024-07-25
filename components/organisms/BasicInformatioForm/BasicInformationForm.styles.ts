@@ -1,10 +1,11 @@
-import Button from '@atoms/Button/Button';
-import Modal from '@atoms/Modal/Modal';
-import Text from '@atoms/Text/Text';
-import View from '@atoms/View/View';
-import { styled } from '@utils/styled';
-import { FlatList, Image, Pressable } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Button from "@atoms/Button/Button";
+import Modal from "@atoms/Modal/Modal";
+import Text from "@atoms/Text/Text";
+import View from "@atoms/View/View";
+import { styled } from "@utils/styled";
+import { Image } from "expo-image";
+import { FlatList, Pressable } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export const BasicInformationButtons = styled(View)`
   display: flex;
@@ -138,6 +139,10 @@ export const ModalView = styled(View)`
   align-items: center;
   padding: 16px;
   background-color: ${({ theme }) => theme.colors.backgroundCardColor};
+  margin-top: 48px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-color: ${({ theme }) => theme.colors.disabledTextColor};
 `;
 
 export const CloseButton = styled(Pressable)`

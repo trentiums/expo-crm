@@ -25,14 +25,21 @@ import {
   LeadInformationFromValuesType,
 } from "@type/api/auth";
 import { LeadListState } from "@type/api/lead";
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { AddLeadContainer } from "../(drawer)/tabs.style";
+import { useTranslation } from "react-i18next";
+import {
+  dashboardLeadListAction,
+  dashboardLeadStageCountAction,
+} from "@redux/actions/dashboard";
 
 const AddLead = () => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation("screenTitle");
+  const navigation = useNavigation();
   const [selectedTabNav, setSelectedTabNav] = useState(
     AddLeadTabBarData?.[0].title || ""
   );
@@ -66,182 +73,10 @@ const AddLead = () => {
   useEffect(() => {
     setSelectedData(leadsDetail);
   }, [leadsDetail]);
-  const commonUpdateLead = async (
-    values: any,
-    id: number,
-    navigationType: string
-  ) => {
-    const selectedDataServices = selectedData.productService?.map(
-      (item) => item.id
-    );
+  useEffect(() => {
+    navigation.setOptions({ title: t("addLead") });
+  }, [navigation]);
 
-    try {
-      setLoading(true);
-      let formData = new FormData();
-
-      if (values?.email) {
-        formData.append(
-          "email",
-          navigationType === AddLeadNavigationType.BASIC
-            ? values?.email
-            : selectedData?.email
-        );
-      }
-      formData.append(
-        "lead_channel_id",
-        selectedChannel || selectedData.leadChannelId
-      );
-      formData.append(
-        "lead_conversion_id",
-        selectedStage || selectedData.leadConversionId
-      );
-      formData.append(
-        "lead_status_id",
-        selectedLead || selectedData.leadStatusId
-      );
-      formData.append(
-        "name",
-        navigationType === AddLeadNavigationType.BASIC
-          ? values?.firstName
-          : selectedData.name
-      );
-      selectedService?.length > 0
-        ? selectedService.forEach((service, index) => {
-            formData.append(`product_services[${index}]`, service);
-          })
-        : selectedDataServices.forEach((service, index) => {
-            formData.append(`product_services[${index}]`, service);
-          });
-      formData.append(
-        "company_name",
-        navigationType === AddLeadNavigationType.COMPANY
-          ? values?.companyName || ""
-          : selectedData.companyName || ""
-      );
-      console.log(values.budget, selectedData.budget);
-      if (values?.budget || selectedData?.budget) {
-        formData.append(
-          "budget",
-          navigationType === AddLeadNavigationType.LEAD
-            ? values?.budget || ""
-            : selectedData?.budget || ""
-        );
-      }
-      if (values?.companySize || selectedData.companySize) {
-        formData.append(
-          "company_size",
-          navigationType === AddLeadNavigationType.COMPANY
-            ? values?.companySize
-            : selectedData.companySize
-        );
-      }
-      formData.append(
-        "company_website",
-        navigationType === AddLeadNavigationType.COMPANY
-          ? values?.webSite || ""
-          : selectedData.webSite || ""
-      );
-      formData.append(
-        "time_line",
-        navigationType === AddLeadNavigationType.LEAD
-          ? values?.timeFrame || ""
-          : selectedData.timeLine || ""
-      );
-      formData.append(
-        "description",
-        navigationType === AddLeadNavigationType.LEAD
-          ? values?.comments || ""
-          : selectedData.description || ""
-      );
-      if (values?.dealAmount || selectedData.dealAmount) {
-        formData.append(
-          "deal_amount",
-          navigationType === AddLeadNavigationType.LEAD
-            ? values?.dealAmount || ""
-            : selectedData.dealAmount || ""
-        );
-      }
-      if (values?.dealCloseDate || selectedData?.dealCloseDate) {
-        formData.append(
-          "deal_close_date",
-          navigationType === AddLeadNavigationType.LEAD
-            ? moment(values.dealCloseDate).format("YYYY-MM-DD")
-            : moment(selectedData?.dealCloseDate).format("YYYY-MM-DD")
-        );
-      }
-      formData.append(
-        "win_close_reason",
-        navigationType === AddLeadNavigationType.LEAD
-          ? values?.winCloseReason || ""
-          : selectedData.winCloseReason || ""
-      );
-      if (assignTo) {
-        formData.append("assign_to_user_id", assignTo);
-      }
-      if (
-        navigationType === AddLeadNavigationType.BASIC &&
-        values.phoneNumber &&
-        selectedCountryCodeValue
-      ) {
-        formData.append("phone", values?.phoneNumber);
-        formData.append(
-          "country_code_alpha",
-          countryList?.filter(
-            (item) => item?.id === selectedCountryCodeValue
-          )?.[0]?.countryCodeAlpha
-        );
-      } else if (
-        selectedCountryCodeValue &&
-        navigationType !== AddLeadNavigationType.BASIC &&
-        selectedData.phone
-      ) {
-        formData.append("phone", selectedData.phone);
-        formData.append(
-          "country_code_alpha",
-          countryList?.filter(
-            (item) => item?.id === selectedCountryCodeValue
-          )?.[0]?.countryCodeAlpha
-        );
-      }
-      const newDocumentsArray = documentArray?.filter((item) => !item.id);
-      if (newDocumentsArray?.length > 0) {
-        newDocumentsArray.forEach((document, index) => {
-          formData.append(`documents[${index}]`, {
-            uri: document.uri,
-            name: document.name,
-            type: document.mimeType,
-          });
-        });
-      }
-      const response = await dispatch(updateLeadAction(formData)).unwrap();
-      await dispatch(getLeadDetailsAction({ lead_id: id })).unwrap();
-      toast.show(response?.message, {
-        type: "customToast",
-        data: {
-          type: ToastTypeProps.Success,
-        },
-      });
-      if (id) {
-        router.back();
-      } else {
-        if (navigationType === AddLeadTabBarData?.[0].title) {
-          setSelectedTabNav(AddLeadTabBarData?.[1].title);
-        } else if (navigationType === AddLeadTabBarData?.[1].title) {
-          setSelectedTabNav(AddLeadTabBarData?.[2].title);
-        } else {
-          router.navigate("/(drawer)/(tabs)/leads");
-        }
-      }
-    } catch (error: any) {
-      toast.show(error, {
-        type: "customToast",
-        data: {
-          type: ToastTypeProps.Error,
-        },
-      });
-    }
-    setLoading(false);
-  };
   const handleSaveBasicInformation = async (
     values: BasicInfoFormValuesType
   ) => {
@@ -268,6 +103,12 @@ const AddLead = () => {
       })
     );
     setSelectedTabNav(AddLeadTabBarData?.[2].title);
+  };
+  const handelFetchLead = async () => {
+    setLoading(true);
+    await dispatch(dashboardLeadListAction({}));
+    await dispatch(dashboardLeadStageCountAction());
+    setLoading(false);
   };
   const handleSaveLeadDetailsInformation = async (
     values: LeadInformationFromValuesType
@@ -358,6 +199,7 @@ const AddLead = () => {
       setSelectedLead(0);
       setSelectedStage(0);
       setSelectedService([]);
+      await handelFetchLead();
     } catch (error: string | any) {
       toast.show(error, {
         type: "customToast",

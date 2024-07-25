@@ -11,7 +11,7 @@ export const DropDownContainer = styled(View)`
 export const DropDownTitleText = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.white};
-  margin-left: 8px;
+  margin-left: 16px;
 `;
 
 export const DropDownDataContainer = styled(View)`
@@ -34,8 +34,8 @@ export const PressableView = styled(Pressable)`
   justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.transparent};
   border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.gray};
-  padding: 12px 8px;
+  border-color: ${({ theme }) => theme.colors.disabledTextColor};
+  padding: 14px 8px;
   border-radius: 4px;
 `;
 export const SelectedText = styled(Text)`
@@ -50,15 +50,27 @@ export const DropDownDataView = styled(Pressable)`
   border-bottom-width: 1px;
   border-bottom-color: ${({ theme }) => theme.colors.gray};
   background-color: ${({ theme }) => theme.colors.transparent};
-  margin: 0px 8px;
+  margin: 0px 16px;
   border-radius: 8px;
 `;
 
 export const DataText = styled(Text)`
   font-size: 12px;
   color: ${({ theme }) => theme.colors.gray};
+  padding-left: 8px;
 `;
 export const ImageView = styled(Image)`
   height: 16px;
   width: 16px;
+`;
+export const PlaceHolderText = styled(Text)`
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.disabledTextColor};
+`;
+export const MultipleSelectedText = styled(Text)`
+  background-color: ${({ theme }) => theme.colors.transparent};
+  font-size: 16px;
+  margin-right: 4px;
+  padding: 4px 16px 6px 16px;
+  border-radius: 16px;
 `;

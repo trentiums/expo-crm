@@ -28,6 +28,11 @@ import { getLeadDetailsAction, updateLeadAction } from "@redux/actions/lead";
 import { useToast } from "react-native-toast-notifications";
 import { ToastTypeProps } from "@molecules/Toast/Toast.props";
 import { router } from "expo-router";
+import { LeadSelectView } from "@molecules/LeadSelect/LeadSelect.styles";
+import {
+  dashboardLeadListAction,
+  dashboardLeadStageCountAction,
+} from "@redux/actions/dashboard";
 
 const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
   whatsAppNumber,
@@ -276,6 +281,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       await dispatch(
         getLeadDetailsAction({ lead_id: currentLeadId || leadId })
       );
+      await handelFetchLead();
     } catch (error: any) {
       toast.show(error, {
         type: "customToast",
@@ -357,6 +363,12 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
     setModalType(initialModalType);
     setModal(false);
   };
+  const handelFetchLead = async () => {
+    setLoading(true);
+    await dispatch(dashboardLeadListAction({}));
+    await dispatch(dashboardLeadStageCountAction());
+    setLoading(false);
+  };
   return (
     <>
       <Swipeable
@@ -380,28 +392,33 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
             title={title}
             dateTime={dateTime}
           />
-          <Spacer size={16} />
-          <View>
-            <LeadDetailsList LeadDetails={LeadDetails} />
-          </View>
-          <LeadSelect
-            channelList={channelList}
-            leadList={leadList}
-            StageList={StageList}
-            selectedChannel={leadChannelId}
-            setSelectedChannel={(leadId, value) =>
-              handleChangeChannelId(leadId, value)
-            }
-            selectedLead={leadStatusId}
-            setSelectedLead={(leadId, value) => handleChangeLead(leadId, value)}
-            selectedStage={leadConversionId}
-            setSelectedStage={(leadId, value) =>
-              handleChangeLeadStage(leadId, value)
-            }
-            leadCardId={leadCardId}
-            assignTo={assignTo}
-            setAssignTo={(leadId, value) => handleChangeAssignTo(leadId, value)}
-          />
+          <Spacer size={8} />
+          <LeadDetailsList LeadDetails={LeadDetails} />
+
+          <LeadSelectView>
+            <LeadSelect
+              channelList={channelList}
+              leadList={leadList}
+              StageList={StageList}
+              selectedChannel={leadChannelId}
+              setSelectedChannel={(leadId, value) =>
+                handleChangeChannelId(leadId, value)
+              }
+              selectedLead={leadStatusId}
+              setSelectedLead={(leadId, value) =>
+                handleChangeLead(leadId, value)
+              }
+              selectedStage={leadConversionId}
+              setSelectedStage={(leadId, value) =>
+                handleChangeLeadStage(leadId, value)
+              }
+              leadCardId={leadCardId}
+              assignTo={assignTo}
+              setAssignTo={(leadId, value) =>
+                handleChangeAssignTo(leadId, value)
+              }
+            />
+          </LeadSelectView>
         </LeadDetailCardContainer>
       </Swipeable>
     </>

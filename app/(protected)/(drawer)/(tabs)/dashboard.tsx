@@ -1,7 +1,6 @@
 import Loader from "@atoms/Loader/Loader";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { Text } from "react-native-paper";
 import {
   DashboardScreenContainer,
   NoDataFoundText,
@@ -32,6 +31,8 @@ import { ToastTypeProps } from "@molecules/Toast/Toast.props";
 import { deleteLeadAction } from "@redux/actions/lead";
 import { Actions } from "@molecules/ActionModal/ActionModal.props";
 import Trash from "@atoms/Illustrations/Trash";
+import React from "react";
+import { Navigator, router } from "expo-router";
 
 const Dashboard = () => {
   const { colors } = useAppTheme();
@@ -129,6 +130,7 @@ const Dashboard = () => {
       key={`${item.id}-${index}`}
       onPress={() => {
         dispatch(setLeadsInformation());
+        router.navigate(`/(protected)/add-lead/${item?.id}`);
       }}>
       <DashBoardLeadCard
         key={`${item.id}-${index}`}

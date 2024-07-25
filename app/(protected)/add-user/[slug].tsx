@@ -11,14 +11,17 @@ import {
 import { useAppDispatch } from "@redux/store";
 import FormTemplate from "@templates/FormTemplate/FormTemplate";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { router, useLocalSearchParams } from "expo-router";
-import React, { useState } from "react";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useToast } from "react-native-toast-notifications";
 
 const addUser = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
   const params = useLocalSearchParams();
+  const navigation = useNavigation();
+  const { t } = useTranslation("screenTitle");
   console.log(params, "params");
   const [slug] = useState(params?.slug);
   console.log(slug, "slug");
@@ -68,6 +71,9 @@ const addUser = () => {
     }
     setLoading(false);
   };
+  useEffect(() => {
+    navigation.setOptions({ title: t("editUser") });
+  }, [navigation]);
   return (
     <ScreenTemplate>
       <PaddingSpace>

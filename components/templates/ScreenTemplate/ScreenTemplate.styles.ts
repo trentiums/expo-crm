@@ -1,7 +1,6 @@
-import Text from '@atoms/Text/Text';
-import View from '@atoms/View/View';
-import { styled } from '@utils/styled';
-import { SafeAreaView, TouchableOpacity } from 'react-native';
+import Text from "@atoms/Text/Text";
+import { styled } from "@utils/styled";
+import { SafeAreaView, TouchableOpacity } from "react-native";
 
 export const Container = styled(SafeAreaView)<{
   backgroundColor?: string;

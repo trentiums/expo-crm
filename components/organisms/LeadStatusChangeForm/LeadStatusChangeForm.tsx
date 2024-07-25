@@ -54,6 +54,7 @@ import {
   composeValidators,
   numberAndFractionalNumberValidator,
 } from "@utils/formValidators";
+import * as MediaLibrary from "expo-media-library";
 
 const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
   form,
@@ -117,6 +118,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
             type: ToastTypeProps.Success,
           },
         });
+        await dispatch(getLeadDetailsAction({ lead_id: leadCardId }));
       } catch (error: any) {
         toast.show(error, {
           type: "customToast",
@@ -127,11 +129,16 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
       }
       setDeleteLoading(false);
     }
+
     setDeleteShowModal(false);
     setDocuments(updatedDocuments);
   };
   const pickFile = async () => {
     try {
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+      if (status !== "granted") {
+        return;
+      }
       const res = await DocumentPicker.getDocumentAsync({
         type: ["application/pdf", "image/*", "text/plain"],
         copyToCacheDirectory: true,

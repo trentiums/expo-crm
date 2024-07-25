@@ -11,16 +11,18 @@ import {
 import { useAppDispatch } from "@redux/store";
 import FormTemplate from "@templates/FormTemplate/FormTemplate";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Platform } from "react-native";
 import { useToast } from "react-native-toast-notifications";
 import { AddProductContainer } from "../(drawer)/drawer.style";
+import { useTranslation } from "react-i18next";
 
 const addProducts = () => {
   const params = useLocalSearchParams();
   const dispatch = useAppDispatch();
   const toast = useToast();
+  const navigation = useNavigation();
+  const { t } = useTranslation("screenTitle");
   const [loading, setLoading] = useState(false);
   const [documentArray, setDocumentArray] = useState<fileSystemProps>();
 
@@ -33,13 +35,17 @@ const addProducts = () => {
       }
       formData.append("name", values?.name || "");
       formData.append("description", values?.description || "");
-      console.log(documentArray, "documents array");
-
-      if (documentArray?.uri) {
+      if (documentArray.id) {
         formData.append("documents", {
           uri: documentArray.uri,
           name: documentArray.name,
-          type: documentArray.mimeType,
+          type: documentArray.mimeType || documentArray.type,
+        });
+      } else if (documentArray?.uri) {
+        formData.append("documents", {
+          uri: documentArray.uri,
+          name: documentArray.name,
+          type: documentArray.mimeType || documentArray.type,
         });
       }
 
@@ -74,7 +80,9 @@ const addProducts = () => {
     }
     setLoading(false);
   };
-
+  useEffect(() => {
+    navigation.setOptions({ title: t("editProducts") });
+  }, [navigation]);
   return (
     <ScreenTemplate>
       <AddProductContainer>

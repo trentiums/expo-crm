@@ -146,7 +146,7 @@ const English = {
     websiteLabel: "Web Site",
   },
   leadDetails: {
-    sourceLabel: "Services *",
+    sourceLabel: "Services",
     productLabel: "Product",
     budgetLabel: "Budget",
     budgetLabelPlaceholder: "e.g 500 INR",

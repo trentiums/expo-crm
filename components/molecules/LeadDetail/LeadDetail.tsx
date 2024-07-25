@@ -12,6 +12,7 @@ import {
   TextView,
   TitleView,
   WhatsAppIcon,
+  WhatsAppIconView,
 } from "./LeadDetail.styles";
 import { Linking, Pressable } from "react-native";
 import { Spacer } from "@atoms/common/common.styles";
@@ -62,6 +63,8 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
             <NameText numberOfLines={1}>{title}</NameText>
             <DateTimeText>{dateTime}</DateTimeText>
           </View>
+        </TitleView>
+        <WhatsAppIconView isShow={whatsAppNumber}>
           {whatsAppNumber && (
             <WhatsAppIcon
               onPress={() => {
@@ -70,9 +73,8 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
               <WhatsApp />
             </WhatsAppIcon>
           )}
-        </TitleView>
-        <Spacer size={14} />
-        <NumberEmailView>
+        </WhatsAppIconView>
+        <NumberEmailView isFull={!whatsAppNumber}>
           {phoneNumber && (
             <NumberView>
               <PressAbleContainer

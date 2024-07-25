@@ -1,7 +1,7 @@
-import Text from '@atoms/Text/Text';
-import View from '@atoms/View/View';
-import { Platform } from 'react-native';
-import styled from 'styled-components';
+import Text from "@atoms/Text/Text";
+import View from "@atoms/View/View";
+import { Platform } from "react-native";
+import styled from "styled-components";
 
 export const Container = styled(View)`
   display: flex;
@@ -9,7 +9,7 @@ export const Container = styled(View)`
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  padding-bottom: 20px;
+  flex: 1;
 `;
 
 export const Flexed = styled(View)`

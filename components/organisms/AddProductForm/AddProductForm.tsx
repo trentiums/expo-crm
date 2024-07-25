@@ -5,16 +5,12 @@ import FieldTextInput from "@molecules/FieldTextInput/FieldTextInput";
 import {
   AddIconButton,
   ButtonSubmit,
-  CloseButton,
   CrossIconContainer,
   FormButtonText,
   HeaderText,
   Label,
-  ModalView,
   PickerContainer,
   PressAbleContainer,
-  PreviewImageView,
-  StyledModal,
   SvgShowContainer,
   UploadText,
 } from "@organisms/BasicInformatioForm/BasicInformationForm.styles";
@@ -30,19 +26,17 @@ import { MAX_FILE_SIZE } from "@utils/constant";
 import { useToast } from "react-native-toast-notifications";
 import { ToastTypeProps } from "@molecules/Toast/Toast.props";
 import { AddProductFormProps } from "./AddProductForm.props";
-import { PermissionsAndroid, Platform } from "react-native";
 import CrossIcon from "@atoms/Illustrations/Cross";
 import ActionModal from "@molecules/ActionModal/ActionModal";
 import Pdf from "react-native-pdf";
 import { Actions } from "@molecules/ActionModal/ActionModal.props";
 import Trash from "@atoms/Illustrations/Trash";
 import { useAppTheme } from "@constants/theme";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import Document from "@atoms/Illustrations/Document";
 import { getProductServiceDetailAction } from "@redux/actions/productService";
 import Loader from "@atoms/Loader/Loader";
-import { PERMISSIONS, request, RESULTS } from "react-native-permissions";
+import * as MediaLibrary from "expo-media-library";
 import { ImagePreviewShow, LoaderView } from "./AddProductForm.styles";
 import { useLocalSearchParams } from "expo-router";
 
@@ -73,43 +67,13 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [detailLoading, setDetailLoading] = useState(false);
   const [isDisable, setIsDisable] = useState(true);
-  // const requestPermissions = async () => {
-  //   if (Platform.OS === "android") {
-  //     try {
-  //       const granted = await PermissionsAndroid.request(
-  //         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-  //         {
-  //           title: t("storagePermission"),
-  //           message: t("storagePermissionDesc"),
-  //           buttonNeutral: t("askLater"),
-  //           buttonNegative: t("cancel"),
-  //           buttonPositive: t("ok"),
-  //         }
-  //       );
-  //       return granted === PermissionsAndroid.RESULTS.GRANTED;
-  //     } catch (err) {
-  //       console.error("Error requesting storage permission on Android:", err);
-  //       return false;
-  //     }
-  //   } else if (Platform.OS === "ios") {
-  //     const granted = await request(PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY, {
-  //       title: t("storagePermission"),
-  //       message: t("storagePermissionDesc"),
-  //       buttonNeutral: t("askLater"),
-  //       buttonNegative: t("cancel"),
-  //       buttonPositive: t("ok"),
-  //     });
-  //     return granted === RESULTS.GRANTED;
-  //   } else {
-  //     return false;
-  //   }
-  // };
+
   const handleGetProductServiceData = async () => {
     try {
       setDetailLoading(true);
       await dispatch(
         getProductServiceDetailAction({
-          product_service_id: params?.slug,
+          product_service_id: +params?.slug,
         })
       ).unwrap();
     } catch (error) {
@@ -139,6 +103,10 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
   };
   const pickFile = async () => {
     try {
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+      if (status !== "granted") {
+        return;
+      }
       const res = await DocumentPicker.getDocumentAsync({
         type: ["application/pdf", "image/*", "text/plain"],
         copyToCacheDirectory: true,
@@ -238,7 +206,8 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                     }}>
                     <CrossIcon color={"#fff"} />
                   </CrossIconContainer>
-                  {documentArray?.mimeType?.includes?.("image") ? (
+                  {documentArray?.mimeType?.includes?.("image") ||
+                  documentArray?.type?.includes?.("image") ? (
                     <ImagePreviewShow source={{ uri: documentArray?.uri }} />
                   ) : (
                     <SvgShowContainer>

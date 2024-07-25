@@ -196,7 +196,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 title: item?.name,
               };
             })}
-            placeholder={t("sourceLabel")}
+            placeholder={`${t("sourceLabel")} *`}
             value={selectedService || []}
             isMultiple
             onChange={(item: number[]) => {

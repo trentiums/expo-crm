@@ -7,6 +7,8 @@ import {
   DropdownLeftView,
   DropDownTitleText,
   ImageView,
+  MultipleSelectedText,
+  PlaceHolderText,
   PressableView,
   SelectedText,
 } from "./DropDown.styles";
@@ -35,9 +37,9 @@ const DropDown: React.FC<DropDownProps> = ({
   const { top } = useSafeAreaInsets();
   const bottomSheetRef = useRef<any>(null);
   const renderMultipleData = ({ selectedData }) => (
-    <SelectedText>
+    <MultipleSelectedText>
       {`${data?.filter((item) => item.id === +selectedData)?.[0]?.title}`}
-    </SelectedText>
+    </MultipleSelectedText>
   );
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const handelSelectData = (id) => {
@@ -84,13 +86,19 @@ const DropDown: React.FC<DropDownProps> = ({
                   renderItem={({ item }) =>
                     renderMultipleData({ selectedData: item })
                   }
+                  numColumns={2}
                   keyExtractor={(item, index) => `${item} - ${index}`}
                 />
               ) : (
-                <SelectedText>
-                  {data?.filter((item) => item.id === value)?.[0]?.title ||
-                    placeholder}
-                </SelectedText>
+                <>
+                  {data?.filter((item) => item.id === value)?.[0]?.title ? (
+                    <SelectedText>
+                      {data?.filter((item) => item.id === value)?.[0]?.title}
+                    </SelectedText>
+                  ) : (
+                    <PlaceHolderText>{placeholder}</PlaceHolderText>
+                  )}
+                </>
               )}
             </View>
           </DropdownLeftView>
@@ -99,7 +107,7 @@ const DropDown: React.FC<DropDownProps> = ({
       </DropDownContainer>
       {showBottomSheet && (
         <BottomSheetModal
-          backgroundStyle={{ backgroundColor: colors.bottomsheetColor }}
+          backgroundStyle={{ backgroundColor: colors.darkBackground }}
           ref={bottomSheetRef}
           enablePanDownToClose={true}
           topInset={top}
