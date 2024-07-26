@@ -39,6 +39,7 @@ import Loader from "@atoms/Loader/Loader";
 import * as MediaLibrary from "expo-media-library";
 import { ImagePreviewShow, LoaderView } from "./AddProductForm.styles";
 import { useLocalSearchParams } from "expo-router";
+import { Linking } from "react-native";
 
 const AddProductForm: React.FC<AddProductFormProps> = ({
   form,
@@ -196,7 +197,10 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                 <PressAbleContainer
                   onPress={() => {
                     setImageURI(documentArray);
-                    setShowModal(true);
+                    if (documentArray && documentArray?.uri?.endsWith("pdf")) {
+                      Linking.openURL(documentArray.uri);
+                    }
+                    // setShowModal(true);
                   }}
                   style={{ width: "30%" }}>
                   <CrossIconContainer

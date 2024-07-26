@@ -104,12 +104,7 @@ const AddLead = () => {
     );
     setSelectedTabNav(AddLeadTabBarData?.[2].title);
   };
-  const handelFetchLead = async () => {
-    setLoading(true);
-    await dispatch(dashboardLeadListAction({}));
-    await dispatch(dashboardLeadStageCountAction());
-    setLoading(false);
-  };
+
   const handleSaveLeadDetailsInformation = async (
     values: LeadInformationFromValuesType
   ) => {
@@ -199,7 +194,6 @@ const AddLead = () => {
       setSelectedLead(0);
       setSelectedStage(0);
       setSelectedService([]);
-      await handelFetchLead();
     } catch (error: string | any) {
       toast.show(error, {
         type: "customToast",

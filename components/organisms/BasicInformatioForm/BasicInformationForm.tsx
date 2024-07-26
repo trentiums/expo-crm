@@ -69,6 +69,7 @@ import { ActivityIndicator } from "react-native-paper";
 import PdfReader from "@hashiprobr/expo-pdf-reader";
 import WebView from "react-native-webview";
 import * as Print from "expo-print";
+import { Linking } from "react-native";
 
 const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   loading,
@@ -241,7 +242,9 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
       <PressAbleContainer
         onPress={() => {
           setImageURI(file);
-          setShowModal(true);
+          if (file && file?.uri?.endsWith("pdf")) {
+            Linking.openURL(file.uri);
+          }
         }}>
         <CrossIconContainer
           onPress={() => {

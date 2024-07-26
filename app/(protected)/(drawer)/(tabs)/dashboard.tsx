@@ -9,7 +9,7 @@ import {
 import { FlatList, Swipeable } from "react-native-gesture-handler";
 import { Spacer } from "@atoms/common/common.styles";
 import ActionModal from "@molecules/ActionModal/ActionModal";
-import { RefObject, useEffect, useState } from "react";
+import { RefObject, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useToast } from "react-native-toast-notifications";
 import { useAppTheme } from "@constants/theme";
@@ -33,6 +33,7 @@ import { Actions } from "@molecules/ActionModal/ActionModal.props";
 import Trash from "@atoms/Illustrations/Trash";
 import React from "react";
 import { Navigator, router } from "expo-router";
+import { useFocusEffect } from "expo-router";
 
 const Dashboard = () => {
   const { colors } = useAppTheme();
@@ -70,7 +71,11 @@ const Dashboard = () => {
       );
     }
   };
-
+  useFocusEffect(
+    useCallback(() => {
+      handelFetchLead();
+    }, [])
+  );
   useEffect(() => {
     handelFetchLead();
   }, []);

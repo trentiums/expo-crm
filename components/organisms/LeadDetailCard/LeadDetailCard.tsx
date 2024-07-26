@@ -281,7 +281,6 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       await dispatch(
         getLeadDetailsAction({ lead_id: currentLeadId || leadId })
       );
-      await handelFetchLead();
     } catch (error: any) {
       toast.show(error, {
         type: "customToast",
@@ -363,12 +362,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
     setModalType(initialModalType);
     setModal(false);
   };
-  const handelFetchLead = async () => {
-    setLoading(true);
-    await dispatch(dashboardLeadListAction({}));
-    await dispatch(dashboardLeadStageCountAction());
-    setLoading(false);
-  };
+
   return (
     <>
       <Swipeable

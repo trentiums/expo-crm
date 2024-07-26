@@ -90,12 +90,7 @@ const AddLead = () => {
   useEffect(() => {
     navigation.setOptions({ title: t("editLead") });
   }, [navigation]);
-  const handelFetchLead = async () => {
-    setLoading(true);
-    await dispatch(dashboardLeadListAction({}));
-    await dispatch(dashboardLeadStageCountAction());
-    setLoading(false);
-  };
+
   useEffect(() => {
     setSelectedData(leadsDetail);
   }, [leadsDetail]);
@@ -266,7 +261,6 @@ const AddLead = () => {
           router.navigate("/(drawer)/(tabs)/leads");
         }
       }
-      await handelFetchLead();
     } catch (error: any) {
       toast.show(error, {
         type: "customToast",

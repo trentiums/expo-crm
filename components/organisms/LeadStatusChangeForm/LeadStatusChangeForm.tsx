@@ -55,6 +55,7 @@ import {
   numberAndFractionalNumberValidator,
 } from "@utils/formValidators";
 import * as MediaLibrary from "expo-media-library";
+import { Linking } from "react-native";
 
 const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
   form,
@@ -170,7 +171,10 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
       <PressAbleContainer
         onPress={() => {
           setImageURI(file);
-          setShowModal(true);
+          // setShowModal(true);
+          if (file && file?.uri?.endsWith("pdf")) {
+            Linking.openURL(file.uri);
+          }
         }}>
         <CrossIconContainer
           onPress={() => {
