@@ -7,6 +7,7 @@ import {
   DropdownLeftView,
   DropDownSelectedView,
   DropDownTitleText,
+  FlatListCon,
   ImageView,
   MultipleSelectedText,
   PlaceHolderText,
@@ -34,6 +35,7 @@ const DropDown: React.FC<DropDownProps> = ({
   dataToShow,
   isDataToShow,
   isLeadChange,
+  isFullWidth,
 }) => {
   const { colors } = useAppTheme();
   const { top } = useSafeAreaInsets();
@@ -76,7 +78,8 @@ const DropDown: React.FC<DropDownProps> = ({
           onPress={() => setShowBottomSheet(true)}
           isLeadChange={isLeadChange}>
           <DropdownLeftView
-            isImage={data?.filter((item) => item.id === value)[0]?.image}>
+            isImage={data?.filter((item) => item.id === value)[0]?.image}
+            isFullWidth={isFullWidth}>
             {
               <ImageView
                 source={data?.filter((item) => item.id === value)[0]?.image}
@@ -85,14 +88,19 @@ const DropDown: React.FC<DropDownProps> = ({
             }
             <DropDownSelectedView>
               {isMultiple && Array.isArray(value) ? (
-                <FlatList
-                  data={value}
-                  renderItem={({ item }) =>
-                    renderMultipleData({ selectedData: item })
-                  }
-                  numColumns={2}
-                  keyExtractor={(item, index) => `${item} - ${index}`}
-                />
+                <>
+                  {value?.length > 0 ? (
+                    <FlatListCon
+                      data={value}
+                      renderItem={({ item }) =>
+                        renderMultipleData({ selectedData: item })
+                      }
+                      keyExtractor={(item, index) => `${item} - ${index}`}
+                    />
+                  ) : (
+                    <PlaceHolderText>{placeholder}</PlaceHolderText>
+                  )}
+                </>
               ) : (
                 <>
                   {data?.filter((item) => item.id === value)?.[0]?.title ? (

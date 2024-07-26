@@ -192,7 +192,7 @@ export const PhoneNumberFieldView = styled(View)`
 `;
 
 export const CountryCodeInput = styled(View)`
-  flex: 0.3;
+  flex: 0.4;
 `;
 
 export const NumberInput = styled(View)`

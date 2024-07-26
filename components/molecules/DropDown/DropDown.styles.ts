@@ -1,7 +1,7 @@
 import Text from "@atoms/Text/Text";
 import View from "@atoms/View/View";
 import { styled } from "@utils/styled";
-import { Pressable } from "react-native";
+import { FlatList, Pressable } from "react-native";
 import { Image } from "expo-image";
 
 export const DropDownContainer = styled(View)`
@@ -21,14 +21,20 @@ export const DropDownDataContainer = styled(View)`
   gap: 8px;
 `;
 
-export const DropdownLeftView = styled(View)<{ isImage?: boolean }>`
+export const DropdownLeftView = styled(View)<{
+  isImage?: boolean;
+  isFullWidth?: boolean;
+}>`
   display: flex;
   flex-direction: row;
   margin-left: ${({ isImage }) => (isImage ? 4 : -20)}px;
   align-items: center;
   gap: 8px;
+  width: ${({ isFullWidth }) => (isFullWidth ? 100 : 80)}%;
 `;
-export const PressableView = styled(Pressable)<{ isLeadChange?: boolean }>`
+export const PressableView = styled(Pressable)<{
+  isLeadChange?: boolean;
+}>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -80,4 +86,12 @@ export const MultipleSelectedText = styled(Text)`
   margin-right: 4px;
   padding: 4px 16px 6px 16px;
   border-radius: 16px;
+  margin-bottom: 8px;
 `;
+export const FlatListCon = styled(FlatList).attrs({
+  contentContainerStyle: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+})``;

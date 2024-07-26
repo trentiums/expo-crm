@@ -30,7 +30,7 @@ import {
   UploadText,
 } from "./BasicInformationForm.styles";
 import { useTranslation } from "react-i18next";
-
+import PdfRendererView from "react-native-pdf-renderer";
 import FieldTextInput from "@molecules/FieldTextInput/FieldTextInput";
 import {
   composeValidators,
@@ -65,6 +65,10 @@ import { useLocalSearchParams } from "expo-router";
 import * as MediaLibrary from "expo-media-library";
 import DropDown from "@molecules/DropDown/DropDown";
 import Pdf from "react-native-pdf";
+import { ActivityIndicator } from "react-native-paper";
+import PdfReader from "@hashiprobr/expo-pdf-reader";
+import WebView from "react-native-webview";
+import * as Print from "expo-print";
 
 const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   loading,
@@ -83,7 +87,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   const addLeadFormData = useSelector(
     (state: RootState) => state.leads.addLead
   );
-
+  const [pdfUri, setPdfUri] = useState(null);
   const [id] = useState(params?.slug);
   const dispatch = useAppDispatch();
   const toast = useToast();
@@ -268,7 +272,22 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
       })
     );
   }, [values, selectedCountryCodeValue]);
+  const generatePdf = async () => {
+    try {
+      const { uri } = await Print.printToFileAsync({
+        html: "<h1>PDF Content</h1><p>This is a sample PDF generated using expo-print.</p>",
+      });
+      setPdfUri(uri);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    }
+  };
 
+  useEffect(() => {
+    if (ImageURI?.uri?.endsWith("pdf")) {
+      generatePdf();
+    }
+  }, [showModal]);
   return (
     <FormsView>
       <KeyboardAwareScrollViewContainer
@@ -384,6 +403,17 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
               <CrossIcon color={colors.black} />
             </CloseButton>
             <Spacer size={64} />
+            {/* <PdfReader
+              source={{
+                uri: "https://morth.nic.in/sites/default/files/dd12-13_0.pdf",
+              }}
+              onLoad={() => console.log("PDF loaded successfully")}
+              onError={(error) => console.error("Error loading PDF:", error)}
+              style={{ flex: 1 }}
+              renderActivityIndicator={() => (
+                <ActivityIndicator size="large" color="#0000ff" />
+              )}
+            /> */}
             {/* <PreviewImageView source={{ uri: ImageURI?.uri }} /> */}
             {/* <WebView
               source={{
@@ -415,6 +445,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
             <Pdf
               source={{
                 uri: null,
+                cache: true,
               }}
               trustAllCerts={false}
               style={{
@@ -423,6 +454,14 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
               }}
               onError={(error) => {
                 console.error(error, "error");
+              }}
+            /> */}
+            {/* <PdfRendererView
+              source="https://morth.nic.in/sites/default/files/dd12-13_0.pdf"
+              distanceBetweenPages={16}
+              maxZoom={5}
+              onPageChange={(current, total) => {
+                console.log(current, total);
               }}
             /> */}
             {/* {ImageURI && ImageURI?.uri?.endsWith("pdf") ? (

@@ -20,14 +20,14 @@ export const FlatListContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.positionBg};
   border-width: 1px;
   border-color: ${({ theme }) => theme.colors.positionBg};
-  border-radius: ${Platform.select({ default: 30, ios: 25 })}px;
+  border-radius: ${Platform.select({ default: 8, ios: 8 })}px;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 10px;
-  padding: 10px;
   margin: 5px;
+  padding: 2px 5px 4px 5px;
   width: fit-content;
 `;
 

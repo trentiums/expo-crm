@@ -209,6 +209,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 setSelectedService([...selectedService, item]);
               }
             }}
+            isFullWidth
             dropDownTitle={`${t("sourceLabel")} ${t("list")}`}
           />
           <Spacer size={16} />

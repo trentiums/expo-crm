@@ -16,7 +16,9 @@ const LeadDetailsList: React.FC<LeadDetailsListProps> = ({ LeadDetails }) => {
           {LeadDetails?.map((item, index) => {
             return (
               <FlatListContainer key={`${index}`}>
-                <ShowLeadText>{item}</ShowLeadText>
+                <ShowLeadText numberOfLines={1} ellipsizeMode="tail">
+                  {item}
+                </ShowLeadText>
               </FlatListContainer>
             );
           })}
