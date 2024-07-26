@@ -1,4 +1,4 @@
-package com.anonymous.expoRouter
+package com.anonymous.CRM
 
 import android.app.Application
 import android.content.res.Configuration

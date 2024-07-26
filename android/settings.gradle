@@ -1,4 +1,4 @@
-rootProject.name = 'expoRouter'
+rootProject.name = 'CRM'
 
 dependencyResolutionManagement {
   versionCatalogs {

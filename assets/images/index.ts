@@ -1,4 +1,4 @@
 export default {
-  appIconImage: require("./App_icon.png"),
+  appIconImage: require("./icon.png"),
   notificationBell: require("../images/NotificationBell.png"),
 };

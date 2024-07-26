@@ -83,9 +83,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.anonymous.expoRouter'
+    namespace 'com.anonymous.CRM'
     defaultConfig {
-        applicationId 'com.anonymous.expoRouter'
+        applicationId 'com.anonymous.CRM'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

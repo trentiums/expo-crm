@@ -188,7 +188,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always">
         <View>
-          <Label>{t("sourceLabel")}</Label>
+          <Label>{`${t("sourceLabel")} *`}</Label>
           <DropDown
             data={servicesData?.map((item: any) => {
               return {
@@ -230,7 +230,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 setSelectedChannel(value);
               }
             }}
-            dropDownTitle={`${t("leadChannel")} ${t("list")}`}
+            dropDownTitle={`${tl("leadChannel")} ${t("list")}`}
             isStaff={!isAdmin && route?.params?.slug}
           />
           <Spacer size={16} />
@@ -251,7 +251,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 setSelectedLead(value);
               }
             }}
-            dropDownTitle={`${t("leadStatus")} ${t("list")}`}
+            dropDownTitle={`${tl("leadStatus")} ${t("list")}`}
           />
           <Spacer size={16} />
           <Label>{`${tl("LeadStage")} *`}</Label>
@@ -271,7 +271,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 setSelectedStage(value);
               }
             }}
-            dropDownTitle={`${t("LeadStage")} ${t("list")}`}
+            dropDownTitle={`${tl("LeadStage")} ${t("list")}`}
           />
           <Spacer size={16} />
           <Label>{`${tl("assignTo")}`}</Label>

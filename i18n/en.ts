@@ -160,6 +160,7 @@ const English = {
     winCloseReason: "Win Close Reason",
     dealAmount: "Deal Amount",
     dealCloseDate: "Deal Close Date",
+    list: "List",
   },
   addData: {
     lead: "Lead",
