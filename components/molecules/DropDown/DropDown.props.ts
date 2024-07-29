@@ -9,6 +9,7 @@ export interface DropDownProps {
   isDataToShow?: boolean;
   isLeadChange?: boolean;
   isFullWidth?: boolean;
+  isStaff?: boolean;
 }
 
 export interface DropDownData {

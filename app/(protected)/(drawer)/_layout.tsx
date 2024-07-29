@@ -70,7 +70,7 @@ const DrawerLayout = () => {
                     borderBottomWidth: 1,
                   }}
                 />
-                {user.userRole !== userRole.CompanyStaff && (
+                {user.userRole === userRole.Admin && (
                   <DrawerItem
                     label="Users"
                     onPress={() => {

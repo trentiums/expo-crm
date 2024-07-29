@@ -43,7 +43,7 @@ const TabsLayout = () => {
           ),
         }}
       />
-      {user.userRole !== userRole.CompanyStaff && (
+      {user.userRole === userRole.Admin && (
         <Tabs.Screen
           name="users"
           options={{

@@ -56,6 +56,7 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
             isStaff={!isAdmin}
             dropDownTitle={`${t("leadChannel")} ${t("list")}`}
             isLeadChange
+            isDisabled={!isAdmin}
           />
         </LeadSelectSubContainer>
         <LeadSelectSubContainer>

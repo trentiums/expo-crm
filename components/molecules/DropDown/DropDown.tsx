@@ -20,8 +20,6 @@ import { DropDownProps } from "./DropDown.props";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BottomSheetFlatList, BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useAppTheme } from "@constants/theme";
-import { FlatList } from "react-native-gesture-handler";
-import View from "@atoms/View/View";
 import CheckMarkIcon from "@atoms/Illustrations/Check";
 import { Spacer } from "@atoms/common/common.styles";
 
@@ -36,6 +34,7 @@ const DropDown: React.FC<DropDownProps> = ({
   isDataToShow,
   isLeadChange,
   isFullWidth,
+  isStaff,
 }) => {
   const { colors } = useAppTheme();
   const { top } = useSafeAreaInsets();
@@ -117,7 +116,7 @@ const DropDown: React.FC<DropDownProps> = ({
           <ArrowDown />
         </PressableView>
       </DropDownContainer>
-      {showBottomSheet && (
+      {showBottomSheet && !isStaff && (
         <BottomSheetModal
           backgroundStyle={{ backgroundColor: colors.darkBackground }}
           ref={bottomSheetRef}

@@ -196,7 +196,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 title: item?.name,
               };
             })}
-            placeholder={`${t("sourceLabel")} *`}
+            placeholder={`${t("sourceLabel")}`}
             value={selectedService || []}
             isMultiple
             onChange={(item: number[]) => {
@@ -231,7 +231,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
               }
             }}
             dropDownTitle={`${tl("leadChannel")} ${t("list")}`}
-            isStaff={!isAdmin && route?.params?.slug}
+            isStaff={!isAdmin}
           />
           <Spacer size={16} />
           <Label>{`${tl("leadStatus")} *`}</Label>
