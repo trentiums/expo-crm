@@ -7,6 +7,7 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "rm:nm": "yarn cache clean && npm cache verify && npm cache clean --force && rm -rf node_modules && rm -rf package-lock.json && rm -rf yarn.lock && rm -rf android && rm -rf ios",
+    "ios:clean": "cd ios && pod deintegrate && rm -rf build && rm -rf Podfile.lock && pod install && cd ..",
     "android:clean": "cd android && ./gradlew clean && ./gradlew",
     "android:build": "cd android && ./gradlew clean && ./gradlew && ./gradlew bundleRelease && ./gradlew installRelease",
     "postinstall": "patch-package",
