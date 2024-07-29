@@ -43,17 +43,16 @@ const TabsLayout = () => {
           ),
         }}
       />
-      {user.userRole === userRole.Admin && (
-        <Tabs.Screen
-          name="users"
-          options={{
-            title: "Users",
-            tabBarIcon: ({ focused }) => (
-              <Users color={focused ? colors.lightGreen : colors.white} />
-            ),
-          }}
-        />
-      )}
+      <Tabs.Screen
+        name="users"
+        options={{
+          title: "Users",
+          tabBarIcon: ({ focused }) => (
+            <Users color={focused ? colors.lightGreen : colors.white} />
+          ),
+        }}
+        redirect={user.userRole === 3}
+      />
     </Tabs>
   );
 };
