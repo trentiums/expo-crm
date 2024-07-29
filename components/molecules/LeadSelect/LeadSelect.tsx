@@ -61,7 +61,6 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
         </LeadSelectSubContainer>
         <LeadSelectSubContainer>
           <SelectTitleText>{t("status")}</SelectTitleText>
-
           <DropDown
             data={leadListData}
             placeholder={t("leadStatus")}

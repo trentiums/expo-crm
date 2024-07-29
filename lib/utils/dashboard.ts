@@ -1,14 +1,14 @@
 import {
   DashboardLeadListItem,
   LeadStageCountLeadListItem,
-} from '@type/api/dashboard';
+} from "@type/api/dashboard";
 import {
   DashboardLeadList,
   LeadStageCountLeadList,
-} from '@type/redux/slices/dashboard';
+} from "@type/redux/slices/dashboard";
 
 export const formatDashboardLeadList = (
-  data: DashboardLeadListItem[],
+  data: DashboardLeadListItem[]
 ): DashboardLeadList[] => {
   return data?.map((item) => ({
     id: item?.id,
@@ -16,11 +16,12 @@ export const formatDashboardLeadList = (
     email: item?.email,
     phone: item?.phone,
     createdAt: item?.created_at,
+    updatedAt: item?.updated_at,
   }));
 };
 
 export const formatDashboardLeadStageCountList = (
-  data: LeadStageCountLeadListItem[],
+  data: LeadStageCountLeadListItem[]
 ): LeadStageCountLeadList[] => {
   return data?.map((item) => ({
     leadConversionId: item.lead_conversion_id,

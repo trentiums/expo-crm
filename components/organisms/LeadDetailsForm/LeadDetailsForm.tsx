@@ -286,7 +286,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 setAssignTo(value);
               }
             }}
-            dropDownTitle={`${t("assignTo")} ${t("list")}`}
+            dropDownTitle={`${tl("assignTo")} ${t("list")}`}
             dataToShow={leadAssignToData?.filter(
               (item) => item.id !== assignTo
             )}

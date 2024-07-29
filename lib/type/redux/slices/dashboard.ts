@@ -4,6 +4,7 @@ export interface DashboardLeadList {
   email: string;
   phone: number;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface LeadStageCountLeadList {

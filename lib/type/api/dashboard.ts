@@ -1,4 +1,4 @@
-import { ApiResponse } from './api';
+import { ApiResponse } from "./api";
 
 export interface DashboardLeadListItem {
   id: number;
@@ -13,6 +13,7 @@ export interface DashboardLeadListItem {
   name: string;
   email: string;
   phone: number;
+  updated_at?: string;
   created_at: string;
 }
 

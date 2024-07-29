@@ -74,7 +74,10 @@ const DropDown: React.FC<DropDownProps> = ({
     <>
       <DropDownContainer>
         <PressableView
-          onPress={() => setShowBottomSheet(true)}
+          onPress={() => {
+            handleOpenBottomSheetOpen();
+            setShowBottomSheet(true);
+          }}
           isLeadChange={isLeadChange}>
           <DropdownLeftView
             isImage={data?.filter((item) => item.id === value)[0]?.image}
@@ -124,7 +127,12 @@ const DropDown: React.FC<DropDownProps> = ({
           topInset={top}
           index={1}
           snapPoints={DropdownBottomSheetSnapPoints}
-          onChange={(index) => index === -1 && setShowBottomSheet(false)}>
+          onChange={(index) => {
+            if (index <= 0) {
+              bottomSheetRef.current?.close();
+              setShowBottomSheet(false);
+            }
+          }}>
           <>
             <DropDownTitleText>{dropDownTitle}</DropDownTitleText>
             <Spacer size={16} />

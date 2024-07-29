@@ -2,15 +2,14 @@ import Text from "@atoms/Text/Text";
 import View from "@atoms/View/View";
 import styled from "styled-components";
 
-export const LeadSelectView = styled(View)`
-  margin-top: -8px;
-`;
+export const LeadSelectView = styled(View)``;
 
 export const LeadSelectContainer = styled(View)`
   display: flex;
   gap: 8px;
   flex-direction: row;
   padding: 0px 6px;
+  flex: 1;
 `;
 
 export const SelectTitleText = styled(Text)<{ isStart?: boolean }>`

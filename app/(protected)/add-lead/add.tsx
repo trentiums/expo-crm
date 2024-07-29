@@ -158,6 +158,12 @@ const AddLead = () => {
           ? moment(values.dealCloseDate).format("YYYY-MM-DD")
           : ""
       );
+      if (assignTo || selectedData.assignTo) {
+        formData.append(
+          "assign_to_user_id",
+          `${assignTo || selectedData.assignTo}`
+        );
+      }
       formData.append("win_close_reason", values?.winCloseReason || "");
       const countryCodeAlpha = countryList?.filter(
         (item) => item?.id === addLeadData?.countryCode

@@ -386,7 +386,9 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
             title={title}
             dateTime={dateTime}
           />
-          <LeadDetailsList LeadDetails={LeadDetails} />
+          <View style={{ flex: 1 }}>
+            <LeadDetailsList LeadDetails={LeadDetails} />
+          </View>
           <LeadSelectView>
             <LeadSelect
               channelList={channelList}

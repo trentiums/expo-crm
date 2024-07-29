@@ -144,7 +144,9 @@ const Dashboard = () => {
         phoneNumber={item.phone}
         title={item.name}
         mailID={item.email}
-        dateTime={moment(item.createdAt).format(dateTimeFormate)}
+        dateTime={moment(item?.updatedAt || item.createdAt).format(
+          dateTimeFormate
+        )}
         closeSwipeAble={closeSwipeAble}
         setSwipeAbleRef={setSwipeAbleRef}
         selectedCard={selectedCard}

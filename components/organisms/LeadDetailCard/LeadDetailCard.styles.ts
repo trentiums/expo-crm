@@ -19,6 +19,7 @@ export const RequirementClubContainer = styled(View)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex: 1;
 `;
 
 export const TouchableOpacityContainer = styled(TouchableOpacity)<{

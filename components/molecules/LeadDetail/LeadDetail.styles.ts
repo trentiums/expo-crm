@@ -9,6 +9,7 @@ export const DetailContainer = styled(View)`
   align-content: flex-start;
   gap: 8px;
   width: 100%;
+  flex: 1;
 `;
 
 export const LeadInfoView = styled(View)`
@@ -17,6 +18,7 @@ export const LeadInfoView = styled(View)`
   justify-content: space-between;
   align-items: center;
   padding-left: 8px;
+  flex: 1;
 `;
 
 export const NameContainer = styled(View)`
@@ -31,6 +33,7 @@ export const TitleView = styled(View)`
   flex-direction: row;
   justify-content: space-between;
   width: 40%;
+  flex: 1;
 `;
 
 export const WhatsAppIconView = styled(View)<{ isShow?: boolean }>``;
@@ -69,6 +72,7 @@ export const PressAbleContainer = styled(Pressable)`
   flex-direction: row;
   gap: 8px;
   justify-content: flex-end;
+  flex: 1;
 `;
 
 export const DateTimeText = styled(Text)`
