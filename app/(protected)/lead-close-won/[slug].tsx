@@ -6,15 +6,17 @@ import { getLeadDetailsAction, updateLeadAction } from "@redux/actions/lead";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import FormTemplate from "@templates/FormTemplate/FormTemplate";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useToast } from "react-native-toast-notifications";
 
 const LeadStageCloseWonScreen = () => {
   const toast = useToast();
+  const { t } = useTranslation("screenTitle");
   const dispatch = useAppDispatch();
   const slug = useLocalSearchParams();
-
+  const navigation = useNavigation();
   const leadsData = useSelector(
     (state: RootState) => state.leads.leadList.leads
   );
@@ -105,6 +107,9 @@ const LeadStageCloseWonScreen = () => {
     }
     setLoading(false);
   };
+  useEffect(() => {
+    navigation.setOptions({ title: t("leadStageChange") });
+  }, [navigation]);
   return (
     <ScreenTemplate>
       <FormTemplate

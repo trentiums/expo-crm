@@ -6,8 +6,9 @@ import { getLeadDetailsAction, updateLeadAction } from "@redux/actions/lead";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import FormTemplate from "@templates/FormTemplate/FormTemplate";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useToast } from "react-native-toast-notifications";
 
 const LeadStageNegotiationScreen = () => {
@@ -18,9 +19,10 @@ const LeadStageNegotiationScreen = () => {
     (state: RootState) => state.general.countryList
   );
   const slug = useLocalSearchParams();
+  const { t } = useTranslation("screenTitle");
   const toast = useToast();
   const dispatch = useAppDispatch();
-  const route = useRoute();
+  const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const leadConversionId = slug?.leadConversionId;
   const leadId = +slug?.leadId;
@@ -95,6 +97,9 @@ const LeadStageNegotiationScreen = () => {
     }
     setLoading(false);
   };
+  useEffect(() => {
+    navigation.setOptions({ title: t("leadStageChange") });
+  }, [navigation]);
   return (
     <ScreenTemplate>
       <FormTemplate

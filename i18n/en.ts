@@ -81,6 +81,8 @@ const English = {
     addProduct: "Add Product / Services",
     products: "Product / Services",
     editProducts: "Edit Product / Services",
+    leadStatusChange: "Lead Status Change",
+    leadStageChange: "Lead Stage Change",
   },
   leadDetailList: {
     name: "User Name",

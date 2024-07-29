@@ -25,10 +25,6 @@ import React, { useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { AddLeadContainer } from "../(drawer)/tabs.style";
 import { useTranslation } from "react-i18next";
-import {
-  dashboardLeadListAction,
-  dashboardLeadStageCountAction,
-} from "@redux/actions/dashboard";
 
 const AddLead = () => {
   const dispatch = useAppDispatch();

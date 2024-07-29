@@ -231,7 +231,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
               }
             }}
             dropDownTitle={`${tl("leadChannel")} ${t("list")}`}
-            isStaff={!isAdmin}
+            isStaff={!isAdmin && id}
           />
           <Spacer size={16} />
           <Label>{`${tl("leadStatus")} *`}</Label>

@@ -5,13 +5,16 @@ import { getLeadDetailsAction, updateLeadAction } from "@redux/actions/lead";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import FormTemplate from "@templates/FormTemplate/FormTemplate";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { router, useLocalSearchParams } from "expo-router";
-import React, { useState } from "react";
+import { router, useLocalSearchParams, useNavigation } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useToast } from "react-native-toast-notifications";
 
 const LeadStatusChangeScreen = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
+  const navigation = useNavigation();
+  const { t } = useTranslation("screenTitle");
   const leadsData = useSelector(
     (state: RootState) => state.leads.leadList.leads
   );
@@ -105,6 +108,9 @@ const LeadStatusChangeScreen = () => {
     }
     setLoading(false);
   };
+  useEffect(() => {
+    navigation.setOptions({ title: t("leadStageChange") });
+  }, [navigation]);
   return (
     <ScreenTemplate>
       <FormTemplate
