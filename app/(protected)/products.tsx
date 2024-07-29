@@ -39,7 +39,7 @@ const products = () => {
     }
   };
   const [showModal, setShowModal] = useState(false);
-  const [deleteId, setDeleteId] = useState<number>(0);
+  const [deleteId, setDeleteId] = useState<number | string>(0);
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [moreLoading, setMoreLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);

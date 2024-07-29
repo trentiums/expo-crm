@@ -132,25 +132,25 @@ const AddLead = () => {
       if (addLeadData?.email) {
         formData.append("email", addLeadData?.email);
       }
-      formData.append("lead_channel_id", selectedChannel);
-      formData.append("lead_conversion_id", selectedStage);
-      formData.append("lead_status_id", selectedLead);
+      formData.append("lead_channel_id", `${selectedChannel}`);
+      formData.append("lead_conversion_id", `${selectedStage}`);
+      formData.append("lead_status_id", `${selectedLead}`);
       selectedService.forEach((service, index) => {
         formData.append(`product_services[${index}]`, service);
       });
       formData.append("name", `${addLeadData.fullName || ""}`);
       formData.append("company_name", addLeadData?.companyName || "");
       if (values?.budget) {
-        formData.append("budget", values?.budget);
+        formData.append("budget", `${values?.budget}`);
       }
       if (addLeadData?.companySize) {
-        formData.append("company_size", addLeadData?.companySize);
+        formData.append("company_size", `${addLeadData?.companySize}`);
       }
       formData.append("company_website", addLeadData?.webSite || "");
       formData.append("time_line", values?.timeFrame || "");
       formData.append("description", values?.comments || "");
       if (values?.dealAmount) {
-        formData.append("deal_amount", values?.dealAmount);
+        formData.append("deal_amount", `${values?.dealAmount}`);
       }
       formData.append(
         "deal_close_date",
@@ -164,10 +164,10 @@ const AddLead = () => {
       )?.[0]?.countryCodeAlpha;
       if (!addLeadData?.email) {
         formData.append("country_code_alpha", countryCodeAlpha);
-        formData.append("phone", addLeadData?.phoneNumber);
+        formData.append("phone", `${addLeadData?.phoneNumber}`);
       } else if (countryCodeAlpha && addLeadData?.phoneNumber) {
         formData.append("country_code_alpha", countryCodeAlpha);
-        formData.append("phone", addLeadData?.phoneNumber);
+        formData.append("phone", `${addLeadData?.phoneNumber}`);
       }
 
       if (documentArray?.length > 0) {

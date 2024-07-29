@@ -47,20 +47,7 @@ const Users = () => {
     setShowModal(true);
     setDeleteId(slug);
   };
-  const handleGetUserList = async () => {
-    try {
-      setLoading(true);
-      await dispatch(getUserListAction({})).unwrap();
-    } catch (error: any) {
-      toast.show(error, {
-        type: "customToast",
-        data: {
-          type: ToastTypeProps.Error,
-        },
-      });
-    }
-    setLoading(false);
-  };
+
   const handleDeleteUser = async () => {
     try {
       setDeleteLoading(true);
@@ -146,6 +133,11 @@ const Users = () => {
         selectedCard={selectedCard}
         setSelectedCard={setSelectedCard}
         cardIndex={index}
+        id={0}
+        cardImage={0}
+        name={""}
+        email={""}
+        createdAt={""}
       />
     </Pressable>
   );

@@ -8,6 +8,8 @@ export type BasicInfoFormValues = {
 };
 
 export interface fileSystemProps {
+  id: any;
+  mimeType: string;
   fileCopyUri: string;
   name: string;
   size: number;

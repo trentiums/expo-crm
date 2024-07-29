@@ -32,7 +32,7 @@ import { deleteLeadAction } from "@redux/actions/lead";
 import { Actions } from "@molecules/ActionModal/ActionModal.props";
 import Trash from "@atoms/Illustrations/Trash";
 import React from "react";
-import { Navigator, router } from "expo-router";
+import { router } from "expo-router";
 import { useFocusEffect } from "expo-router";
 
 const Dashboard = () => {
@@ -44,7 +44,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
-  const [deletedId, setDeletedId] = useState();
+  const [deletedId, setDeletedId] = useState<number | undefined>();
   const [openSwipeAbleRef, setOpenSwipeAbleRef] =
     useState<RefObject<Swipeable> | null>(null);
   const dashboardLeadList = useSelector((state: RootState) => state.dashboard);

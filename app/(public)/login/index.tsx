@@ -19,7 +19,7 @@ import {
   leadStatusListAction,
 } from "@redux/actions/general";
 import { getProductServiceListAction } from "@redux/actions/productService";
-import { router, useNavigation } from "expo-router";
+import { router } from "expo-router";
 import { getLeadListAction } from "@redux/actions/lead";
 import {
   getAssignUserListAction,

@@ -1,7 +1,5 @@
 import { ToastTypeProps } from "@molecules/Toast/Toast.props";
-import DealCloseWinForm from "@organisms/DealCloseWinForm/DealCloseWinForm";
 import { DealWinCloseFormValues } from "@organisms/DealCloseWinForm/DealCloseWinForm.props";
-import { LeadStageType } from "@organisms/LeadDetailCard/LeadDetailCard.props";
 import LeadProposalNegotiationForm from "@organisms/LeadProposolNagotioationForm/LeadProposolNagotioationForm";
 import { useRoute } from "@react-navigation/native";
 import { getLeadDetailsAction, updateLeadAction } from "@redux/actions/lead";
@@ -41,13 +39,13 @@ const LeadStageNegotiationScreen = () => {
     try {
       setLoading(true);
       let formData = new FormData();
-      formData.append("lead_id", currentLeadId || leadId);
+      formData.append("lead_id", `${currentLeadId || leadId}`);
       if (data?.email) {
         formData.append("email", data?.email);
       }
-      formData.append("lead_channel_id", data?.leadChannelId || "");
-      formData.append("lead_conversion_id", leadConversionId);
-      formData.append("lead_status_id", data?.leadStatusId);
+      formData.append("lead_channel_id", `${data?.leadChannelId || ""}`);
+      formData.append("lead_conversion_id", `${leadConversionId}`);
+      formData.append("lead_status_id", `${data?.leadStatusId}`);
       formData.append("name", data?.name);
       selectedDataServices.forEach((service, index) => {
         formData.append(`product_services[${index}]`, service);
@@ -58,7 +56,7 @@ const LeadStageNegotiationScreen = () => {
         formData.append("company_size", data?.companySize);
       }
       if (data?.assignTo) {
-        formData.append("assign_to_user_id", data?.assignTo);
+        formData.append("assign_to_user_id", `${data?.assignTo}`);
       }
       formData.append("company_website", data?.webSite || "");
       formData.append("time_line", data?.timeLine || "");
@@ -75,7 +73,7 @@ const LeadStageNegotiationScreen = () => {
       )?.[0]?.countryCodeAlpha;
       if (countryCodeAlpha && data?.phone) {
         formData.append("country_code_alpha", countryCodeAlpha);
-        formData.append("phone", data?.phone);
+        formData.append("phone", `${data?.phone}`);
       }
 
       const response = await dispatch(updateLeadAction(formData)).unwrap();

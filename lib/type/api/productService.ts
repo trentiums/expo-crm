@@ -1,4 +1,4 @@
-import { DocumentTye } from './lead';
+import { DocumentTye } from "./lead";
 
 export interface ProductServiceListParams {
   page?: number;
@@ -26,7 +26,7 @@ export interface EditProductServiceParams {
   documents: [];
 }
 export interface DeleteProductServicesParams {
-  product_service_id: number;
+  product_service_id: number | string;
 }
 
 export interface ProductServiceDetailsParams {

@@ -27,10 +27,6 @@ import Loader from "@atoms/Loader/Loader";
 import ActionModal from "@molecules/ActionModal/ActionModal";
 import { Actions } from "@molecules/ActionModal/ActionModal.props";
 import Trash from "@atoms/Illustrations/Trash";
-import {
-  dashboardLeadListAction,
-  dashboardLeadStageCountAction,
-} from "@redux/actions/dashboard";
 
 const settings = () => {
   const { t } = useTranslation("modalText");

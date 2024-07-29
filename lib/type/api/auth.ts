@@ -39,7 +39,7 @@ export interface LeadInformationFromValuesType {
   budget?: number;
   timeFrame?: string;
   comments: string;
-  dealAmount: string;
+  dealAmount: number;
   winCloseReason: string;
   dealCloseDate: Date;
 }

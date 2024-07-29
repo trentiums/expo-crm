@@ -12,5 +12,5 @@ export interface TabBarProps {
   onTabChange?: (index: number) => void;
   val?: string;
   totalWidth?: number;
-  isTabChange?: boolean;
+  isTabChange?: any;
 }

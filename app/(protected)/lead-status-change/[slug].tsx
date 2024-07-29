@@ -1,7 +1,6 @@
 import { ToastTypeProps } from "@molecules/Toast/Toast.props";
 import LeadStatusChangeForm from "@organisms/LeadStatusChangeForm/LeadStatusChangeForm";
 import { LeadStatusChangeFormValues } from "@organisms/LeadStatusChangeForm/LeadStatusChangeForm.props";
-import { useRoute } from "@react-navigation/native";
 import { getLeadDetailsAction, updateLeadAction } from "@redux/actions/lead";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import FormTemplate from "@templates/FormTemplate/FormTemplate";
@@ -35,13 +34,13 @@ const LeadStatusChangeScreen = () => {
     try {
       setLoading(true);
       let formData = new FormData();
-      formData.append("lead_id", leadId);
+      formData.append("lead_id", `${leadId}`);
       if (data?.email) {
         formData.append("email", data?.email);
       }
-      formData.append("lead_channel_id", data?.leadChannelId);
-      formData.append("lead_conversion_id", data?.leadConversionId);
-      formData.append("lead_status_id", leadStatusId);
+      formData.append("lead_channel_id", `${data?.leadChannelId}`);
+      formData.append("lead_conversion_id", `${data?.leadConversionId}`);
+      formData.append("lead_status_id", `${leadStatusId}`);
       formData.append("name", data?.name);
       selectedDataServices.forEach((service, index) => {
         formData.append(`product_services[${index}]`, service);
@@ -54,7 +53,7 @@ const LeadStatusChangeScreen = () => {
         formData.append("company_size", data?.companySize);
       }
       if (data?.assignTo) {
-        formData.append("assign_to_user_id", data?.assignTo);
+        formData.append("assign_to_user_id", `${data?.assignTo}`);
       }
       formData.append("company_website", values?.webSite || "");
       formData.append("time_line", values?.timeFrame || "");

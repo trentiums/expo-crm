@@ -1,6 +1,6 @@
 export interface LeadDetailsProps {
-  phoneNumber: number;
-  whatsAppNumber: number;
+  phoneNumber: number | string;
+  whatsAppNumber: number | string;
   mailID: string;
   title: string;
   dateTime: string;

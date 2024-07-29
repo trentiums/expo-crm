@@ -26,7 +26,7 @@ export interface SaveUserParams {
   password: string;
 }
 export interface DeleteUserParams {
-  user_id: number;
+  user_id: number | string;
 }
 export interface UpdateUserParams {
   user_id: number;
@@ -42,7 +42,7 @@ export interface UserStateType {
   createdAt: string;
 }
 export interface UserDetailsParams {
-  user_id: number;
+  user_id: number | any;
 }
 
 export interface UserDetailsResponse {

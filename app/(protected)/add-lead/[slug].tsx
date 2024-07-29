@@ -117,15 +117,15 @@ const AddLead = () => {
       }
       formData.append(
         "lead_channel_id",
-        selectedChannel || selectedData.leadChannelId
+        `${selectedChannel || selectedData.leadChannelId}`
       );
       formData.append(
         "lead_conversion_id",
-        selectedStage || selectedData.leadConversionId
+        `${selectedStage || selectedData.leadConversionId}`
       );
       formData.append(
         "lead_status_id",
-        selectedLead || selectedData.leadStatusId
+        `${selectedLead || selectedData.leadStatusId}`
       );
       formData.append(
         "name",
@@ -190,7 +190,10 @@ const AddLead = () => {
         );
       }
       if (assignTo || selectedData.assignTo) {
-        formData.append("assign_to_user_id", assignTo || selectedData.assignTo);
+        formData.append(
+          "assign_to_user_id",
+          `${assignTo || selectedData.assignTo}`
+        );
       }
       if (values?.dealCloseDate || selectedData?.dealCloseDate) {
         formData.append(
@@ -216,7 +219,7 @@ const AddLead = () => {
         formData.append(
           "country_code_alpha",
           countryList?.filter(
-            (item) => item?.id === selectedCountryCodeValue
+            (item) => item?.id === +selectedCountryCodeValue
           )?.[0]?.countryCodeAlpha
         );
       } else if (
@@ -224,11 +227,11 @@ const AddLead = () => {
         navigationType !== AddLeadNavigationType.BASIC &&
         selectedData.phone
       ) {
-        formData.append("phone", selectedData.phone);
+        formData.append("phone", `${selectedData.phone}`);
         formData.append(
           "country_code_alpha",
           countryList?.filter(
-            (item) => item?.id === selectedCountryCodeValue
+            (item) => item?.id === +selectedCountryCodeValue
           )?.[0]?.countryCodeAlpha
         );
       }

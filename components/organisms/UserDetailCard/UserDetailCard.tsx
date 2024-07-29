@@ -1,21 +1,20 @@
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 import {
   LeadDetailCardContainer,
   RenderRightView,
   SwipeText,
   TouchableOpacityContainer,
   ViewContainer,
-} from './UserDetailCard.styles';
-import { Spacer } from '@atoms/common/common.styles';
-import { Swipeable } from 'react-native-gesture-handler';
-import Trash from '@atoms/Illustrations/Trash';
-import EditIcon from '@atoms/Illustrations/EditIcon';
-import { UserDetailCardProps } from './UserDetailCard.props';
-import { useTranslation } from 'react-i18next';
-import UserDetails from '@molecules/UserDetails/UserDetails';
-import { useAppTheme } from '@constants/theme';
-import LeadDetail from '@molecules/LeadDetail/LeadDetail';
-import { RootState, useSelector } from '@redux/store';
+} from "./UserDetailCard.styles";
+import { Spacer } from "@atoms/common/common.styles";
+import { Swipeable } from "react-native-gesture-handler";
+import Trash from "@atoms/Illustrations/Trash";
+import EditIcon from "@atoms/Illustrations/EditIcon";
+import { UserDetailCardProps } from "./UserDetailCard.props";
+import { useTranslation } from "react-i18next";
+import { useAppTheme } from "@constants/theme";
+import LeadDetail from "@molecules/LeadDetail/LeadDetail";
+import { RootState, useSelector } from "@redux/store";
 
 const UserDetailCard: React.FC<UserDetailCardProps> = ({
   whatsAppNumber,
@@ -32,7 +31,7 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
   selectedCard,
   setSelectedCard,
 }) => {
-  const { t } = useTranslation('leadDetailCardDetails');
+  const { t } = useTranslation("leadDetailCardDetails");
   const { colors } = useAppTheme();
   const swipeAbleRef = useRef(null);
   const user = useSelector((state: RootState) => state.auth.user);
@@ -49,7 +48,7 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
           <EditIcon />
         </ViewContainer>
         <Spacer size={10} />
-        <SwipeText>{t('edit')}</SwipeText>
+        <SwipeText>{t("edit")}</SwipeText>
       </TouchableOpacityContainer>
       {user?.email !== mailID && (
         <TouchableOpacityContainer
@@ -59,7 +58,7 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
             <Trash />
           </ViewContainer>
           <Spacer size={10} />
-          <SwipeText>{t('delete')}</SwipeText>
+          <SwipeText>{t("delete")}</SwipeText>
         </TouchableOpacityContainer>
       )}
     </RenderRightView>

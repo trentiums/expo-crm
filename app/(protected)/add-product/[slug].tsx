@@ -31,7 +31,7 @@ const addProducts = () => {
       setLoading(true);
       let formData = new FormData();
       if (params?.slug) {
-        formData.append(`product_service_id`, +params?.slug);
+        formData.append(`product_service_id`, `${params?.slug}`);
       }
       formData.append("name", values?.name || "");
       formData.append("description", values?.description || "");
