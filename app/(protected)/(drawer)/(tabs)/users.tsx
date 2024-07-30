@@ -2,7 +2,11 @@ import { useAppTheme } from "@constants/theme";
 import { ToastTypeProps } from "@molecules/Toast/Toast.props";
 import UserDetailCard from "@organisms/UserDetailCard/UserDetailCard";
 import { UserDetailCardProps } from "@organisms/UserDetailCard/UserDetailCard.props";
-import { deleteUserAction, getUserListAction } from "@redux/actions/user";
+import {
+  deleteUserAction,
+  getAssignUserListAction,
+  getUserListAction,
+} from "@redux/actions/user";
 import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
 import { router } from "expo-router";
@@ -60,6 +64,7 @@ const Users = () => {
           type: ToastTypeProps.Success,
         },
       });
+      await dispatch(getAssignUserListAction());
     } catch (error: any) {
       toast.show(error, {
         type: "customToast",

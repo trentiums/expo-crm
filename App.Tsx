@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { GestureHandlerRootContainer } from "./App.styles";
 import NetInfo from "@react-native-community/netinfo";
-import NoInternet from "./src/components/molecules/NoInternet/NoInternet";
 import "./i18n/i18n";
+import NoInternet from "./components/molecules/NoInternet/NoInternet";
 
 SplashScreen.preventAutoHideAsync();
 

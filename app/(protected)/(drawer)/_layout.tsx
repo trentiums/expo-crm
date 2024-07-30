@@ -119,7 +119,7 @@ const DrawerLayout = () => {
           </DrawerContentScrollView>
         )}
         screenOptions={{
-          headerTitle: "CRM",
+          headerTitle: "Crm",
           headerTitleAlign: "center",
           headerTintColor: colors.white,
           headerStyle: {

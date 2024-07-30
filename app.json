@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "CRM",
-    "slug": "CRM",
-    "scheme": "CRM",
+    "name": "Crm",
+    "slug": "Crm",
+    "scheme": "Crm",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000"
     },
     "ios": {
       "supportsTablet": true
@@ -21,7 +21,7 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.CRM"
+      "package": "com.Crm"
     },
     "web": {
       "favicon": "./assets/icon.png"
@@ -30,7 +30,7 @@
       [
         "expo-router",
         {
-          "origin": "https://crm.trentiums.com/api/v1/"
+          "origin": "https://Crm.trentiums.com/api/v1/"
         }
       ]
     ]
