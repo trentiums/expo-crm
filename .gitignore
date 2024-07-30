@@ -36,3 +36,6 @@ yarn-error.*
 
 # Android
 android/
+
+# iOS
+ios/

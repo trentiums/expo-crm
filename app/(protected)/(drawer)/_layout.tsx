@@ -42,7 +42,7 @@ const DrawerLayout = () => {
             {...props}
             contentContainerStyle={{ flex: 1 }}>
             <DrawerNavigationView>
-              <View>
+              <View style={{ width: "100%" }}>
                 <UserInfoSection>
                   <UserName>{userData.name}</UserName>
                 </UserInfoSection>

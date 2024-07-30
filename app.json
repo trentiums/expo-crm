@@ -21,7 +21,7 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.CRM"
+      "package": "com.CRM"
     },
     "web": {
       "favicon": "./assets/icon.png"
