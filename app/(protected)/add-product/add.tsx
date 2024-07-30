@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { AddProductContainer } from "../(drawer)/drawer.style";
 import { useTranslation } from "react-i18next";
+import { useAppTheme } from "@constants/theme";
 
 const addProducts = () => {
   const dispatch = useAppDispatch();
@@ -22,7 +23,7 @@ const addProducts = () => {
   const { t } = useTranslation("screenTitle");
   const [loading, setLoading] = useState(false);
   const [documentArray, setDocumentArray] = useState<fileSystemProps>();
-
+  const { colors } = useAppTheme();
   const handleAddServices = async (values: AddProductFormValues) => {
     try {
       setLoading(true);
@@ -63,7 +64,13 @@ const addProducts = () => {
     setLoading(false);
   };
   useEffect(() => {
-    navigation.setOptions({ title: t("addProduct") });
+    navigation.setOptions({
+      title: t("addProduct"),
+      headerStyle: {
+        backgroundColor: colors.tabBar,
+      },
+      headerTintColor: colors.white,
+    });
   }, [navigation]);
   return (
     <ScreenTemplate>

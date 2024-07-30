@@ -74,7 +74,13 @@ const AddLead = () => {
     setSelectedData(leadsDetail);
   }, [leadsDetail]);
   useEffect(() => {
-    navigation.setOptions({ title: t("addLead") });
+    navigation.setOptions({
+      title: t("addLead"),
+      headerStyle: {
+        backgroundColor: colors.tabBar,
+      },
+      headerTintColor: colors.white,
+    });
   }, [navigation]);
 
   const handleSaveBasicInformation = async (

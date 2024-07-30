@@ -84,7 +84,13 @@ const AddLead = () => {
     getLeadDetails();
   }, [id]);
   useEffect(() => {
-    navigation.setOptions({ title: t("editLead") });
+    navigation.setOptions({
+      title: t("editLead"),
+      headerStyle: {
+        backgroundColor: colors.tabBar,
+      },
+      headerTintColor: colors.white,
+    });
   }, [navigation]);
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+import { useAppTheme } from "@constants/theme";
 import { ToastTypeProps } from "@molecules/Toast/Toast.props";
 import DealCloseWinForm from "@organisms/DealCloseWinForm/DealCloseWinForm";
 import { DealWinCloseFormValues } from "@organisms/DealCloseWinForm/DealCloseWinForm.props";
@@ -13,6 +14,7 @@ import { useToast } from "react-native-toast-notifications";
 
 const LeadStageCloseWonScreen = () => {
   const toast = useToast();
+  const { colors } = useAppTheme();
   const { t } = useTranslation("screenTitle");
   const dispatch = useAppDispatch();
   const slug = useLocalSearchParams();
@@ -108,7 +110,13 @@ const LeadStageCloseWonScreen = () => {
     setLoading(false);
   };
   useEffect(() => {
-    navigation.setOptions({ title: t("leadStageChange") });
+    navigation.setOptions({
+      title: t("leadStageChange"),
+      headerStyle: {
+        backgroundColor: colors.tabBar,
+      },
+      headerTintColor: colors.white,
+    });
   }, [navigation]);
   return (
     <ScreenTemplate>

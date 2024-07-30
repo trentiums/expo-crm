@@ -16,10 +16,12 @@ import React, { useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { AddProductContainer } from "../(drawer)/drawer.style";
 import { useTranslation } from "react-i18next";
+import { useAppTheme } from "@constants/theme";
 
 const addProducts = () => {
   const params = useLocalSearchParams();
   const dispatch = useAppDispatch();
+  const { colors } = useAppTheme();
   const toast = useToast();
   const navigation = useNavigation();
   const { t } = useTranslation("screenTitle");
@@ -81,7 +83,13 @@ const addProducts = () => {
     setLoading(false);
   };
   useEffect(() => {
-    navigation.setOptions({ title: t("editProducts") });
+    navigation.setOptions({
+      title: t("editProducts"),
+      headerStyle: {
+        backgroundColor: colors.tabBar,
+      },
+      headerTintColor: colors.white,
+    });
   }, [navigation]);
   return (
     <ScreenTemplate>

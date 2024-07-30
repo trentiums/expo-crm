@@ -139,7 +139,13 @@ const products = () => {
     setRefreshing(false);
   };
   useEffect(() => {
-    navigation.setOptions({ title: ts("products") });
+    navigation.setOptions({
+      title: ts("products"),
+      headerStyle: {
+        backgroundColor: colors.tabBar,
+      },
+      headerTintColor: colors.white,
+    });
   }, [navigation]);
   return (
     <ScreenTemplate

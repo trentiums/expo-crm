@@ -1,4 +1,5 @@
 import { PaddingSpace, Spacer } from "@atoms/common/common.styles";
+import { useAppTheme } from "@constants/theme";
 import { ToastTypeProps } from "@molecules/Toast/Toast.props";
 import UserInformationForm from "@organisms/UserInformationForm/UserInformationForm";
 import { UserInformationFormValues } from "@organisms/UserInformationForm/UserInformationForm.props";
@@ -19,6 +20,7 @@ import { useToast } from "react-native-toast-notifications";
 
 const addUser = () => {
   const toast = useToast();
+  const { colors } = useAppTheme();
   const dispatch = useAppDispatch();
   const params = useLocalSearchParams();
   const navigation = useNavigation();
@@ -74,7 +76,13 @@ const addUser = () => {
     setLoading(false);
   };
   useEffect(() => {
-    navigation.setOptions({ title: t("editUser") });
+    navigation.setOptions({
+      title: t("editUser"),
+      headerStyle: {
+        backgroundColor: colors.tabBar,
+      },
+      headerTintColor: colors.white,
+    });
   }, [navigation]);
   return (
     <ScreenTemplate>

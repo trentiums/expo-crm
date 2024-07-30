@@ -1,3 +1,4 @@
+import { useAppTheme } from "@constants/theme";
 import { ToastTypeProps } from "@molecules/Toast/Toast.props";
 import LeadStatusChangeForm from "@organisms/LeadStatusChangeForm/LeadStatusChangeForm";
 import { LeadStatusChangeFormValues } from "@organisms/LeadStatusChangeForm/LeadStatusChangeForm.props";
@@ -12,6 +13,7 @@ import { useToast } from "react-native-toast-notifications";
 
 const LeadStatusChangeScreen = () => {
   const toast = useToast();
+  const { colors } = useAppTheme();
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
   const { t } = useTranslation("screenTitle");
@@ -109,7 +111,13 @@ const LeadStatusChangeScreen = () => {
     setLoading(false);
   };
   useEffect(() => {
-    navigation.setOptions({ title: t("leadStageChange") });
+    navigation.setOptions({
+      title: t("leadStageChange"),
+      headerStyle: {
+        backgroundColor: colors.tabBar,
+      },
+      headerTintColor: colors.white,
+    });
   }, [navigation]);
   return (
     <ScreenTemplate>

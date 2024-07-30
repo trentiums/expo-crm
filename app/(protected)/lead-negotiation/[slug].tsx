@@ -1,3 +1,4 @@
+import { useAppTheme } from "@constants/theme";
 import { ToastTypeProps } from "@molecules/Toast/Toast.props";
 import { DealWinCloseFormValues } from "@organisms/DealCloseWinForm/DealCloseWinForm.props";
 import LeadProposalNegotiationForm from "@organisms/LeadProposolNagotioationForm/LeadProposolNagotioationForm";
@@ -12,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useToast } from "react-native-toast-notifications";
 
 const LeadStageNegotiationScreen = () => {
+  const { colors } = useAppTheme();
   const leadsData = useSelector(
     (state: RootState) => state.leads.leadList.leads
   );
@@ -98,7 +100,13 @@ const LeadStageNegotiationScreen = () => {
     setLoading(false);
   };
   useEffect(() => {
-    navigation.setOptions({ title: t("leadStageChange") });
+    navigation.setOptions({
+      title: t("leadStageChange"),
+      headerStyle: {
+        backgroundColor: colors.tabBar,
+      },
+      headerTintColor: colors.white,
+    });
   }, [navigation]);
   return (
     <ScreenTemplate>
