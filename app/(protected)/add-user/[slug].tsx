@@ -4,6 +4,7 @@ import UserInformationForm from "@organisms/UserInformationForm/UserInformationF
 import { UserInformationFormValues } from "@organisms/UserInformationForm/UserInformationForm.props";
 import {
   addUserAction,
+  getAssignUserListAction,
   getUserDetailAction,
   getUserListAction,
   updateUserAction,
@@ -53,6 +54,7 @@ const addUser = () => {
       } else {
         await dispatch(getUserListAction({}));
       }
+      await dispatch(getAssignUserListAction());
       toast.show(response?.message, {
         type: "customToast",
         data: {
