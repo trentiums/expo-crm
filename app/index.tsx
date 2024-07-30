@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Redirect } from "expo-router";
+import { Redirect, SplashScreen } from "expo-router";
 import { RootState, useSelector } from "@redux/store";
 import { setAuthenticationToken } from "@api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -11,6 +11,7 @@ const Index = () => {
     if (token) {
       setAuthenticationToken(token);
     }
+    SplashScreen.hideAsync();
   };
   useEffect(() => {
     handleSetToken();
