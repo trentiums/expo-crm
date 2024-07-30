@@ -9,7 +9,6 @@ export const DetailContainer = styled(View)`
   align-content: flex-start;
   gap: 8px;
   width: 100%;
-  flex: 1;
 `;
 
 export const LeadInfoView = styled(View)`
@@ -19,6 +18,7 @@ export const LeadInfoView = styled(View)`
   align-items: center;
   padding-left: 8px;
   flex: 1;
+  flex-basis: auto;
 `;
 
 export const NameContainer = styled(View)`
@@ -44,6 +44,7 @@ export const NumberEmailView = styled(View)<{ isFull?: boolean }>`
   flex-direction: row;
   flex: 1;
   justify-content: space-between;
+  flex-basis: auto;
 `;
 
 export const NumberView = styled(View)<{ isFullNumber?: boolean }>`

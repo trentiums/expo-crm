@@ -60,7 +60,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   return (
     <DetailContainer>
       <LeadInfoView>
-        <View>
+        <View style={{ flex: 1 }}>
           <NameText numberOfLines={1}>{title}</NameText>
           <DateTimeText>{dateTime}</DateTimeText>
         </View>

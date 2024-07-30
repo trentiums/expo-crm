@@ -166,7 +166,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
     }
   };
   const renderFilePreview = (file: any) => {
-    const type = file?.type;
+    const type = file?.type || file?.mimeType;
     return (
       <PressAbleContainer
         onPress={() => {
@@ -183,7 +183,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
           }}>
           <CrossIcon color={"#fff"} />
         </CrossIconContainer>
-        {type.includes("image") ? (
+        {type?.includes("image") ? (
           <ImagePreviewShow source={{ uri: file?.uri }} />
         ) : (
           <SvgShowContainer>

@@ -42,7 +42,7 @@ const English = {
     passwordLable: "Enter your Password",
     email: "Enter Email",
     emailLabel: "Enter your Email",
-    loginSuccess: "Login SuccessFully",
+    loginSuccess: "Login Successfully",
   },
   forgot: {
     forgotusername: "Forgot your username?",
