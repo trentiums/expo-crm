@@ -40,14 +40,7 @@ const LoginScreen = () => {
           password: values.password.trim(),
         })
       ).unwrap();
-      console.log(loginResponse, "loginResponse");
       if (await loginResponse.status) {
-        toast.show(t("loginSuccess"), {
-          type: "customToast",
-          data: {
-            type: ToastTypeProps.Success,
-          },
-        });
         await Promise.all([
           dispatch(leadChannelListAction()),
           dispatch(leadConversionListAction()),
