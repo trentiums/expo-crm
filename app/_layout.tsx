@@ -9,7 +9,6 @@ import { Provider as ReduxProvider } from "react-redux";
 import "../i18n/i18n";
 import ThemeProvider from "../containers/ThemeProvider";
 import ToastProviderContainer from "@molecules/Toast/Toast";
-
 const RootStack = () => {
   return (
     <GestureHandlerRootContainer>

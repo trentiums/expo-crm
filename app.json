@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#000"
+      "backgroundColor": "#000000"
     },
     "ios": {
       "supportsTablet": true
@@ -19,9 +19,14 @@
       "jsEngine": "hermes",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#000000"
       },
-      "package": "com.Crm"
+      "package": "com.crm",
+      "splash": {
+        "image": "./assets/splash.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#000000"
+      }
     },
     "web": {
       "favicon": "./assets/icon.png"
@@ -30,7 +35,7 @@
       [
         "expo-router",
         {
-          "origin": "https://Crm.trentiums.com/api/v1/"
+          "origin": "https://crm.trentiums.com/api/v1/"
         }
       ]
     ]
