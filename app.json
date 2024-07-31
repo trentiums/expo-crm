@@ -21,7 +21,7 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#000000"
       },
-      "package": "com.crm",
+      "package": "com.trentiums.crm",
       "splash": {
         "image": "./assets/splash.png",
         "resizeMode": "cover",
@@ -37,7 +37,22 @@
         {
           "origin": "https://crm.trentiums.com/api/v1/"
         }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "Trentiums Solutions",
+          "project": "crm"
+        }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": "https://crm.trentiums.com/api/v1/"
+      },
+      "eas": {
+        "projectId": "25bd144c-2353-40d2-986f-0be86fceb5d8"
+      }
+    }
   }
 }

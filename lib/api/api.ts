@@ -3,7 +3,7 @@ import store from "@redux/store";
 import { StatusCode } from "@type/api/api";
 import axios from "axios";
 
-export const baseURL = "https://Crm.trentiums.com/api/v1/";
+export const baseURL = "https://crm.trentiums.com/api/v1/";
 export const api = axios.create({
   baseURL,
 });
