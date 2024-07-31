@@ -31,6 +31,7 @@ const LoginScreen = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const toast = useToast();
+  console.log("hello");
   const onLoginPress = async (values: LoginFormData) => {
     try {
       setLoading(true);
