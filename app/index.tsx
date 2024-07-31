@@ -4,12 +4,12 @@ SplashScreen.preventAutoHideAsync();
 import { RootState, useSelector } from "@redux/store";
 import { setAuthenticationToken } from "@api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Sentry from "@sentry/react-native";
+// import * as Sentry from "@sentry/react-native";
 
-Sentry.init({
-  dsn: "https://46d8d8b7dd0180aeb0673685956609e1@o4507174888275968.ingest.de.sentry.io/4507690690216016",
-  debug: true,
-});
+// Sentry.init({
+//   dsn: "https://46d8d8b7dd0180aeb0673685956609e1@o4507174888275968.ingest.de.sentry.io/4507690690216016",
+//   debug: true,
+// });
 
 const Index = () => {
   const token = useSelector((state: RootState) => state.auth.user.token);
@@ -41,4 +41,5 @@ const Index = () => {
   );
 };
 
-export default Sentry.wrap(Index);
+// export default Sentry.wrap(Index);
+export default Index;
