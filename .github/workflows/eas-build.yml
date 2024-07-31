@@ -15,7 +15,8 @@ jobs:
             echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
             exit 1
           fi
-
+      - name: Build iOS
+        run: eas build --platform ios --profile preview
       - name: "Set ENV"
         run: echo "https://crm.trentiums.com/api/v1/"
         env:
