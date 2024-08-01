@@ -45,14 +45,14 @@
         "origin": "https://crm.trentiums.com/api/v1/"
       },
       "eas": {
-        "projectId": "25bd144c-2353-40d2-986f-0be86fceb5d8"
+        "projectId": "0d412a02-3387-4418-8868-c6dbe7f049ab"
       }
     },
     "runtimeVersion": {
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/25bd144c-2353-40d2-986f-0be86fceb5d8"
+      "url": "https://u.expo.dev/0d412a02-3387-4418-8868-c6dbe7f049ab"
     }
   }
 }
