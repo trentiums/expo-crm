@@ -18,7 +18,6 @@
       }
     },
     "production": {
-      "workflow": "managed",
       "owner": "trentium-solution",
       "android": {
         "image": "latest"
@@ -28,7 +27,6 @@
       }
     },
     "preview": {
-      "workflow": "managed",
       "owner": "trentium-solution",
       "ios": {
         "simulator": true
