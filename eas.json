@@ -27,7 +27,8 @@
     },
     "preview": {
       "ios": {
-        "simulator": true
+        "simulator": true,
+        "nonInteractive": true
       },
       "android": {
         "buildType": "apk"
