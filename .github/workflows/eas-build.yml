@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Check for EXPO_TOKEN
         run: |
-          if [ -z "2rH8PEJDWznEqyTY8M9gzPrV0-sOq_ozha3HjLWv" ]; then
+          if [ -z "0d412a02-3387-4418-8868-c6dbe7f049ab" ]; then
             echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
             exit 1
           fi
@@ -35,7 +35,7 @@ jobs:
         with:
           expo-version: latest
           eas-version: latest
-          token: "2rH8PEJDWznEqyTY8M9gzPrV0-sOq_ozha3HjLWv"
+          token: "0d412a02-3387-4418-8868-c6dbe7f049ab"
 
       - name: Find yarn cache
         id: yarn-cache-path
