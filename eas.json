@@ -4,7 +4,6 @@
   },
   "build": {
     "development": {
-      "extends": "base",
       "env": {
         "EXPO_PUBLIC_API_BASEURL": "https://crm.trentiums.com/api/v1/"
       },
