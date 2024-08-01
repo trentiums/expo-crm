@@ -25,14 +25,11 @@ const addUser = () => {
   const params = useLocalSearchParams();
   const navigation = useNavigation();
   const { t } = useTranslation("screenTitle");
-  console.log(params, "params");
   const [slug] = useState(params?.slug);
-  console.log(slug, "slug");
   const [loading, setLoading] = useState(false);
   const onUserInformationSubmitPress = async (
     values: UserInformationFormValues
   ) => {
-    console.log(slug, "slug");
     try {
       setLoading(true);
       const response = slug
