@@ -55,7 +55,7 @@ jobs:
         run: eas build --platform android --profile preview
 
       - name: Build iOS
-        run: eas build --platform ios --profile preview
+        run: eas build --platform ios --profile preview --non-interactive
         env:
           EXPO_TOKEN: fW4otygBhLhvvWvp1qeNjPcbeL1UlvfwXpPxtQsa
           APPLE_APP_SPECIFIC_PASSWORD: Kailasben@0611
