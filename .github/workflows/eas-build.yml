@@ -52,7 +52,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Publish build
-        run: eas build --platform all --profile preview --non-interactive --no-wait
+        run: eas build --platform all --profile preview  --no-wait
 
       - name: Build iOS
-        run: eas build --profile production --platform ios --local --non-interactive
+        run: eas build --profile production --platform ios --local

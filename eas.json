@@ -14,12 +14,14 @@
         "simulator": true
       },
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "credentialsSource": "remote"
       }
     },
     "production": {
       "android": {
-        "image": "latest"
+        "image": "latest",
+        "credentialsSource": "remote"
       },
       "ios": {
         "image": "latest"
@@ -30,7 +32,8 @@
         "simulator": true
       },
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "credentialsSource": "remote"
       },
       "distribution": "internal"
     }
