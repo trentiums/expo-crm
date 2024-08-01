@@ -141,11 +141,6 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
     );
     setAssignTo(id ? leadsDetail?.assignTo : addLeadFormData?.assignTo);
     setSourceValue(addLeadFormData?.source || dropdownData?.[0]?.id);
-    console.log(
-      leadsDetail?.budget,
-      "leadsDetail?.budget",
-      typeof leadsDetail?.budget
-    );
 
     form.change(
       "budget",
