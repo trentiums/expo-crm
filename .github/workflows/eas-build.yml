@@ -55,3 +55,6 @@ jobs:
         run: eas build --profile production --platform ios
         env:
           EXPO_TOKEN: b-VWWGh8ykTSJiRec8dBRNHiwz5jwt1-bqazemGb
+          APPLE_ID: kuldip@trentiums.com
+          APPLE_APP_SPECIFIC_PASSWORD: Kailasben@0611
+          APPLE_TEAM_ID: Q98KG3C5AT
