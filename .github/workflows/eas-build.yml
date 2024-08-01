@@ -47,7 +47,7 @@ jobs:
         run: yarn install --immutable
 
       - name: Publish Android build
-        run: eas build --platform android --profile preview --no-wait
+        run: eas build --no-wait --profile development --platform android
         env:
           EXPO_TOKEN: b-VWWGh8ykTSJiRec8dBRNHiwz5jwt1-bqazemGb
 
