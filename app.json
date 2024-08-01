@@ -13,7 +13,8 @@
       "backgroundColor": "#000000"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.trentiums.crm"
     },
     "android": {
       "jsEngine": "hermes",
@@ -46,6 +47,12 @@
       "eas": {
         "projectId": "25bd144c-2353-40d2-986f-0be86fceb5d8"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/25bd144c-2353-40d2-986f-0be86fceb5d8"
     }
   }
 }
