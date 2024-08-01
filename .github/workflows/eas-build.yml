@@ -47,11 +47,11 @@ jobs:
         run: yarn install --immutable
 
       - name: Publish Android build
-        run: eas build --platform android --profile preview --non-interactive --no-wait
+        run: eas build --platform android --profile preview --no-wait
         env:
           EXPO_TOKEN: b-VWWGh8ykTSJiRec8dBRNHiwz5jwt1-bqazemGb
 
       - name: Build iOS
-        run: eas build --profile production --platform ios --non-interactive
+        run: eas build --profile production --platform ios
         env:
           EXPO_TOKEN: b-VWWGh8ykTSJiRec8dBRNHiwz5jwt1-bqazemGb
