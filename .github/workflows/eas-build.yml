@@ -16,11 +16,6 @@ jobs:
             exit 1
           fi
 
-      - name: "Set ENV"
-        run: echo "https://crm.trentiums.com/api/v1/"
-        env:
-          BASE_URL: https://crm.trentiums.com/api/v1/
-
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -35,7 +30,7 @@ jobs:
         with:
           expo-version: latest
           eas-version: latest
-          token: "b-VWWGh8ykTSJiRec8dBRNHiwz5jwt1-bqazemGb"
+          token: b-VWWGh8ykTSJiRec8dBRNHiwz5jwt1-bqazemGb
 
       - name: Find yarn cache
         id: yarn-cache-path
@@ -51,8 +46,12 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Publish build
-        run: eas build --platform android --profile preview  --no-wait
+      - name: Publish Android build
+        run: eas build --platform android --profile preview --non-interactive --no-wait
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
       - name: Build iOS
-        run: eas build --profile production --platform ios --local
+        run: eas build --profile production --platform ios --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
