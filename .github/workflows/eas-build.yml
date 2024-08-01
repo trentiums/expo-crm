@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Check for EXPO_TOKEN
         run: |
-          if [ -z "fW4otygBhLhvvWvp1qeNjPcbeL1UlvfwXpPxtQsa" ]; then
+          if [ -z "1rPpefZgZFHdMI-ww20GYx7FWDgsGq9WqYswxcax" ]; then
             echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
             exit 1
           fi
@@ -35,7 +35,7 @@ jobs:
         with:
           expo-version: latest
           eas-version: latest
-          token: "fW4otygBhLhvvWvp1qeNjPcbeL1UlvfwXpPxtQsa"
+          token: "1rPpefZgZFHdMI-ww20GYx7FWDgsGq9WqYswxcax"
 
       - name: Find yarn cache
         id: yarn-cache-path
@@ -57,7 +57,7 @@ jobs:
       - name: Build iOS
         run: eas build --profile production --platform ios --local --non-interactive
         env:
-          EXPO_TOKEN: fW4otygBhLhvvWvp1qeNjPcbeL1UlvfwXpPxtQsa
+          EXPO_TOKEN: 1rPpefZgZFHdMI-ww20GYx7FWDgsGq9WqYswxcax
           APPLE_APP_SPECIFIC_PASSWORD: Kailasben@0611
           APPLE_APP_ID: "6590634281"
           APPLE_APP_KEY_ID: "OZHIV2I0O01O"
