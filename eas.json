@@ -27,6 +27,9 @@
       "ios": {
         "image": "latest",
         "credentialsSource": "remote"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_BASEURL": "https://crm.trentiums.com/api/v1/"
       }
     },
     "preview": {

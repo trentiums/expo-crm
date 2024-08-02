@@ -52,7 +52,7 @@ jobs:
       #     EXPO_TOKEN: b-VWWGh8ykTSJiRec8dBRNHiwz5jwt1-bqazemGb
 
       - name: Build iOS
-        run: eas build --profile production --platform ios
+        run: eas build --platform all --non-interactive --no-wait
         env:
           EXPO_TOKEN: b-VWWGh8ykTSJiRec8dBRNHiwz5jwt1-bqazemGb
           APPLE_ID: kuldip@trentiums.com
