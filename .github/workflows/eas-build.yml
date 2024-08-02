@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Check for EXPO_TOKEN
         run: |
-          if [ -z "b-VWWGh8ykTSJiRec8dBRNHiwz5jwt1-bqazemGb" ]; then
+          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
             echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
             exit 1
           fi
@@ -30,7 +30,7 @@ jobs:
         with:
           expo-version: latest
           eas-version: latest
-          token: b-VWWGh8ykTSJiRec8dBRNHiwz5jwt1-bqazemGb
+          token: ${{ secrets.EXPO_TOKEN }}
 
       - name: Find yarn cache
         id: yarn-cache-path
@@ -46,15 +46,14 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      # - name: Publish Android build
-      #   run: eas build --no-wait --profile development --platform android
-      #   env:
-      #     EXPO_TOKEN: b-VWWGh8ykTSJiRec8dBRNHiwz5jwt1-bqazemGb
-
+      - name: Publish Android build
+        run: eas build --no-wait --profile development --platform android
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
       - name: Build iOS
         run: eas build --platform all --non-interactive --no-wait
         env:
-          EXPO_TOKEN: b-VWWGh8ykTSJiRec8dBRNHiwz5jwt1-bqazemGb
-          APPLE_ID: kuldip@trentiums.com
-          APPLE_APP_SPECIFIC_PASSWORD: vlcr-ckzo-fqfw-vahi
-          APPLE_TEAM_ID: Q98KG3C5AT
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
