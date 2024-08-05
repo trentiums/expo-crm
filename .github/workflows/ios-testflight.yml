@@ -20,7 +20,7 @@ jobs:
           node-version: "20.12.0"
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install --immutable
 
       - name: Install CocoaPods
         run: pod install
