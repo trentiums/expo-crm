@@ -39,26 +39,31 @@ jobs:
       - name: Restore cache
         uses: actions/cache@v2
         with:
-          path: "${{ steps.yarn-cache-path.outputs.dir }}"
-          key: "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
-          restore-keys: "${{ runner.os }}-yarn-"
+          path: ${{ steps.yarn-cache-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
 
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: Install EAS CLI globally
+        run: npm install -g eas-cli
+
       - name: Publish Android build
-        run: eas build --no-wait --profile development --platform android
+        run: eas build --profile development --platform android --non-interactive --no-wait
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
       - name: Build iOS
-        run: eas build --platform all --non-interactive --no-wait
+        run: eas build --profile development --platform ios --non-interactive --no-wait
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+
       - name: Submit to TestFlight
-        run: npx eas submit --platform ios --profile production
+        run: eas submit --platform ios --profile production --non-interactive
         env:
           EXPO_APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
           EXPO_APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
