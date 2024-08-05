@@ -176,7 +176,6 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
         type: ["application/pdf", "image/*", "text/plain"],
         copyToCacheDirectory: true,
       });
-      console.log(res, "res");
 
       if (!res.canceled) {
         res.assets.forEach((file) => {
