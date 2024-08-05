@@ -39,9 +39,9 @@ jobs:
       - name: Increment build number
         env:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.KULDIP_DEV }}
           APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
-          APP_STORE_APPLE_ID: ${{ secrets.APP_STORE_APPLE_ID }}
+          APP_STORE_APPLE_ID: ${{ secrets.APPLE_ID }}
         run: |
           cd $GITHUB_WORKSPACE
           LATEST_BUILD_NUMBER=$(npx app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID")
