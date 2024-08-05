@@ -148,7 +148,6 @@ const AddLead = () => {
           ? values?.companyName || ""
           : selectedData.companyName || ""
       );
-      console.log(values.budget, selectedData.budget);
       if (values?.budget || selectedData?.budget) {
         formData.append(
           "budget",
