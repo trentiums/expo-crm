@@ -73,3 +73,22 @@ export const ProductCardView = styled(Pressable)`
 export const AddProductContainer = styled(View)`
   padding: 16px;
 `;
+
+export const FilterContainer = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0px 16px;
+  gap: 16px;
+`;
+export const FilterIconView = styled(Pressable)`
+  width: 11%;
+  padding: 12px 8px;
+  background-color: ${({ theme }) => theme.colors.primaryColor};
+  border-radius: 12px;
+`;
+export const SearchInputContainer = styled(View)`
+  width: 85%;
+`;

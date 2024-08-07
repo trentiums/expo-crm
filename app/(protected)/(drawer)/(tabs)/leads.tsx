@@ -10,7 +10,14 @@ import { LeadListState } from "@type/api/lead";
 import { initialModalType } from "@utils/constant";
 import { router } from "expo-router";
 import moment from "moment";
-import React, { RefObject, useEffect, useState } from "react";
+import React, {
+  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useTranslation } from "react-i18next";
 import { Pressable } from "react-native";
 import { RefreshControl, Swipeable } from "react-native-gesture-handler";
@@ -27,15 +34,30 @@ import Loader from "@atoms/Loader/Loader";
 import ActionModal from "@molecules/ActionModal/ActionModal";
 import { Actions } from "@molecules/ActionModal/ActionModal.props";
 import Trash from "@atoms/Illustrations/Trash";
+import TextInput from "@atoms/TextInput/TextInput";
+import isEmpty from "lodash/isEmpty";
+import { useDebounce } from "@utils/useDebounce";
+import {
+  FilterContainer,
+  FilterIconView,
+  SearchInputContainer,
+} from "../drawer.style";
+import Filter from "@atoms/Illustrations/Filter";
+import { DropdownBottomSheetSnapPoints } from "@constants/common";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import FormTemplate from "@templates/FormTemplate/FormTemplate";
+import LeadsFilterForm from "@organisms/LeadsFilterForm/LeadsFilterForm";
 
 const settings = () => {
   const { t } = useTranslation("modalText");
   const { t: td } = useTranslation("dashBoard");
   const { t: ts } = useTranslation("addData");
   const { colors } = useAppTheme();
+  const bottomSheetRef = useRef<any>(null);
   const leadsData = useSelector(
     (state: RootState) => state.leads.leadList?.leads
   );
+
   const leadListData = useSelector((state: RootState) => state.leads.leadList);
   const toast = useToast();
   const general = useSelector((state: RootState) => state.general);
@@ -47,17 +69,24 @@ const settings = () => {
   const [loading, setLoading] = useState(false);
   const [moreLoading, setMoreLoading] = useState(false);
   const [leadsLoading, setLeadsLoading] = useState(false);
+  const [leadSearch, setLeadSearch] = useState("");
   const dispatch = useAppDispatch();
   const [refreshing, setRefreshing] = useState(false);
   const [openSwipeAbleRef, setOpenSwipeAbleRef] =
     useState<RefObject<Swipeable> | null>(null);
   const [modal, setModal] = useState(false);
   const [currentId, setCurrentId] = useState<number>(0);
+  const [filterSheet, setFilterSheet] = useState(false);
+  const [channelId, setChannelId] = useState();
+  const [statusId, setStatusId] = useState();
+  const [conversionId, setConversionId] = useState();
+  const [orderBy, setOrderBy] = useState();
+  const [sortBy, setSortBy] = useState();
   const handleDelete = async (slug: number) => {
     setShowModal(true);
     setDeleteCardId(slug);
   };
-
+  const debouncedLeadSearch = useDebounce(leadSearch || undefined, 500);
   const onDeleteActionPress = async (slug: number) => {
     setLoading(true);
     try {
@@ -190,6 +219,47 @@ const settings = () => {
     }
     setRefreshing(false);
   };
+  const searchFilter = useMemo(() => {
+    if (isEmpty(leadSearch)) {
+      return {};
+    }
+    const filtersValue = {};
+    if (leadSearch) {
+      filtersValue["search"] = debouncedLeadSearch;
+    }
+    return filtersValue;
+  }, [leadSearch]);
+  useEffect(() => {
+    handleSearchLead();
+  }, [searchFilter]);
+
+  const handleSearchLead = async () => {
+    try {
+      setLeadsLoading(true);
+      await dispatch(
+        getLeadListAction({ search: debouncedLeadSearch })
+      ).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+    setLeadsLoading(false);
+  };
+
+  const handleApplyFilter = async (values: any) => {
+    try {
+      setLeadsLoading(true);
+      await dispatch(
+        getLeadListAction({
+          end_date: values?.endDate,
+          start_date: values?.startDate,
+          search: debouncedLeadSearch,
+        })
+      ).unwrap();
+    } catch (error) {
+      console.log(error);
+    }
+    setLeadsLoading(false);
+  };
   return (
     <ScreenTemplate
       addButtonText={ts("lead")}
@@ -197,6 +267,19 @@ const settings = () => {
         dispatch(setLeadsInformation());
         router.navigate(`/(protected)/add-lead/add`);
       }}>
+      <Spacer size={16} />
+      <FilterContainer>
+        <SearchInputContainer>
+          <TextInput
+            mode="outlined"
+            value={leadSearch}
+            onChangeText={(text) => setLeadSearch(text)}
+          />
+        </SearchInputContainer>
+        <FilterIconView onPress={() => setFilterSheet(true)}>
+          <Filter />
+        </FilterIconView>
+      </FilterContainer>
       {leadsLoading ? (
         <LoaderView>
           <ActivityIndicator color={colors.primaryColor} />
@@ -248,6 +331,30 @@ const settings = () => {
             />
           )}
         </PaddingSpace>
+      )}
+      {filterSheet && (
+        <BottomSheetModal
+          backgroundStyle={{
+            backgroundColor: colors.darkBackground,
+          }}
+          ref={bottomSheetRef}
+          enablePanDownToClose={true}
+          topInset={top}
+          index={1}
+          snapPoints={DropdownBottomSheetSnapPoints}
+          onChange={(index) => {
+            if (index <= 0) {
+              bottomSheetRef.current?.close();
+              setFilterSheet(false);
+            }
+          }}>
+          <FormTemplate
+            Component={LeadsFilterForm}
+            onSubmit={(values) => handleApplyFilter(values)}
+            selectedChannel={channelId}
+            setSelectedChannel={setChannelId}
+          />
+        </BottomSheetModal>
       )}
     </ScreenTemplate>
   );
