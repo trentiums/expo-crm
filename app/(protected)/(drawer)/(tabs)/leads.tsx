@@ -211,6 +211,14 @@ const settings = () => {
         await dispatch(
           getLeadListAction({
             page: leadListData?.currentPage + 1,
+            search: leadSearch,
+            sort_order: sortBy,
+            order_by: orderBy,
+            lead_channel_id: channelId,
+            lead_conversion_id: conversionId,
+            lead_status_id: statusId,
+            end_date: endDate && moment(endDate).format("YYYY-MM-DD"),
+            start_date: startDate && moment(startDate).format("YYYY-MM-DD"),
           })
         ).unwrap();
       } catch (error) {
@@ -268,10 +276,8 @@ const settings = () => {
       setFilterLoading(true);
       await dispatch(
         getLeadListAction({
-          end_date:
-            (endDate && moment(endDate).format("YYYY-MM-DD")) || undefined,
-          start_date:
-            (startDate && moment(startDate).format("YYYY-MM-DD")) || undefined,
+          end_date: endDate && moment(endDate).format("YYYY-MM-DD"),
+          start_date: startDate && moment(startDate).format("YYYY-MM-DD"),
           search: debouncedLeadSearch,
           lead_channel_id: channelId,
           lead_conversion_id: conversionId,
