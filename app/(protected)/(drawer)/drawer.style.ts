@@ -73,3 +73,37 @@ export const ProductCardView = styled(Pressable)`
 export const AddProductContainer = styled(View)`
   padding: 16px;
 `;
+
+export const FilterContainer = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0px 16px;
+  gap: 16px;
+`;
+export const FilterIconView = styled(Pressable)`
+  width: 11%;
+  padding: 12px 8px;
+  background-color: ${({ theme }) => theme.colors.primaryColor};
+  border-radius: 12px;
+  position: relative;
+`;
+export const SearchInputContainer = styled(View)`
+  width: 85%;
+`;
+export const FilterCountView = styled(View)`
+  position: absolute;
+  top: 0;
+  left: 30;
+  background-color: ${({ theme }) => theme.colors.white};
+  padding: 2px 6px;
+  z-index: 1;
+  border-radius: 8px;
+`;
+
+export const FilterCountText = styled(Text)`
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.black};
+`;

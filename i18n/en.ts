@@ -117,6 +117,7 @@ const English = {
     discardMedia: "Delete",
     yesDiscard: "Delete",
     cancel: "Cancel",
+    searchLeads: "search leads",
     addProduct: "P/S",
   },
   BasicInformation: {
@@ -200,6 +201,18 @@ const English = {
     document: "Documents",
     nameEg: "Product / Services name",
     uploadDocuments: "Upload Documents",
+  },
+  leadsFilter: {
+    startDate: "Start Date",
+    endDate: "End Date",
+    orderBy: "Order By",
+    sortOrder: "Sort Order",
+    status: "Status",
+    channel: "Channel",
+    conversion: "Conversion",
+    search: "Search",
+    list: "List",
+    applyFilter: "Apply Filters",
   },
 };
 
