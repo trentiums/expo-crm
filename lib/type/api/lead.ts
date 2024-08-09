@@ -21,8 +21,8 @@ export interface SaveLeadParams {
   documents?: File;
 }
 export interface LeadListParams {
-  start_date?: Date;
-  end_date?: Date;
+  start_date?: Date | string;
+  end_date?: Date | string;
   order_by?: ORDERBY;
   sort_order?: SORTORDER;
   page?: number;

@@ -88,7 +88,22 @@ export const FilterIconView = styled(Pressable)`
   padding: 12px 8px;
   background-color: ${({ theme }) => theme.colors.primaryColor};
   border-radius: 12px;
+  position: relative;
 `;
 export const SearchInputContainer = styled(View)`
   width: 85%;
+`;
+export const FilterCountView = styled(View)`
+  position: absolute;
+  top: 0;
+  left: 20;
+  background-color: ${({ theme }) => theme.colors.white};
+  padding: 2px 6px;
+  z-index: -1;
+  border-radius: 8px;
+`;
+
+export const FilterCountText = styled(Text)`
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.black};
 `;

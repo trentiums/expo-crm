@@ -16,4 +16,9 @@ export type LeadFilterFormProps = FormRenderProps<LeadsFilterFormValues> & {
   setOrderBy: (value?: number) => void;
   setSortBy: (value?: number) => void;
   sortBy: number;
+  handleDropDownClose?: () => void;
+  startDate: Date;
+  setStartDate: (value: Date) => void;
+  endDate: Date;
+  setEndDate: (value: Date) => void;
 };

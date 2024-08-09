@@ -23,7 +23,7 @@ export const sortOrderList = [
     title: "Ascending ",
   },
   {
-    id: 1,
+    id: 2,
     title: "Descending ",
   },
 ];

@@ -39,6 +39,8 @@ import isEmpty from "lodash/isEmpty";
 import { useDebounce } from "@utils/useDebounce";
 import {
   FilterContainer,
+  FilterCountText,
+  FilterCountView,
   FilterIconView,
   SearchInputContainer,
 } from "../drawer.style";
@@ -47,9 +49,12 @@ import { DropdownBottomSheetSnapPoints } from "@constants/common";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import FormTemplate from "@templates/FormTemplate/FormTemplate";
 import LeadsFilterForm from "@organisms/LeadsFilterForm/LeadsFilterForm";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Text from "@atoms/Text/Text";
 
 const settings = () => {
   const { t } = useTranslation("modalText");
+  const { top } = useSafeAreaInsets();
   const { t: td } = useTranslation("dashBoard");
   const { t: ts } = useTranslation("addData");
   const { colors } = useAppTheme();
@@ -82,11 +87,15 @@ const settings = () => {
   const [conversionId, setConversionId] = useState();
   const [orderBy, setOrderBy] = useState();
   const [sortBy, setSortBy] = useState();
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [filterLoading, setFilterLoading] = useState(false);
+  const [filterCount, setFilterCount] = useState(0);
   const handleDelete = async (slug: number) => {
     setShowModal(true);
     setDeleteCardId(slug);
   };
-  const debouncedLeadSearch = useDebounce(leadSearch || undefined, 500);
+  const debouncedLeadSearch = useDebounce(leadSearch || undefined, 300);
   const onDeleteActionPress = async (slug: number) => {
     setLoading(true);
     try {
@@ -224,21 +233,17 @@ const settings = () => {
       return {};
     }
     const filtersValue = {};
-    if (leadSearch) {
-      filtersValue["search"] = debouncedLeadSearch;
-    }
+    filtersValue["search"] = leadSearch;
     return filtersValue;
-  }, [leadSearch]);
+  }, [leadSearch, debouncedLeadSearch]);
   useEffect(() => {
     handleSearchLead();
-  }, [searchFilter]);
+  }, [debouncedLeadSearch]);
 
   const handleSearchLead = async () => {
     try {
       setLeadsLoading(true);
-      await dispatch(
-        getLeadListAction({ search: debouncedLeadSearch })
-      ).unwrap();
+      await dispatch(getLeadListAction(searchFilter)).unwrap();
     } catch (error) {
       console.log(error);
     }
@@ -246,19 +251,50 @@ const settings = () => {
   };
 
   const handleApplyFilter = async (values: any) => {
+    const states = [
+      startDate,
+      endDate,
+      channelId,
+      statusId,
+      conversionId,
+      orderBy,
+      sortBy,
+    ];
+    const count = states.filter(
+      (state) => state !== null && state !== undefined && state !== ""
+    ).length;
+    setFilterCount(count);
     try {
-      setLeadsLoading(true);
+      setFilterLoading(true);
       await dispatch(
         getLeadListAction({
-          end_date: values?.endDate,
-          start_date: values?.startDate,
+          end_date:
+            (endDate && moment(endDate).format("YYYY-MM-DD")) || undefined,
+          start_date:
+            (startDate && moment(startDate).format("YYYY-MM-DD")) || undefined,
           search: debouncedLeadSearch,
+          lead_channel_id: channelId,
+          lead_conversion_id: conversionId,
+          lead_status_id: statusId,
+          order_by: orderBy,
+          sort_order: sortBy,
         })
       ).unwrap();
     } catch (error) {
-      console.log(error);
+      toast.show(error, {
+        type: "customToast",
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
     }
-    setLeadsLoading(false);
+    setFilterSheet(false);
+    setFilterLoading(false);
+    bottomSheetRef.current?.close();
+  };
+  const handleOpenBottomSheetOpen = () => {
+    setFilterSheet(true);
+    bottomSheetRef.current?.present();
   };
   return (
     <ScreenTemplate
@@ -274,9 +310,23 @@ const settings = () => {
             mode="outlined"
             value={leadSearch}
             onChangeText={(text) => setLeadSearch(text)}
+            placeholder={t("searchLeads")}
+            style={[
+              {
+                borderRadius: 25,
+                overflow: "hidden",
+                borderWidth: 0,
+              },
+            ]}
+            outlineColor="transparent"
           />
         </SearchInputContainer>
-        <FilterIconView onPress={() => setFilterSheet(true)}>
+        <FilterIconView onPress={handleOpenBottomSheetOpen}>
+          {filterCount > 0 && (
+            <FilterCountView>
+              <FilterCountText>{filterCount}</FilterCountText>
+            </FilterCountView>
+          )}
           <Filter />
         </FilterIconView>
       </FilterContainer>
@@ -332,30 +382,42 @@ const settings = () => {
           )}
         </PaddingSpace>
       )}
-      {filterSheet && (
-        <BottomSheetModal
-          backgroundStyle={{
-            backgroundColor: colors.darkBackground,
-          }}
-          ref={bottomSheetRef}
-          enablePanDownToClose={true}
-          topInset={top}
-          index={1}
-          snapPoints={DropdownBottomSheetSnapPoints}
-          onChange={(index) => {
-            if (index <= 0) {
-              bottomSheetRef.current?.close();
-              setFilterSheet(false);
-            }
-          }}>
-          <FormTemplate
-            Component={LeadsFilterForm}
-            onSubmit={(values) => handleApplyFilter(values)}
-            selectedChannel={channelId}
-            setSelectedChannel={setChannelId}
-          />
-        </BottomSheetModal>
-      )}
+      <BottomSheetModal
+        backgroundStyle={{
+          backgroundColor: colors.darkBackground,
+        }}
+        ref={bottomSheetRef}
+        enablePanDownToClose={true}
+        index={1}
+        topInset={top}
+        snapPoints={DropdownBottomSheetSnapPoints}
+        onChange={(index) => {
+          if (index <= 0) {
+            bottomSheetRef.current?.close();
+            setFilterSheet(false);
+          }
+        }}>
+        <FormTemplate
+          Component={LeadsFilterForm}
+          onSubmit={(values) => handleApplyFilter(values)}
+          selectedChannel={channelId}
+          setSelectedChannel={setChannelId}
+          selectedLead={statusId}
+          setSelectedLead={setStatusId}
+          selectedStage={conversionId}
+          setSelectedStage={setConversionId}
+          orderBy={orderBy}
+          setOrderBy={setOrderBy}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          handleDropDownClose={handleOpenBottomSheetOpen}
+          loading={filterLoading}
+          startDate={startDate}
+          endDate={endDate}
+          setStartDate={setStartDate}
+          setEndDate={setEndDate}
+        />
+      </BottomSheetModal>
     </ScreenTemplate>
   );
 };
