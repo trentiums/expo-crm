@@ -96,10 +96,10 @@ export const SearchInputContainer = styled(View)`
 export const FilterCountView = styled(View)`
   position: absolute;
   top: 0;
-  left: 20;
+  left: 30;
   background-color: ${({ theme }) => theme.colors.white};
   padding: 2px 6px;
-  z-index: -1;
+  z-index: 1;
   border-radius: 8px;
 `;
 

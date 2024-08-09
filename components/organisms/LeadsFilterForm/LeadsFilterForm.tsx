@@ -101,7 +101,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             placeholder={t("sortOrder")}
             value={sortBy}
             onChange={(value: any) => {
-              if (orderBy === value) {
+              if (sortBy === value) {
                 setSortBy();
               } else {
                 setSortBy(value);
