@@ -19,7 +19,7 @@ import React, {
   useState,
 } from "react";
 import { useTranslation } from "react-i18next";
-import { Pressable } from "react-native";
+import { Keyboard, Pressable } from "react-native";
 import { RefreshControl, Swipeable } from "react-native-gesture-handler";
 import { useToast } from "react-native-toast-notifications";
 import {
@@ -295,6 +295,7 @@ const settings = () => {
   const handleOpenBottomSheetOpen = () => {
     setFilterSheet(true);
     bottomSheetRef.current?.present();
+    Keyboard?.dismiss();
   };
   return (
     <ScreenTemplate
@@ -315,10 +316,11 @@ const settings = () => {
               {
                 borderRadius: 25,
                 overflow: "hidden",
-                borderWidth: 0,
+                borderColor: colors.primaryColor,
               },
             ]}
             outlineColor="transparent"
+            outlineStyle={{ borderWidth: 0 }}
           />
         </SearchInputContainer>
         <FilterIconView onPress={handleOpenBottomSheetOpen}>
