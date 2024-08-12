@@ -117,7 +117,7 @@ const English = {
     discardMedia: "Delete",
     yesDiscard: "Delete",
     cancel: "Cancel",
-    searchLeads: "search leads",
+    searchLeads: "Search leads",
     addProduct: "P/S",
   },
   BasicInformation: {
@@ -213,6 +213,7 @@ const English = {
     search: "Search",
     list: "List",
     applyFilter: "Apply Filters",
+    removeFilter: "Remove Filters",
   },
 };
 

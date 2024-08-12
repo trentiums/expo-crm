@@ -7,6 +7,8 @@ import {
   FilterFormView,
   FiltersDropDownViews,
   LeadsFilterFormContainer,
+  RemoveFilterBtnText,
+  RemoveFiltersContainer,
 } from "./LeadsFilterForm.styles";
 import { Field, useFormState } from "react-final-form";
 import { useTranslation } from "react-i18next";
@@ -14,11 +16,12 @@ import { Label } from "@organisms/UserInformationForm/UserInformationForm.styles
 import FieldDatePicker from "@molecules/FieldDatePicker/FieldDatePicker";
 import moment from "moment";
 import DropDown from "@molecules/DropDown/DropDown";
-import { RootState, useSelector } from "@redux/store";
+import { RootState, useAppDispatch, useSelector } from "@redux/store";
 import { Spacer } from "@atoms/common/common.styles";
 import { orderByList, sortOrderList } from "../../../constant";
 import { LeadFilterFormProps } from "./LeadsFilterForm.props";
 import { endOfDay } from "date-fns";
+import { getLeadListAction } from "@redux/actions/lead";
 
 const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
   form,
@@ -38,11 +41,12 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
   setStartDate,
   endDate,
   setEndDate,
+  setFilterCount,
 }) => {
   const { t } = useTranslation("leadsFilter");
   const { values } = useFormState();
   const general = useSelector((state: RootState) => state.general);
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     setStartDate(values.startDate);
     setEndDate(values.endDate);
@@ -52,6 +56,23 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
     form.change("startDate", startDate);
     form.change("endDate", endDate);
   }, []);
+  const handleGetLeadList = async () => {
+    await dispatch(getLeadListAction({ page: 1 }));
+  };
+  const handleRemoveFilters = () => {
+    setStartDate();
+    setEndDate();
+    setSelectedChannel();
+    setSelectedStage();
+    setSelectedLead();
+    setSortBy();
+    setOrderBy();
+    form.change("startDate", "");
+    form.change("endDate", "");
+    handleGetLeadList();
+    handleDropDownClose();
+    setFilterCount(0);
+  };
   return (
     <LeadsFilterFormContainer>
       <FilterFormView>
@@ -64,6 +85,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
               initialDate={
                 values?.startDate || startDate || moment().clone().toDate()
               }
+              maxDate={endDate || moment().startOf("day").toDate()}
             />
           </DateContainer>
           <DateContainer>
@@ -74,6 +96,8 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
               initialDate={
                 values?.endDate || endDate || moment().clone().toDate()
               }
+              minDate={startDate}
+              maxDate={moment().startOf("day").toDate()}
             />
           </DateContainer>
         </DateFilterContainer>
@@ -179,6 +203,10 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
       <ApplyFiltersContainer onPress={form.submit} loading={loading}>
         <FilterBtnText>{t("applyFilter")}</FilterBtnText>
       </ApplyFiltersContainer>
+      <Spacer size={16} />
+      <RemoveFiltersContainer onPress={handleRemoveFilters}>
+        <RemoveFilterBtnText>{t("removeFilter")}</RemoveFilterBtnText>
+      </RemoveFiltersContainer>
     </LeadsFilterFormContainer>
   );
 };

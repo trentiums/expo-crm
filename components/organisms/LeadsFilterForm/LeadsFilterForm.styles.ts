@@ -43,3 +43,15 @@ export const FiltersDropDownViews = styled(View)`
   flex-direction: column;
   justify-content: flex-start;
 `;
+export const RemoveFiltersContainer = styled(Button)`
+  width: 100%;
+  border-width: 1px;
+  border-color: ${({ theme }) => theme.colors.errorText};
+  border-radius: 8px;
+  background-color: ${({ theme }) => theme.colors.bgColor};
+`;
+export const RemoveFilterBtnText = styled(Text)`
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.errorText};
+  text-align: center;
+`;

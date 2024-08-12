@@ -418,6 +418,7 @@ const settings = () => {
           endDate={endDate}
           setStartDate={setStartDate}
           setEndDate={setEndDate}
+          setFilterCount={setFilterCount}
         />
       </BottomSheetModal>
     </ScreenTemplate>

@@ -2,7 +2,7 @@ export const token = "";
 export const orderByList = [
   {
     id: 1,
-    title: "Created At",
+    title: "Date",
   },
   {
     id: 2,
@@ -14,7 +14,7 @@ export const orderByList = [
   },
   {
     id: 4,
-    title: "Company User Id",
+    title: "Staff",
   },
 ];
 export const sortOrderList = [
