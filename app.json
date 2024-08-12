@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Crm",
+    "name": "CRM",
     "slug": "crm-manage-leads",
-    "scheme": "Crm",
+    "scheme": "CRM",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
