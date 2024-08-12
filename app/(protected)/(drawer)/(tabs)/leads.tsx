@@ -297,6 +297,9 @@ const settings = () => {
     bottomSheetRef.current?.present();
     Keyboard?.dismiss();
   };
+  const handleBottomSheetClose = () => {
+    bottomSheetRef.current?.close();
+  };
   return (
     <ScreenTemplate
       addButtonText={ts("lead")}
@@ -419,6 +422,7 @@ const settings = () => {
           setStartDate={setStartDate}
           setEndDate={setEndDate}
           setFilterCount={setFilterCount}
+          bottomSheetClose={handleBottomSheetClose}
         />
       </BottomSheetModal>
     </ScreenTemplate>

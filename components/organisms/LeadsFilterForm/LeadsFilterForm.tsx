@@ -41,6 +41,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
   setStartDate,
   endDate,
   setEndDate,
+  bottomSheetClose,
   setFilterCount,
 }) => {
   const { t } = useTranslation("leadsFilter");
@@ -72,6 +73,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
     handleGetLeadList();
     handleDropDownClose();
     setFilterCount(0);
+    bottomSheetClose();
   };
   return (
     <LeadsFilterFormContainer>
