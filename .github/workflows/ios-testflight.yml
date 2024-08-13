@@ -21,17 +21,19 @@ jobs:
       - name: Install Fastlane
         run: gem install fastlane
 
-      - name: List files in certs directory
-        run: ls -la ./certs/
-
-      - name: Set up Keychain
+      - name: Decode and set up Keychain
         run: |
+          # Decode and save the .p12 file
+          echo "${{ secrets.IOS_DISTRIBUTION_P12_BASE64 }}" | base64 --decode > ./ios_distribution.p12
+
+          # Create and set up the keychain
           security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" ios-build.keychain
           security default-keychain -s ios-build.keychain
           security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" ios-build.keychain
           security set-keychain-settings -t 3600 -u ios-build.keychain
-          security import "./certs/ios_distribution.p12" -P "${{ secrets.P12_PASSWORD }}" -A
-          security import "./certs/apple.cer" -A
+
+          # Import the .p12 certificate
+          security import "./ios_distribution.p12" -P "${{ secrets.P12_PASSWORD }}" -A
 
       - name: Create provisioning profile directory
         run: mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
