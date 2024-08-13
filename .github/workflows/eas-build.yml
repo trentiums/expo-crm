@@ -1,63 +1,63 @@
-name: EAS build
-on:
-  push:
-    branches:
-      - master
+# name: EAS build
+# on:
+#   push:
+#     branches:
+#       - master
 
-jobs:
-  build:
-    name: EAS build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check for EXPO_TOKEN
-        run: |
-          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
-            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
-            exit 1
-          fi
+# jobs:
+#   build:
+#     name: EAS build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Check for EXPO_TOKEN
+#         run: |
+#           if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
+#             echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
+#             exit 1
+#           fi
 
-      - name: Checkout repository
-        uses: actions/checkout@v2
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
 
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 20.12.0
-          cache: yarn
+#       - name: Setup Node
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: 20.12.0
+#           cache: yarn
 
-      - name: Setup Expo
-        uses: expo/expo-github-action@v7
-        with:
-          expo-version: latest
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
+#       - name: Setup Expo
+#         uses: expo/expo-github-action@v7
+#         with:
+#           expo-version: latest
+#           eas-version: latest
+#           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Find yarn cache
-        id: yarn-cache-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+#       - name: Find yarn cache
+#         id: yarn-cache-path
+#         run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - name: Restore cache
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.yarn-cache-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ runner.os }}-yarn-
+#       - name: Restore cache
+#         uses: actions/cache@v2
+#         with:
+#           path: ${{ steps.yarn-cache-path.outputs.dir }}
+#           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+#           restore-keys: ${{ runner.os }}-yarn-
 
-      - name: Install dependencies
-        run: yarn install --immutable
+#       - name: Install dependencies
+#         run: yarn install --immutable
 
-      - name: Install EAS CLI globally
-        run: npm install -g eas-cli
+#       - name: Install EAS CLI globally
+#         run: npm install -g eas-cli
 
-      - name: Publish Android build
-        run: eas build --profile development --platform android --non-interactive --no-wait
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+#       - name: Publish Android build
+#         run: eas build --profile development --platform android --non-interactive --no-wait
+#         env:
+#           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Build iOS
-        run: eas build --profile development --platform ios --non-interactive --no-wait
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+#       - name: Build iOS
+#         run: eas build --profile development --platform ios --non-interactive --no-wait
+#         env:
+#           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+#           APPLE_ID: ${{ secrets.APPLE_ID }}
+#           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+#           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
