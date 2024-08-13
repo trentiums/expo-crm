@@ -35,12 +35,33 @@ jobs:
           # Import the .p12 certificate
           security import "./ios_distribution.p12" -P "${{ secrets.P12_PASSWORD }}" -A
 
-      - name: Create provisioning profile directory
-        run: mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles/
-
       - name: Decode and set up provisioning profile
         run: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           echo "${{ secrets.CRM_MOBILEPROVISION_BASE64 }}" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/CRM.mobileprovision
+
+      - name: Generate exportOptions.plist
+        run: |
+          cat > exportOptions.plist <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>method</key>
+              <string>app-store</string>
+              <key>uploadBitcode</key>
+              <true/>
+              <key>uploadSymbols</key>
+              <true/>
+              <key>compileBitcode</key>
+              <true/>
+              <key>signingStyle</key>
+              <string>automatic</string>
+              <key>teamID</key>
+              <string>${{ secrets.APPLE_TEAM_ID }}</string>
+          </dict>
+          </plist>
+          EOF
 
       - name: Build the iOS App
         run: |
