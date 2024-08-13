@@ -70,7 +70,14 @@ jobs:
                      -sdk iphoneos \
                      -configuration AppStoreDistribution \
                      -archivePath $PWD/build/CRM.xcarchive \
-                     clean archive | xcpretty
+                     clean archive | tee build.log | xcpretty
+
+      - name: Verify Archive Existence
+        run: |
+          if [ ! -d "$PWD/build/CRM.xcarchive" ]; then
+            echo "Archive not found!"
+            exit 1
+          fi
 
       - name: Export the Archive
         run: |
