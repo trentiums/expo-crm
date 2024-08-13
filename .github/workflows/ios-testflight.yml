@@ -3,7 +3,7 @@ name: Build and Upload iOS App to TestFlight
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
