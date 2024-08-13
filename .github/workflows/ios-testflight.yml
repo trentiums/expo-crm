@@ -1,28 +1,26 @@
 workflows:
-  ios:workflow:
-    name:Custom Work Flow
+  ios_workflow:
+    name: Custom Work Flow
     environment:
-        groups: 
-          -admin
+      groups:
+        - admin
     scripts:
-      -name: Set up keychain to be used for code signing using Codemagic CLI 'keychain' command 
-       script: keychain initialize 
-      -name: Fetch signing files 
-       script: app-store-connect fetch-signing-files "com.trentiums.crm"
-          --type IOS_APP_STORE \
-          --create
-      -name: Set up signing certificate 
-       script:keychain add-certificates
-      -name : set up code signing settings on Xcode project 
-       script: xcode-project use profiles 
-      -name : build App
-       script: xcode-project build-ipa --workspace "IA.xcworkspace" --scheme "IA"
+      - name: Set up keychain to be used for code signing using Codemagic CLI 'keychain' command
+        script: keychain initialize
+      - name: Fetch signing files
+        script: app-store-connect fetch-signing-files "com.trentiums.crm" --type IOS_APP_STORE --create
+      - name: Set up signing certificate
+        script: keychain add-certificates
+      - name: Set up code signing settings on Xcode project
+        script: xcode-project use-profiles
+      - name: Build App
+        script: xcode-project build-ipa --workspace "IA.xcworkspace" --scheme "IA"
     artifacts:
-      -build/ios/ipa/*.ipa
-      -/tmp/xcodebuild_logs/*.log
-      -$HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
     publishing:
-      app_store-connect:
+      app_store_connect:
         api_key: $APP_STORE_CONNECT_PRIVATE_KEY
-        key_id:  $APP_STORE_CONNECT_KEY_IDENTIFIER
-        issuer_id:  $APP_STORE_CONNECT_ISSUER_ID
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
