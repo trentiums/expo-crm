@@ -29,7 +29,6 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
   isSave,
   onBackClick,
 }) => {
-  console.log("hello from 32");
   const { t } = useTranslation("companyInformation");
   const { t: tb } = useTranslation("formButtonName");
   const { values, valid } = useFormState();
