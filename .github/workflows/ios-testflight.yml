@@ -65,11 +65,12 @@ jobs:
       - name: Build the Archive
         run: |
           xcodebuild -workspace ios/CRM.xcworkspace \
-                     -scheme CRM \
-                     -sdk iphoneos \
-                     -configuration AppStoreDistribution \
-                     -archivePath $PWD/ios/build/CRM.xcarchive \
-                     clean archive | tee ios/build.log | xcpretty
+               -scheme CRM \
+               -sdk iphoneos \
+               -configuration AppStoreDistribution \
+               -archivePath $PWD/ios/build/CRM.xcarchive \
+               clean archive \
+               -verbose | tee ios/build.log | xcpretty
 
       - name: Verify Archive Existence
         run: |
