@@ -38,7 +38,11 @@ yarn-error.*
 Android/
 android/
 
+# iOS
+ios/
+
 # Android & IOS folder
+ios/
 Android/
 
 #ios certificate
