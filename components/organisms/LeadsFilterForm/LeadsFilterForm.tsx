@@ -169,8 +169,8 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             placeholder={t("status")}
             value={selectedLead}
             onChange={(value: any) => {
-              if (selectedStage === value) {
-                setSelectedStage();
+              if (selectedLead === value) {
+                setSelectedLead();
               } else {
                 setSelectedLead(value);
               }
