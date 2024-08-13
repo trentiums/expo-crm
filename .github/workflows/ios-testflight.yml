@@ -1,64 +1,28 @@
-name: Build and Submit iOS to TestFlight
-
-on:
-  push:
-    branches:
-      - master
-
-jobs:
-  build:
-    runs-on: macos-latest
-    timeout-minutes: 120
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "20.12.0"
-
-      - name: Install dependencies
-        run: yarn install --immutable
-
-      - name: Navigate to iOS directory
-        run: cd ios
-
-      - name: Install CocoaPods
-        run: pod install
-
-      - name: Install EAS CLI
-        run: npm install -g eas-cli
-
-      - name: Log in to Expo
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: npx expo login --token $EXPO_TOKEN
-
-      - name: Set up provisioning profiles settings on Xcode project
-        run: xcode-project use-profiles
-
-      - name: Increment build number
-        env:
-          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.KULDIP_DEV }}
-          APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
-          APP_STORE_APPLE_ID: ${{ secrets.APPLE_ID }}
-        run: |
-          cd $GITHUB_WORKSPACE
-          LATEST_BUILD_NUMBER=$(npx app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID")
-          agvtool new-version -all $(($LATEST_BUILD_NUMBER + 1))
-
-      - name: Build ipa for distribution
-        env:
-          XCODE_WORKSPACE: ${{ secrets.XCODE_WORKSPACE }}
-          XCODE_SCHEME: ${{ secrets.XCODE_SCHEME }}
-        run: |
-          xcodebuild -workspace "$XCODE_WORKSPACE" -scheme "$XCODE_SCHEME" -sdk iphoneos -configuration AppStoreDistribution archive -archivePath $PWD/build/$XCODE_SCHEME.xcarchive
-          xcodebuild -exportArchive -archivePath $PWD/build/$XCODE_SCHEME.xcarchive -exportOptionsPlist ExportOptions.plist -exportPath $PWD/build/$XCODE_SCHEME.ipa
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: ios-build
+workflows:
+  ios:workflow:
+    name:Custom Work Flow
+    environment:
+        groups: 
+          -admin
+    scripts:
+      -name: Set up keychain to be used for code signing using Codemagic CLI 'keychain' command 
+       script: keychain initialize 
+      -name: Fetch signing files 
+       script: app-store-connect fetch-signing-files "com.trentiums.crm"
+          --type IOS_APP_STORE \
+          --create
+      -name: Set up signing certificate 
+       script:keychain add-certificates
+      -name : set up code signing settings on Xcode project 
+       script: xcode-project use profiles 
+      -name : build App
+       script: xcode-project build-ipa --workspace "IA.xcworkspace" --scheme "IA"
+    artifacts:
+      -build/ios/ipa/*.ipa
+      -/tmp/xcodebuild_logs/*.log
+      -$HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    publishing:
+      app_store-connect:
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id:  $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id:  $APP_STORE_CONNECT_ISSUER_ID
