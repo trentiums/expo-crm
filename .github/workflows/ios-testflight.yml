@@ -1,41 +1,66 @@
+name: Build and Upload iOS App to TestFlight
+
 on:
   push:
-    branches:
-      - main
-  pull_request:
     branches:
       - main
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macOS-latest
+
     steps:
-      - name: Check out code
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Set up keychain to be used for code signing using Codemagic CLI 'keychain' command
-        run: keychain initialize
+      - name: Set up Ruby environment
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
 
-      - name: Fetch signing files
-        run: app-store-connect fetch-signing-files "com.trentiums.crm" --type IOS_APP_STORE --create
+      - name: Install Fastlane
+        run: gem install fastlane
 
-      - name: Set up signing certificate
-        run: keychain add-certificates
+      - name: Set up Keychain
+        run: |
+          security create-keychain -p "$KEYCHAIN_PASSWORD" ios-build.keychain
+          security default-keychain -s ios-build.keychain
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" ios-build.keychain
+          security set-keychain-settings -t 3600 -u ios-build.keychain
+          security import "./certs/ios_distribution.p12" -P "$P12_PASSWORD" -A
+          security import "./certs/apple.cer" -A
+        env:
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
 
-      - name: Set up code signing settings on Xcode project
-        run: xcode-project use-profiles
+      - name: Create provisioning profile directory
+        run: mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
 
-      - name: Build App
-        run: xcode-project build-ipa --workspace "IA.xcworkspace" --scheme "IA"
+      - name: Move provisioning profile
+        run: mv ./certs/CRM.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
-    artifacts:
-      files:
-        - build/ios/ipa/*.ipa
-        - /tmp/xcodebuild_logs/*.log
-        - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+      - name: Build the iOS App
+        run: |
+          xcodebuild -workspace CRM.xcworkspace \
+                     -scheme CRM \
+                     -sdk iphoneos \
+                     -configuration AppStoreDistribution \
+                     -archivePath $PWD/build/CRM.xcarchive \
+                     clean archive | xcpretty
 
-    publishing:
-      app_store_connect:
-        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
-        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
-        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+      - name: Export the Archive
+        run: |
+          xcodebuild -exportArchive \
+                     -archivePath $PWD/build/CRM.xcarchive \
+                     -exportOptionsPlist ./exportOptions.plist \
+                     -exportPath $PWD/build/CRM
+
+      - name: Upload to TestFlight
+        run: |
+          fastlane pilot upload \
+            --ipa $PWD/build/CRM/CRM.ipa \
+            --skip_waiting_for_build_processing true
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
