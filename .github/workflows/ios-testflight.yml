@@ -63,18 +63,18 @@ jobs:
           </plist>
           EOF
 
-      - name: Build the iOS App
+      - name: Build the Archive
         run: |
-          xcodebuild -workspace CRM.xcworkspace \
+          xcodebuild -workspace ios/CRM.xcworkspace \
                      -scheme CRM \
                      -sdk iphoneos \
                      -configuration AppStoreDistribution \
-                     -archivePath $PWD/build/CRM.xcarchive \
-                     clean archive | tee build.log | xcpretty
+                     -archivePath $PWD/ios/build/CRM.xcarchive \
+                     clean archive | tee ios/build.log | xcpretty
 
       - name: Verify Archive Existence
         run: |
-          if [ ! -d "$PWD/build/CRM.xcarchive" ]; then
+          if [ ! -d "$PWD/ios/build/CRM.xcarchive" ]; then
             echo "Archive not found!"
             exit 1
           fi
@@ -82,14 +82,14 @@ jobs:
       - name: Export the Archive
         run: |
           xcodebuild -exportArchive \
-                     -archivePath $PWD/build/CRM.xcarchive \
-                     -exportOptionsPlist ./exportOptions.plist \
-                     -exportPath $PWD/build/CRM
+                     -archivePath $PWD/ios/build/CRM.xcarchive \
+                     -exportOptionsPlist ios/exportOptions.plist \
+                     -exportPath $PWD/ios/build/CRM
 
       - name: Upload to TestFlight
         run: |
           fastlane pilot upload \
-            --ipa $PWD/build/CRM/CRM.ipa \
+            --ipa $PWD/ios/build/CRM/CRM.ipa \
             --skip_waiting_for_build_processing true
         env:
           APPLE_ID: ${{ secrets.APPLE_ID }}
