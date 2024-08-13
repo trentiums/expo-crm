@@ -23,15 +23,12 @@ jobs:
 
       - name: Set up Keychain
         run: |
-          security create-keychain -p "Kuldip@0611" ios-build.keychain
+          security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" ios-build.keychain
           security default-keychain -s ios-build.keychain
-          security unlock-keychain -p "$Kuldip@0611" ios-build.keychain
+          security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" ios-build.keychain
           security set-keychain-settings -t 3600 -u ios-build.keychain
-          security import "./certs/ios_distribution.p12" -P "Kailasben@0611" -A
+          security import "./certs/ios_distribution.p12" -P "${{ secrets.P12_PASSWORD }}" -A
           security import "./certs/apple.cer" -A
-        env:
-          KEYCHAIN_PASSWORD: ${{ secrets.Kuldip@0611 }}
-          P12_PASSWORD: ${{ secrets.Kailasben@0611 }}
 
       - name: Create provisioning profile directory
         run: mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
