@@ -35,12 +35,12 @@ jobs:
           # Import the .p12 certificate
           security import "./ios_distribution.p12" -P "${{ secrets.P12_PASSWORD }}" -A
 
+      - name: Create provisioning profile directory
+        run: mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles/
+
       - name: Decode and set up provisioning profile
         run: |
           echo "${{ secrets.CRM_MOBILEPROVISION_BASE64 }}" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/CRM.mobileprovision
-
-      - name: Move provisioning profile
-        run: mv ./certs/CRM.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
       - name: Build the iOS App
         run: |
