@@ -1,3 +1,11 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
 workflows:
   ios_workflow:
     name: Custom Work Flow
