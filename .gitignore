@@ -44,3 +44,6 @@ ios/
 # Android & IOS folder
 ios/
 Android/
+
+#ios certificate
+certs/
