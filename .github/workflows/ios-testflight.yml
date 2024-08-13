@@ -72,19 +72,19 @@ jobs:
                      -archivePath $PWD/build/CRM.xcarchive \
                      clean archive | tee build.log | xcpretty
 
-      # - name: Verify Archive Existence
-      #   run: |
-      #     if [ ! -d "$PWD/build/CRM.xcarchive" ]; then
-      #       echo "Archive not found!"
-      #       exit 1
-      #     fi
+      - name: Verify Archive Existence
+        run: |
+          if [ ! -d "$PWD/build/CRM.xcarchive" ]; then
+            echo "Archive not found!"
+            exit 1
+          fi
 
-      # - name: Export the Archive
-      #   run: |
-      #     xcodebuild -exportArchive \
-      #                -archivePath $PWD/build/CRM.xcarchive \
-      #                -exportOptionsPlist ./exportOptions.plist \
-      #                -exportPath $PWD/build/CRM
+      - name: Export the Archive
+        run: |
+          xcodebuild -exportArchive \
+                     -archivePath $PWD/build/CRM.xcarchive \
+                     -exportOptionsPlist ./exportOptions.plist \
+                     -exportPath $PWD/build/CRM
 
       - name: Upload to TestFlight
         run: |
