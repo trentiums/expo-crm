@@ -13,6 +13,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install Expo CLI
+        run: npm install -g expo-cli
+
+      - name: Generate ios folder
+        run: expo prebuild
+
+      - name: Print Current Directory
+        run: |
+          pwd
+
+      - name: List Directory Contents
+        run: |
+          ls -la
+          ls -la ios
+
       - name: Set up Ruby environment
         uses: ruby/setup-ruby@v1
         with:
@@ -23,11 +43,16 @@ jobs:
 
       - name: Decode and set up Keychain
         run: |
+          # Decode and save the .p12 file
           echo "${{ secrets.IOS_DISTRIBUTION_P12_BASE64 }}" | base64 --decode > ./ios_distribution.p12
+
+          # Create and set up the keychain
           security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" ios-build.keychain
           security default-keychain -s ios-build.keychain
           security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" ios-build.keychain
           security set-keychain-settings -t 3600 -u ios-build.keychain
+
+          # Import the .p12 certificate
           security import "./ios_distribution.p12" -P "${{ secrets.P12_PASSWORD }}" -A
 
       - name: Decode and set up provisioning profile
@@ -58,19 +83,14 @@ jobs:
           </plist>
           EOF
 
-      - name: Clean build directory
-        run: |
-          rm -rf ios/build
-
       - name: Build the Archive
         run: |
           xcodebuild -workspace ios/CRM.xcworkspace \
-               -scheme CRM \
-               -sdk iphoneos \
-               -configuration AppStoreDistribution \
-               -archivePath $PWD/ios/build/CRM.xcarchive \
-               clean archive \
-               -verbose | tee ios/build.log | xcpretty
+                     -scheme CRM \
+                     -sdk iphoneos \
+                     -configuration AppStoreDistribution \
+                     -archivePath $PWD/ios/build/CRM.xcarchive \
+                     clean archive | tee ios/build.log | xcpretty
 
       - name: Verify Archive Existence
         run: |
@@ -83,7 +103,7 @@ jobs:
         run: |
           xcodebuild -exportArchive \
                      -archivePath $PWD/ios/build/CRM.xcarchive \
-                     -exportOptionsPlist exportOptions.plist \
+                     -exportOptionsPlist ios/exportOptions.plist \
                      -exportPath $PWD/ios/build/CRM
 
       - name: Upload to TestFlight
