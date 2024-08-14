@@ -63,21 +63,28 @@ jobs:
           rm -rf ios/build
 
       - name: Build the Archive
-        run: expo build:ios
+        run: |
+          xcodebuild -workspace ios/CRM.xcworkspace \
+               -scheme CRM \
+               -sdk iphoneos \
+               -configuration AppStoreDistribution \
+               -archivePath $PWD/ios/build/CRM.xcarchive \
+               clean archive \
+               -verbose | tee ios/build.log | xcpretty
 
-      # - name: Verify Archive Existence
-      #   run: |
-      #     if [ ! -d "$PWD/ios/build/CRM.xcarchive" ]; then
-      #       echo "Archive not found!"
-      #       exit 1
-      #     fi
+      - name: Verify Archive Existence
+        run: |
+          if [ ! -d "$PWD/ios/build/CRM.xcarchive" ]; then
+            echo "Archive not found!"
+            exit 1
+          fi
 
-      # - name: Export the Archive
-      #   run: |
-      #     xcodebuild -exportArchive \
-      #                -archivePath $PWD/ios/build/CRM.xcarchive \
-      #                -exportOptionsPlist exportOptions.plist \
-      #                -exportPath $PWD/ios/build/CRM
+      - name: Export the Archive
+        run: |
+          xcodebuild -exportArchive \
+                     -archivePath $PWD/ios/build/CRM.xcarchive \
+                     -exportOptionsPlist exportOptions.plist \
+                     -exportPath $PWD/ios/build/CRM
 
       - name: Upload to TestFlight
         run: |
