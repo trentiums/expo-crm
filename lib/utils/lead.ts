@@ -21,7 +21,7 @@ export const formatLeadList = (data: LeadListData[]) => {
     leadConversionId: item?.lead_conversion_id,
     countryId: item?.country_id,
     createdAt: item?.created_at,
-    updatedAt: item?.updated_at,
+    updatedAt: item?.created_at,
     assignTo: item.assign_to_user_id,
     productService: item.product_services.map((item) => ({
       id: item?.id,
