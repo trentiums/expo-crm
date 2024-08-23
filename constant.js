@@ -12,10 +12,6 @@ export const orderByList = [
     id: 3,
     title: "Email",
   },
-  {
-    id: 4,
-    title: "Staff",
-  },
 ];
 export const sortOrderList = [
   {
