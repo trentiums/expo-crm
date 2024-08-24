@@ -7,6 +7,7 @@ import { styles } from "../tabs.style";
 import { RootState, useSelector } from "@redux/store";
 import { userRole } from "@type/api/auth";
 import Users from "@atoms/Illustrations/Users";
+import { View } from "react-native";
 
 const TabsLayout = () => {
   const { colors } = useAppTheme();
@@ -21,10 +22,14 @@ const TabsLayout = () => {
         tabBarActiveTintColor: colors.lightGreen,
         tabBarStyle: [
           styles.barStyle,
-          { backgroundColor: colors.tabBar, borderColor: colors.tabBar },
+          {
+            backgroundColor: colors.tabBar,
+            borderTopWidth: 0,
+          },
         ],
-        tabBarLabelStyle: { fontSize: 12, marginBottom: 8 },
-      }}>
+        tabBarLabelStyle: { fontSize: 12, marginTop: 8 },
+      }}
+    >
       <Tabs.Screen
         name="dashboard"
         options={{

@@ -22,6 +22,7 @@ import {
 import Users from "@atoms/Illustrations/Users";
 import { userRole } from "@type/api/auth";
 import View from "@atoms/View/View";
+import DrawerContent from "@molecules/DrawerContent/DrawerContent";
 
 const DrawerLayout = () => {
   const { colors } = useAppTheme();
@@ -37,106 +38,30 @@ const DrawerLayout = () => {
     <GestureHandlerRootView>
       <Drawer
         initialRouteName="dashboard"
-        drawerContent={(props) => (
-          <DrawerContentScrollView
-            {...props}
-            contentContainerStyle={{ flex: 1 }}>
-            <DrawerNavigationView>
-              <View style={{ width: "100%" }}>
-                <UserInfoSection>
-                  <UserName>{userData.name}</UserName>
-                </UserInfoSection>
-                <DrawerItem
-                  label="Dashboard"
-                  onPress={() => {
-                    router.navigate("(tabs)/dashboard");
-                  }}
-                  labelStyle={{ color: colors.white }}
-                  icon={() => <Dashboard color={colors.white} />}
-                  style={{
-                    borderColor: colors.gray,
-                    borderBottomWidth: 1,
-                  }}
-                />
-                <DrawerItem
-                  label="Leads"
-                  onPress={() => {
-                    router.navigate("(tabs)/leads");
-                  }}
-                  labelStyle={{ color: colors.white }}
-                  icon={() => <Leads color={colors.white} />}
-                  style={{
-                    borderColor: colors.gray,
-                    borderBottomWidth: 1,
-                  }}
-                />
-                {user.userRole !== 3 && (
-                  <DrawerItem
-                    label="Users"
-                    onPress={() => {
-                      router.navigate("(tabs)/users");
-                    }}
-                    labelStyle={{ color: colors.white }}
-                    icon={() => <Users color={colors.white} />}
-                    style={{
-                      borderColor: colors.gray,
-                      borderBottomWidth: 1,
-                    }}
-                  />
-                )}
-                <DrawerItem
-                  label={t("products")}
-                  onPress={() => {
-                    router.navigate("/products");
-                  }}
-                  labelStyle={{ color: colors.white }}
-                  icon={() => <Users color={colors.white} />}
-                  style={{
-                    borderColor: colors.gray,
-                    borderBottomWidth: 1,
-                  }}
-                />
-              </View>
-              <DrawerBottomSection>
-                <Pressable
-                  onPress={async () => {
-                    try {
-                      await dispatch(logoutUserAction()).unwrap();
-                      router.replace("/(public)/login");
-                    } catch (error) {
-                      console.log("error: ", error);
-                    }
-                  }}>
-                  <LogoutText>{t("logout")}</LogoutText>
-                </Pressable>
-                <Spacer size={16} />
-                <Pressable
-                  onPress={() => Linking.openURL("https://www.trentiums.com/")}>
-                  <CompanyText>{t("poweredByTrentiums")}</CompanyText>
-                </Pressable>
-              </DrawerBottomSection>
-            </DrawerNavigationView>
-          </DrawerContentScrollView>
-        )}
+        drawerContent={(props) => <DrawerContent />}
         screenOptions={{
           headerTitle: "CRM",
           headerTitleAlign: "center",
           headerTintColor: colors.white,
           headerStyle: {
-            backgroundColor: colors.darkBackground,
+            backgroundColor: colors.tabBar,
+            borderBottomWidth: 0,
+            shadowOpacity: 0,
+            elevation: 0,
           },
           drawerItemStyle: {
             borderBottomColor: colors.lightGray,
             borderBottomWidth: 1,
           },
           drawerStyle: {
-            backgroundColor: colors.darkBackground,
+            backgroundColor: colors.tabBar,
           },
           drawerActiveTintColor: colors.white,
           drawerInactiveTintColor: colors.white,
           drawerActiveBackgroundColor: "transparent",
           // headerRight: () => <CustomHeaderRight />,
-        }}>
+        }}
+      >
         <Drawer.Screen name="(tabs)" />
       </Drawer>
     </GestureHandlerRootView>

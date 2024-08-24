@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 7,
   },
   barStyle: {
-    height: Platform.select({ default: 80, ios: 120 }),
+    paddingTop: 16,
   },
 });
 export const DashboardScreenContainer = styled(ScrollView)`
