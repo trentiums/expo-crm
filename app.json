@@ -15,7 +15,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.trentiums.crm"
+      "bundleIdentifier": "com.trentiums.crm",
+      "userInterfaceStyle": "light"
     },
     "android": {
       "jsEngine": "hermes",

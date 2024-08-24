@@ -1,23 +1,40 @@
-import React from "react";
-import { Tabs } from "expo-router";
-import Dashboard from "@atoms/Illustrations/Dashboard";
-import { useAppTheme } from "@constants/theme";
-import Leads from "@atoms/Illustrations/Leads";
-import { styles } from "../tabs.style";
-import { RootState, useSelector } from "@redux/store";
-import { userRole } from "@type/api/auth";
-import Users from "@atoms/Illustrations/Users";
-import { View } from "react-native";
+import React from 'react';
+import { router, Tabs, useNavigation } from 'expo-router';
+import Dashboard from '@atoms/Illustrations/Dashboard';
+import { useAppTheme } from '@constants/theme';
+import Leads from '@atoms/Illustrations/Leads';
+import { styles } from '../tabs.style';
+import { RootState, useSelector } from '@redux/store';
+import Users from '@atoms/Illustrations/Users';
+import { IconButton } from 'react-native-paper';
+import { DrawerActions } from '@react-navigation/native';
 
 const TabsLayout = () => {
   const { colors } = useAppTheme();
   const user = useSelector((state: RootState) => state.auth.user);
+  const navigation = useNavigation();
+
+  const renderDrawerMenuButton = () => {
+    return (
+      <IconButton
+        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+        icon="menu"
+        size={24}
+        iconColor={colors.white}
+      />
+    );
+  };
+
   return (
     <Tabs
       initialRouteName="dashboard"
       screenOptions={{
-        headerTitle: () => null,
-        headerShown: false,
+        headerTitleAlign: 'center',
+        headerTintColor: colors.white,
+        headerLeft: renderDrawerMenuButton,
+        headerStyle: {
+          backgroundColor: colors.tabBar,
+        },
         tabBarShowLabel: true,
         tabBarActiveTintColor: colors.lightGreen,
         tabBarStyle: [
@@ -28,12 +45,12 @@ const TabsLayout = () => {
           },
         ],
         tabBarLabelStyle: { fontSize: 12, marginTop: 8 },
-      }}
-    >
+      }}>
       <Tabs.Screen
         name="dashboard"
         options={{
-          title: "Dashboard",
+          title: 'Dashboard',
+          headerTitle: 'Dashboard',
           tabBarIcon: ({ focused }) => (
             <Dashboard color={focused ? colors.lightGreen : colors.white} />
           ),
@@ -42,7 +59,8 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="leads"
         options={{
-          title: "Leads",
+          title: 'Leads',
+          headerTitle: 'Leads',
           tabBarIcon: ({ focused }) => (
             <Leads color={focused ? colors.lightGreen : colors.white} />
           ),
@@ -51,7 +69,8 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="users"
         options={{
-          title: "Users",
+          title: 'Users',
+          headerTitle: 'Users',
           tabBarIcon: ({ focused }) => (
             <Users color={focused ? colors.lightGreen : colors.white} />
           ),

@@ -1,8 +1,8 @@
-import Text from "@atoms/Text/Text";
-import View from "@atoms/View/View";
-import { styled } from "@utils/styled";
-import { StyleSheet, Platform, FlatList, Pressable } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import Text from '@atoms/Text/Text';
+import View from '@atoms/View/View';
+import { styled } from '@utils/styled';
+import { StyleSheet, Platform, FlatList, Pressable } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export const styles = StyleSheet.create({
   badgeStyle: {

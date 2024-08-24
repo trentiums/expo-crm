@@ -1,17 +1,18 @@
-import Text from "@atoms/Text/Text";
-import View from "@atoms/View/View";
-import { styled } from "@utils/styled";
-import { FlatList, Pressable } from "react-native";
-import { Image } from "expo-image";
+import Text from '@atoms/Text/Text';
+import View from '@atoms/View/View';
+import { styled } from '@utils/styled';
+import { FlatList, Pressable } from 'react-native';
+import { Image } from 'expo-image';
 
 export const DropDownContainer = styled(View)`
   flex: 1;
 `;
 
 export const DropDownTitleText = styled(Text)`
-  font-size: 16px;
+  font-size: 18px;
   color: ${({ theme }) => theme.colors.white};
-  margin-left: 16px;
+  text-align: center;
+  font-weight: bold;
 `;
 
 export const DropDownDataContainer = styled(View)`
@@ -59,18 +60,14 @@ export const DropDownDataView = styled(Pressable)`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 8px;
+  padding: 16px;
   border-bottom-width: 1px;
-  border-bottom-color: ${({ theme }) => theme.colors.gray};
-  background-color: ${({ theme }) => theme.colors.transparent};
-  margin: 0px 16px;
-  border-radius: 8px;
+  border-bottom-color: ${({ theme }) => theme.colors.transparent};
 `;
 
 export const DataText = styled(Text)`
-  font-size: 12px;
+  font-size: 16px;
   color: ${({ theme }) => theme.colors.gray};
-  padding-left: 8px;
 `;
 export const ImageView = styled(Image)`
   height: 16px;
@@ -90,8 +87,8 @@ export const MultipleSelectedText = styled(Text)`
 `;
 export const FlatListCon = styled(FlatList).attrs({
   contentContainerStyle: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 })``;

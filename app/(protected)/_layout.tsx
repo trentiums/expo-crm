@@ -1,9 +1,16 @@
-import React from "react";
-import { Stack } from "expo-router";
+import React from 'react';
+import { Stack } from 'expo-router';
+import { useAppTheme } from '@constants/theme';
 
 const ProtectedLayout = () => {
+  const { colors } = useAppTheme();
   return (
-    <Stack initialRouteName="(drawer)">
+    <Stack
+      screenOptions={{
+        headerBackTitleVisible: false,
+        headerTintColor: colors.white,
+      }}
+      initialRouteName="(drawer)">
       <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
     </Stack>
   );

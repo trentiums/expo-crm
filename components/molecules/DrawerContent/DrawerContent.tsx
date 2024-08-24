@@ -1,12 +1,12 @@
-import { Flexed, Spacer } from "@atoms/common/common.styles";
-import Text from "@atoms/Text/Text";
-import { useSelector } from "@redux/store";
-import { router, usePathname } from "expo-router";
-import React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
-import { Button, Drawer } from "react-native-paper";
-import { Linking } from "react-native";
-import { styled } from "@utils/styled";
+import { Flexed, Spacer } from '@atoms/common/common.styles';
+import Text from '@atoms/Text/Text';
+import { useSelector } from '@redux/store';
+import { router, usePathname } from 'expo-router';
+import React from 'react';
+import { SafeAreaView, ScrollView } from 'react-native';
+import { Button, Drawer } from 'react-native-paper';
+import { Linking } from 'react-native';
+import { styled } from '@utils/styled';
 
 const BoldCenteredText = styled(Text)`
   font-weight: bold;
@@ -40,33 +40,35 @@ const DrawerContent = () => {
           <ScrollView showsVerticalScrollIndicator={false}>
             <Drawer.Item
               label="Dashboard"
-              active={pathname === "/dashboard"}
+              active={pathname === '/dashboard'}
               onPress={() => {
-                router.navigate("(tabs)/dashboard");
+                router.navigate('(tabs)/dashboard');
               }}
               icon="home"
             />
             <Drawer.Item
               label="Leads"
-              active={pathname === "/leads"}
+              active={pathname === '/leads'}
               onPress={() => {
-                router.navigate("(tabs)/leads");
+                router.navigate('(tabs)/leads');
               }}
               icon="lead-pencil"
             />
-            <Drawer.Item
-              label="Users"
-              active={pathname === "/users"}
-              onPress={() => {
-                router.navigate("(tabs)/users");
-              }}
-              icon="account-group"
-            />
+            {user.userRole !== 3 && (
+              <Drawer.Item
+                label="Users"
+                active={pathname === '/users'}
+                onPress={() => {
+                  router.navigate('(tabs)/users');
+                }}
+                icon="account-group"
+              />
+            )}
             <Drawer.Item
               label="Products"
-              active={pathname === "/products"}
+              active={pathname === '/products'}
               onPress={() => {
-                router.navigate("/products");
+                router.navigate('/products');
               }}
               icon="shopping-outline"
             />
@@ -77,15 +79,14 @@ const DrawerContent = () => {
         </Button>
         <Spacer size={16} />
         <CenteredText>
-          Powered by{" "}
+          Powered by{' '}
           <BlueText
-            onPress={() => Linking.openURL("https://www.trentiums.com")}
-          >
+            onPress={() => Linking.openURL('https://www.trentiums.com')}>
             Trentium Solutions
           </BlueText>
         </CenteredText>
         <Spacer size={4} />
-        <CenteredText style={{ color: "gray", fontSize: 12 }}>
+        <CenteredText style={{ color: 'gray', fontSize: 12 }}>
           Version 1.0.0
         </CenteredText>
       </Flexed>

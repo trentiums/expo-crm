@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import {
   DataText,
   DropDownContainer,
@@ -13,15 +13,16 @@ import {
   PlaceHolderText,
   PressableView,
   SelectedText,
-} from "./DropDown.styles";
-import ArrowDown from "@atoms/Illustrations/ArrowDown";
-import { DropdownBottomSheetSnapPoints } from "@constants/common";
-import { DropDownProps } from "./DropDown.props";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { BottomSheetFlatList, BottomSheetModal } from "@gorhom/bottom-sheet";
-import { useAppTheme } from "@constants/theme";
-import CheckMarkIcon from "@atoms/Illustrations/Check";
-import { Spacer } from "@atoms/common/common.styles";
+} from './DropDown.styles';
+import ArrowDown from '@atoms/Illustrations/ArrowDown';
+import { DropdownBottomSheetSnapPoints } from '@constants/common';
+import { DropDownProps } from './DropDown.props';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { useAppTheme } from '@constants/theme';
+import CheckMarkIcon from '@atoms/Illustrations/Check';
+import { Spacer } from '@atoms/common/common.styles';
+import { View } from 'react-native';
 
 const DropDown: React.FC<DropDownProps> = ({
   data,
@@ -37,7 +38,7 @@ const DropDown: React.FC<DropDownProps> = ({
   isStaff,
 }) => {
   const { colors } = useAppTheme();
-  const { top } = useSafeAreaInsets();
+  const { top, bottom } = useSafeAreaInsets();
   const bottomSheetRef = useRef<any>(null);
   const renderMultipleData = ({ selectedData }) => (
     <MultipleSelectedText>
@@ -121,7 +122,10 @@ const DropDown: React.FC<DropDownProps> = ({
       </DropDownContainer>
       {showBottomSheet && !isStaff && (
         <BottomSheetModal
-          backgroundStyle={{ backgroundColor: colors.darkBackground }}
+          backgroundStyle={{
+            backgroundColor: colors.darkBackground,
+          }}
+          handleIndicatorStyle={{ backgroundColor: colors.white }}
           ref={bottomSheetRef}
           enablePanDownToClose={true}
           topInset={top}
@@ -134,13 +138,21 @@ const DropDown: React.FC<DropDownProps> = ({
             }
           }}>
           <>
-            <DropDownTitleText>{dropDownTitle}</DropDownTitleText>
-            <Spacer size={16} />
+            <View
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: colors.transparent,
+                paddingBottom: 16,
+                paddingTop: 8,
+              }}>
+              <DropDownTitleText>{dropDownTitle}</DropDownTitleText>
+            </View>
             <BottomSheetFlatList
               keyboardShouldPersistTaps="always"
               data={isDataToShow ? dataToShow : data}
               renderItem={renderDropdownData}
               keyExtractor={(item, index) => `${item.id} - ${index}`}
+              ListFooterComponent={<View style={{ paddingBottom: bottom }} />}
             />
           </>
         </BottomSheetModal>

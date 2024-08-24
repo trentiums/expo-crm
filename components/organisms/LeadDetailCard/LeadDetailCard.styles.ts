@@ -1,19 +1,13 @@
-import Text from "@atoms/Text/Text";
-import View from "@atoms/View/View";
-import { TouchableOpacity } from "react-native";
-import styled from "styled-components";
+import Text from '@atoms/Text/Text';
+import View from '@atoms/View/View';
+import { TouchableOpacity } from 'react-native';
+import styled from 'styled-components';
 
 export const LeadDetailCardContainer = styled(View)<{
   isActive?: boolean;
 }>`
-  background-color: ${({ theme }) => theme.colors.darkBackground};
-  border-radius: 8px;
   padding: 16px 8px;
   border-width: 1px;
-  border-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.primaryColor : theme.colors.transparent};
-  background-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.backgroundCardColor : theme.colors.transparent};
 `;
 export const RequirementClubContainer = styled(View)`
   display: flex;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import {
   ApplyFiltersContainer,
   DateContainer,
@@ -9,19 +9,21 @@ import {
   LeadsFilterFormContainer,
   RemoveFilterBtnText,
   RemoveFiltersContainer,
-} from "./LeadsFilterForm.styles";
-import { Field, useFormState } from "react-final-form";
-import { useTranslation } from "react-i18next";
-import { Label } from "@organisms/UserInformationForm/UserInformationForm.styles";
-import FieldDatePicker from "@molecules/FieldDatePicker/FieldDatePicker";
-import moment from "moment";
-import DropDown from "@molecules/DropDown/DropDown";
-import { RootState, useAppDispatch, useSelector } from "@redux/store";
-import { Spacer } from "@atoms/common/common.styles";
-import { orderByList, sortOrderList } from "../../../constant";
-import { LeadFilterFormProps } from "./LeadsFilterForm.props";
-import { endOfDay } from "date-fns";
-import { getLeadListAction } from "@redux/actions/lead";
+} from './LeadsFilterForm.styles';
+import { Field, useFormState } from 'react-final-form';
+import { useTranslation } from 'react-i18next';
+import { Label } from '@organisms/UserInformationForm/UserInformationForm.styles';
+import FieldDatePicker from '@molecules/FieldDatePicker/FieldDatePicker';
+import moment from 'moment';
+import DropDown from '@molecules/DropDown/DropDown';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
+import { Spacer } from '@atoms/common/common.styles';
+import { orderByList, sortOrderList } from '../../../constant';
+import { LeadFilterFormProps } from './LeadsFilterForm.props';
+import { endOfDay } from 'date-fns';
+import { getLeadListAction } from '@redux/actions/lead';
+import Button from '@atoms/Button/Button';
+import { useAppTheme } from '@constants/theme';
 
 const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
   form,
@@ -44,18 +46,19 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
   bottomSheetClose,
   setFilterCount,
 }) => {
-  const { t } = useTranslation("leadsFilter");
+  const { t } = useTranslation('leadsFilter');
   const { values } = useFormState();
   const general = useSelector((state: RootState) => state.general);
   const dispatch = useAppDispatch();
+  const { colors } = useAppTheme();
   useEffect(() => {
     setStartDate(values.startDate);
     setEndDate(values.endDate);
   }, [values]);
 
   useEffect(() => {
-    form.change("startDate", startDate);
-    form.change("endDate", endDate);
+    form.change('startDate', startDate);
+    form.change('endDate', endDate);
   }, []);
   const handleGetLeadList = async () => {
     await dispatch(getLeadListAction({ page: 1 }));
@@ -68,8 +71,8 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
     setSelectedLead();
     setSortBy();
     setOrderBy();
-    form.change("startDate", "");
-    form.change("endDate", "");
+    form.change('startDate', '');
+    form.change('endDate', '');
     handleGetLeadList();
     handleDropDownClose();
     setFilterCount(0);
@@ -80,18 +83,18 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
       <FilterFormView>
         <DateFilterContainer>
           <DateContainer>
-            <Label>{t("startDate")}</Label>
+            <Label>{t('startDate')}</Label>
             <Field
               name="startDate"
               component={FieldDatePicker}
               initialDate={
                 values?.startDate || startDate || moment().clone().toDate()
               }
-              maxDate={endDate || moment().startOf("day").toDate()}
+              maxDate={endDate || moment().startOf('day').toDate()}
             />
           </DateContainer>
           <DateContainer>
-            <Label>{t("endDate")}</Label>
+            <Label>{t('endDate')}</Label>
             <Field
               name="endDate"
               component={FieldDatePicker}
@@ -99,16 +102,16 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
                 values?.endDate || endDate || moment().clone().toDate()
               }
               minDate={startDate}
-              maxDate={moment().startOf("day").toDate()}
+              maxDate={moment().startOf('day').toDate()}
             />
           </DateContainer>
         </DateFilterContainer>
         <FiltersDropDownViews>
           <Spacer size={16} />
-          <Label>{`${t("orderBy")}`}</Label>
+          <Label>{`${t('orderBy')}`}</Label>
           <DropDown
             data={orderByList}
-            placeholder={t("orderBy")}
+            placeholder={t('orderBy')}
             value={orderBy}
             onChange={(value: any) => {
               if (orderBy === value) {
@@ -117,14 +120,14 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
                 setOrderBy(value);
               }
             }}
-            dropDownTitle={`${t("orderBy")} ${t("list")}`}
+            dropDownTitle={`${t('orderBy')} ${t('list')}`}
             handleBottomSheetClose={handleDropDownClose}
           />
           <Spacer size={16} />
-          <Label>{`${t("sortOrder")}`}</Label>
+          <Label>{`${t('sortOrder')}`}</Label>
           <DropDown
             data={sortOrderList}
-            placeholder={t("sortOrder")}
+            placeholder={t('sortOrder')}
             value={sortBy}
             onChange={(value: any) => {
               if (sortBy === value) {
@@ -133,11 +136,11 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
                 setSortBy(value);
               }
             }}
-            dropDownTitle={`${t("sortOrder")} ${t("list")}`}
+            dropDownTitle={`${t('sortOrder')} ${t('list')}`}
             handleBottomSheetClose={handleDropDownClose}
           />
           <Spacer size={16} />
-          <Label>{`${t("channel")}`}</Label>
+          <Label>{`${t('channel')}`}</Label>
           <DropDown
             data={general.leadChannelList?.map((item) => {
               return {
@@ -145,7 +148,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
                 title: item?.name,
               };
             })}
-            placeholder={t("channel")}
+            placeholder={t('channel')}
             value={selectedChannel}
             onChange={(value: any) => {
               if (selectedChannel === value) {
@@ -154,11 +157,11 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
                 setSelectedChannel(value);
               }
             }}
-            dropDownTitle={`${t("channel")} ${t("list")}`}
+            dropDownTitle={`${t('channel')} ${t('list')}`}
             handleBottomSheetClose={handleDropDownClose}
           />
           <Spacer size={16} />
-          <Label>{`${t("status")}`}</Label>
+          <Label>{`${t('status')}`}</Label>
           <DropDown
             data={general.leadStatusList?.map((item) => {
               return {
@@ -166,7 +169,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
                 title: item?.name,
               };
             })}
-            placeholder={t("status")}
+            placeholder={t('status')}
             value={selectedLead}
             onChange={(value: any) => {
               if (selectedLead === value) {
@@ -175,11 +178,11 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
                 setSelectedLead(value);
               }
             }}
-            dropDownTitle={`${t("status")} ${t("list")}`}
+            dropDownTitle={`${t('status')} ${t('list')}`}
             handleBottomSheetClose={handleDropDownClose}
           />
           <Spacer size={16} />
-          <Label>{`${t("conversion")}`}</Label>
+          <Label>{`${t('conversion')}`}</Label>
           <DropDown
             data={general.leadConversionList?.map((item) => {
               return {
@@ -187,7 +190,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
                 title: item?.name,
               };
             })}
-            placeholder={t("conversion")}
+            placeholder={t('conversion')}
             value={selectedStage}
             onChange={(value: any) => {
               if (selectedStage === value) {
@@ -196,19 +199,28 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
                 setSelectedStage(value);
               }
             }}
-            dropDownTitle={`${t("conversion")} ${t("list")}`}
+            dropDownTitle={`${t('conversion')} ${t('list')}`}
             handleBottomSheetClose={handleDropDownClose}
           />
           <Spacer size={16} />
         </FiltersDropDownViews>
       </FilterFormView>
-      <ApplyFiltersContainer onPress={form.submit} loading={loading}>
-        <FilterBtnText>{t("applyFilter")}</FilterBtnText>
-      </ApplyFiltersContainer>
-      <Spacer size={16} />
-      <RemoveFiltersContainer onPress={handleRemoveFilters}>
-        <RemoveFilterBtnText>{t("removeFilter")}</RemoveFilterBtnText>
-      </RemoveFiltersContainer>
+      <Button
+        mode="contained"
+        buttonColor={colors.primaryColor}
+        textColor={colors.white}
+        onPress={form.submit}
+        uppercase={false}
+        loading={loading}>
+        {t('applyFilter')}
+      </Button>
+      <Button
+        mode="text"
+        textColor={colors.errorText}
+        uppercase={false}
+        onPress={handleRemoveFilters}>
+        {t('removeFilter')}
+      </Button>
     </LeadsFilterFormContainer>
   );
 };

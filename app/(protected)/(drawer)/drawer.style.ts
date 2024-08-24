@@ -1,7 +1,13 @@
-import Text from "@atoms/Text/Text";
-import View from "@atoms/View/View";
-import { styled } from "@utils/styled";
-import { Dimensions, Image, Pressable, TouchableOpacity } from "react-native";
+import Text from '@atoms/Text/Text';
+import View from '@atoms/View/View';
+import { styled } from '@utils/styled';
+import {
+  View as RNView,
+  Dimensions,
+  Image,
+  Pressable,
+  TouchableOpacity,
+} from 'react-native';
 
 export const DrawerNavigationView = styled(View)`
   display: flex;
@@ -27,7 +33,7 @@ export const UserImage = styled(Image)`
 `;
 
 export const DrawerItemSection = styled(View)`
-  height: ${Dimensions.get("screen")?.height * 0.58}px;
+  height: ${Dimensions.get('screen')?.height * 0.58}px;
 `;
 
 export const UserName = styled(Text)`
@@ -75,23 +81,28 @@ export const AddProductContainer = styled(View)`
 `;
 
 export const FilterContainer = styled(View)`
-  display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0px 16px;
+  padding-bottom: 16px;
+  margin-top: 16px;
   gap: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-bottom-width: 1px;
+  border-bottom-color: #333;
 `;
 export const FilterIconView = styled(Pressable)`
-  width: 11%;
-  padding: 12px 8px;
-  background-color: ${({ theme }) => theme.colors.primaryColor};
+  width: 50px;
   border-radius: 12px;
-  position: relative;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
 `;
-export const SearchInputContainer = styled(View)`
-  width: 85%;
+export const SearchInputContainer = styled(RNView)`
+  flex: 1;
 `;
 export const FilterCountView = styled(View)`
   position: absolute;

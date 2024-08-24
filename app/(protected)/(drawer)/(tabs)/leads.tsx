@@ -1,15 +1,15 @@
-import { useAppTheme } from "@constants/theme";
-import { ToastTypeProps } from "@molecules/Toast/Toast.props";
-import LeadDetailCard from "@organisms/LeadDetailCard/LeadDetailCard";
-import { ModalType } from "@organisms/LeadDetailCard/LeadDetailCard.props";
-import { deleteLeadAction, getLeadListAction } from "@redux/actions/lead";
-import { setLeadsInformation } from "@redux/slices/leads";
-import { RootState, useAppDispatch, useSelector } from "@redux/store";
-import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { LeadListState } from "@type/api/lead";
-import { initialModalType } from "@utils/constant";
-import { router } from "expo-router";
-import moment from "moment";
+import { useAppTheme } from '@constants/theme';
+import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import LeadDetailCard from '@organisms/LeadDetailCard/LeadDetailCard';
+import { ModalType } from '@organisms/LeadDetailCard/LeadDetailCard.props';
+import { deleteLeadAction, getLeadListAction } from '@redux/actions/lead';
+import { setLeadsInformation } from '@redux/slices/leads';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
+import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
+import { LeadListState } from '@type/api/lead';
+import { initialModalType } from '@utils/constant';
+import { router } from 'expo-router';
+import moment from 'moment';
 import React, {
   RefObject,
   useCallback,
@@ -17,50 +17,51 @@ import React, {
   useMemo,
   useRef,
   useState,
-} from "react";
-import { useTranslation } from "react-i18next";
-import { Keyboard, Pressable } from "react-native";
-import { RefreshControl, Swipeable } from "react-native-gesture-handler";
-import { useToast } from "react-native-toast-notifications";
+} from 'react';
+import { useTranslation } from 'react-i18next';
+import { FlatList, Keyboard, Pressable, View } from 'react-native';
+import { RefreshControl, Swipeable } from 'react-native-gesture-handler';
+import { useToast } from 'react-native-toast-notifications';
 import {
   FlatListCon,
   LoaderView,
   NoDataFoundText,
   NoLeadsFoundContainer,
-} from "../tabs.style";
-import { ActivityIndicator } from "react-native-paper";
-import { PaddingSpace, Spacer } from "@atoms/common/common.styles";
-import Loader from "@atoms/Loader/Loader";
-import ActionModal from "@molecules/ActionModal/ActionModal";
-import { Actions } from "@molecules/ActionModal/ActionModal.props";
-import Trash from "@atoms/Illustrations/Trash";
-import TextInput from "@atoms/TextInput/TextInput";
-import isEmpty from "lodash/isEmpty";
-import { useDebounce } from "@utils/useDebounce";
+} from '../tabs.style';
+import { ActivityIndicator, IconButton } from 'react-native-paper';
+import { PaddingSpace, Spacer } from '@atoms/common/common.styles';
+import Loader from '@atoms/Loader/Loader';
+import ActionModal from '@molecules/ActionModal/ActionModal';
+import { Actions } from '@molecules/ActionModal/ActionModal.props';
+import Trash from '@atoms/Illustrations/Trash';
+import TextInput from '@atoms/TextInput/TextInput';
+import isEmpty from 'lodash/isEmpty';
+import { useDebounce } from '@utils/useDebounce';
 import {
   FilterContainer,
   FilterCountText,
   FilterCountView,
   FilterIconView,
   SearchInputContainer,
-} from "../drawer.style";
-import Filter from "@atoms/Illustrations/Filter";
-import { DropdownBottomSheetSnapPoints } from "@constants/common";
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import FormTemplate from "@templates/FormTemplate/FormTemplate";
-import LeadsFilterForm from "@organisms/LeadsFilterForm/LeadsFilterForm";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Text from "@atoms/Text/Text";
+} from '../drawer.style';
+import Filter from '@atoms/Illustrations/Filter';
+import { DropdownBottomSheetSnapPoints } from '@constants/common';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import FormTemplate from '@templates/FormTemplate/FormTemplate';
+import LeadsFilterForm from '@organisms/LeadsFilterForm/LeadsFilterForm';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const settings = () => {
-  const { t } = useTranslation("modalText");
+const ButtonSize = 40;
+
+const Leads = () => {
+  const { t } = useTranslation('modalText');
   const { top } = useSafeAreaInsets();
-  const { t: td } = useTranslation("dashBoard");
-  const { t: ts } = useTranslation("addData");
+  const { t: td } = useTranslation('dashBoard');
+  const { t: ts } = useTranslation('addData');
   const { colors } = useAppTheme();
   const bottomSheetRef = useRef<any>(null);
   const leadsData = useSelector(
-    (state: RootState) => state.leads.leadList?.leads
+    (state: RootState) => state.leads.leadList?.leads,
   );
 
   const leadListData = useSelector((state: RootState) => state.leads.leadList);
@@ -74,7 +75,7 @@ const settings = () => {
   const [loading, setLoading] = useState(false);
   const [moreLoading, setMoreLoading] = useState(false);
   const [leadsLoading, setLeadsLoading] = useState(false);
-  const [leadSearch, setLeadSearch] = useState("");
+  const [leadSearch, setLeadSearch] = useState('');
   const dispatch = useAppDispatch();
   const [refreshing, setRefreshing] = useState(false);
   const [openSwipeAbleRef, setOpenSwipeAbleRef] =
@@ -87,8 +88,8 @@ const settings = () => {
   const [conversionId, setConversionId] = useState();
   const [orderBy, setOrderBy] = useState();
   const [sortBy, setSortBy] = useState();
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const [filterLoading, setFilterLoading] = useState(false);
   const [filterCount, setFilterCount] = useState(0);
   const handleDelete = async (slug: number) => {
@@ -100,10 +101,10 @@ const settings = () => {
     setLoading(true);
     try {
       const response = await dispatch(
-        deleteLeadAction({ lead_id: slug })
+        deleteLeadAction({ lead_id: slug }),
       ).unwrap();
       toast.show(response?.message, {
-        type: "customToast",
+        type: 'customToast',
         data: {
           type: ToastTypeProps.Success,
         },
@@ -112,7 +113,7 @@ const settings = () => {
       setDeleteCardId(null);
     } catch (error: any) {
       toast.show(error, {
-        type: "customToast",
+        type: 'customToast',
         data: {
           type: ToastTypeProps.Error,
         },
@@ -160,7 +161,7 @@ const settings = () => {
     <Pressable
       key={`${item.id}-${index}`}
       onPress={() => {
-        console.log("pressCard", item.id);
+        console.log('pressCard', item.id);
       }}>
       <LeadDetailCard
         key={`${item.id}-${index}`}
@@ -175,7 +176,7 @@ const settings = () => {
         title={item.name}
         mailID={item.email}
         dateTime={moment(item?.updatedAt || item?.createdAt).format(
-          "DD MMM YYYY, hh:mm A"
+          'DD MMM YYYY, hh:mm A',
         )}
         closeSwipeAble={closeSwipeAble}
         setSwipeAbleRef={setSwipeAbleRef}
@@ -197,7 +198,6 @@ const settings = () => {
         leadId={leadId}
         assignTo={item.assignTo}
       />
-      <Spacer size={16} />
     </Pressable>
   );
   const handleGetMoreData = async () => {
@@ -211,7 +211,7 @@ const settings = () => {
         await dispatch(
           getLeadListAction({
             page: leadListData?.currentPage + 1,
-          })
+          }),
         ).unwrap();
       } catch (error) {
         console.log(error);
@@ -233,7 +233,7 @@ const settings = () => {
       return {};
     }
     const filtersValue = {};
-    filtersValue["search"] = leadSearch;
+    filtersValue['search'] = leadSearch;
     return filtersValue;
   }, [leadSearch, debouncedLeadSearch]);
   useEffect(() => {
@@ -261,7 +261,7 @@ const settings = () => {
       sortBy,
     ];
     const count = states.filter(
-      (state) => state !== null && state !== undefined && state !== ""
+      (state) => state !== null && state !== undefined && state !== '',
     ).length;
     setFilterCount(count);
     try {
@@ -269,20 +269,20 @@ const settings = () => {
       await dispatch(
         getLeadListAction({
           end_date:
-            (endDate && moment(endDate).format("YYYY-MM-DD")) || undefined,
+            (endDate && moment(endDate).format('YYYY-MM-DD')) || undefined,
           start_date:
-            (startDate && moment(startDate).format("YYYY-MM-DD")) || undefined,
+            (startDate && moment(startDate).format('YYYY-MM-DD')) || undefined,
           search: debouncedLeadSearch,
           lead_channel_id: channelId,
           lead_conversion_id: conversionId,
           lead_status_id: statusId,
           order_by: orderBy,
           sort_order: sortBy,
-        })
+        }),
       ).unwrap();
     } catch (error) {
       toast.show(error, {
-        type: "customToast",
+        type: 'customToast',
         data: {
           type: ToastTypeProps.Error,
         },
@@ -300,93 +300,93 @@ const settings = () => {
   const handleBottomSheetClose = () => {
     bottomSheetRef.current?.close();
   };
-  return (
-    <ScreenTemplate
-      addButtonText={ts("lead")}
-      onAddButtonPress={() => {
-        dispatch(setLeadsInformation());
-        router.navigate(`/(protected)/add-lead/add`);
-      }}>
-      <Spacer size={16} />
+  const onAddButtonPress = () => {
+    dispatch(setLeadsInformation());
+    router.navigate(`/(protected)/add-lead/add`);
+  };
+
+  if (leadsLoading) {
+    return (
+      <ScreenTemplate>
+        <LoaderView>
+          <ActivityIndicator color={colors.primaryColor} />
+        </LoaderView>
+      </ScreenTemplate>
+    );
+  }
+
+  const renderHeader = () => {
+    return (
       <FilterContainer>
         <SearchInputContainer>
           <TextInput
             mode="outlined"
             value={leadSearch}
             onChangeText={(text) => setLeadSearch(text)}
-            placeholder={t("searchLeads")}
+            placeholder={t('searchLeads')}
             style={[
               {
                 borderRadius: 25,
-                overflow: "hidden",
+                overflow: 'hidden',
                 borderColor: colors.primaryColor,
+                paddingLeft: 10,
+                paddingRight: 40,
               },
             ]}
             outlineColor="transparent"
             outlineStyle={{ borderWidth: 0 }}
           />
+          <FilterIconView onPress={handleOpenBottomSheetOpen}>
+            {filterCount > 0 && (
+              <FilterCountView>
+                <FilterCountText>{filterCount}</FilterCountText>
+              </FilterCountView>
+            )}
+            <Filter color={colors.primaryColor} />
+          </FilterIconView>
         </SearchInputContainer>
-        <FilterIconView onPress={handleOpenBottomSheetOpen}>
-          {filterCount > 0 && (
-            <FilterCountView>
-              <FilterCountText>{filterCount}</FilterCountText>
-            </FilterCountView>
-          )}
-          <Filter />
-        </FilterIconView>
       </FilterContainer>
-      {leadsLoading ? (
-        <LoaderView>
-          <ActivityIndicator color={colors.primaryColor} />
-        </LoaderView>
+    );
+  };
+
+  return (
+    <ScreenTemplate>
+      {leadsData?.length > 0 ? (
+        <FlatList
+          contentContainerStyle={{ paddingBottom: ButtonSize + 20 }}
+          data={leadsData}
+          keyExtractor={(item: any, index: number) => `${item.id}-${index}`}
+          renderItem={RenderComponent}
+          showsVerticalScrollIndicator={false}
+          onEndReached={handleGetMoreData}
+          ListFooterComponent={moreLoading ? <Loader size={24} /> : null}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefreshLeadList}
+              colors={[colors.primaryColor]}
+            />
+          }
+          ListHeaderComponent={renderHeader()}
+          ItemSeparatorComponent={() => (
+            <View style={{ height: 1, backgroundColor: '#333' }} />
+          )}
+        />
       ) : (
-        <PaddingSpace>
-          {leadsData?.length > 0 ? (
-            <FlatListCon
-              data={leadsData}
-              keyExtractor={(item: any, index: number) => `${item.id}-${index}`}
-              renderItem={RenderComponent}
-              showsVerticalScrollIndicator={false}
-              onEndReached={handleGetMoreData}
-              ListFooterComponent={moreLoading ? <Loader size={24} /> : null}
-              refreshControl={
-                <RefreshControl
-                  refreshing={refreshing}
-                  onRefresh={onRefreshLeadList}
-                  colors={[colors.primaryColor]}
-                />
-              }
-            />
-          ) : (
-            <NoLeadsFoundContainer>
-              <NoDataFoundText>{td("noLeadsFound")}</NoDataFoundText>
-            </NoLeadsFoundContainer>
-          )}
-          {showModal && (
-            <ActionModal
-              isModal
-              onBackdropPress={() => {
-                setShowModal(false);
-                setDeleteCardId(null);
-                closeSwipeAble();
-              }}
-              heading={t("discardMedia")}
-              description={t("disCardDescription")}
-              label={t("yesDiscard")}
-              actionType={Actions.delete}
-              actiontext={t("cancel")}
-              onCancelPress={() => {
-                setShowModal(false);
-                setDeleteCardId(null);
-                closeSwipeAble();
-              }}
-              onActionPress={() => onDeleteActionPress(deleteCardId || 0)}
-              icon={<Trash color={colors?.deleteColor} />}
-              loading={loading}
-            />
-          )}
-        </PaddingSpace>
+        <NoLeadsFoundContainer>
+          <NoDataFoundText>{td('noLeadsFound')}</NoDataFoundText>
+        </NoLeadsFoundContainer>
       )}
+      <View style={{ position: 'absolute', right: 16, bottom: 16 }}>
+        <IconButton
+          icon="plus"
+          iconColor={colors.white}
+          size={ButtonSize}
+          containerColor={colors.primaryColor}
+          onPress={onAddButtonPress}
+        />
+      </View>
+
       <BottomSheetModal
         backgroundStyle={{
           backgroundColor: colors.darkBackground,
@@ -425,8 +425,32 @@ const settings = () => {
           bottomSheetClose={handleBottomSheetClose}
         />
       </BottomSheetModal>
+
+      {showModal && (
+        <ActionModal
+          isModal
+          onBackdropPress={() => {
+            setShowModal(false);
+            setDeleteCardId(null);
+            closeSwipeAble();
+          }}
+          heading={t('discardMedia')}
+          description={t('disCardDescription')}
+          label={t('yesDiscard')}
+          actionType={Actions.delete}
+          actiontext={t('cancel')}
+          onCancelPress={() => {
+            setShowModal(false);
+            setDeleteCardId(null);
+            closeSwipeAble();
+          }}
+          onActionPress={() => onDeleteActionPress(deleteCardId || 0)}
+          icon={<Trash color={colors?.deleteColor} />}
+          loading={loading}
+        />
+      )}
     </ScreenTemplate>
   );
 };
 
-export default settings;
+export default Leads;
