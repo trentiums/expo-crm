@@ -23,14 +23,18 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
     if (isMultiple) {
       const multiValue: number[] = Array.isArray(input.value)
         ? input.value
-        : undefined;
+        : [];
       if (multiValue?.includes(value)) {
         input.onChange(multiValue.filter((id) => value !== id));
       } else {
         input.onChange(multiValue.concat(value));
       }
     } else {
-      input.onChange(value);
+      if (input.value === value) {
+        input.onChange(null);
+      } else {
+        input.onChange(value);
+      }
     }
   };
   return (

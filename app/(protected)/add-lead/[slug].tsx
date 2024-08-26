@@ -135,8 +135,8 @@ const AddLead = () => {
           ? values?.firstName
           : selectedData.name,
       );
-      selectedService?.length > 0
-        ? selectedService.forEach((service, index) => {
+      values?.selectedServices?.length > 0
+        ? values?.selectedServices?.forEach((service, index) => {
             formData.append(`product_services[${index}]`, service);
           })
         : selectedDataServices.forEach((service, index) => {

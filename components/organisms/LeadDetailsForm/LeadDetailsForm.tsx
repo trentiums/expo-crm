@@ -110,9 +110,9 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         ...addLeadFormData,
         budget: values.budget,
         timeFrame: values.timeFrame,
-        selectedChannel: selectedChannel,
-        selectedLead: selectedLead,
-        selectedStage: selectedStage,
+        selectedChannel: values?.selectedChannel,
+        selectedLead: values?.selectedLead,
+        selectedStage: values?.selectedStage,
         selectedServices: selectedService,
         dealAmount: values.dealAmount,
         winCloseReason: values.winCloseReason,
@@ -122,7 +122,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         comments: values.comments,
       }),
     );
-  }, [values, selectedService, selectedChannel, selectedLead, selectedStage]);
+  }, [values, selectedService]);
 
   useEffect(() => {
     form.change(
@@ -142,8 +142,8 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       'assignTo',
       id ? leadsDetail?.assignTo : addLeadFormData?.assignTo,
     );
-
-    setSelectedService(
+    form.change(
+      'selectedServices',
       id
         ? leadsDetail?.productService?.map((item) => item?.id)
         : addLeadFormData?.selectedServices,
@@ -188,26 +188,17 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         keyboardShouldPersistTaps="always">
         <View>
           <Label>{`${t('sourceLabel')} *`}</Label>
-          <DropDown
-            data={servicesData?.map((item: any) => {
+          <Field
+            component={FieldDropDown}
+            name={'selectedServices'}
+            listData={servicesData?.map((item: any) => {
               return {
                 id: item?.id,
                 title: item?.name,
               };
             })}
             placeholder={`${t('sourceLabel')}`}
-            value={selectedService || []}
             isMultiple
-            onChange={(item: number[]) => {
-              if (selectedService?.includes(item)) {
-                const updatedServices = selectedService.filter(
-                  (service) => service !== item,
-                );
-                setSelectedService(updatedServices);
-              } else {
-                setSelectedService([...selectedService, item]);
-              }
-            }}
             isFullWidth
             dropDownTitle={`${t('sourceLabel')} ${t('list')}`}
           />
@@ -299,8 +290,8 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             contentStyle={{ marginTop: -10 }}
           />
           <Spacer size={16} />
-          {(selectedStage === LeadStageType.CLOSELOST ||
-            selectedStage === LeadStageType.CLOSEWON) && (
+          {(values?.selectedStage === LeadStageType.CLOSELOST ||
+            values?.selectedStage === LeadStageType.CLOSEWON) && (
             <>
               <Label>{t('winCloseReason')}</Label>
               <Field
@@ -339,7 +330,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         <SubContainerView>
           <ButtonSubmit
             onPress={
-              selectedService?.length > 0 &&
+              values?.selectedServices?.length > 0 &&
               values?.selectedChannel &&
               values?.selectedLead &&
               values?.selectedStage &&
@@ -349,7 +340,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             loading={loading}
             valid={
               valid &&
-              selectedService?.length > 0 &&
+              values?.selectedServices?.length > 0 &&
               values?.selectedChannel &&
               values?.selectedLead &&
               values?.selectedStage
@@ -357,7 +348,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             <FormButtonText
               valid={
                 valid &&
-                selectedService?.length > 0 &&
+                values?.selectedServices?.length > 0 &&
                 values?.selectedChannel &&
                 values?.selectedLead &&
                 values?.selectedStage

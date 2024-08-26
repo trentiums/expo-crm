@@ -114,7 +114,6 @@ const AddLead = () => {
   const handleSaveLeadDetailsInformation = async (
     values: LeadInformationFromValuesType,
   ) => {
-    console.log(values, 'values');
     dispatch(
       addLeadInformation({
         ...addLeadData,
@@ -124,7 +123,7 @@ const AddLead = () => {
         selectedChannel: values?.selectedChannel,
         selectedLead: values?.selectedLead,
         selectedStage: values?.selectedStage,
-        selectedServices: selectedService,
+        selectedServices: values?.selectedService,
         dealAmount: values.dealAmount,
         winCloseReason: values.winCloseReason,
         dealCloseDate: values?.dealCloseDate
@@ -143,7 +142,7 @@ const AddLead = () => {
       formData.append('lead_channel_id', `${values?.selectedChannel}`);
       formData.append('lead_conversion_id', `${values?.selectedStage}`);
       formData.append('lead_status_id', `${values?.selectedLead}`);
-      selectedService.forEach((service, index) => {
+      values?.selectedServices?.forEach((service, index) => {
         formData.append(`product_services[${index}]`, service);
       });
       formData.append('name', `${addLeadData.fullName || ''}`);
