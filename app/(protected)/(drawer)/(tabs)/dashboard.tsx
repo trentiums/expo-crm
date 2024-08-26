@@ -34,6 +34,7 @@ import Trash from '@atoms/Illustrations/Trash';
 import React from 'react';
 import { router } from 'expo-router';
 import { useFocusEffect } from 'expo-router';
+import Button from '@atoms/Button/Button';
 
 const Dashboard = () => {
   const { colors } = useAppTheme();
@@ -215,7 +216,16 @@ const Dashboard = () => {
             />
           ) : (
             <>
-              <NoDataFoundText>{t('noLeadsFound')}</NoDataFoundText>
+              <NoDataFoundText>{t('noLeadsDashboard')}</NoDataFoundText>
+              <Spacer size={12} />
+              <Button
+                mode="contained"
+                buttonColor={colors.primaryColor}
+                textColor={colors.white}
+                onPress={() => router.navigate(`/(protected)/add-lead/add`)}
+                uppercase={false}>
+                {t('addLeads')}
+              </Button>
             </>
           )}
           <Spacer size={16} />

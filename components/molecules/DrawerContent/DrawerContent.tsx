@@ -1,12 +1,15 @@
 import { Flexed, Spacer } from '@atoms/common/common.styles';
 import Text from '@atoms/Text/Text';
-import { useSelector } from '@redux/store';
+import { useAppDispatch, useSelector } from '@redux/store';
 import { router, usePathname } from 'expo-router';
 import React from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import { Button, Drawer } from 'react-native-paper';
 import { Linking } from 'react-native';
 import { styled } from '@utils/styled';
+import { logoutUserAction } from '@redux/actions/auth';
+import { useTranslation } from 'react-i18next';
+import { DrawerSafeAreaView, VersionText } from './DrawerContent.styles';
 
 const BoldCenteredText = styled(Text)`
   font-weight: bold;
@@ -22,6 +25,7 @@ const CenteredText = styled(Text)`
 
 const RedText = styled(Text)`
   color: ${({ theme }) => theme.colors.error};
+  font-size: 16px;
 `;
 
 const BlueText = styled(Text)`
@@ -31,11 +35,15 @@ const BlueText = styled(Text)`
 const DrawerContent = () => {
   const user = useSelector((state) => state.auth.user);
   const pathname = usePathname();
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation('drawer');
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <DrawerSafeAreaView>
       <Flexed>
-        <BoldCenteredText>Welcome, {user.name}</BoldCenteredText>
+        <BoldCenteredText>
+          {t('welcome')} {user.name}
+        </BoldCenteredText>
         <Flexed>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Drawer.Item
@@ -74,23 +82,29 @@ const DrawerContent = () => {
             />
           </ScrollView>
         </Flexed>
-        <Button>
-          <RedText>Logout</RedText>
+        <Button
+          onPress={async () => {
+            try {
+              await dispatch(logoutUserAction()).unwrap();
+              router.replace('/(public)/login');
+            } catch (error) {
+              console.log('error: ', error);
+            }
+          }}>
+          <RedText>{t('logout')}</RedText>
         </Button>
         <Spacer size={16} />
         <CenteredText>
-          Powered by{' '}
+          {t('poweredBy')}{' '}
           <BlueText
             onPress={() => Linking.openURL('https://www.trentiums.com')}>
-            Trentium Solutions
+            {t('trentiums')}
           </BlueText>
         </CenteredText>
         <Spacer size={4} />
-        <CenteredText style={{ color: 'gray', fontSize: 12 }}>
-          Version 1.0.0
-        </CenteredText>
+        <VersionText>Version 1.0.0</VersionText>
       </Flexed>
-    </SafeAreaView>
+    </DrawerSafeAreaView>
   );
 };
 

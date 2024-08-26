@@ -7,7 +7,8 @@ export const LeadDetailCardContainer = styled(View)<{
   isActive?: boolean;
 }>`
   padding: 16px 8px;
-  border-width: 1px;
+  border-bottom-width: 1px;
+  border-bottom-color: ${({ theme }) => theme.colors.lightBorder};
 `;
 export const RequirementClubContainer = styled(View)`
   display: flex;

@@ -59,12 +59,17 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
           <Menu
             visible={visible}
             onDismiss={closeMenu}
-            anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}>
+            anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
+            style={{ borderRadius: 16, overflow: 'hidden' }}>
             <Menu.Item
               leadingIcon="pencil"
               onPress={() => {
                 closeMenu();
                 onEdit();
+              }}
+              style={{
+                borderBottomColor: colors.lightBorder,
+                borderBottomWidth: 1,
               }}
               title={t('edit')}
             />

@@ -116,6 +116,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             onChange={(value: any) => {
               if (orderBy === value) {
                 setOrderBy();
+                setSortBy();
               } else {
                 setOrderBy(value);
               }
@@ -138,6 +139,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             }}
             dropDownTitle={`${t('sortOrder')} ${t('list')}`}
             handleBottomSheetClose={handleDropDownClose}
+            isStaff={!orderBy}
           />
           <Spacer size={16} />
           <Label>{`${t('channel')}`}</Label>

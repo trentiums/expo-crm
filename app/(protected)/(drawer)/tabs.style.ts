@@ -26,6 +26,8 @@ export const NoDataFoundText = styled(Text)`
   font-size: 16px;
   text-align: center;
   color: ${({ theme }) => theme.colors.placeholderTextColor};
+  max-width: 300px;
+  margin: auto;
 `;
 export const FlatListCon = styled(FlatList).attrs({
   contentContainerStyle: {

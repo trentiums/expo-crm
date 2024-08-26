@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { Field, useFormState } from "react-final-form";
-import { LoginFormProps } from "./LoginForm.props";
+import React, { useState } from 'react';
+import { Field, useFormState } from 'react-final-form';
+import { LoginFormProps } from './LoginForm.props';
 
-import { ButtonSubmit, LoginFormContainer } from "./LoginForm.styles";
-import { useTranslation } from "react-i18next";
-import { useAppTheme } from "@constants/theme";
-import { RootState, useSelector } from "@redux/store";
-import EmailIcon from "@atoms/Illustrations/Email";
-import Lock from "@atoms/Illustrations/Lock";
-import { Pressable } from "react-native";
-import EyeOpenIcon from "@atoms/Illustrations/EyeOpen";
-import EyeCloseIcon from "@atoms/Illustrations/EyeClose";
-import FieldTextInput from "@molecules/FieldTextInput/FieldTextInput";
+import { ButtonSubmit, LoginFormContainer } from './LoginForm.styles';
+import { useTranslation } from 'react-i18next';
+import { useAppTheme } from '@constants/theme';
+import { RootState, useSelector } from '@redux/store';
+import EmailIcon from '@atoms/Illustrations/Email';
+import Lock from '@atoms/Illustrations/Lock';
+import { Pressable } from 'react-native';
+import EyeOpenIcon from '@atoms/Illustrations/EyeOpen';
+import EyeCloseIcon from '@atoms/Illustrations/EyeClose';
+import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
 import {
   complexPasswordValidator,
   composeValidators,
@@ -19,10 +19,11 @@ import {
   lowercaseValidator,
   minLengthValidator,
   requiredValidator,
-} from "@utils/formValidators";
+} from '@utils/formValidators';
+import { Spacer } from '@atoms/common/common.styles';
 
 const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
-  const { t } = useTranslation("login");
+  const { t } = useTranslation('login');
   const { colors } = useAppTheme();
   const { user } = useSelector((state: RootState) => state?.auth);
   const [isActive, setIsActive] = useState(false);
@@ -35,28 +36,27 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
       <LoginFormContainer>
         <Field
           name="username"
-          placeholder={t("email")}
+          placeholder={t('email')}
           component={FieldTextInput}
           keyboardType="email-address"
-          label={t("emailLabel")}
           validate={composeValidators(
             requiredValidator,
             minLengthValidator,
-            emailValidator
+            emailValidator,
           )}
           left={() => (
             <EmailIcon color={isActive ? colors.primaryColor : colors.gray} />
           )}
         />
+        <Spacer size={16} />
         <Field
           name="password"
-          placeholder={t("password")}
+          placeholder={t('password')}
           component={FieldTextInput}
-          label={t("passwordLable")}
           validate={composeValidators(
             requiredValidator,
             minLengthValidator,
-            complexPasswordValidator
+            complexPasswordValidator,
           )}
           left={() => (
             <Lock
@@ -80,7 +80,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
         textColor={valid ? colors.black : colors.disabledTextColor}
         valid={valid}
         disabled={!valid}>
-        {t("login")}
+        {t('login')}
       </ButtonSubmit>
     </>
   );

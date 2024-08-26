@@ -88,7 +88,7 @@ export const FilterContainer = styled(View)`
   padding-left: 16px;
   padding-right: 16px;
   border-bottom-width: 1px;
-  border-bottom-color: #333;
+  border-bottom-color: ${({ theme }) => theme.colors.lightBorder};
 `;
 export const FilterIconView = styled(Pressable)`
   width: 50px;
@@ -117,4 +117,13 @@ export const FilterCountView = styled(View)`
 export const FilterCountText = styled(Text)`
   font-size: 12px;
   color: ${({ theme }) => theme.colors.black};
+`;
+export const ActionBtnView = styled(View)`
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+`;
+export const SeparatorComponent = styled(View)`
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.lightBorder};
 `;

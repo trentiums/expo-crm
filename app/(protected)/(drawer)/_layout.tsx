@@ -10,12 +10,6 @@ import DrawerContent from '@molecules/DrawerContent/DrawerContent';
 const DrawerLayout = () => {
   const { colors } = useAppTheme();
   const { t } = useTranslation('drawer');
-  const dispatch = useAppDispatch();
-  const user = useSelector((state: RootState) => state.auth.user);
-  const router = useRouter();
-  const userData = {
-    name: user.name,
-  };
 
   return (
     <GestureHandlerRootView>
@@ -26,6 +20,7 @@ const DrawerLayout = () => {
           headerShown: false,
           drawerStyle: {
             backgroundColor: colors.tabBar,
+            borderRadius: 8,
           },
         }}>
         <Drawer.Screen name="(tabs)" />

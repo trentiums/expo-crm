@@ -1,7 +1,7 @@
-import Text from "@atoms/Text/Text";
-import View from "@atoms/View/View";
-import { Pressable } from "react-native";
-import styled from "styled-components";
+import Text from '@atoms/Text/Text';
+import View from '@atoms/View/View';
+import { Pressable } from 'react-native';
+import styled from 'styled-components';
 
 export const DetailContainer = styled(View)`
   display: flex;
@@ -36,7 +36,10 @@ export const TitleView = styled(View)`
   flex: 1;
 `;
 
-export const WhatsAppIconView = styled(View)<{ isShow?: boolean }>``;
+export const WhatsAppIconView = styled(View)<{ isShow?: boolean }>`
+  margin-top: 24px;
+  margin-right: 0px;
+`;
 
 export const NumberEmailView = styled(View)<{ isFull?: boolean }>`
   width: 100%;

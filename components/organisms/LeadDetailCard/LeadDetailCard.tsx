@@ -88,31 +88,6 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
 
   const closeMenu = () => setVisible(false);
 
-  const renderRightActions = () => (
-    <RenderRightView>
-      <TouchableOpacityContainer
-        backgroundColor={colors?.lightBlue}
-        onPress={() => {
-          closeSwipeAble();
-          onEdit();
-        }}>
-        <ViewContainer>
-          <EditIcon />
-        </ViewContainer>
-        <Spacer size={10} />
-        <SwipeText>{t('edit')}</SwipeText>
-      </TouchableOpacityContainer>
-      <TouchableOpacityContainer
-        backgroundColor={colors?.deleteColor}
-        onPress={onDelete}>
-        <ViewContainer>
-          <Trash />
-        </ViewContainer>
-        <Spacer size={10} />
-        <SwipeText>{t('delete')}</SwipeText>
-      </TouchableOpacityContainer>
-    </RenderRightView>
-  );
   const handleChangeLead = (leadId: number, value: number) => {
     if (
       (value === LeadStatusTypes.CONTACTED ||
@@ -192,10 +167,6 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
     }
   };
 
-  const handleCloseModal = async () => {
-    setModalType(initialModalType);
-    setModal(false);
-  };
   const handleSaveLeadsStatusChange = async (
     values: any,
     currentLeadId: number,
@@ -403,16 +374,27 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
           setAssignTo={(leadId, value) => handleChangeAssignTo(leadId, value)}
         />
       </LeadSelectView>
-      <View style={{ position: 'absolute', top: 0, right: 0, width: 50 }}>
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          width: 50,
+        }}>
         <Menu
           visible={visible}
           onDismiss={closeMenu}
-          anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}>
+          anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
+          style={{ borderRadius: 16, overflow: 'hidden' }}>
           <Menu.Item
             leadingIcon="pencil"
             onPress={() => {
               closeMenu();
               onEdit();
+            }}
+            style={{
+              borderBottomColor: colors.lightBorder,
+              borderBottomWidth: 1,
             }}
             title={t('edit')}
           />

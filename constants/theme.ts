@@ -46,6 +46,7 @@ export const DefaultTheme = {
     lightGrayColor: '#DADDE2',
     bottomsheetColor: '#161B22',
     primarygradient2: '#1DC771',
+    lightBorder: '#333',
   },
 };
 
@@ -91,6 +92,7 @@ export const DarkTheme: AppTheme = {
     lightGrayColor: '#DADDE2',
     bottomsheetColor: '#161B22',
     primarygradient2: '#1DC771',
+    lightBorder: '#333',
   },
 };
 

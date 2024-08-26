@@ -38,11 +38,13 @@ import TextInput from '@atoms/TextInput/TextInput';
 import isEmpty from 'lodash/isEmpty';
 import { useDebounce } from '@utils/useDebounce';
 import {
+  ActionBtnView,
   FilterContainer,
   FilterCountText,
   FilterCountView,
   FilterIconView,
   SearchInputContainer,
+  SeparatorComponent,
 } from '../drawer.style';
 import Filter from '@atoms/Illustrations/Filter';
 import { DropdownBottomSheetSnapPoints } from '@constants/common';
@@ -368,16 +370,14 @@ const Leads = () => {
             />
           }
           ListHeaderComponent={renderHeader()}
-          ItemSeparatorComponent={() => (
-            <View style={{ height: 1, backgroundColor: '#333' }} />
-          )}
+          ItemSeparatorComponent={() => <SeparatorComponent />}
         />
       ) : (
         <NoLeadsFoundContainer>
           <NoDataFoundText>{td('noLeadsFound')}</NoDataFoundText>
         </NoLeadsFoundContainer>
       )}
-      <View style={{ position: 'absolute', right: 16, bottom: 16 }}>
+      <ActionBtnView>
         <IconButton
           icon="plus"
           iconColor={colors.white}
@@ -385,7 +385,7 @@ const Leads = () => {
           containerColor={colors.primaryColor}
           onPress={onAddButtonPress}
         />
-      </View>
+      </ActionBtnView>
 
       <BottomSheetModal
         backgroundStyle={{

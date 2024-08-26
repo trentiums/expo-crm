@@ -1,6 +1,6 @@
-import Text from "@atoms/Text/Text";
-import { styled } from "@utils/styled";
-import { Image, View } from "react-native";
+import Text from '@atoms/Text/Text';
+import { styled } from '@utils/styled';
+import { Image, View } from 'react-native';
 
 export const Container = styled(View)`
   flex: 1;

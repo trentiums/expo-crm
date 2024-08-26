@@ -28,6 +28,7 @@ import Loader from '@atoms/Loader/Loader';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import Trash from '@atoms/Illustrations/Trash';
+import { ActionBtnView, SeparatorComponent } from '../drawer.style';
 
 const ButtonSize = 40;
 
@@ -192,9 +193,7 @@ const Users = () => {
               colors={[colors.primaryColor]}
             />
           }
-          ItemSeparatorComponent={() => (
-            <View style={{ height: 1, backgroundColor: '#333' }} />
-          )}
+          ItemSeparatorComponent={() => <SeparatorComponent />}
         />
       ) : (
         <NoLeadsFoundContainer>
@@ -223,7 +222,7 @@ const Users = () => {
         />
       )}
 
-      <View style={{ position: 'absolute', right: 16, bottom: 16 }}>
+      <ActionBtnView>
         <IconButton
           icon="plus"
           iconColor={colors.white}
@@ -231,7 +230,7 @@ const Users = () => {
           containerColor={colors.primaryColor}
           onPress={onAddButtonPress}
         />
-      </View>
+      </ActionBtnView>
     </ScreenTemplate>
   );
 };
