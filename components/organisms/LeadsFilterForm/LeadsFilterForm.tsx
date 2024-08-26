@@ -19,6 +19,7 @@ import { getLeadListAction } from '@redux/actions/lead';
 import Button from '@atoms/Button/Button';
 import { useAppTheme } from '@constants/theme';
 import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
+import { setLeadsFilters } from '@redux/slices/leads';
 
 const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
   form,
@@ -62,6 +63,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
     handleDropDownClose();
     setFilterCount(0);
     bottomSheetClose();
+    dispatch(setLeadsFilters({}));
   };
   return (
     <LeadsFilterFormContainer>

@@ -1,61 +1,61 @@
-import { Spacer } from "@atoms/common/common.styles";
-import Loader from "@atoms/Loader/Loader";
-import { AddLeadTabBarData } from "@constants/dummyData";
-import { useAppTheme } from "@constants/theme";
-import TabBar from "@molecules/TabBar/TabBar";
-import { ToastTypeProps } from "@molecules/Toast/Toast.props";
-import BasicInformationForm from "@organisms/BasicInformatioForm/BasicInformationForm";
-import { fileSystemProps } from "@organisms/BasicInformatioForm/BasicInformationForm.props";
-import CompanyInformationForm from "@organisms/CompanyInformationForm/CompanyInformationForm";
-import LeadDetailsForm from "@organisms/LeadDetailsForm/LeadDetailsForm";
+import { Spacer } from '@atoms/common/common.styles';
+import Loader from '@atoms/Loader/Loader';
+import { AddLeadTabBarData } from '@constants/dummyData';
+import { useAppTheme } from '@constants/theme';
+import TabBar from '@molecules/TabBar/TabBar';
+import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import BasicInformationForm from '@organisms/BasicInformatioForm/BasicInformationForm';
+import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
+import CompanyInformationForm from '@organisms/CompanyInformationForm/CompanyInformationForm';
+import LeadDetailsForm from '@organisms/LeadDetailsForm/LeadDetailsForm';
 import {
   getLeadDetailsAction,
   getLeadListAction,
   saveLeadAction,
   updateLeadAction,
-} from "@redux/actions/lead";
-import { addLeadInformation, setLeadsInformation } from "@redux/slices/leads";
-import { RootState, useAppDispatch, useSelector } from "@redux/store";
-import FormTemplate from "@templates/FormTemplate/FormTemplate";
-import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { AddLeadNavigationType, AddLeadTabBar } from "@type/api/api";
+} from '@redux/actions/lead';
+import { addLeadInformation, setLeadsInformation } from '@redux/slices/leads';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
+import FormTemplate from '@templates/FormTemplate/FormTemplate';
+import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
+import { AddLeadNavigationType, AddLeadTabBar } from '@type/api/api';
 import {
   BasicInfoFormValuesType,
   CompanyInformationFromValueTypes,
   LeadInformationFromValuesType,
-} from "@type/api/auth";
-import { LeadListState } from "@type/api/lead";
-import { router, useNavigation } from "expo-router";
-import moment from "moment";
-import React, { useEffect, useState } from "react";
-import { useToast } from "react-native-toast-notifications";
-import { AddLeadContainer } from "../(drawer)/tabs.style";
-import { useTranslation } from "react-i18next";
+} from '@type/api/auth';
+import { LeadListState } from '@type/api/lead';
+import { router, useNavigation } from 'expo-router';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
+import { useToast } from 'react-native-toast-notifications';
+import { AddLeadContainer } from '../(drawer)/tabs.style';
+import { useTranslation } from 'react-i18next';
 import {
   dashboardLeadListAction,
   dashboardLeadStageCountAction,
-} from "@redux/actions/dashboard";
+} from '@redux/actions/dashboard';
 
 const AddLead = () => {
   const dispatch = useAppDispatch();
-  const { t } = useTranslation("screenTitle");
+  const { t } = useTranslation('screenTitle');
   const navigation = useNavigation();
   const [selectedTabNav, setSelectedTabNav] = useState(
-    AddLeadTabBarData?.[0].title || ""
+    AddLeadTabBarData?.[0].title || '',
   );
   const [selectedCountryCodeValue, setSelectedCountryCodeValue] =
-    useState<string>("");
+    useState<string>('');
   const { colors } = useAppTheme();
   const [sourceValue, setSourceValue] = useState<number>();
   const addLeadData = useSelector((state: RootState) => state.leads.addLead);
   const leadsDetail = useSelector(
-    (state: RootState) => state.leads.leadsDetail
+    (state: RootState) => state.leads.leadsDetail,
   );
   const countryList = useSelector(
-    (state: RootState) => state.general.countryList
+    (state: RootState) => state.general.countryList,
   );
   const leadsData = useSelector(
-    (state: RootState) => state.leads.leadList?.leads
+    (state: RootState) => state.leads.leadList?.leads,
   );
   const toast = useToast();
   const [documentArray, setDocumentArray] = useState<fileSystemProps[]>([]);
@@ -66,7 +66,7 @@ const AddLead = () => {
   const [loading, setLoading] = useState(false);
   const [leadsDetailLoading, setDetailLoading] = useState(false);
   const [selectedData, setSelectedData] = useState<LeadListState>(
-    leadsData?.[0]
+    leadsData?.[0],
   );
   const [assignTo, setAssignTo] = useState();
 
@@ -75,7 +75,7 @@ const AddLead = () => {
   }, [leadsDetail]);
   useEffect(() => {
     navigation.setOptions({
-      title: t("addLead"),
+      title: t('addLead'),
       headerStyle: {
         backgroundColor: colors.tabBar,
       },
@@ -84,7 +84,7 @@ const AddLead = () => {
   }, [navigation]);
 
   const handleSaveBasicInformation = async (
-    values: BasicInfoFormValuesType
+    values: BasicInfoFormValuesType,
   ) => {
     dispatch(
       addLeadInformation({
@@ -93,12 +93,12 @@ const AddLead = () => {
         email: values.email,
         phoneNumber: values.phoneNumber,
         countryCode: selectedCountryCodeValue,
-      })
+      }),
     );
     setSelectedTabNav(AddLeadTabBarData?.[1].title);
   };
   const handleSaveCompanyInformation = async (
-    values: CompanyInformationFromValueTypes
+    values: CompanyInformationFromValueTypes,
   ) => {
     dispatch(
       addLeadInformation({
@@ -106,80 +106,82 @@ const AddLead = () => {
         companyName: values.companyName,
         companySize: values.companySize,
         webSite: values.webSite,
-      })
+      }),
     );
     setSelectedTabNav(AddLeadTabBarData?.[2].title);
   };
 
   const handleSaveLeadDetailsInformation = async (
-    values: LeadInformationFromValuesType
+    values: LeadInformationFromValuesType,
   ) => {
+    console.log(values, 'values');
     dispatch(
       addLeadInformation({
         ...addLeadData,
         comments: values.comments,
         budget: values.budget,
         timeFrame: values.timeFrame,
-        selectedChannel,
-        selectedLead,
-        selectedStage,
+        selectedChannel: values?.selectedChannel,
+        selectedLead: values?.selectedLead,
+        selectedStage: values?.selectedStage,
         selectedServices: selectedService,
         dealAmount: values.dealAmount,
         winCloseReason: values.winCloseReason,
         dealCloseDate: values?.dealCloseDate
-          ? moment(values.dealCloseDate).format("YYYY-MM-DD")
-          : "",
+          ? moment(values.dealCloseDate).format('YYYY-MM-DD')
+          : '',
         documents: documentArray,
-      })
+        assignTo: values?.assignTo,
+      }),
     );
     try {
       setLoading(true);
       let formData = new FormData();
       if (addLeadData?.email) {
-        formData.append("email", addLeadData?.email);
+        formData.append('email', addLeadData?.email);
       }
-      formData.append("lead_channel_id", `${selectedChannel}`);
-      formData.append("lead_conversion_id", `${selectedStage}`);
-      formData.append("lead_status_id", `${selectedLead}`);
+      formData.append('lead_channel_id', `${values?.selectedChannel}`);
+      formData.append('lead_conversion_id', `${values?.selectedStage}`);
+      formData.append('lead_status_id', `${values?.selectedLead}`);
       selectedService.forEach((service, index) => {
         formData.append(`product_services[${index}]`, service);
       });
-      formData.append("name", `${addLeadData.fullName || ""}`);
-      formData.append("company_name", addLeadData?.companyName || "");
+      formData.append('name', `${addLeadData.fullName || ''}`);
+      formData.append('company_name', addLeadData?.companyName || '');
       if (values?.budget) {
-        formData.append("budget", `${values?.budget}`);
+        formData.append('budget', `${values?.budget}`);
       }
       if (addLeadData?.companySize) {
-        formData.append("company_size", `${addLeadData?.companySize}`);
+        formData.append('company_size', `${addLeadData?.companySize}`);
       }
-      formData.append("company_website", addLeadData?.webSite || "");
-      formData.append("time_line", values?.timeFrame || "");
-      formData.append("description", values?.comments || "");
+      formData.append('company_website', addLeadData?.webSite || '');
+      formData.append('time_line', values?.timeFrame || '');
+      formData.append('description', values?.comments || '');
       if (values?.dealAmount) {
-        formData.append("deal_amount", `${values?.dealAmount}`);
+        formData.append('deal_amount', `${values?.dealAmount}`);
       }
       formData.append(
-        "deal_close_date",
+        'deal_close_date',
         values?.dealCloseDate
-          ? moment(values.dealCloseDate).format("YYYY-MM-DD")
-          : ""
+          ? moment(values.dealCloseDate).format('YYYY-MM-DD')
+          : '',
       );
       if (assignTo || selectedData.assignTo) {
         formData.append(
-          "assign_to_user_id",
-          `${assignTo || selectedData.assignTo}`
+          'assign_to_user_id',
+          `${values?.assignTo || selectedData.assignTo}`,
         );
       }
-      formData.append("win_close_reason", values?.winCloseReason || "");
+      formData.append('win_close_reason', values?.winCloseReason || '');
       const countryCodeAlpha = countryList?.filter(
-        (item) => item?.id === addLeadData?.countryCode
+        (item) => item?.id === addLeadData?.countryCode,
       )?.[0]?.countryCodeAlpha;
       if (!addLeadData?.email) {
-        formData.append("country_code_alpha", countryCodeAlpha);
-        formData.append("phone", `${addLeadData?.phoneNumber}`);
+        formData.append('country_code_alpha', countryCodeAlpha);
+        formData.append('phone', `${addLeadData?.phoneNumber}`);
       } else if (countryCodeAlpha && addLeadData?.phoneNumber) {
-        formData.append("country_code_alpha", countryCodeAlpha);
-        formData.append("phone", `${addLeadData?.phoneNumber}`);
+        formData.append('country_code_alpha', countryCodeAlpha);
+        formData.append('phone', `${addLeadData?.phoneNumber}`);
       }
 
       if (documentArray?.length > 0) {
@@ -195,12 +197,12 @@ const AddLead = () => {
       await dispatch(getLeadListAction({}));
       await dispatch(setLeadsInformation());
       toast.show(response.message, {
-        type: "customToast",
+        type: 'customToast',
         data: {
           type: ToastTypeProps.Success,
         },
       });
-      router.navigate("/(protected)/(drawer)/(tabs)/leads");
+      router.navigate('/(protected)/(drawer)/(tabs)/leads');
       setDocumentArray([]);
       setSelectedChannel(0);
       setSelectedLead(0);
@@ -208,7 +210,7 @@ const AddLead = () => {
       setSelectedService([]);
     } catch (error: string | any) {
       toast.show(error, {
-        type: "customToast",
+        type: 'customToast',
         data: {
           type: ToastTypeProps.Error,
         },

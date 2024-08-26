@@ -45,6 +45,7 @@ const initialState: LeadsState = {
     winCloseReason: '',
     dealCloseDate: '',
     documents: [],
+    assignTo: 0,
   },
   leadList: {
     currentPage: 0,

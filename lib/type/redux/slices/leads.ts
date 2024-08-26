@@ -20,4 +20,5 @@ export interface AddLeadState {
   winCloseReason: string;
   dealCloseDate: Date | string;
   documents?: fileSystemProps[];
+  assignTo?: number;
 }
