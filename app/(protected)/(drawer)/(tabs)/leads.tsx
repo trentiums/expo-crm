@@ -3,7 +3,7 @@ import { ToastTypeProps } from '@molecules/Toast/Toast.props';
 import LeadDetailCard from '@organisms/LeadDetailCard/LeadDetailCard';
 import { ModalType } from '@organisms/LeadDetailCard/LeadDetailCard.props';
 import { deleteLeadAction, getLeadListAction } from '@redux/actions/lead';
-import { setLeadsInformation } from '@redux/slices/leads';
+import { setLeadsFilters, setLeadsInformation } from '@redux/slices/leads';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
 import { LeadListState } from '@type/api/lead';
@@ -65,7 +65,9 @@ const Leads = () => {
   const leadsData = useSelector(
     (state: RootState) => state.leads.leadList?.leads,
   );
-
+  const leadsFilter = useSelector(
+    (state: RootState) => state.leads.leadsFilter,
+  );
   const leadListData = useSelector((state: RootState) => state.leads.leadList);
   const toast = useToast();
   const general = useSelector((state: RootState) => state.general);
@@ -78,18 +80,13 @@ const Leads = () => {
   const [moreLoading, setMoreLoading] = useState(false);
   const [leadsLoading, setLeadsLoading] = useState(false);
   const [leadSearch, setLeadSearch] = useState('');
+  const [filterSheet, setFilterSheet] = useState(false);
   const dispatch = useAppDispatch();
   const [refreshing, setRefreshing] = useState(false);
   const [openSwipeAbleRef, setOpenSwipeAbleRef] =
     useState<RefObject<Swipeable> | null>(null);
   const [modal, setModal] = useState(false);
   const [currentId, setCurrentId] = useState<number>(0);
-  const [filterSheet, setFilterSheet] = useState(false);
-  const [channelId, setChannelId] = useState();
-  const [statusId, setStatusId] = useState();
-  const [conversionId, setConversionId] = useState();
-  const [orderBy, setOrderBy] = useState();
-  const [sortBy, setSortBy] = useState();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [filterLoading, setFilterLoading] = useState(false);
@@ -252,34 +249,55 @@ const Leads = () => {
     setLeadsLoading(false);
   };
 
-  const handleApplyFilter = async (values: any) => {
+  useEffect(() => {
     const states = [
-      startDate,
-      endDate,
-      channelId,
-      statusId,
-      conversionId,
-      orderBy,
-      sortBy,
+      leadsFilter?.startDate,
+      leadsFilter?.endDate,
+      leadsFilter?.selectedChannel,
+      leadsFilter?.selectedStatus,
+      leadsFilter?.selectedStage,
+      leadsFilter?.orderBy,
+      leadsFilter?.sortBy,
     ];
     const count = states.filter(
       (state) => state !== null && state !== undefined && state !== '',
     ).length;
     setFilterCount(count);
+  }, [leadsFilter]);
+
+  const handleApplyFilter = async (values: any) => {
+    const states = [
+      values?.startDate || leadsFilter?.startDate,
+      values?.endDate || leadsFilter?.endDate,
+      values?.selectedChannel || leadsFilter?.selectedChannel,
+      values?.selectedStatus || leadsFilter?.selectedStatus,
+      values?.selectedStage || leadsFilter?.selectedStage,
+      values?.orderBy || leadsFilter?.orderBy,
+      values?.sortBy || leadsFilter?.sortBy,
+    ];
+
+    const count = states.filter(
+      (state) => state !== null && state !== undefined && state !== '',
+    ).length;
+    setFilterCount(count);
+    dispatch(setLeadsFilters(values));
     try {
       setFilterLoading(true);
       await dispatch(
         getLeadListAction({
           end_date:
-            (endDate && moment(endDate).format('YYYY-MM-DD')) || undefined,
+            (values?.endDate && moment(values?.endDate).format('YYYY-MM-DD')) ||
+            undefined,
           start_date:
-            (startDate && moment(startDate).format('YYYY-MM-DD')) || undefined,
+            (values?.startDate &&
+              moment(values?.startDate).format('YYYY-MM-DD')) ||
+            undefined,
           search: debouncedLeadSearch,
-          lead_channel_id: channelId,
-          lead_conversion_id: conversionId,
-          lead_status_id: statusId,
-          order_by: orderBy,
-          sort_order: sortBy,
+          lead_channel_id: values?.selectedChannel,
+          lead_conversion_id: values?.selectedStage,
+          lead_status_id: values?.selectedStatus,
+          order_by: values?.orderBy,
+          sort_order: values?.sortBy,
         }),
       ).unwrap();
     } catch (error) {
@@ -353,6 +371,7 @@ const Leads = () => {
 
   return (
     <ScreenTemplate>
+      {renderHeader()}
       {leadsData?.length > 0 ? (
         <FlatList
           contentContainerStyle={{ paddingBottom: ButtonSize + 20 }}
@@ -369,7 +388,6 @@ const Leads = () => {
               colors={[colors.primaryColor]}
             />
           }
-          ListHeaderComponent={renderHeader()}
           ItemSeparatorComponent={() => <SeparatorComponent />}
         />
       ) : (
@@ -399,22 +417,12 @@ const Leads = () => {
         onChange={(index) => {
           if (index <= 0) {
             bottomSheetRef.current?.close();
-            setFilterSheet(false);
+            setFilterSheet?.(false);
           }
         }}>
         <FormTemplate
           Component={LeadsFilterForm}
           onSubmit={(values) => handleApplyFilter(values)}
-          selectedChannel={channelId}
-          setSelectedChannel={setChannelId}
-          selectedLead={statusId}
-          setSelectedLead={setStatusId}
-          selectedStage={conversionId}
-          setSelectedStage={setConversionId}
-          orderBy={orderBy}
-          setOrderBy={setOrderBy}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
           handleDropDownClose={handleOpenBottomSheetOpen}
           loading={filterLoading}
           startDate={startDate}

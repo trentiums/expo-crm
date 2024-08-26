@@ -1,4 +1,4 @@
-import { fileSystemProps } from "@organisms/BasicInformatioForm/BasicInformationForm.props";
+import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
 
 export interface SaveLeadParams {
   name: string;
@@ -145,6 +145,16 @@ export interface LeadListState {
   webSite: string;
   documents: fileSystemProps[];
   assignTo?: number;
+}
+
+export interface LeadsFilterType {
+  startDate: string;
+  endDate: string;
+  selectedChannel?: number;
+  selectedStage?: number;
+  selectedStatus?: number;
+  orderBy?: number;
+  sortBy?: number;
 }
 
 export interface DeleteLeadParams {

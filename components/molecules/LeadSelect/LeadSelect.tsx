@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 import {
   LeadSelectContainer,
   LeadSelectSubContainer,
   SelectTitleText,
-} from "./LeadSelect.styles";
-import { useTranslation } from "react-i18next";
-import { LeadListProps, LeadSelectProps } from "./LeadSelect.props";
-import { RootState, useSelector } from "@redux/store";
-import { userRole } from "@type/api/auth";
-import DropDown from "@molecules/DropDown/DropDown";
-import { Spacer } from "@atoms/common/common.styles";
+} from './LeadSelect.styles';
+import { useTranslation } from 'react-i18next';
+import { LeadListProps, LeadSelectProps } from './LeadSelect.props';
+import { RootState, useSelector } from '@redux/store';
+import { userRole } from '@type/api/auth';
+import DropDown from '@molecules/DropDown/DropDown';
+import { Spacer } from '@atoms/common/common.styles';
 
 const LeadSelect: React.FC<LeadSelectProps> = ({
   channelList,
@@ -25,8 +25,8 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
   assignTo,
   setAssignTo,
 }) => {
-  const { t } = useTranslation("leadDetailList");
-  const { t: tl } = useTranslation("leadDetailList");
+  const { t } = useTranslation('leadDetailList');
+  const { t: tl } = useTranslation('leadDetailList');
   const channelListData = channelList?.map((item) => {
     return { id: item?.id, title: item?.name };
   });
@@ -37,7 +37,7 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
     return { id: item?.id, title: item?.name };
   });
   const leadAssignToData = useSelector(
-    (state: RootState) => state.user.assignUserList
+    (state: RootState) => state.user.assignUserList,
   );
   const { user } = useSelector((state: RootState) => state.auth);
   const isAdmin = user?.userRole !== userRole.CompanyStaff;
@@ -45,53 +45,53 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
     <>
       <LeadSelectContainer>
         <LeadSelectSubContainer>
-          <SelectTitleText>{t("channel")}</SelectTitleText>
+          <SelectTitleText>{t('channel')}</SelectTitleText>
           <DropDown
             data={channelListData}
-            placeholder={t("leadChannel")}
+            placeholder={t('leadChannel')}
             value={selectedChannel}
             onChange={(value: LeadListProps) => {
               setSelectedChannel(leadCardId, value);
             }}
             isStaff={!isAdmin}
-            dropDownTitle={`${t("leadChannel")} ${t("list")}`}
+            dropDownTitle={`${t('leadChannel')} ${t('list')}`}
             isLeadChange
             isDisabled={!isAdmin}
           />
         </LeadSelectSubContainer>
         <LeadSelectSubContainer>
-          <SelectTitleText>{t("status")}</SelectTitleText>
+          <SelectTitleText>{t('status')}</SelectTitleText>
           <DropDown
             data={leadListData}
-            placeholder={t("leadStatus")}
+            placeholder={t('leadStatus')}
             value={selectedLead}
             onChange={(value: LeadListProps) => {
               setSelectedLead(leadCardId, value);
             }}
-            dropDownTitle={`${t("leadStatus")} ${t("list")}`}
+            dropDownTitle={`${t('leadStatus')} ${t('list')}`}
             isLeadChange
           />
         </LeadSelectSubContainer>
       </LeadSelectContainer>
       <LeadSelectContainer>
         <LeadSelectSubContainer>
-          <SelectTitleText>{t("stage")}</SelectTitleText>
+          <SelectTitleText>{t('stage')}</SelectTitleText>
           <DropDown
             data={StageListData}
-            placeholder={t("LeadStage")}
+            placeholder={t('LeadStage')}
             value={selectedStage}
             onChange={(value: LeadListProps) => {
               setSelectedStage(leadCardId, value);
             }}
-            dropDownTitle={`${t("LeadStage")} ${t("list")}`}
+            dropDownTitle={`${t('LeadStage')} ${t('list')}`}
             isLeadChange
           />
         </LeadSelectSubContainer>
         <LeadSelectSubContainer>
-          <SelectTitleText>{`${tl("assignTo")}`}</SelectTitleText>
+          <SelectTitleText>{`${tl('assignTo')}`}</SelectTitleText>
           <DropDown
             data={leadAssignToData}
-            placeholder={tl("assignTo")}
+            placeholder={tl('assignTo')}
             value={assignTo}
             onChange={(value: any) => {
               if (assignTo === value) {
@@ -100,9 +100,9 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
                 setAssignTo(leadCardId, value);
               }
             }}
-            dropDownTitle={`${t("assignTo")} ${t("list")}`}
+            dropDownTitle={`${t('assignTo')} ${t('list')}`}
             dataToShow={leadAssignToData?.filter(
-              (item) => item.id !== assignTo
+              (item) => item.id !== assignTo,
             )}
             isDataToShow
             isLeadChange
