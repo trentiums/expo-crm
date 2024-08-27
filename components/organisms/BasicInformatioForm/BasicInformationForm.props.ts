@@ -1,4 +1,4 @@
-import { FormRenderProps } from "react-final-form";
+import { FormRenderProps } from 'react-final-form';
 
 export type BasicInfoFormValues = {
   firstName: string;
@@ -14,7 +14,7 @@ export interface fileSystemProps {
   name: string;
   size: number;
   type: string;
-  uri: string;
+  uri: any;
 }
 
 export type BasicInfoFormProps = FormRenderProps<BasicInfoFormValues> & {

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Field, useFormState } from "react-final-form";
-import * as DocumentPicker from "expo-document-picker";
+import React, { useEffect, useState } from 'react';
+import { Field, useFormState } from 'react-final-form';
+import * as DocumentPicker from 'expo-document-picker';
 import {
   AddIconButton,
   ButtonSubmit,
@@ -28,10 +28,10 @@ import {
   StyledModal,
   SvgShowContainer,
   UploadText,
-} from "./BasicInformationForm.styles";
-import { useTranslation } from "react-i18next";
-import PdfRendererView from "react-native-pdf-renderer";
-import FieldTextInput from "@molecules/FieldTextInput/FieldTextInput";
+} from './BasicInformationForm.styles';
+import { useTranslation } from 'react-i18next';
+import PdfRendererView from 'react-native-pdf-renderer';
+import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
 import {
   composeValidators,
   emailOrPhoneValidator,
@@ -39,37 +39,37 @@ import {
   maxLengthValidator,
   numberValidator,
   requiredValidator,
-} from "@utils/formValidators";
-import { BasicInfoFormProps } from "./BasicInformationForm.props";
-import { Spacer } from "@atoms/common/common.styles";
-import AddIcon from "@atoms/Illustrations/AddIcon";
-import Trash from "@atoms/Illustrations/Trash";
-import { useAppTheme } from "@constants/theme";
-import ActionModal from "@molecules/ActionModal/ActionModal";
-import { Actions } from "@molecules/ActionModal/ActionModal.props";
-import Document from "@atoms/Illustrations/Document";
-import CrossIcon from "@atoms/Illustrations/Cross";
-import { FormsView } from "@organisms/LeadDetailsForm/LeadDetailsForm.styles";
-import { RootState, useAppDispatch, useSelector } from "@redux/store";
-import { LeadListState } from "@type/api/lead";
+} from '@utils/formValidators';
+import { BasicInfoFormProps } from './BasicInformationForm.props';
+import { Spacer } from '@atoms/common/common.styles';
+import AddIcon from '@atoms/Illustrations/AddIcon';
+import Trash from '@atoms/Illustrations/Trash';
+import { useAppTheme } from '@constants/theme';
+import ActionModal from '@molecules/ActionModal/ActionModal';
+import { Actions } from '@molecules/ActionModal/ActionModal.props';
+import Document from '@atoms/Illustrations/Document';
+import CrossIcon from '@atoms/Illustrations/Cross';
+import { FormsView } from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
+import { LeadListState } from '@type/api/lead';
 import {
   deleteLeadDocumentsAction,
   getLeadDetailsAction,
-} from "@redux/actions/lead";
-import { useToast } from "react-native-toast-notifications";
-import { ToastTypeProps } from "@molecules/Toast/Toast.props";
-import { MAX_FILE_SIZE } from "@utils/constant";
-import { SvgUri } from "react-native-svg";
-import { addLeadInformation } from "@redux/slices/leads";
-import { useLocalSearchParams } from "expo-router";
-import * as MediaLibrary from "expo-media-library";
-import DropDown from "@molecules/DropDown/DropDown";
-import Pdf from "react-native-pdf";
-import { ActivityIndicator } from "react-native-paper";
-import PdfReader from "@hashiprobr/expo-pdf-reader";
-import WebView from "react-native-webview";
-import * as Print from "expo-print";
-import { Linking } from "react-native";
+} from '@redux/actions/lead';
+import { useToast } from 'react-native-toast-notifications';
+import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { MAX_FILE_SIZE } from '@utils/constant';
+import { SvgUri } from 'react-native-svg';
+import { addLeadInformation } from '@redux/slices/leads';
+import { useLocalSearchParams } from 'expo-router';
+import * as MediaLibrary from 'expo-media-library';
+import DropDown from '@molecules/DropDown/DropDown';
+import Pdf from 'react-native-pdf';
+import { ActivityIndicator } from 'react-native-paper';
+import PdfReader from '@hashiprobr/expo-pdf-reader';
+import WebView from 'react-native-webview';
+import * as Print from 'expo-print';
+import { Linking } from 'react-native';
 
 const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   loading,
@@ -82,19 +82,19 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
 }) => {
   const params = useLocalSearchParams();
   const { colors } = useAppTheme();
-  const { t } = useTranslation("BasicInformation");
-  const { t: tb } = useTranslation("formButtonName");
-  const { t: tm } = useTranslation("modalText");
+  const { t } = useTranslation('BasicInformation');
+  const { t: tb } = useTranslation('formButtonName');
+  const { t: tm } = useTranslation('modalText');
   const addLeadFormData = useSelector(
-    (state: RootState) => state.leads.addLead
+    (state: RootState) => state.leads.addLead,
   );
   const [pdfUri, setPdfUri] = useState(null);
-  const [id] = useState(params?.slug);
+  const [id] = useState<number | any>(params?.slug);
   const dispatch = useAppDispatch();
   const toast = useToast();
   const [selectedData, setSelectedData] = useState<LeadListState | undefined>();
   const [showModal, setShowModal] = useState<Boolean>(false);
-  const [countryCodeError, setCountryCodeError] = useState("");
+  const [countryCodeError, setCountryCodeError] = useState('');
   const [ImageURI, setImageURI] = useState<{
     name?: string;
     uri?: string;
@@ -104,13 +104,13 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
 
   const { values, valid } = useFormState();
   const countryListData = useSelector(
-    (state: RootState) => state.general.countryList
+    (state: RootState) => state.general.countryList,
   );
   const leadsDetail = useSelector(
-    (state: RootState) => state.leads.leadsDetail
+    (state: RootState) => state.leads.leadsDetail,
   );
   const leadsData = useSelector(
-    (state: RootState) => state.leads.leadList?.leads
+    (state: RootState) => state.leads.leadList?.leads,
   );
   const [deleteLoading, setDeleteLoading] = useState(false);
   useEffect(() => {
@@ -120,13 +120,13 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   const [deleteDocumentUrl, setDeleteDocumentUrl] = useState(null);
   useEffect(() => {
     if (values.phoneNumber && !selectedCountryCodeValue) {
-      setCountryCodeError(t("countryCodeError"));
+      setCountryCodeError(t('countryCodeError'));
     } else if (!values.phoneNumber && selectedCountryCodeValue) {
-      setCountryCodeError(t("phoneNumberError"));
+      setCountryCodeError(t('phoneNumberError'));
     } else if (values.phoneNumber && selectedCountryCodeValue) {
-      setCountryCodeError("");
+      setCountryCodeError('');
     } else if (!values.phoneNumber && !selectedCountryCodeValue) {
-      setCountryCodeError("");
+      setCountryCodeError('');
     }
   }, [values, selectedCountryCodeValue]);
 
@@ -135,32 +135,32 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
       if (id) {
         setSelectedCountryCodeValue(
           leadsDetail?.countryId ||
-            leadsData.filter((item) => item?.id === id)?.[0]?.countryId
+            leadsData.filter((item) => item?.id === id)?.[0]?.countryId,
         );
       }
       if (id) {
         setDocumentArray(leadsDetail?.documents);
       }
       form.change(
-        "firstName",
+        'firstName',
         id
           ? leadsData?.filter((item) => item?.id === id)?.[0]?.name ||
               leadsDetail?.name
-          : addLeadFormData?.fullName
+          : addLeadFormData?.fullName,
       );
       form.change(
-        "email",
+        'email',
         id
           ? leadsData?.filter((item) => item?.id === id)?.[0]?.email ||
               leadsDetail?.email
-          : addLeadFormData?.email
+          : addLeadFormData?.email,
       );
       form.change(
-        "phoneNumber",
+        'phoneNumber',
         id
           ? leadsData?.filter((item) => item?.id === id)?.[0]?.phone ||
               leadsDetail?.phone
-          : addLeadFormData.phoneNumber
+          : addLeadFormData.phoneNumber,
       );
     };
 
@@ -169,19 +169,19 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   const pickFile = async () => {
     try {
       const { status } = await MediaLibrary.requestPermissionsAsync();
-      if (status !== "granted") {
+      if (status !== 'granted') {
         return;
       }
       const res = await DocumentPicker.getDocumentAsync({
-        type: ["application/pdf", "image/*", "text/plain"],
+        type: ['application/pdf', 'image/*', 'text/plain'],
         copyToCacheDirectory: true,
       });
 
       if (!res.canceled) {
         res.assets.forEach((file) => {
           if (file.size > MAX_FILE_SIZE) {
-            toast.show("File size limit exceeded", {
-              type: "customToast",
+            toast.show('File size limit exceeded', {
+              type: 'customToast',
               data: {
                 type: ToastTypeProps.Error,
               },
@@ -191,38 +191,38 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
           }
         });
       } else {
-        console.log("cancelled");
+        console.log('cancelled');
       }
     } catch (err) {
-      console.log("error", err);
+      console.log('error', err);
       throw err;
     }
   };
 
   const onDeleteActionPress = async () => {
     const deletedDocument = documentArray?.filter(
-      (item) => item?.uri === deleteDocumentUrl
+      (item) => item?.uri === deleteDocumentUrl,
     );
 
     const updatedDocuments = documentArray?.filter(
-      (item) => item?.uri !== deleteDocumentUrl
+      (item) => item?.uri !== deleteDocumentUrl,
     );
 
     if (deletedDocument?.[0]?.id) {
       try {
         setDeleteLoading(true);
         const response = await dispatch(
-          deleteLeadDocumentsAction({ media_id: deletedDocument?.[0]?.id })
+          deleteLeadDocumentsAction({ media_id: deletedDocument?.[0]?.id }),
         ).unwrap();
         toast.show(response?.message, {
-          type: "customToast",
+          type: 'customToast',
           data: {
             type: ToastTypeProps.Success,
           },
         });
       } catch (error) {
         toast.show(error, {
-          type: "customToast",
+          type: 'customToast',
           data: {
             type: ToastTypeProps.Error,
           },
@@ -241,7 +241,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
       <PressAbleContainer
         onPress={() => {
           setImageURI(file);
-          if (file && file?.uri?.endsWith("pdf")) {
+          if (file && file?.uri?.endsWith('pdf')) {
             Linking.openURL(file.uri);
           }
         }}>
@@ -250,9 +250,9 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
             setDeleteShowModal(true);
             setDeleteDocumentUrl(file?.uri);
           }}>
-          <CrossIcon color={"#fff"} />
+          <CrossIcon color={'#fff'} />
         </CrossIconContainer>
-        {type?.includes("image") ? (
+        {type?.includes('image') ? (
           <ImagePreviewShow source={{ uri: file?.uri }} />
         ) : (
           <SvgShowContainer>
@@ -271,22 +271,22 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
         email: values.email,
         phoneNumber: values.phoneNumber,
         countryCode: selectedCountryCodeValue,
-      })
+      }),
     );
   }, [values, selectedCountryCodeValue]);
   const generatePdf = async () => {
     try {
       const { uri } = await Print.printToFileAsync({
-        html: "<h1>PDF Content</h1><p>This is a sample PDF generated using expo-print.</p>",
+        html: '<h1>PDF Content</h1><p>This is a sample PDF generated using expo-print.</p>',
       });
       setPdfUri(uri);
     } catch (error) {
-      console.error("Error generating PDF:", error);
+      console.error('Error generating PDF:', error);
     }
   };
 
   useEffect(() => {
-    if (ImageURI?.uri?.endsWith("pdf")) {
+    if (ImageURI?.uri?.endsWith('pdf')) {
       generatePdf();
     }
   }, [showModal]);
@@ -296,27 +296,27 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always">
-        <Label>{`${t("firstNameLabel")} *`}</Label>
+        <Label>{`${t('firstNameLabel')} *`}</Label>
         <Field
           name="firstName"
-          placeholder={t("firstNameLabel")}
+          placeholder={t('firstNameLabel')}
           component={FieldTextInput}
           validate={requiredValidator}
         />
         <Spacer size={16} />
-        <Label>{t("emailLabel")}</Label>
+        <Label>{t('emailLabel')}</Label>
         <Field
           name="email"
-          placeholder={t("emailLabel")}
+          placeholder={t('emailLabel')}
           component={FieldTextInput}
           keyboardType="email-address"
           validate={composeValidators(
             (value) => emailOrPhoneValidator(value, form.getState().values),
-            emailValidator
+            emailValidator,
           )}
         />
         <Spacer size={16} />
-        <Label>{t("phoneNumberLabel")}</Label>
+        <Label>{t('phoneNumberLabel')}</Label>
         <PhoneNumberFieldView>
           <CountryCodeInput>
             <DropDown
@@ -325,13 +325,13 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
                 id: item?.id,
                 image: item?.flag,
               }))}
-              placeholder={t("selectCountry")}
+              placeholder={t('selectCountry')}
               value={selectedCountryCodeValue}
               onChange={(value: { label: string | number }) => {
                 if (selectedCountryCodeValue !== value) {
                   setSelectedCountryCodeValue(value);
                 } else {
-                  setSelectedCountryCodeValue("");
+                  setSelectedCountryCodeValue('');
                 }
               }}
             />
@@ -339,12 +339,12 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
           <NumberInput>
             <Field
               name="phoneNumber"
-              placeholder={t("phoneNumberLabel")}
+              placeholder={t('phoneNumberLabel')}
               component={FieldTextInput}
               keyboardType="phone-pad"
               validate={composeValidators(
                 numberValidator,
-                maxLengthValidator(15)
+                maxLengthValidator(15),
               )}
             />
           </NumberInput>
@@ -355,14 +355,14 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
         <PickerContainer onPress={pickFile}>
           <AddIconButton>
             <AddIcon />
-            <UploadText>{t("uploadDocuments")}</UploadText>
+            <UploadText>{t('uploadDocuments')}</UploadText>
           </AddIconButton>
         </PickerContainer>
         <Spacer size={16} />
 
         {documentArray?.length > 0 && (
           <>
-            <HeaderText>{t("attachments")}</HeaderText>
+            <HeaderText>{t('attachments')}</HeaderText>
             <Spacer size={8} />
             <FlatListCon
               data={documentArray}
@@ -381,11 +381,11 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
             onBackdropPress={() => {
               setDeleteShowModal(false);
             }}
-            heading={tm("discardMedia")}
-            description={tm("disCardDescription")}
-            label={tm("yesDiscard")}
+            heading={tm('discardMedia')}
+            description={tm('disCardDescription')}
+            label={tm('yesDiscard')}
             actionType={Actions.delete}
-            actiontext={tm("cancel")}
+            actiontext={tm('cancel')}
             onCancelPress={() => {
               setDeleteShowModal(false);
             }}
@@ -494,7 +494,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
         loading={loading}
         valid={valid && !countryCodeError}>
         <FormButtonText valid={valid && !countryCodeError}>
-          {id ? tb("save") : tb("next")}
+          {id ? tb('save') : tb('next')}
         </FormButtonText>
       </ButtonSubmit>
     </FormsView>

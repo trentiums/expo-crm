@@ -1,7 +1,7 @@
-import AddIcon from "@atoms/Illustrations/AddIcon";
-import * as DocumentPicker from "expo-document-picker";
-import { Spacer } from "@atoms/common/common.styles";
-import FieldTextInput from "@molecules/FieldTextInput/FieldTextInput";
+import AddIcon from '@atoms/Illustrations/AddIcon';
+import * as DocumentPicker from 'expo-document-picker';
+import { Spacer } from '@atoms/common/common.styles';
+import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
 import {
   AddIconButton,
   ButtonSubmit,
@@ -13,33 +13,33 @@ import {
   PressAbleContainer,
   SvgShowContainer,
   UploadText,
-} from "@organisms/BasicInformatioForm/BasicInformationForm.styles";
+} from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
 import {
   FormsView,
   KeyboardAwareScrollViewContainer,
-} from "@organisms/LeadDetailsForm/LeadDetailsForm.styles";
-import { composeValidators, requiredValidator } from "@utils/formValidators";
-import React, { useEffect, useState } from "react";
-import { Field, useFormState } from "react-final-form";
-import { useTranslation } from "react-i18next";
-import { MAX_FILE_SIZE } from "@utils/constant";
-import { useToast } from "react-native-toast-notifications";
-import { ToastTypeProps } from "@molecules/Toast/Toast.props";
-import { AddProductFormProps } from "./AddProductForm.props";
-import CrossIcon from "@atoms/Illustrations/Cross";
-import ActionModal from "@molecules/ActionModal/ActionModal";
-import Pdf from "react-native-pdf";
-import { Actions } from "@molecules/ActionModal/ActionModal.props";
-import Trash from "@atoms/Illustrations/Trash";
-import { useAppTheme } from "@constants/theme";
-import { RootState, useAppDispatch, useSelector } from "@redux/store";
-import Document from "@atoms/Illustrations/Document";
-import { getProductServiceDetailAction } from "@redux/actions/productService";
-import Loader from "@atoms/Loader/Loader";
-import * as MediaLibrary from "expo-media-library";
-import { ImagePreviewShow, LoaderView } from "./AddProductForm.styles";
-import { useLocalSearchParams } from "expo-router";
-import { Linking } from "react-native";
+} from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
+import { composeValidators, requiredValidator } from '@utils/formValidators';
+import React, { useEffect, useState } from 'react';
+import { Field, useFormState } from 'react-final-form';
+import { useTranslation } from 'react-i18next';
+import { MAX_FILE_SIZE } from '@utils/constant';
+import { useToast } from 'react-native-toast-notifications';
+import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { AddProductFormProps } from './AddProductForm.props';
+import CrossIcon from '@atoms/Illustrations/Cross';
+import ActionModal from '@molecules/ActionModal/ActionModal';
+import Pdf from 'react-native-pdf';
+import { Actions } from '@molecules/ActionModal/ActionModal.props';
+import Trash from '@atoms/Illustrations/Trash';
+import { useAppTheme } from '@constants/theme';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
+import Document from '@atoms/Illustrations/Document';
+import { getProductServiceDetailAction } from '@redux/actions/productService';
+import Loader from '@atoms/Loader/Loader';
+import * as MediaLibrary from 'expo-media-library';
+import { ImagePreviewShow, LoaderView } from './AddProductForm.styles';
+import { useLocalSearchParams } from 'expo-router';
+import { Linking } from 'react-native';
 
 const AddProductForm: React.FC<AddProductFormProps> = ({
   form,
@@ -49,10 +49,10 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const params = useLocalSearchParams();
-  const { t } = useTranslation("addProduct");
+  const { t } = useTranslation('addProduct');
   const { values, valid } = useFormState();
-  const { t: tm } = useTranslation("modalText");
-  const { t: tb } = useTranslation("BasicInformation");
+  const { t: tm } = useTranslation('modalText');
+  const { t: tb } = useTranslation('BasicInformation');
   const toast = useToast();
   const { colors } = useAppTheme();
   const [showModal, setShowModal] = useState<Boolean>(false);
@@ -61,7 +61,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
     uri?: string;
   }>({});
   const productServiceDetail = useSelector(
-    (state: RootState) => state.productService.productServiceDetail
+    (state: RootState) => state.productService.productServiceDetail,
   );
   const [deleteShowModal, setDeleteShowModal] = useState<Boolean>(false);
   const [deleteDocumentUrl, setDeleteDocumentUrl] = useState(null);
@@ -75,7 +75,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
       await dispatch(
         getProductServiceDetailAction({
           product_service_id: +params?.slug,
-        })
+        }),
       ).unwrap();
     } catch (error) {
       console.log(error);
@@ -91,8 +91,8 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
   }, [params?.slug]);
   useEffect(() => {
     if (params?.slug) {
-      form.change("name", productServiceDetail?.name);
-      form.change("description", productServiceDetail?.description);
+      form.change('name', productServiceDetail?.name);
+      form.change('description', productServiceDetail?.description);
       setDocumentArray(productServiceDetail?.documents);
     } else {
       setDocumentArray([]);
@@ -105,19 +105,19 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
   const pickFile = async () => {
     try {
       const { status } = await MediaLibrary.requestPermissionsAsync();
-      if (status !== "granted") {
+      if (status !== 'granted') {
         return;
       }
       const res = await DocumentPicker.getDocumentAsync({
-        type: ["application/pdf", "image/*", "text/plain"],
+        type: ['application/pdf', 'image/*', 'text/plain'],
         copyToCacheDirectory: true,
       });
       if (!res.canceled) {
         res.assets.forEach((file) => {
           const { size } = file;
           if (size > MAX_FILE_SIZE) {
-            toast.show(t("fileSizeLimitExceed"), {
-              type: "customToast",
+            toast.show(t('fileSizeLimitExceed'), {
+              type: 'customToast',
               data: {
                 type: ToastTypeProps.Error,
               },
@@ -126,11 +126,11 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
             setDocumentArray(file);
           }
         });
-      } else if (res.type === "cancel") {
-        console.log("cancelled");
+      } else if (res.type === 'cancel') {
+        console.log('cancelled');
       }
     } catch (err) {
-      console.log("error", err);
+      console.log('error', err);
       throw err;
     }
   };
@@ -158,19 +158,19 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="always">
-            <Label>{t("name")}</Label>
+            <Label>{t('name')}</Label>
             <Field
               name="name"
-              placeholder={t("nameEg")}
+              placeholder={t('nameEg')}
               component={FieldTextInput}
               keyboardType="email-address"
               validate={composeValidators(requiredValidator)}
             />
             <Spacer size={16} />
-            <Label>{t("description")}</Label>
+            <Label>{t('description')}</Label>
             <Field
               name="description"
-              placeholder={t("description")}
+              placeholder={t('description')}
               component={FieldTextInput}
               numberOfLines={5}
               style={{
@@ -185,33 +185,33 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
               <PickerContainer onPress={pickFile}>
                 <AddIconButton>
                   <AddIcon />
-                  <UploadText>{t("uploadDocuments")}</UploadText>
+                  <UploadText>{t('uploadDocuments')}</UploadText>
                 </AddIconButton>
               </PickerContainer>
             )}
             {documentArray?.uri && (
               <>
-                <HeaderText>{tb("attachments")}</HeaderText>
+                <HeaderText>{tb('attachments')}</HeaderText>
                 <Spacer size={8} />
 
                 <PressAbleContainer
                   onPress={() => {
                     setImageURI(documentArray);
-                    if (documentArray && documentArray?.uri?.endsWith("pdf")) {
+                    if (documentArray && documentArray?.uri?.endsWith('pdf')) {
                       Linking.openURL(documentArray.uri);
                     }
                     // setShowModal(true);
                   }}
-                  style={{ width: "30%" }}>
+                  style={{ width: '30%' }}>
                   <CrossIconContainer
                     onPress={() => {
                       setDeleteShowModal(true);
                       setDeleteDocumentUrl(documentArray?.uri);
                     }}>
-                    <CrossIcon color={"#fff"} />
+                    <CrossIcon color={'#fff'} />
                   </CrossIconContainer>
-                  {documentArray?.mimeType?.includes?.("image") ||
-                  documentArray?.type?.includes?.("image") ? (
+                  {documentArray?.mimeType?.includes?.('image') ||
+                  documentArray?.type?.includes?.('image') ? (
                     <ImagePreviewShow source={{ uri: documentArray?.uri }} />
                   ) : (
                     <SvgShowContainer>
@@ -227,11 +227,11 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                 onBackdropPress={() => {
                   setDeleteShowModal(false);
                 }}
-                heading={tm("discardMedia")}
-                description={tm("disCardDescription")}
-                label={tm("yesDiscard")}
+                heading={tm('discardMedia')}
+                description={tm('disCardDescription')}
+                label={tm('yesDiscard')}
                 actionType={Actions.delete}
-                actiontext={tm("cancel")}
+                actiontext={tm('cancel')}
                 onCancelPress={() => {
                   setDeleteShowModal(false);
                 }}
@@ -276,7 +276,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
             onPress={handleAddProducts}
             loading={loading}
             valid={valid}>
-            <FormButtonText valid={valid}>{t("save")}</FormButtonText>
+            <FormButtonText valid={valid}>{t('save')}</FormButtonText>
           </ButtonSubmit>
         </FormsView>
       )}
