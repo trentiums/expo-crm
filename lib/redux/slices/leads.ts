@@ -1,17 +1,18 @@
-import { logoutUserAction } from "@redux/actions/auth";
+import { logoutUserAction } from '@redux/actions/auth';
 import {
   deleteLeadAction,
   getLeadDetailsAction,
   getLeadListAction,
-} from "@redux/actions/lead";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+} from '@redux/actions/lead';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import {
   LeadDetailsResponse,
   LeadListResponse,
   LeadListState,
-} from "@type/api/lead";
-import { AddLeadState } from "@type/redux/slices/leads";
-import { formatLeadDetails, formatLeadList } from "@utils/lead";
+  LeadsFilterType,
+} from '@type/api/lead';
+import { AddLeadState } from '@type/redux/slices/leads';
+import { formatLeadDetails, formatLeadList } from '@utils/lead';
 export interface LeadsState {
   addLead: AddLeadState;
   leadList: {
@@ -21,28 +22,30 @@ export interface LeadsState {
     leads: LeadListState[];
   };
   leadsDetail: LeadListState;
+  leadsFilter: LeadsFilterType;
 }
 const initialState: LeadsState = {
   addLead: {
-    fullName: "",
+    fullName: '',
     phoneNumber: undefined,
     countryCode: undefined,
-    email: "",
-    companyName: "",
+    email: '',
+    companyName: '',
     companySize: undefined,
-    webSite: "",
+    webSite: '',
     source: undefined,
     budget: undefined,
     timeFrame: undefined,
-    comments: "",
+    comments: '',
     selectedLead: 0,
     selectedChannel: 0,
     selectedStage: 0,
     selectedServices: [],
     dealAmount: 0,
-    winCloseReason: "",
-    dealCloseDate: "",
+    winCloseReason: '',
+    dealCloseDate: '',
     documents: [],
+    assignTo: 0,
   },
   leadList: {
     currentPage: 0,
@@ -53,33 +56,37 @@ const initialState: LeadsState = {
   leadsDetail: {
     id: 0,
     companyUserId: 0,
-    name: "",
-    email: "",
+    name: '',
+    email: '',
     phone: 0,
-    companyName: "",
-    companySize: "",
-    companyWebsite: "",
-    budget: "",
-    timeLine: "",
-    description: "",
-    dealAmount: "",
-    winCloseReason: "",
-    dealCloseDate: "",
+    companyName: '',
+    companySize: '',
+    companyWebsite: '',
+    budget: '',
+    timeLine: '',
+    description: '',
+    dealAmount: '',
+    winCloseReason: '',
+    dealCloseDate: '',
     leadStatusId: 0,
     leadChannelId: 0,
     leadConversionId: 0,
     countryId: 0,
     productService: [],
-    createdAt: "",
-    updatedAt: "",
-    webSite: "",
+    createdAt: '',
+    updatedAt: '',
+    webSite: '',
     documents: [],
     assignTo: 0,
+  },
+  leadsFilter: {
+    endDate: '',
+    startData: '',
   },
 };
 
 const leadSlice = createSlice({
-  name: "leads",
+  name: 'leads',
   initialState,
   reducers: {
     addLeadInformation: (state, action: PayloadAction<AddLeadState>) => {
@@ -87,6 +94,9 @@ const leadSlice = createSlice({
     },
     setLeadsInformation: (state) => {
       state.addLead = initialState.addLead;
+    },
+    setLeadsFilters: (state, action) => {
+      state.leadsFilter = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -106,21 +116,21 @@ const leadSlice = createSlice({
         state.leadList.currentPage = action.payload.data.current_page;
         state.leadList.lastPage = action.payload.data.last_page;
         state.leadList.perPage = action.payload.data.per_page;
-      }
+      },
     );
     builder.addCase(
       getLeadDetailsAction.fulfilled,
       (state, action: PayloadAction<LeadDetailsResponse>) => {
         const data = formatLeadDetails(action.payload.data);
         state.leadList.leads = state.leadList.leads.map((item) =>
-          item.id === data.id ? data : item
+          item.id === data.id ? data : item,
         );
         state.leadsDetail = data;
-      }
+      },
     );
     builder.addCase(deleteLeadAction.fulfilled, (state, action) => {
       state.leadList.leads = state.leadList.leads.filter(
-        (item) => item.id !== action.payload.data.lead_id
+        (item) => item.id !== action.payload.data.lead_id,
       );
     });
     builder.addCase(logoutUserAction.fulfilled, () => {
@@ -128,5 +138,6 @@ const leadSlice = createSlice({
     });
   },
 });
-export const { addLeadInformation, setLeadsInformation } = leadSlice.actions;
+export const { addLeadInformation, setLeadsInformation, setLeadsFilters } =
+  leadSlice.actions;
 export default leadSlice.reducer;

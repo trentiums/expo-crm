@@ -4,9 +4,9 @@ import { useAppTheme } from '@constants/theme';
 import { CustomTextInputProps } from '@atoms/TextInput/TextInput.props';
 import CheckMarkIcon from '@atoms/Illustrations/Check';
 import CrossIcon from '@atoms/Illustrations/Cross';
-import { Dropdown } from 'react-native-element-dropdown';
 import { FieldDropDownContainer } from './FieldDropDown.styles';
 import { dropdownData } from '@constants/dummyData';
+import DropDown from '@molecules/DropDown/DropDown';
 
 const FieldDropDown = forwardRef<CustomTextInputProps, any>(
   (
@@ -26,6 +26,10 @@ const FieldDropDown = forwardRef<CustomTextInputProps, any>(
     const { colors } = useAppTheme();
     const [selectedValue, setSelectedValue] = useState(input?.value || '');
     const handleOnChange = (value: string) => {
+      if (input.value === value) {
+        input.onChange();
+        setSelectedValue('');
+      }
       setSelectedValue(value);
       input.onChange(value);
     };
@@ -47,7 +51,7 @@ const FieldDropDown = forwardRef<CustomTextInputProps, any>(
     return (
       <>
         <FieldDropDownContainer isError={meta.touched && meta.error}>
-          <Dropdown
+          <DropDown
             data={dropdownData}
             placeholder="Select an option"
             value={selectedValue}

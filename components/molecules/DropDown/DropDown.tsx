@@ -21,7 +21,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useAppTheme } from '@constants/theme';
 import CheckMarkIcon from '@atoms/Illustrations/Check';
-import { Spacer } from '@atoms/common/common.styles';
 import { View } from 'react-native';
 
 const DropDown: React.FC<DropDownProps> = ({
