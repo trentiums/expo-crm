@@ -1,7 +1,7 @@
 export enum userRole {
-  "Admin" = 1,
-  "CompanyAdmin" = 2,
-  "CompanyStaff" = 3,
+  'Admin' = 1,
+  'CompanyAdmin' = 2,
+  'CompanyStaff' = 3,
 }
 
 export interface LoginParams {
@@ -42,4 +42,9 @@ export interface LeadInformationFromValuesType {
   dealAmount: number;
   winCloseReason: string;
   dealCloseDate: Date;
+  selectedChannel: number;
+  selectedLead: number;
+  selectedStage: number;
+  selectedServices: number[];
+  assignTo?: number;
 }

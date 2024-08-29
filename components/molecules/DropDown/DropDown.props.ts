@@ -1,6 +1,6 @@
 export interface DropDownProps {
   data: DropDownData[];
-  value: string | number[];
+  value: string | number[] | number;
   isMultiple?: boolean;
   onChange?: (value: string) => void;
   placeholder: string;

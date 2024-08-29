@@ -1,18 +1,17 @@
-import React, { useState } from "react";
-import { FieldDatePickerProps } from "./FieldDatePicker.props";
-import { Pressable } from "react-native";
-import DatePicker from "@atoms/DatePicker/DatePicker";
+import React, { useState } from 'react';
+import { FieldDatePickerProps } from './FieldDatePicker.props';
+import { Pressable } from 'react-native';
+import DatePicker from '@atoms/DatePicker/DatePicker';
 import {
   Container,
   DateView,
   DateText,
-  CalendarIcon,
   ModalContainer,
   DatePickerContainer,
-} from "./FieldDatePicker.styles";
-import FormError from "@atoms/FormError/FormError";
-import moment from "moment";
-import { dateFormate, dateMonthWordFormate } from "@constants/common";
+} from './FieldDatePicker.styles';
+import FormError from '@atoms/FormError/FormError';
+import moment from 'moment';
+import { dateFormate, dateMonthWordFormate } from '@constants/common';
 
 const FieldDatePicker: React.FC<FieldDatePickerProps> = ({
   input,
@@ -30,7 +29,7 @@ const FieldDatePicker: React.FC<FieldDatePickerProps> = ({
   };
   const handleSelectDate = (val) => {
     if (val?.toString() === input.value) {
-      input.onChange("");
+      input.onChange('');
     } else {
       input.onChange(val.toString());
     }
@@ -47,7 +46,7 @@ const FieldDatePicker: React.FC<FieldDatePickerProps> = ({
             <DateText input={input?.value}>
               {input && input.value
                 ? moment(input.value).format(
-                    showMonth ? dateMonthWordFormate : dateFormate
+                    showMonth ? dateMonthWordFormate : dateFormate,
                   )
                 : dateFormate}
             </DateText>
@@ -64,7 +63,7 @@ const FieldDatePicker: React.FC<FieldDatePickerProps> = ({
 
       {isCalendar && (
         <ModalContainer
-          animationIn={"fadeIn"}
+          animationIn={'fadeIn'}
           transparent={true}
           onRequestClose={handleShowDatePicker}
           onBackdropPress={handleShowDatePicker}

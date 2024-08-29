@@ -1,32 +1,30 @@
-import { PaddingSpace, Spacer } from "@atoms/common/common.styles";
-import { useAppTheme } from "@constants/theme";
-import { ToastTypeProps } from "@molecules/Toast/Toast.props";
-import UserInformationForm from "@organisms/UserInformationForm/UserInformationForm";
-import { UserInformationFormValues } from "@organisms/UserInformationForm/UserInformationForm.props";
+import { PaddingSpace, Spacer } from '@atoms/common/common.styles';
+import { useAppTheme } from '@constants/theme';
+import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import UserInformationForm from '@organisms/UserInformationForm/UserInformationForm';
+import { UserInformationFormValues } from '@organisms/UserInformationForm/UserInformationForm.props';
 import {
   addUserAction,
   getAssignUserListAction,
-  getUserDetailAction,
   getUserListAction,
-  updateUserAction,
-} from "@redux/actions/user";
-import { useAppDispatch } from "@redux/store";
-import FormTemplate from "@templates/FormTemplate/FormTemplate";
-import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useToast } from "react-native-toast-notifications";
+} from '@redux/actions/user';
+import { useAppDispatch } from '@redux/store';
+import FormTemplate from '@templates/FormTemplate/FormTemplate';
+import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
+import { router, useNavigation } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useToast } from 'react-native-toast-notifications';
 
 const addUser = () => {
   const toast = useToast();
   const { colors } = useAppTheme();
   const dispatch = useAppDispatch();
   const navigation = useNavigation();
-  const { t } = useTranslation("screenTitle");
+  const { t } = useTranslation('screenTitle');
   const [loading, setLoading] = useState(false);
   const onUserInformationSubmitPress = async (
-    values: UserInformationFormValues
+    values: UserInformationFormValues,
   ) => {
     try {
       setLoading(true);
@@ -35,21 +33,21 @@ const addUser = () => {
           email: values?.email,
           name: values?.name,
           password: values?.password,
-        })
+        }),
       ).unwrap();
 
       await dispatch(getUserListAction({}));
       await dispatch(getAssignUserListAction());
       toast.show(response?.message, {
-        type: "customToast",
+        type: 'customToast',
         data: {
           type: ToastTypeProps.Success,
         },
       });
-      router.navigate("/users");
+      router.navigate('/users');
     } catch (error: any) {
       toast.show(error, {
-        type: "customToast",
+        type: 'customToast',
         data: {
           type: ToastTypeProps.Error,
         },
@@ -59,7 +57,7 @@ const addUser = () => {
   };
   useEffect(() => {
     navigation.setOptions({
-      title: t("addUser"),
+      title: t('addUser'),
       headerStyle: {
         backgroundColor: colors.tabBar,
       },

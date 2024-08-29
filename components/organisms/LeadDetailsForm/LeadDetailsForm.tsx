@@ -12,7 +12,6 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { LeadDetailsFormProps } from './LeadDetailsForm.props';
 import { FormsView } from './LeadDetailsForm.styles';
 import View from '@atoms/View/View';
-import { dropdownData } from '@constants/dummyData';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import FieldDatePicker from '@molecules/FieldDatePicker/FieldDatePicker';
 import moment from 'moment';
@@ -29,7 +28,6 @@ import { userRole } from '@type/api/auth';
 import { useAppTheme } from '@constants/theme';
 import { LeadStageType } from '@organisms/LeadDetailCard/LeadDetailCard.props';
 import { getProductServiceListAction } from '@redux/actions/productService';
-import DropDown from '@molecules/DropDown/DropDown';
 import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
 
 const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
@@ -37,18 +35,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   loading,
   isSave,
   onBackClick,
-  setSourceValue,
-  sourceValue,
-  setSelectedChannel,
-  selectedChannel,
-  setSelectedLead,
-  selectedLead,
-  selectedStage,
-  setSelectedStage,
-  setSelectedService,
-  selectedService,
   assignTo,
-  setAssignTo,
 }) => {
   const { t } = useTranslation('leadDetails');
   const { t: tb } = useTranslation('formButtonName');
@@ -113,7 +100,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         selectedChannel: values?.selectedChannel,
         selectedLead: values?.selectedLead,
         selectedStage: values?.selectedStage,
-        selectedServices: selectedService,
+        selectedServices: values?.selectedServices,
         dealAmount: values.dealAmount,
         winCloseReason: values.winCloseReason,
         dealCloseDate: values?.dealCloseDate
@@ -122,7 +109,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         comments: values.comments,
       }),
     );
-  }, [values, selectedService]);
+  }, [values]);
 
   useEffect(() => {
     form.change(

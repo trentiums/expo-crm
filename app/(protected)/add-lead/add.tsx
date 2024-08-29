@@ -31,10 +31,6 @@ import React, { useEffect, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
 import { AddLeadContainer } from '../(drawer)/tabs.style';
 import { useTranslation } from 'react-i18next';
-import {
-  dashboardLeadListAction,
-  dashboardLeadStageCountAction,
-} from '@redux/actions/dashboard';
 
 const AddLead = () => {
   const dispatch = useAppDispatch();
@@ -46,7 +42,6 @@ const AddLead = () => {
   const [selectedCountryCodeValue, setSelectedCountryCodeValue] =
     useState<string>('');
   const { colors } = useAppTheme();
-  const [sourceValue, setSourceValue] = useState<number>();
   const addLeadData = useSelector((state: RootState) => state.leads.addLead);
   const leadsDetail = useSelector(
     (state: RootState) => state.leads.leadsDetail,
@@ -59,16 +54,11 @@ const AddLead = () => {
   );
   const toast = useToast();
   const [documentArray, setDocumentArray] = useState<fileSystemProps[]>([]);
-  const [selectedChannel, setSelectedChannel] = useState(0);
-  const [selectedLead, setSelectedLead] = useState(0);
-  const [selectedStage, setSelectedStage] = useState(0);
-  const [selectedService, setSelectedService] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [leadsDetailLoading, setDetailLoading] = useState(false);
   const [selectedData, setSelectedData] = useState<LeadListState>(
     leadsData?.[0],
   );
-  const [assignTo, setAssignTo] = useState();
 
   useEffect(() => {
     setSelectedData(leadsDetail);
@@ -123,7 +113,7 @@ const AddLead = () => {
         selectedChannel: values?.selectedChannel,
         selectedLead: values?.selectedLead,
         selectedStage: values?.selectedStage,
-        selectedServices: values?.selectedService,
+        selectedServices: values?.selectedServices,
         dealAmount: values.dealAmount,
         winCloseReason: values.winCloseReason,
         dealCloseDate: values?.dealCloseDate
@@ -165,7 +155,7 @@ const AddLead = () => {
           ? moment(values.dealCloseDate).format('YYYY-MM-DD')
           : '',
       );
-      if (assignTo || selectedData.assignTo) {
+      if (values?.assignTo || selectedData.assignTo) {
         formData.append(
           'assign_to_user_id',
           `${values?.assignTo || selectedData.assignTo}`,
@@ -203,10 +193,6 @@ const AddLead = () => {
       });
       router.navigate('/(protected)/(drawer)/(tabs)/leads');
       setDocumentArray([]);
-      setSelectedChannel(0);
-      setSelectedLead(0);
-      setSelectedStage(0);
-      setSelectedService([]);
     } catch (error: string | any) {
       toast.show(error, {
         type: 'customToast',
@@ -260,19 +246,7 @@ const AddLead = () => {
             onBackClick={() => {
               setSelectedTabNav(AddLeadTabBarData?.[1].title);
             }}
-            setSourceValue={setSourceValue}
-            sourceValue={sourceValue}
             isSave
-            setSelectedStage={setSelectedStage}
-            setSelectedLead={setSelectedLead}
-            setSelectedChannel={setSelectedChannel}
-            selectedChannel={selectedChannel}
-            selectedLead={selectedLead}
-            selectedStage={selectedStage}
-            setSelectedService={setSelectedService}
-            selectedService={selectedService}
-            setAssignTo={setAssignTo}
-            assignTo={assignTo}
           />
         );
       default:

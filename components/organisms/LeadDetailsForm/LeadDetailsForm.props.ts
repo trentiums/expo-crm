@@ -1,4 +1,4 @@
-import { FormRenderProps } from "react-final-form";
+import { FormRenderProps } from 'react-final-form';
 
 export type LeadDetailsFormValues = {
   product: string;
@@ -8,6 +8,11 @@ export type LeadDetailsFormValues = {
   winCloseReason: string;
   dealCloseDate?: string | Date;
   dealAmount?: number | string;
+  selectedChannel?: number;
+  selectedLead?: number;
+  selectedStage?: number;
+  assignTo?: number;
+  selectedServices?: number[];
 };
 
 export type LeadDetailsFormProps = FormRenderProps<LeadDetailsFormValues> & {

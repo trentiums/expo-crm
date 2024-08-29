@@ -35,13 +35,15 @@ export const DropdownLeftView = styled(View)<{
 `;
 export const PressableView = styled(Pressable)<{
   isLeadChange?: boolean;
+  isDisabled?: boolean;
 }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.transparent};
   border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.disabledTextColor};
+  border-color: ${({ theme, isDisabled }) =>
+    isDisabled ? theme.colors.lightBorder : theme.colors.disabledTextColor};
   padding-left: 8px;
   padding-right: 8px;
   padding-top: ${({ isLeadChange }) => (isLeadChange ? 4 : 14)}px;

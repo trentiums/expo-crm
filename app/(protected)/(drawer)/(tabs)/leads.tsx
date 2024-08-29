@@ -425,10 +425,6 @@ const Leads = () => {
           onSubmit={(values) => handleApplyFilter(values)}
           handleDropDownClose={handleOpenBottomSheetOpen}
           loading={filterLoading}
-          startDate={startDate}
-          endDate={endDate}
-          setStartDate={setStartDate}
-          setEndDate={setEndDate}
           setFilterCount={setFilterCount}
           bottomSheetClose={handleBottomSheetClose}
         />
