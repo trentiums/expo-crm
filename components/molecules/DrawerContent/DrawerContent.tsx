@@ -3,7 +3,7 @@ import Text from '@atoms/Text/Text';
 import { useAppDispatch, useSelector } from '@redux/store';
 import { router, usePathname } from 'expo-router';
 import React from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Button, Drawer } from 'react-native-paper';
 import { Linking } from 'react-native';
 import { styled } from '@utils/styled';

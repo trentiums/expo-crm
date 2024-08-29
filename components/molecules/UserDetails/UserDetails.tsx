@@ -10,7 +10,7 @@ import {
   PressAbleContainer,
   SubNameText,
 } from './UserDetails.styles';
-import { Linking, Pressable } from 'react-native';
+import { Pressable } from 'react-native';
 import { Spacer } from '@atoms/common/common.styles';
 import { UserDetailsProps } from './UserDetails.props';
 import { useTranslation } from 'react-i18next';
