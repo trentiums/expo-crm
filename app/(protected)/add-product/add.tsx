@@ -22,7 +22,7 @@ const addProducts = () => {
   const navigation = useNavigation();
   const { t } = useTranslation('screenTitle');
   const [loading, setLoading] = useState(false);
-  const [documentArray, setDocumentArray] = useState<fileSystemProps | any>();
+  const [documentArray, setDocumentArray] = useState<fileSystemProps>();
   const { colors } = useAppTheme();
   const handleAddServices = async (values: AddProductFormValues) => {
     try {

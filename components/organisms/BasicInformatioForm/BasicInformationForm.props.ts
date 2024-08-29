@@ -14,7 +14,7 @@ export interface fileSystemProps {
   name: string;
   size: number;
   type: string;
-  uri: any;
+  uri: string | string[] | number;
 }
 
 export type BasicInfoFormProps = FormRenderProps<BasicInfoFormValues> & {

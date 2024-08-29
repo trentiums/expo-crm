@@ -202,13 +202,13 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                     }
                     // setShowModal(true);
                   }}
-                  style={{ width: '30%' }}>
+                  isWidthShort>
                   <CrossIconContainer
                     onPress={() => {
                       setDeleteShowModal(true);
                       setDeleteDocumentUrl(documentArray?.uri);
                     }}>
-                    <CrossIcon color={'#fff'} />
+                    <CrossIcon color={colors.white} />
                   </CrossIconContainer>
                   {documentArray?.mimeType?.includes?.('image') ||
                   documentArray?.type?.includes?.('image') ? (

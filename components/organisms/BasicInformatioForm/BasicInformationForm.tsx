@@ -89,7 +89,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
     (state: RootState) => state.leads.addLead,
   );
   const [pdfUri, setPdfUri] = useState(null);
-  const [id] = useState<number | any>(params?.slug);
+  const [id] = useState<number | string | string[]>(params?.slug);
   const dispatch = useAppDispatch();
   const toast = useToast();
   const [selectedData, setSelectedData] = useState<LeadListState | undefined>();
@@ -123,37 +123,30 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
       setCountryCodeError(t('countryCodeError'));
     } else if (!values.phoneNumber && selectedCountryCodeValue) {
       setCountryCodeError(t('phoneNumberError'));
-    } else if (values.phoneNumber && selectedCountryCodeValue) {
-      setCountryCodeError('');
-    } else if (!values.phoneNumber && !selectedCountryCodeValue) {
+    } else if (
+      (values.phoneNumber && selectedCountryCodeValue) ||
+      (!values.phoneNumber && !selectedCountryCodeValue)
+    ) {
       setCountryCodeError('');
     }
   }, [values, selectedCountryCodeValue]);
 
   useEffect(() => {
     const initializePermissionsAndForm = async () => {
+      const data = leadsData.filter((item) => item?.id === id)?.[0];
       if (id) {
-        setSelectedCountryCodeValue(
-          leadsDetail?.countryId ||
-            leadsData.filter((item) => item?.id === id)?.[0]?.countryId,
-        );
+        setSelectedCountryCodeValue(leadsDetail?.countryId || data?.countryId);
       }
       if (id) {
         setDocumentArray(leadsDetail?.documents);
       }
       form.change(
         'firstName',
-        id
-          ? leadsData?.filter((item) => item?.id === id)?.[0]?.name ||
-              leadsDetail?.name
-          : addLeadFormData?.fullName,
+        id ? data?.name || leadsDetail?.name : addLeadFormData?.fullName,
       );
       form.change(
         'email',
-        id
-          ? leadsData?.filter((item) => item?.id === id)?.[0]?.email ||
-              leadsDetail?.email
-          : addLeadFormData?.email,
+        id ? data?.email || leadsDetail?.email : addLeadFormData?.email,
       );
       form.change(
         'phoneNumber',
@@ -180,7 +173,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
       if (!res.canceled) {
         res.assets.forEach((file) => {
           if (file.size > MAX_FILE_SIZE) {
-            toast.show('File size limit exceeded', {
+            toast.show(t('fileSizeExceeded'), {
               type: 'customToast',
               data: {
                 type: ToastTypeProps.Error,
@@ -250,7 +243,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
             setDeleteShowModal(true);
             setDeleteDocumentUrl(file?.uri);
           }}>
-          <CrossIcon color={'#fff'} />
+          <CrossIcon color={colors.white} />
         </CrossIconContainer>
         {type?.includes('image') ? (
           <ImagePreviewShow source={{ uri: file?.uri }} />
@@ -277,7 +270,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   const generatePdf = async () => {
     try {
       const { uri } = await Print.printToFileAsync({
-        html: '<h1>PDF Content</h1><p>This is a sample PDF generated using expo-print.</p>',
+        html: `<h1>${t('pdfContent')}</h1><p>${t('samplePdf')}</p>`,
       });
       setPdfUri(uri);
     } catch (error) {
