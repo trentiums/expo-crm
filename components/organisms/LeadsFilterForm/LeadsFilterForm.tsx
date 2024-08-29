@@ -25,10 +25,6 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
   form,
   handleDropDownClose,
   loading,
-  startDate,
-  setStartDate,
-  endDate,
-  setEndDate,
   bottomSheetClose,
   setFilterCount,
 }) => {
@@ -37,10 +33,6 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
   const general = useSelector((state: RootState) => state.general);
   const dispatch = useAppDispatch();
   const { colors } = useAppTheme();
-  useEffect(() => {
-    setStartDate(values.startDate);
-    setEndDate(values.endDate);
-  }, [values]);
   const leadsFilter = useSelector(
     (state: RootState) => state.leads.leadsFilter,
   );
@@ -74,10 +66,8 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             <Field
               name="startDate"
               component={FieldDatePicker}
-              initialDate={
-                values?.startDate || startDate || moment().clone().toDate()
-              }
-              maxDate={endDate || moment().startOf('day').toDate()}
+              initialDate={values?.startDate || moment().clone().toDate()}
+              maxDate={values?.endDate || moment().startOf('day').toDate()}
             />
           </DateContainer>
           <DateContainer>
@@ -85,10 +75,8 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             <Field
               name="endDate"
               component={FieldDatePicker}
-              initialDate={
-                values?.endDate || endDate || moment().clone().toDate()
-              }
-              minDate={startDate}
+              initialDate={values?.endDate || moment().clone().toDate()}
+              minDate={values?.startDate}
               maxDate={moment().startOf('day').toDate()}
             />
           </DateContainer>
