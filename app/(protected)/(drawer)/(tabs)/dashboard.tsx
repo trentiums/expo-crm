@@ -13,19 +13,13 @@ import { RefObject, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useToast } from 'react-native-toast-notifications';
 import { useAppTheme } from '@constants/theme';
-import {
-  DashboardLeadList,
-  LeadStageCountLeadList,
-} from '@type/redux/slices/dashboard';
-import DashboardLeadsCard from '@molecules/DashboardLeadsCard/DashboardLeadsCard';
+import { DashboardLeadList } from '@type/redux/slices/dashboard';
 import {
   dashboardLeadListAction,
   dashboardLeadStageCountAction,
 } from '@redux/actions/dashboard';
 import { setLeadsInformation } from '@redux/slices/leads';
 import DashBoardLeadCard from '@organisms/DashBoardLeadCard/DashBoardLeadCard';
-import moment from 'moment';
-import { dateTimeFormate } from '@constants/common';
 import { Pressable } from 'react-native';
 import { ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { deleteLeadAction } from '@redux/actions/lead';
@@ -35,6 +29,7 @@ import React from 'react';
 import { router } from 'expo-router';
 import { useFocusEffect } from 'expo-router';
 import Button from '@atoms/Button/Button';
+import LeadsIndigator from '@organisms/LeadsIndigator/LeadsIndigator';
 
 const Dashboard = () => {
   const { colors } = useAppTheme();
@@ -44,7 +39,6 @@ const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [deletedId, setDeletedId] = useState<number | undefined>();
   const [openSwipeAbleRef, setOpenSwipeAbleRef] =
     useState<RefObject<Swipeable> | null>(null);
@@ -59,6 +53,13 @@ const Dashboard = () => {
     await dispatch(dashboardLeadStageCountAction());
     setLoading(false);
   };
+  const chartColors = [
+    colors?.greenLight,
+    colors.yellowLight,
+    colors.redLight,
+    colors.blueLight,
+    colors.grayLight,
+  ];
   const handleMoreData = async () => {
     if (
       dashboardLeadList &&
@@ -141,43 +142,9 @@ const Dashboard = () => {
       <DashBoardLeadCard
         key={`${item.id}-${index}`}
         onDelete={() => handleDelete(item?.id)}
-        whatsAppNumber={item.phone}
-        phoneNumber={item.phone}
-        title={item.name}
-        mailID={item.email}
-        dateTime={moment(item.createdAt).format(dateTimeFormate)}
-        closeSwipeAble={closeSwipeAble}
-        setSwipeAbleRef={setSwipeAbleRef}
-        selectedCard={selectedCard}
-        setSelectedCard={setSelectedCard}
-        cardIndex={index}
+        leadData={item}
       />
     </Pressable>
-  );
-
-  const dashboardCardColors = [
-    colors.primaryColor,
-    colors.white,
-    colors.lightYellow,
-    colors.lightBlue,
-  ];
-
-  const renderProfileGameHistoryCard = ({
-    item,
-    index,
-  }: {
-    item: LeadStageCountLeadList;
-    index: number;
-  }) => (
-    <>
-      <DashboardLeadsCard
-        title={item.name}
-        leads={item.leadCount}
-        scoreColor={dashboardCardColors[index % dashboardCardColors.length]}
-        key={`${item?.name?.toString()} - ${index}`}
-      />
-      <Spacer size={index % 2 === 0 ? 16 : 0} />
-    </>
   );
 
   return (
@@ -188,15 +155,14 @@ const Dashboard = () => {
         <DashboardScreenContainer
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}>
-          <FlatList
-            data={dashboardLeadList.leadStageCount}
-            renderItem={renderProfileGameHistoryCard}
-            keyExtractor={(item, index) =>
-              ` ${item.name.toString()} - ${index}`
-            }
-            numColumns={2}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
+          <LeadsIndigator
+            data={dashboardLeadList.leadStageCount?.map((item, index) => {
+              return {
+                label: item?.name,
+                value: item?.leadCount,
+                color: chartColors[index],
+              };
+            })}
           />
           <Spacer size={16} />
           <TitleText>{t('newLeads')}</TitleText>

@@ -7,7 +7,7 @@ export const Container = styled(SafeAreaView)<{
 }>`
   flex: 1;
   background-color: ${({ backgroundColor, theme }) =>
-    backgroundColor ? backgroundColor : theme.colors.bgColor};
+    backgroundColor ? backgroundColor : theme.colors.screenTemplateColor};
 `;
 
 export const AddButton = styled(TouchableOpacity)`

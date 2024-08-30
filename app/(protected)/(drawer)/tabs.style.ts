@@ -20,7 +20,7 @@ export const DashboardScreenContainer = styled(ScrollView)`
 export const TitleText = styled(Text)`
   font-size: 22px;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.textDark};
 `;
 export const NoDataFoundText = styled(Text)`
   font-size: 16px;

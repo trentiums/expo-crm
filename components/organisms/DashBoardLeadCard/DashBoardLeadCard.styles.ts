@@ -6,14 +6,14 @@ import styled from 'styled-components';
 export const LeadDetailCardContainer = styled(View)<{
   isActive?: boolean;
 }>`
-  background-color: ${({ theme }) => theme.colors.darkBackground};
-  border-radius: 8px;
-  padding: 16px 8px;
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 16px;
+  padding: 14px 16px 16px 16px;
   border-width: 1px;
   border-color: ${({ isActive, theme }) =>
     isActive ? theme.colors.primaryColor : theme.colors.transparent};
   background-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.backgroundCardColor : theme.colors.transparent};
+    isActive ? theme.colors.white : theme.colors.white};
 `;
 export const RequirementClubContainer = styled(View)`
   display: flex;
