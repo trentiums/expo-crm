@@ -325,16 +325,6 @@ const Leads = () => {
     router.navigate(`/(protected)/add-lead/add`);
   };
 
-  if (leadsLoading) {
-    return (
-      <ScreenTemplate>
-        <LoaderView>
-          <ActivityIndicator color={colors.primaryColor} />
-        </LoaderView>
-      </ScreenTemplate>
-    );
-  }
-
   const renderHeader = () => {
     return (
       <FilterContainer>
@@ -368,7 +358,16 @@ const Leads = () => {
       </FilterContainer>
     );
   };
-
+  if (leadsLoading) {
+    return (
+      <ScreenTemplate>
+        {renderHeader()}
+        <LoaderView>
+          <ActivityIndicator color={colors.primaryColor} />
+        </LoaderView>
+      </ScreenTemplate>
+    );
+  }
   return (
     <ScreenTemplate>
       {renderHeader()}
