@@ -3,6 +3,8 @@ import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
 import {
   DashboardScreenContainer,
+  GreetingText,
+  NameText,
   NoDataFoundText,
   TitleText,
 } from '../tabs.style';
@@ -35,7 +37,9 @@ const Dashboard = () => {
   const { colors } = useAppTheme();
   const { t } = useTranslation('dashBoard');
   const { t: tm } = useTranslation('modalText');
+  const { t: tr } = useTranslation('drawer');
   const toast = useToast();
+  const user = useSelector((state: RootState) => state.auth.user);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -122,9 +126,6 @@ const Dashboard = () => {
     setDeleteLoading(false);
     setShowModal(false);
   };
-  const setSwipeAbleRef = (ref: RefObject<Swipeable>) => {
-    setOpenSwipeAbleRef(ref);
-  };
 
   const RenderComponent = ({
     item,
@@ -155,6 +156,9 @@ const Dashboard = () => {
         <DashboardScreenContainer
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}>
+          <GreetingText>{tr('welcome')}</GreetingText>
+          <NameText>{user?.name}</NameText>
+          <Spacer size={16} />
           <LeadsIndigator
             data={dashboardLeadList.leadStageCount?.map((item, index) => {
               return {
@@ -164,7 +168,7 @@ const Dashboard = () => {
               };
             })}
           />
-          <Spacer size={16} />
+          <Spacer size={32} />
           <TitleText>{t('newLeads')}</TitleText>
           <Spacer size={16} />
           {leadListData?.length > 0 ? (

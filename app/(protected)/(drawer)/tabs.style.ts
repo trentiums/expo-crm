@@ -59,3 +59,13 @@ export const AddLeadContainer = styled(View)`
   padding: 16px;
   flex: 1;
 `;
+export const GreetingText = styled(Text)`
+  font-size: 36px;
+  color: ${({ theme }) => theme.colors.textDark};
+  font-weight: 600;
+`;
+export const NameText = styled(Text)`
+  font-size: 36px;
+  color: #5892ff;
+  font-weight: 600;
+`;
