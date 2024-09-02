@@ -12,7 +12,7 @@ import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
 import { router, useNavigation } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
-import { AddProductContainer } from '../(drawer)/drawer.style';
+import { AddProductContainer } from '../(tabs)/drawer.style';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@constants/theme';
 

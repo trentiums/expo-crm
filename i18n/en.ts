@@ -231,6 +231,12 @@ const English = {
     qualified: 'Qualified',
     unQualified: 'Unqualified',
   },
+  tabs: {
+    dashboard: 'Dashboard',
+    leads: 'Leads',
+    users: 'Users',
+    services: 'Services',
+  },
 };
 
 export default English;

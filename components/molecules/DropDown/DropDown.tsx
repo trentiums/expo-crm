@@ -14,7 +14,7 @@ import {
   PressableView,
   SelectedText,
 } from './DropDown.styles';
-import ArrowDown from '@atoms/Illustrations/ArrowDown';
+import ArrowDownIcon from '@atoms/Illustrations/ArrowDown';
 import { DropdownBottomSheetSnapPoints } from '@constants/common';
 import { DropDownProps } from './DropDown.props';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -117,7 +117,7 @@ const DropDown: React.FC<DropDownProps> = ({
               )}
             </DropDownSelectedView>
           </DropdownLeftView>
-          <ArrowDown />
+          <ArrowDownIcon />
         </PressableView>
       </DropDownContainer>
       {showBottomSheet && !isStaff && (

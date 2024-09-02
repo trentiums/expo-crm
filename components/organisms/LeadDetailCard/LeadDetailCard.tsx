@@ -1,16 +1,6 @@
 import React, { useRef, useState } from 'react';
-import {
-  LeadDetailCardContainer,
-  RenderRightView,
-  SwipeText,
-  TouchableOpacityContainer,
-  ViewContainer,
-} from './LeadDetailCard.styles';
-import { Spacer } from '@atoms/common/common.styles';
+import { LeadDetailCardContainer } from './LeadDetailCard.styles';
 import LeadDetailsList from '@molecules/LeadDetailsList/LeadDetailsList';
-import { Swipeable } from 'react-native-gesture-handler';
-import Trash from '@atoms/Illustrations/Trash';
-import EditIcon from '@atoms/Illustrations/EditIcon';
 import LeadSelect from '@molecules/LeadSelect/LeadSelect';
 import {
   LeadDetailCardProps,

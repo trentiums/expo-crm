@@ -30,10 +30,10 @@ import CrossIcon from '@atoms/Illustrations/Cross';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import Pdf from 'react-native-pdf';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import Trash from '@atoms/Illustrations/Trash';
+import TrashIcon from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
-import Document from '@atoms/Illustrations/Document';
+import DocumentIcon from '@atoms/Illustrations/Document';
 import { getProductServiceDetailAction } from '@redux/actions/productService';
 import Loader from '@atoms/Loader/Loader';
 import * as MediaLibrary from 'expo-media-library';
@@ -215,7 +215,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                     <ImagePreviewShow source={{ uri: documentArray?.uri }} />
                   ) : (
                     <SvgShowContainer>
-                      <Document />
+                      <DocumentIcon />
                     </SvgShowContainer>
                   )}
                 </PressAbleContainer>
@@ -236,7 +236,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                   setDeleteShowModal(false);
                 }}
                 onActionPress={() => onDeleteActionPress()}
-                icon={<Trash color={colors?.deleteColor} />}
+                icon={<TrashIcon color={colors?.deleteColor} />}
                 loading={deleteLoading}
               />
             )}

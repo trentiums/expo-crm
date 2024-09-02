@@ -69,3 +69,17 @@ export const NameText = styled(Text)`
   color: #5892ff;
   font-weight: 600;
 `;
+
+export const AddLeadTabContainer = styled(View)`
+  align-items: center;
+  justify-content: center;
+  top: -4px;
+`;
+
+export const TabLabelText = styled(Text)<{ focused?: boolean }>`
+  margin-top: 5;
+  font-size: 12;
+  font-weight: ${({ focused }) => (focused ? 'bold' : 'lighter')};
+  color: ${({ focused, theme }) =>
+    focused ? theme.colors.EnglishHolly : theme.colors.LaurelGarland};
+`;

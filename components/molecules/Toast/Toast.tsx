@@ -12,10 +12,10 @@ import { ToastTypeProps } from './Toast.props';
 import { useAppTheme } from '@constants/theme';
 import { ToastProps } from 'react-native-toast-notifications/lib/typescript/toast';
 import ShadowBox from '@atoms/ShadowBox/ShadowBox';
-import NotificationSuccess from '@atoms/Illustrations/NotificationSuccess';
+import NotificationSuccessIcon from '@atoms/Illustrations/NotificationSuccess';
 import { Flexed, Spacer } from '@atoms/common/common.styles';
-import NotificationError from '@atoms/Illustrations/NotificationError';
-import NotificationWarning from '@atoms/Illustrations/NotificationWarning';
+import NotificationErrorIcon from '@atoms/Illustrations/NotificationError';
+import NotificationWarningIcon from '@atoms/Illustrations/NotificationWarning';
 
 import CloseIcon from '@atoms/Illustrations/Close';
 import { StatusCode } from '@type/api/api';
@@ -40,7 +40,7 @@ const ToastProviderContainer = ({
       case ToastTypeProps.Error:
         return (
           <NotificationContent>
-            <NotificationError />
+            <NotificationErrorIcon />
             <Spacer size={8} />
             <MessageText>{message?.toString()}</MessageText>
           </NotificationContent>
@@ -48,7 +48,7 @@ const ToastProviderContainer = ({
       case ToastTypeProps.Success:
         return (
           <NotificationContent>
-            <NotificationSuccess />
+            <NotificationSuccessIcon />
             <Spacer size={8} />
             <MessageText>{message?.toString()}</MessageText>
           </NotificationContent>
@@ -56,7 +56,7 @@ const ToastProviderContainer = ({
       case ToastTypeProps.Warning:
         return (
           <NotificationContent>
-            <NotificationWarning />
+            <NotificationWarningIcon />
             <Spacer size={8} />
             <MessageText>{message?.toString()}</MessageText>
           </NotificationContent>

@@ -39,12 +39,12 @@ import AddIcon from '@atoms/Illustrations/AddIcon';
 import { MAX_FILE_SIZE } from '@utils/constant';
 import { ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
-import Document from '@atoms/Illustrations/Document';
+import DocumentIcon from '@atoms/Illustrations/Document';
 import CrossIcon from '@atoms/Illustrations/Cross';
 import Pdf from 'react-native-pdf';
 import { useAppTheme } from '@constants/theme';
 import ActionModal from '@molecules/ActionModal/ActionModal';
-import Trash from '@atoms/Illustrations/Trash';
+import TrashIcon from '@atoms/Illustrations/Trash';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import {
   deleteLeadDocumentsAction,
@@ -187,7 +187,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
           <ImagePreviewShow source={{ uri: file?.uri }} />
         ) : (
           <SvgShowContainer>
-            <Document />
+            <DocumentIcon />
           </SvgShowContainer>
         )}
       </PressAbleContainer>
@@ -272,7 +272,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
               setDeleteShowModal(false);
             }}
             onActionPress={() => onDeleteActionPress()}
-            icon={<Trash color={colors?.deleteColor} />}
+            icon={<TrashIcon color={colors?.deleteColor} />}
             loading={deleteLoading}
           />
         )}

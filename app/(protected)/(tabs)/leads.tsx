@@ -10,14 +10,7 @@ import { LeadListState } from '@type/api/lead';
 import { initialModalType } from '@utils/constant';
 import { router } from 'expo-router';
 import moment from 'moment';
-import React, {
-  RefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, Keyboard, Pressable, View } from 'react-native';
 import { RefreshControl, Swipeable } from 'react-native-gesture-handler';
@@ -27,13 +20,12 @@ import {
   LoaderView,
   NoDataFoundText,
   NoLeadsFoundContainer,
-} from '../tabs.style';
+} from './tabs.style';
 import { ActivityIndicator, IconButton } from 'react-native-paper';
-import { PaddingSpace, Spacer } from '@atoms/common/common.styles';
 import Loader from '@atoms/Loader/Loader';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import Trash from '@atoms/Illustrations/Trash';
+import TrashIcon from '@atoms/Illustrations/Trash';
 import TextInput from '@atoms/TextInput/TextInput';
 import isEmpty from 'lodash/isEmpty';
 import { useDebounce } from '@utils/useDebounce';
@@ -45,8 +37,8 @@ import {
   FilterIconView,
   SearchInputContainer,
   SeparatorComponent,
-} from '../drawer.style';
-import Filter from '@atoms/Illustrations/Filter';
+} from './drawer.style';
+import FilterIcon from '@atoms/Illustrations/Filter';
 import { DropdownBottomSheetSnapPoints } from '@constants/common';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import FormTemplate from '@templates/FormTemplate/FormTemplate';
@@ -59,7 +51,6 @@ const Leads = () => {
   const { t } = useTranslation('modalText');
   const { top } = useSafeAreaInsets();
   const { t: td } = useTranslation('dashBoard');
-  const { t: ts } = useTranslation('addData');
   const { colors } = useAppTheme();
   const bottomSheetRef = useRef<any>(null);
   const leadsData = useSelector(
@@ -322,18 +313,8 @@ const Leads = () => {
   };
   const onAddButtonPress = () => {
     dispatch(setLeadsInformation());
-    router.navigate(`/(protected)/add-lead/add`);
+    router.navigate(`./addLead`);
   };
-
-  if (leadsLoading) {
-    return (
-      <ScreenTemplate>
-        <LoaderView>
-          <ActivityIndicator color={colors.primaryColor} />
-        </LoaderView>
-      </ScreenTemplate>
-    );
-  }
 
   const renderHeader = () => {
     return (
@@ -362,13 +343,22 @@ const Leads = () => {
                 <FilterCountText>{filterCount}</FilterCountText>
               </FilterCountView>
             )}
-            <Filter color={colors.primaryColor} />
+            <FilterIcon color={colors.primaryColor} />
           </FilterIconView>
         </SearchInputContainer>
       </FilterContainer>
     );
   };
-
+  if (leadsLoading) {
+    return (
+      <ScreenTemplate>
+        {renderHeader()}
+        <LoaderView>
+          <ActivityIndicator color={colors.primaryColor} />
+        </LoaderView>
+      </ScreenTemplate>
+    );
+  }
   return (
     <ScreenTemplate>
       {renderHeader()}
@@ -449,7 +439,7 @@ const Leads = () => {
             closeSwipeAble();
           }}
           onActionPress={() => onDeleteActionPress(deleteCardId || 0)}
-          icon={<Trash color={colors?.deleteColor} />}
+          icon={<TrashIcon color={colors?.deleteColor} />}
           loading={loading}
         />
       )}
