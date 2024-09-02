@@ -15,7 +15,6 @@ import {
 } from './ActionModal.styles';
 import { useAppTheme } from '@constants/theme';
 import CrossIcon from '@atoms/Illustrations/Cross';
-import { ActivityIndicator, Pressable } from 'react-native';
 import { Spacer } from '@atoms/common/common.styles';
 import Loader from '@atoms/Loader/Loader';
 

@@ -1,11 +1,11 @@
-import Button from "@atoms/Button/Button";
-import Modal from "@atoms/Modal/Modal";
-import Text from "@atoms/Text/Text";
-import View from "@atoms/View/View";
-import { styled } from "@utils/styled";
-import { Image } from "expo-image";
-import { FlatList, Pressable } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Button from '@atoms/Button/Button';
+import Modal from '@atoms/Modal/Modal';
+import Text from '@atoms/Text/Text';
+import View from '@atoms/View/View';
+import { styled } from '@utils/styled';
+import { Image } from 'expo-image';
+import { FlatList, Pressable } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const BasicInformationButtons = styled(View)`
   display: flex;
@@ -164,11 +164,10 @@ export const StyledImage = styled(Image)`
   height: 90%;
 `;
 
-export const PressAbleContainer = styled(Pressable)`
+export const PressAbleContainer = styled(Pressable)<{ isWidthShort?: boolean }>`
   position: relative;
-  width: 100%;
+  width: ${({ isWidthShort }) => (isWidthShort ? 30 : 100)}%;
   height: 120px;
-  width: 100%;
   background-color: ${({ theme }) => theme.colors.backgroundCardColor};
   border-radius: 8px;
 `;

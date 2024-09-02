@@ -25,10 +25,6 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
   form,
   handleDropDownClose,
   loading,
-  startDate,
-  setStartDate,
-  endDate,
-  setEndDate,
   bottomSheetClose,
   setFilterCount,
 }) => {
@@ -37,10 +33,6 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
   const general = useSelector((state: RootState) => state.general);
   const dispatch = useAppDispatch();
   const { colors } = useAppTheme();
-  useEffect(() => {
-    setStartDate(values.startDate);
-    setEndDate(values.endDate);
-  }, [values]);
   const leadsFilter = useSelector(
     (state: RootState) => state.leads.leadsFilter,
   );
@@ -65,6 +57,11 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
     bottomSheetClose();
     dispatch(setLeadsFilters({}));
   };
+  useEffect(() => {
+    if (!values?.orderBy) {
+      form.change('sortBy', undefined);
+    }
+  }, [values.orderBy]);
   return (
     <LeadsFilterFormContainer>
       <FilterFormView>
@@ -74,10 +71,8 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             <Field
               name="startDate"
               component={FieldDatePicker}
-              initialDate={
-                values?.startDate || startDate || moment().clone().toDate()
-              }
-              maxDate={endDate || moment().startOf('day').toDate()}
+              initialDate={values?.startDate || moment().clone().toDate()}
+              maxDate={values?.endDate || moment().startOf('day').toDate()}
             />
           </DateContainer>
           <DateContainer>
@@ -85,10 +80,8 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             <Field
               name="endDate"
               component={FieldDatePicker}
-              initialDate={
-                values?.endDate || endDate || moment().clone().toDate()
-              }
-              minDate={startDate}
+              initialDate={values?.endDate || moment().clone().toDate()}
+              minDate={values?.startDate}
               maxDate={moment().startOf('day').toDate()}
             />
           </DateContainer>
@@ -103,6 +96,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             name={'orderBy'}
             dropDownTitle={`${t('orderBy')} ${t('list')}`}
             handleBottomSheetClose={handleDropDownClose}
+            isAllowDeselect
           />
           <Spacer size={16} />
           <Label>{`${t('sortOrder')}`}</Label>
@@ -114,6 +108,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             dropDownTitle={`${t('sortOrder')} ${t('list')}`}
             handleBottomSheetClose={handleDropDownClose}
             isStaff={!values?.orderBy}
+            isAllowDeselect
           />
           <Spacer size={16} />
           <Label>{`${t('channel')}`}</Label>
@@ -129,6 +124,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             placeholder={t('channel')}
             dropDownTitle={`${t('channel')} ${t('list')}`}
             handleBottomSheetClose={handleDropDownClose}
+            isAllowDeselect
           />
           <Spacer size={16} />
           <Label>{`${t('status')}`}</Label>
@@ -144,6 +140,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             placeholder={t('status')}
             dropDownTitle={`${t('status')} ${t('list')}`}
             handleBottomSheetClose={handleDropDownClose}
+            isAllowDeselect
           />
           <Spacer size={16} />
           <Label>{`${t('conversion')}`}</Label>
@@ -159,6 +156,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             placeholder={t('conversion')}
             dropDownTitle={`${t('conversion')} ${t('list')}`}
             handleBottomSheetClose={handleDropDownClose}
+            isAllowDeselect
           />
           <Spacer size={16} />
         </FiltersDropDownViews>

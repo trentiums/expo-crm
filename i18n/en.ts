@@ -141,6 +141,9 @@ const English = {
     selectCountry: 'Country',
     countryCodeError: 'Please select country code',
     phoneNumberError: 'Please enter phone number',
+    fileSizeExceeded: 'File size limit exceeded',
+    samplePdf: 'This is a sample PDF generated using expo-print.',
+    pdfContent: 'PDF Content',
   },
   formButtonName: {
     previous: 'Previous',

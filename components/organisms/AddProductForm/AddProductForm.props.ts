@@ -8,6 +8,6 @@ export type AddProductFormValues = {
 
 export type AddProductFormProps = FormRenderProps<AddProductFormValues> & {
   loading?: boolean;
-  documentArray: fileSystemProps[];
+  documentArray: fileSystemProps;
   setDocumentArray: React.Dispatch<React.SetStateAction<fileSystemProps[]>>;
 };

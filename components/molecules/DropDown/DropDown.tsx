@@ -78,7 +78,8 @@ const DropDown: React.FC<DropDownProps> = ({
             handleOpenBottomSheetOpen();
             setShowBottomSheet(true);
           }}
-          isLeadChange={isLeadChange}>
+          isLeadChange={isLeadChange}
+          isDisabled={isStaff}>
           <DropdownLeftView
             isImage={data?.filter((item) => item.id === value)[0]?.image}
             isFullWidth={isFullWidth}>

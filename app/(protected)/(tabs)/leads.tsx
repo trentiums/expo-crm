@@ -316,16 +316,6 @@ const Leads = () => {
     router.navigate(`./addLead`);
   };
 
-  if (leadsLoading) {
-    return (
-      <ScreenTemplate>
-        <LoaderView>
-          <ActivityIndicator color={colors.primaryColor} />
-        </LoaderView>
-      </ScreenTemplate>
-    );
-  }
-
   const renderHeader = () => {
     return (
       <FilterContainer>
@@ -359,7 +349,16 @@ const Leads = () => {
       </FilterContainer>
     );
   };
-
+  if (leadsLoading) {
+    return (
+      <ScreenTemplate>
+        {renderHeader()}
+        <LoaderView>
+          <ActivityIndicator color={colors.primaryColor} />
+        </LoaderView>
+      </ScreenTemplate>
+    );
+  }
   return (
     <ScreenTemplate>
       {renderHeader()}
@@ -416,10 +415,6 @@ const Leads = () => {
           onSubmit={(values) => handleApplyFilter(values)}
           handleDropDownClose={handleOpenBottomSheetOpen}
           loading={filterLoading}
-          startDate={startDate}
-          endDate={endDate}
-          setStartDate={setStartDate}
-          setEndDate={setEndDate}
           setFilterCount={setFilterCount}
           bottomSheetClose={handleBottomSheetClose}
         />

@@ -1,8 +1,13 @@
-import { FormRenderProps } from "react-final-form";
+import { FormRenderProps } from 'react-final-form';
 
 export type LeadsFilterFormValues = {
   startDate: string;
   endDate: string;
+  orderBy?: number;
+  sortBy?: number;
+  selectedChannel?: number;
+  selectedStatus?: number;
+  selectedStage?: number;
 };
 export type LeadFilterFormProps = FormRenderProps<LeadsFilterFormValues> & {
   loading?: boolean;
