@@ -68,7 +68,7 @@ export const GreetingText = styled(Text)`
 `;
 export const NameText = styled(Text)`
   font-size: 36px;
-  color: #5892ff;
+  color: ${({ theme }) => theme.colors.BlueChaos};
   font-weight: 600;
 `;
 
