@@ -18,7 +18,7 @@ import {
 import { ToastTypeProps } from '@molecules/Toast/Toast.props';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import Trash from '@atoms/Illustrations/Trash';
+import TrashIcon from '@atoms/Illustrations/Trash';
 import { ProductCardView } from './drawer.style';
 
 const products = () => {
@@ -188,7 +188,7 @@ const products = () => {
             closeSwipeAble();
           }}
           onActionPress={() => onDeleteActionPress()}
-          icon={<Trash color={colors?.deleteColor} />}
+          icon={<TrashIcon color={colors?.deleteColor} />}
           loading={deleteLoading}
         />
       )}

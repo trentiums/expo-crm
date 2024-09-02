@@ -25,7 +25,7 @@ import { ActivityIndicator, IconButton } from 'react-native-paper';
 import Loader from '@atoms/Loader/Loader';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import Trash from '@atoms/Illustrations/Trash';
+import TrashIcon from '@atoms/Illustrations/Trash';
 import { ActionBtnView, SeparatorComponent } from './drawer.style';
 
 const ButtonSize = 40;
@@ -214,7 +214,7 @@ const Users = () => {
             closeSwipeAble();
           }}
           onActionPress={() => onDeleteActionPress()}
-          icon={<Trash color={colors?.deleteColor} />}
+          icon={<TrashIcon color={colors?.deleteColor} />}
           loading={deleteLoading}
         />
       )}

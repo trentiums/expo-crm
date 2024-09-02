@@ -18,7 +18,7 @@ import PhoneIcon from '@atoms/Illustrations/PhoneIcon';
 import MailIcon from '@atoms/Illustrations/MailIcon';
 import View from '@atoms/View/View';
 import { callToAction, compressString } from '@utils/common';
-import WhatsApp from '@atoms/Illustrations/WhatsApp';
+import WhatsAppIcon from '@atoms/Illustrations/WhatsApp';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
@@ -62,7 +62,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
               onPress={() => {
                 callToAction(`${whatsAppLink}${whatsAppNumber}`);
               }}>
-              <WhatsApp />
+              <WhatsAppIcon />
             </Pressable>
           </NumberView>
           <Spacer size={5} />

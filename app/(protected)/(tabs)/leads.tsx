@@ -25,7 +25,7 @@ import { ActivityIndicator, IconButton } from 'react-native-paper';
 import Loader from '@atoms/Loader/Loader';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import Trash from '@atoms/Illustrations/Trash';
+import TrashIcon from '@atoms/Illustrations/Trash';
 import TextInput from '@atoms/TextInput/TextInput';
 import isEmpty from 'lodash/isEmpty';
 import { useDebounce } from '@utils/useDebounce';
@@ -38,7 +38,7 @@ import {
   SearchInputContainer,
   SeparatorComponent,
 } from './drawer.style';
-import Filter from '@atoms/Illustrations/Filter';
+import FilterIcon from '@atoms/Illustrations/Filter';
 import { DropdownBottomSheetSnapPoints } from '@constants/common';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import FormTemplate from '@templates/FormTemplate/FormTemplate';
@@ -343,7 +343,7 @@ const Leads = () => {
                 <FilterCountText>{filterCount}</FilterCountText>
               </FilterCountView>
             )}
-            <Filter color={colors.primaryColor} />
+            <FilterIcon color={colors.primaryColor} />
           </FilterIconView>
         </SearchInputContainer>
       </FilterContainer>
@@ -439,7 +439,7 @@ const Leads = () => {
             closeSwipeAble();
           }}
           onActionPress={() => onDeleteActionPress(deleteCardId || 0)}
-          icon={<Trash color={colors?.deleteColor} />}
+          icon={<TrashIcon color={colors?.deleteColor} />}
           loading={loading}
         />
       )}

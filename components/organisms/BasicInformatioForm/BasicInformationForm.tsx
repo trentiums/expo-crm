@@ -43,11 +43,11 @@ import {
 import { BasicInfoFormProps } from './BasicInformationForm.props';
 import { Spacer } from '@atoms/common/common.styles';
 import AddIcon from '@atoms/Illustrations/AddIcon';
-import Trash from '@atoms/Illustrations/Trash';
+import TrashIcon from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import Document from '@atoms/Illustrations/Document';
+import DocumentIcon from '@atoms/Illustrations/Document';
 import CrossIcon from '@atoms/Illustrations/Cross';
 import { FormsView } from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
@@ -249,7 +249,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
           <ImagePreviewShow source={{ uri: file?.uri }} />
         ) : (
           <SvgShowContainer>
-            <Document />
+            <DocumentIcon />
           </SvgShowContainer>
         )}
       </PressAbleContainer>
@@ -383,7 +383,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
               setDeleteShowModal(false);
             }}
             onActionPress={() => onDeleteActionPress()}
-            icon={<Trash color={colors?.deleteColor} />}
+            icon={<TrashIcon color={colors?.deleteColor} />}
             loading={deleteLoading}
           />
         )}

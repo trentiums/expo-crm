@@ -6,7 +6,7 @@ import LeadsIcon from '@atoms/Illustrations/Leads';
 import { AddLeadTabContainer, styles, TabLabelText } from './tabs.style';
 import { RootState, useSelector } from '@redux/store';
 import UsersIcon from '@atoms/Illustrations/Users';
-import AddCircle from '@atoms/Illustrations/addCircle';
+import AddCircleIcon from '@atoms/Illustrations/addCircle';
 import ProductIcon from '@atoms/Illustrations/Product';
 import { useTranslation } from 'react-i18next';
 
@@ -73,7 +73,7 @@ const TabsLayout = () => {
           tabBarIcon: ({ focused }) => {
             return (
               <AddLeadTabContainer>
-                <AddCircle color={colors.BlueChaos} />
+                <AddCircleIcon color={colors.BlueChaos} />
               </AddLeadTabContainer>
             );
           },
