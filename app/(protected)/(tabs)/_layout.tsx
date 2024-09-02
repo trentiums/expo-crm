@@ -1,13 +1,13 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
-import Dashboard from '@atoms/Illustrations/Dashboard';
+import DashboardIcon from '@atoms/Illustrations/Dashboard';
 import { useAppTheme } from '@constants/theme';
-import Leads from '@atoms/Illustrations/Leads';
+import LeadsIcon from '@atoms/Illustrations/Leads';
 import { AddLeadTabContainer, styles, TabLabelText } from './tabs.style';
 import { RootState, useSelector } from '@redux/store';
-import Users from '@atoms/Illustrations/Users';
+import UsersIcon from '@atoms/Illustrations/Users';
 import AddCircle from '@atoms/Illustrations/addCircle';
-import Product from '@atoms/Illustrations/Product';
+import ProductIcon from '@atoms/Illustrations/Product';
 import { useTranslation } from 'react-i18next';
 
 const TabsLayout = () => {
@@ -45,7 +45,7 @@ const TabsLayout = () => {
           tabBarLabel: ({ focused }) =>
             renderTabBarLabel(focused, t('dashboard')),
           tabBarIcon: ({ focused }) => (
-            <Dashboard
+            <DashboardIcon
               color={focused ? colors.EnglishHolly : colors.AmericanSilver}
             />
           ),
@@ -58,7 +58,7 @@ const TabsLayout = () => {
           headerTitle: 'Leads',
           tabBarLabel: ({ focused }) => renderTabBarLabel(focused, t('leads')),
           tabBarIcon: ({ focused }) => (
-            <Leads
+            <LeadsIcon
               color={focused ? colors.EnglishHolly : colors.AmericanSilver}
             />
           ),
@@ -87,7 +87,7 @@ const TabsLayout = () => {
           headerTitle: 'Users',
           tabBarLabel: ({ focused }) => renderTabBarLabel(focused, t('users')),
           tabBarIcon: ({ focused }) => (
-            <Users
+            <UsersIcon
               color={focused ? colors.EnglishHolly : colors.AmericanSilver}
             />
           ),
@@ -102,7 +102,7 @@ const TabsLayout = () => {
           tabBarLabel: ({ focused }) =>
             renderTabBarLabel(focused, t('services')),
           tabBarIcon: ({ focused }) => (
-            <Product
+            <ProductIcon
               color={focused ? colors.EnglishHolly : colors.AmericanSilver}
             />
           ),
