@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@constants/theme';
 import { RootState, useSelector } from '@redux/store';
 import EmailIcon from '@atoms/Illustrations/Email';
-import Lock from '@atoms/Illustrations/Lock';
+import LockIcon from '@atoms/Illustrations/Lock';
 import { Pressable } from 'react-native';
 import EyeOpenIcon from '@atoms/Illustrations/EyeOpen';
 import EyeCloseIcon from '@atoms/Illustrations/EyeClose';
@@ -59,7 +59,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
             complexPasswordValidator,
           )}
           left={() => (
-            <Lock
+            <LockIcon
               color={isActivePassword ? colors.primaryColor : colors.gray}
             />
           )}

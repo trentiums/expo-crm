@@ -25,7 +25,7 @@ const RootStack = () => {
                     initialRouteName="(public)/login/index"
                     screenOptions={{ headerShown: false }}>
                     <Stack.Screen name="(public)/login/index" />
-                    <Stack.Screen name="(protected)/(drawer)/(tabs)/dashboard" />
+                    <Stack.Screen name="(protected)/(tabs)/dashboard" />
                   </Stack>
                 </View>
               </BottomSheetModalProvider>

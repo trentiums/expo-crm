@@ -224,6 +224,12 @@ const English = {
     applyFilter: 'Apply Filters',
     removeFilter: 'Clear All',
   },
+  tabs: {
+    dashboard: 'Dashboard',
+    leads: 'Leads',
+    users: 'Users',
+    services: 'Services',
+  },
 };
 
 export default English;

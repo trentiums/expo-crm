@@ -1,15 +1,5 @@
-import React, { useRef, useState } from 'react';
-import {
-  LeadDetailCardContainer,
-  RenderRightView,
-  SwipeText,
-  TouchableOpacityContainer,
-  ViewContainer,
-} from './UserDetailCard.styles';
-import { Spacer } from '@atoms/common/common.styles';
-import { Swipeable } from 'react-native-gesture-handler';
-import Trash from '@atoms/Illustrations/Trash';
-import EditIcon from '@atoms/Illustrations/EditIcon';
+import React, { useState } from 'react';
+import { LeadDetailCardContainer } from './UserDetailCard.styles';
 import { UserDetailCardProps } from './UserDetailCard.props';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@constants/theme';
