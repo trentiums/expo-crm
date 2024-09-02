@@ -60,6 +60,7 @@ export const DefaultTheme = {
     redLight: '#FFDBD2',
     blueLight: '#CDDFFF',
     grayLight: '#D9D9D9',
+    boogieBlast12: '#13944B1F',
   },
 };
 
@@ -119,6 +120,7 @@ export const DarkTheme: AppTheme = {
     redLight: '#FFDBD2',
     blueLight: '#CDDFFF',
     grayLight: '#D9D9D9',
+    boogieBlast12: '#13944B1F',
   },
 };
 

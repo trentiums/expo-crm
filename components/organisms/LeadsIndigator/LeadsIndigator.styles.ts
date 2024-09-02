@@ -42,3 +42,8 @@ export const IndigatorValue = styled(Text)`
   font-weight: 500;
   color: ${({ theme }) => theme.colors.darkText};
 `;
+
+export const LabelContainer = styled(View)`
+  justify-content: flex-start;
+  height: 30px;
+`;

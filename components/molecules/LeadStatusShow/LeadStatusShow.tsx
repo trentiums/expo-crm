@@ -34,7 +34,7 @@ const LeadStatusShow: React.FC<LeadStatusProps> = ({ leadStatus }) => {
 
     case LeadStatusTypes.NEW:
       return (
-        <LeadStatusContainer bgColor={colors.lightGreen}>
+        <LeadStatusContainer bgColor={colors.boogieBlast12}>
           <LeadStatusText color={colors.green}>{t('new')}</LeadStatusText>
         </LeadStatusContainer>
       );

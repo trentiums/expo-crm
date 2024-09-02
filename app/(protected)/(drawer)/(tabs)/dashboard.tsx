@@ -127,7 +127,7 @@ const Dashboard = () => {
     setShowModal(false);
   };
 
-  const RenderComponent = ({
+  const renderComponent = ({
     item,
     index,
   }: {
@@ -174,7 +174,7 @@ const Dashboard = () => {
           {leadListData?.length > 0 ? (
             <FlatList
               data={leadListData}
-              renderItem={RenderComponent}
+              renderItem={renderComponent}
               keyExtractor={(item, index) =>
                 ` ${item.name.toString()} - ${index}`
               }
