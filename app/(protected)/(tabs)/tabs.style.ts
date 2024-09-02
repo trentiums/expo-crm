@@ -15,7 +15,9 @@ export const styles = StyleSheet.create({
   },
 });
 export const DashboardScreenContainer = styled(ScrollView)`
-  padding: 16px;
+  padding-left: 16px;
+  padding-bottom: 16px;
+  padding-right: 16px;
 `;
 export const TitleText = styled(Text)`
   font-size: 22px;
