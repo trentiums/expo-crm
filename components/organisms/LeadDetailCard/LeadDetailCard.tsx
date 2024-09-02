@@ -334,11 +334,12 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
   return (
     <LeadDetailCardContainer isActive={false}>
       <LeadDetail
-        phoneNumber={phoneNumber}
-        whatsAppNumber={whatsAppNumber}
-        mailID={mailID}
-        title={title}
-        dateTime={dateTime}
+        leadData={{
+          phone: phoneNumber,
+          email: mailID,
+          name: title,
+          createdAt: dateTime,
+        }}
       />
 
       <View style={{ flex: 1 }}>

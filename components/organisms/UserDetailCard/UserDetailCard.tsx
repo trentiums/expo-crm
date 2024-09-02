@@ -38,12 +38,12 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
     <>
       <LeadDetailCardContainer isActive={false}>
         <LeadDetail
-          phoneNumber={phoneNumber}
-          whatsAppNumber={whatsAppNumber}
-          mailID={mailID}
-          cardImage={cardImage}
-          title={title}
-          dateTime={dateTime}
+          leadData={{
+            phone: phoneNumber,
+            email: mailID,
+            name: title,
+            createdAt: dateTime,
+          }}
         />
         <View style={{ position: 'absolute', top: 0, right: 0, width: 50 }}>
           <Menu

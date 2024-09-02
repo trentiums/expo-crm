@@ -100,7 +100,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({ leadData }) => {
             <NameText numberOfLines={1}>{leadData?.name}</NameText>
             <LeadStatusShow
               leadStatus={
-                leads?.filter((item) => item.id === leadData.id)[0]
+                leads?.filter((item) => item?.id === leadData?.id)[0]
                   ?.leadStatusId
               }
             />
