@@ -18,8 +18,8 @@ const LeadsIndigatorItem: React.FC<LeadsIndigatorItemProps> = ({
   const height = useSharedValue(0);
 
   useEffect(() => {
-    const containerHeight = maxValue === 0 ? 0 : (item.value / maxValue) * 100;
-    height.value = withTiming(containerHeight - 30, { duration: 1000 });
+    const containerHeight = maxValue === 0 ? 0 : (item.value / maxValue) * 70;
+    height.value = withTiming(containerHeight, { duration: 1000 });
   }, [item.value, maxValue]);
 
   const animatedStyle = useAnimatedStyle(() => ({
