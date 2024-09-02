@@ -1,35 +1,35 @@
-import Loader from "@atoms/Loader/Loader";
-import { useAppTheme } from "@constants/theme";
-import { RootState, useAppDispatch, useSelector } from "@redux/store";
-import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { router, useNavigation } from "expo-router";
-import React, { RefObject, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Swipeable } from "react-native-gesture-handler";
-import { useToast } from "react-native-toast-notifications";
-import { FlatListCon } from "./(drawer)/tabs.style";
-import { RefreshControl } from "react-native";
-import { UserDetailCardProps } from "@organisms/UserDetailCard/UserDetailCard.props";
-import UserDetailCard from "@organisms/UserDetailCard/UserDetailCard";
+import Loader from '@atoms/Loader/Loader';
+import { useAppTheme } from '@constants/theme';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
+import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
+import { router, useNavigation } from 'expo-router';
+import React, { RefObject, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Swipeable } from 'react-native-gesture-handler';
+import { useToast } from 'react-native-toast-notifications';
+import { FlatListCon } from './tabs.style';
+import { RefreshControl } from 'react-native';
+import { UserDetailCardProps } from '@organisms/UserDetailCard/UserDetailCard.props';
+import UserDetailCard from '@organisms/UserDetailCard/UserDetailCard';
 import {
   deleteProductServiceAction,
   getProductServiceListAction,
-} from "@redux/actions/productService";
-import { ToastTypeProps } from "@molecules/Toast/Toast.props";
-import ActionModal from "@molecules/ActionModal/ActionModal";
-import { Actions } from "@molecules/ActionModal/ActionModal.props";
-import Trash from "@atoms/Illustrations/Trash";
-import { ProductCardView } from "./(drawer)/drawer.style";
+} from '@redux/actions/productService';
+import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import ActionModal from '@molecules/ActionModal/ActionModal';
+import { Actions } from '@molecules/ActionModal/ActionModal.props';
+import Trash from '@atoms/Illustrations/Trash';
+import { ProductCardView } from './drawer.style';
 
 const products = () => {
   const { colors } = useAppTheme();
-  const { t: ts } = useTranslation("screenTitle");
+  const { t: ts } = useTranslation('screenTitle');
   const toast = useToast();
   const navigation = useNavigation();
   const dispatch = useAppDispatch();
-  const { t } = useTranslation("modalText");
+  const { t } = useTranslation('modalText');
   const products = useSelector(
-    (state: RootState) => state.productService?.productServiceList
+    (state: RootState) => state.productService?.productServiceList,
   );
   const [openSwipeAbleRef, setOpenSwipeAbleRef] =
     useState<RefObject<Swipeable> | null>(null);
@@ -65,7 +65,7 @@ const products = () => {
     <ProductCardView
       key={`${item.id}-${index}`}
       onPress={() => {
-        console.log("pressCard", item.id);
+        console.log('pressCard', item.id);
       }}>
       <UserDetailCard
         key={`${item.id}-${index}`}
@@ -87,11 +87,11 @@ const products = () => {
       try {
         setMoreLoading(true);
         await dispatch(
-          getProductServiceListAction({ page: products?.currentPage + 1 })
+          getProductServiceListAction({ page: products?.currentPage + 1 }),
         ).unwrap();
       } catch (error: any) {
         toast.show(error, {
-          type: "customToast",
+          type: 'customToast',
           data: {
             type: ToastTypeProps.Error,
           },
@@ -105,17 +105,17 @@ const products = () => {
     try {
       setDeleteLoading(true);
       const response = await dispatch(
-        deleteProductServiceAction({ product_service_id: deleteId })
+        deleteProductServiceAction({ product_service_id: deleteId }),
       ).unwrap();
       toast.show(response?.message, {
-        type: "customToast",
+        type: 'customToast',
         data: {
           type: ToastTypeProps.Success,
         },
       });
     } catch (error: any) {
       toast.show(error, {
-        type: "customToast",
+        type: 'customToast',
         data: {
           type: ToastTypeProps.Error,
         },
@@ -140,7 +140,7 @@ const products = () => {
   };
   useEffect(() => {
     navigation.setOptions({
-      title: ts("products"),
+      title: ts('products'),
       headerStyle: {
         backgroundColor: colors.tabBar,
       },
@@ -149,7 +149,7 @@ const products = () => {
   }, [navigation]);
   return (
     <ScreenTemplate
-      addButtonText={t("addProduct")}
+      addButtonText={t('addProduct')}
       onAddButtonPress={() => router.navigate(`/add-product/add`)}>
       {loading ? (
         <Loader />
@@ -178,11 +178,11 @@ const products = () => {
             setShowModal(false);
             closeSwipeAble();
           }}
-          heading={t("discardMedia")}
-          description={t("disCardDescription")}
-          label={t("yesDiscard")}
+          heading={t('discardMedia')}
+          description={t('disCardDescription')}
+          label={t('yesDiscard')}
           actionType={Actions.delete}
-          actiontext={t("cancel")}
+          actiontext={t('cancel')}
           onCancelPress={() => {
             setShowModal(false);
             closeSwipeAble();

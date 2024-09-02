@@ -10,14 +10,7 @@ import { LeadListState } from '@type/api/lead';
 import { initialModalType } from '@utils/constant';
 import { router } from 'expo-router';
 import moment from 'moment';
-import React, {
-  RefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList, Keyboard, Pressable, View } from 'react-native';
 import { RefreshControl, Swipeable } from 'react-native-gesture-handler';
@@ -27,9 +20,8 @@ import {
   LoaderView,
   NoDataFoundText,
   NoLeadsFoundContainer,
-} from '../tabs.style';
+} from './tabs.style';
 import { ActivityIndicator, IconButton } from 'react-native-paper';
-import { PaddingSpace, Spacer } from '@atoms/common/common.styles';
 import Loader from '@atoms/Loader/Loader';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
@@ -45,7 +37,7 @@ import {
   FilterIconView,
   SearchInputContainer,
   SeparatorComponent,
-} from '../drawer.style';
+} from './drawer.style';
 import Filter from '@atoms/Illustrations/Filter';
 import { DropdownBottomSheetSnapPoints } from '@constants/common';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
@@ -59,7 +51,6 @@ const Leads = () => {
   const { t } = useTranslation('modalText');
   const { top } = useSafeAreaInsets();
   const { t: td } = useTranslation('dashBoard');
-  const { t: ts } = useTranslation('addData');
   const { colors } = useAppTheme();
   const bottomSheetRef = useRef<any>(null);
   const leadsData = useSelector(
@@ -322,7 +313,7 @@ const Leads = () => {
   };
   const onAddButtonPress = () => {
     dispatch(setLeadsInformation());
-    router.navigate(`/(protected)/add-lead/add`);
+    router.navigate(`./addLead`);
   };
 
   if (leadsLoading) {

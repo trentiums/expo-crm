@@ -8,17 +8,12 @@ import BasicInformationForm from '@organisms/BasicInformatioForm/BasicInformatio
 import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
 import CompanyInformationForm from '@organisms/CompanyInformationForm/CompanyInformationForm';
 import LeadDetailsForm from '@organisms/LeadDetailsForm/LeadDetailsForm';
-import {
-  getLeadDetailsAction,
-  getLeadListAction,
-  saveLeadAction,
-  updateLeadAction,
-} from '@redux/actions/lead';
+import { getLeadListAction, saveLeadAction } from '@redux/actions/lead';
 import { addLeadInformation, setLeadsInformation } from '@redux/slices/leads';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import FormTemplate from '@templates/FormTemplate/FormTemplate';
 import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
-import { AddLeadNavigationType, AddLeadTabBar } from '@type/api/api';
+import { AddLeadTabBar } from '@type/api/api';
 import {
   BasicInfoFormValuesType,
   CompanyInformationFromValueTypes,
@@ -29,12 +24,8 @@ import { router, useNavigation } from 'expo-router';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
-import { AddLeadContainer } from '../(drawer)/tabs.style';
+import { AddLeadContainer } from './tabs.style';
 import { useTranslation } from 'react-i18next';
-import {
-  dashboardLeadListAction,
-  dashboardLeadStageCountAction,
-} from '@redux/actions/dashboard';
 
 const AddLead = () => {
   const dispatch = useAppDispatch();
@@ -201,7 +192,7 @@ const AddLead = () => {
           type: ToastTypeProps.Success,
         },
       });
-      router.navigate('/(protected)/(drawer)/(tabs)/leads');
+      router.navigate('/(protected)/(tabs)/leads');
       setDocumentArray([]);
       setSelectedChannel(0);
       setSelectedLead(0);

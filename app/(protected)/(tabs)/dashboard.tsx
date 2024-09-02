@@ -5,7 +5,7 @@ import {
   DashboardScreenContainer,
   NoDataFoundText,
   TitleText,
-} from '../tabs.style';
+} from './tabs.style';
 import { FlatList, Swipeable } from 'react-native-gesture-handler';
 import { Spacer } from '@atoms/common/common.styles';
 import ActionModal from '@molecules/ActionModal/ActionModal';
@@ -220,7 +220,7 @@ const Dashboard = () => {
                 mode="contained"
                 buttonColor={colors.primaryColor}
                 textColor={colors.white}
-                onPress={() => router.navigate(`/(protected)/add-lead/add`)}
+                onPress={() => router.navigate(`./addLead`)}
                 uppercase={false}>
                 {t('addLeads')}
               </Button>

@@ -17,24 +17,21 @@ import { FlatList, Pressable, View } from 'react-native';
 import { RefreshControl, Swipeable } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
 import {
-  FlatListCon,
   LoaderView,
   NoDataFoundText,
   NoLeadsFoundContainer,
-} from '../tabs.style';
+} from './tabs.style';
 import { ActivityIndicator, IconButton } from 'react-native-paper';
-import { PaddingSpace } from '@atoms/common/common.styles';
 import Loader from '@atoms/Loader/Loader';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import Trash from '@atoms/Illustrations/Trash';
-import { ActionBtnView, SeparatorComponent } from '../drawer.style';
+import { ActionBtnView, SeparatorComponent } from './drawer.style';
 
 const ButtonSize = 40;
 
 const Users = () => {
   const { t } = useTranslation('modalText');
-  const { t: ts } = useTranslation('addData');
   const { t: td } = useTranslation('dashBoard');
   const [showModal, setShowModal] = useState(false);
   const { colors } = useAppTheme();

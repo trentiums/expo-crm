@@ -23,7 +23,7 @@ import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
-import { AddLeadContainer } from '../(drawer)/tabs.style';
+import { AddLeadContainer } from '../(tabs)/tabs.style';
 import { useTranslation } from 'react-i18next';
 
 const AddLead = () => {
@@ -75,7 +75,7 @@ const AddLead = () => {
             type: ToastTypeProps.Error,
           },
         });
-        router.navigate('/(protected)/(drawer)/(tabs)/leads');
+        router.navigate('/(protected)/(tabs)/leads');
       }
       setDetailLoading(false);
     }
@@ -262,7 +262,7 @@ const AddLead = () => {
         } else if (navigationType === AddLeadTabBarData?.[1].title) {
           setSelectedTabNav(AddLeadTabBarData?.[2].title);
         } else {
-          router.navigate('/(drawer)/(tabs)/leads');
+          router.navigate('/(tabs)/leads');
         }
       }
     } catch (error: any) {

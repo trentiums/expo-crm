@@ -1,33 +1,33 @@
-import React, { useState } from "react";
-import FormTemplate from "@templates/FormTemplate/FormTemplate";
-import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { Container, ImageView, IntroText } from "./LoginScreen.styles";
-import { Spacer } from "@atoms/common/common.styles";
-import { useTranslation } from "react-i18next";
-import LoginForm from "@organisms/LoginForm/LoginForm";
-import images from "../../../assets/images/index";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { LoginFormData } from "./LoginScreen.props";
-import { loginUserAction } from "@redux/actions/auth";
-import { useAppDispatch } from "@redux/store";
-import { ToastTypeProps } from "@molecules/Toast/Toast.props";
-import { useToast } from "react-native-toast-notifications";
+import React, { useState } from 'react';
+import FormTemplate from '@templates/FormTemplate/FormTemplate';
+import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
+import { Container, ImageView, IntroText } from './LoginScreen.styles';
+import { Spacer } from '@atoms/common/common.styles';
+import { useTranslation } from 'react-i18next';
+import LoginForm from '@organisms/LoginForm/LoginForm';
+import images from '../../../assets/images/index';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { LoginFormData } from './LoginScreen.props';
+import { loginUserAction } from '@redux/actions/auth';
+import { useAppDispatch } from '@redux/store';
+import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { useToast } from 'react-native-toast-notifications';
 import {
   countryListAction,
   leadChannelListAction,
   leadConversionListAction,
   leadStatusListAction,
-} from "@redux/actions/general";
-import { getProductServiceListAction } from "@redux/actions/productService";
-import { router } from "expo-router";
-import { getLeadListAction } from "@redux/actions/lead";
+} from '@redux/actions/general';
+import { getProductServiceListAction } from '@redux/actions/productService';
+import { router } from 'expo-router';
+import { getLeadListAction } from '@redux/actions/lead';
 import {
   getAssignUserListAction,
   getUserListAction,
-} from "@redux/actions/user";
+} from '@redux/actions/user';
 
 const LoginScreen = () => {
-  const { t } = useTranslation("login");
+  const { t } = useTranslation('login');
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const toast = useToast();
@@ -38,7 +38,7 @@ const LoginScreen = () => {
         loginUserAction({
           email: values.username.trim(),
           password: values.password.trim(),
-        })
+        }),
       ).unwrap();
       if (await loginResponse.status) {
         await Promise.all([
@@ -52,10 +52,10 @@ const LoginScreen = () => {
           dispatch(getAssignUserListAction()),
         ]);
       }
-      router.replace("/(protected)/(drawer)/(tabs)/dashboard");
+      router.replace('/(protected)/(tabs)/dashboard');
     } catch (error: any) {
       toast.show(error, {
-        type: "customToast",
+        type: 'customToast',
         data: {
           type: ToastTypeProps.Error,
         },
@@ -74,7 +74,7 @@ const LoginScreen = () => {
           <Spacer size={50} />
           <ImageView source={images.appIconImage} />
           <Spacer size={70} />
-          <IntroText>{t("signIn")}</IntroText>
+          <IntroText>{t('signIn')}</IntroText>
           <FormTemplate
             Component={LoginForm}
             onSubmit={(values) => onLoginPress(values)}

@@ -47,6 +47,10 @@ export const DefaultTheme = {
     bottomsheetColor: '#161B22',
     primarygradient2: '#1DC771',
     lightBorder: '#333',
+    EnglishHolly: '#253E31',
+    LaurelGarland: '#686d5d',
+    AmericanSilver: '#CECECE',
+    BlueChaos: '#5892FF',
   },
 };
 
@@ -93,6 +97,10 @@ export const DarkTheme: AppTheme = {
     bottomsheetColor: '#161B22',
     primarygradient2: '#1DC771',
     lightBorder: '#333',
+    EnglishHolly: '#253E31',
+    LaurelGarland: '#686d5d',
+    AmericanSilver: '#CECECE',
+    BlueChaos: '#5892FF',
   },
 };
 

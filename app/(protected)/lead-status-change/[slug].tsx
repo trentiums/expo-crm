@@ -92,7 +92,7 @@ const LeadStatusChangeScreen = () => {
       }
       const response = await dispatch(updateLeadAction(formData)).unwrap();
       await dispatch(getLeadDetailsAction({ lead_id: leadId }));
-      router.navigate('(protected)/(drawer)/(tabs)/leads');
+      router.navigate('(protected)/(tabs)/leads');
       setDocuments([]);
       toast.show(response?.message, {
         type: 'customToast',
@@ -130,9 +130,7 @@ const LeadStatusChangeScreen = () => {
         leadCardId={slug?.leadId}
         setDocuments={setDocuments}
         documents={documents}
-        onCancelPress={() =>
-          router.navigate('(protected)/(drawer)/(tabs)/leads')
-        }
+        onCancelPress={() => router.navigate('(protected)/(tabs)/leads')}
       />
     </ScreenTemplate>
   );
