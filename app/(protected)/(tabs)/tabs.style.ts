@@ -79,8 +79,8 @@ export const AddLeadTabContainer = styled(View)`
 `;
 
 export const TabLabelText = styled(Text)<{ focused?: boolean }>`
-  margin-top: 5;
-  font-size: 12;
+  margin-top: 5px;
+  font-size: 12px;
   font-weight: ${({ focused }) => (focused ? 'bold' : 'lighter')};
   color: ${({ focused, theme }) =>
     focused ? theme.colors.EnglishHolly : theme.colors.LaurelGarland};
