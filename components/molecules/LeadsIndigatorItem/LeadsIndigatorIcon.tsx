@@ -1,0 +1,41 @@
+import React, { useEffect } from 'react';
+import {
+  IndigatorContainer,
+  IndigatorText,
+  IndigatorValue,
+} from '@organisms/LeadsIndigator/LeadsIndigator.styles';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
+import { LeadsIndigatorItemProps } from './LeadsIndigatorIcon.props';
+
+const LeadsIndigatorItem: React.FC<LeadsIndigatorItemProps> = ({
+  item,
+  maxValue,
+}) => {
+  const height = useSharedValue(0);
+
+  useEffect(() => {
+    const containerHeight = maxValue === 0 ? 0 : (item.value / maxValue) * 100;
+    height.value = withTiming(containerHeight - 30, { duration: 1000 });
+  }, [item.value, maxValue]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    height: `${height.value}%`,
+    width: 30,
+    borderRadius: 15,
+    backgroundColor: item?.color,
+  }));
+
+  return (
+    <IndigatorContainer>
+      <IndigatorValue>{item?.value}</IndigatorValue>
+      <Animated.View style={animatedStyle} />
+      <IndigatorText>{item.label}</IndigatorText>
+    </IndigatorContainer>
+  );
+};
+
+export default LeadsIndigatorItem;

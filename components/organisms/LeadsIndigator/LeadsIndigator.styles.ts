@@ -31,8 +31,12 @@ export const FlatListCon = styled(FlatList).attrs({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    height: 200,
   },
-})``;
+})`
+  height: ${({ height }) => `${height}px` || 'auto'};
+  max-height: ${({ maxHeight }) => `${maxHeight}px` || 'auto'};
+`;
 export const IndigatorValue = styled(Text)`
   font-size: 14px;
   font-weight: 500;
