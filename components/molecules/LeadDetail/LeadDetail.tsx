@@ -40,6 +40,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   setShowModal,
   isServices,
   setDeleteId,
+  showSocialMedia,
 }) => {
   const { t: tm } = useTranslation('modalText');
   const toast = useToast();
@@ -139,7 +140,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           id={leadData?.leadId || leadData?.id}
         />
       </LeadInfoView>
-      {!isServices && (
+      {showSocialMedia && (
         <ContactBox>
           {leadData?.email && (
             <WhatsAppContainer onPress={handleEmail}>

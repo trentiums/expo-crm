@@ -71,6 +71,7 @@ export const DefaultTheme = {
     twilightZone: '#1a1a17',
     aria: '#E3E3E3',
     lightBlack: '#0000004D',
+    snowflake: '#F0F0F0',
   },
 };
 
@@ -140,6 +141,7 @@ export const DarkTheme: AppTheme = {
     background: '#00000080',
     twilightZone: '#1a1a17',
     aria: '#E3E3E3',
+    snowflake: '#F0F0F0',
     lightBlack: '#0000004D',
   },
 };

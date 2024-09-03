@@ -72,6 +72,7 @@ const English = {
     products: 'Product / Services',
     trentiums: 'Trentiums Solutions',
     welcome: 'Welcome,',
+    searchUsers: 'Search user',
   },
   screenTitle: {
     notification: 'Notification',

@@ -44,11 +44,11 @@ const products = () => {
       onDelete={handleDeleteProduct}
       onEdit={() => handleEdit(item?.id)}
       data={item}
-      isServices
       showModal={showModal}
       setShowModal={setShowModal}
       loading={deleteLoading}
       setDeleteId={setDeleteId}
+      isServices
     />
   );
 

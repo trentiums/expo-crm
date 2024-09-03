@@ -10,7 +10,10 @@ import { useToast } from 'react-native-toast-notifications';
 import { ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { dashboardLeadListAction } from '@redux/actions/dashboard';
 
-const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({ leadData }) => {
+const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
+  leadData,
+  showSocialMedia,
+}) => {
   const dispatch = useAppDispatch();
   const toast = useToast();
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -50,6 +53,7 @@ const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({ leadData }) => {
           loading={deleteLoading}
           setShowModal={setShowModal}
           showModal={showModal}
+          showSocialMedia={showSocialMedia}
         />
       </LeadDetailCardContainer>
       <Spacer size={16} />

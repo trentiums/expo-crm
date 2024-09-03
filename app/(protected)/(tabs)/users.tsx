@@ -16,6 +16,9 @@ import { FlatList } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
 import {
+  CountsText,
+  HeadingText,
+  HeadingView,
   LoaderView,
   NoDataFoundText,
   NoLeadsFoundContainer,
@@ -23,10 +26,15 @@ import {
 import { ActivityIndicator } from 'react-native-paper';
 import Loader from '@atoms/Loader/Loader';
 import { Spacer } from '@atoms/common/common.styles';
+import { FilterContainer, SearchInputContainer } from './drawer.style';
+import TextInput from '@atoms/TextInput/TextInput';
+import Search from '@atoms/Illustrations/Search';
+import View from '@atoms/View/View';
 
 const ButtonSize = 40;
 
 const Users = () => {
+  const { t: ts } = useTranslation('drawer');
   const { t } = useTranslation('modalText');
   const { t: td } = useTranslation('dashBoard');
   const [showModal, setShowModal] = useState(false);
@@ -35,6 +43,7 @@ const Users = () => {
   const toast = useToast();
   const userList = useSelector((state: RootState) => state.user?.userList);
   const [loading, setLoading] = useState(false);
+  const [leadSearch, setLeadSearch] = useState('');
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
   const [moreLoading, setMoreLoading] = useState(false);
@@ -105,7 +114,6 @@ const Users = () => {
         showModal={showModal}
         loading={deleteLoading}
         setDeleteId={setDeleteId}
-        isServices
       />
       <Spacer size={12} />
     </>
@@ -129,9 +137,41 @@ const Users = () => {
       </ScreenTemplate>
     );
   }
+  const renderHeader = () => {
+    return (
+      <FilterContainer>
+        <SearchInputContainer>
+          <TextInput
+            mode="outlined"
+            value={leadSearch}
+            onChangeText={(text) => setLeadSearch(text)}
+            placeholder={ts('searchUsers')}
+            style={[
+              {
+                backgroundColor: colors.snowflake,
+                borderRadius: 25,
+                overflow: 'hidden',
+                borderColor: colors.primaryColor,
+                paddingLeft: 10,
+                paddingRight: 40,
+              },
+            ]}
+            outlineColor="transparent"
+            outlineStyle={{ borderWidth: 0 }}
+            left={<TextInput.Icon icon={() => <Search />} />}
+          />
+        </SearchInputContainer>
+      </FilterContainer>
+    );
+  };
 
   return (
     <ScreenTemplate isDrawerBtn>
+      <HeadingView>
+        <HeadingText>{ts('users')}</HeadingText>
+        <CountsText>{`${userList?.users?.length} ${t('items')}`}</CountsText>
+      </HeadingView>
+      {renderHeader()}
       {userList?.users?.length > 0 ? (
         <FlatList
           data={userList?.users}
