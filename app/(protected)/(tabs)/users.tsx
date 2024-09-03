@@ -105,6 +105,7 @@ const Users = () => {
         showModal={showModal}
         loading={deleteLoading}
         setDeleteId={setDeleteId}
+        isServices
       />
       <Spacer size={12} />
     </>

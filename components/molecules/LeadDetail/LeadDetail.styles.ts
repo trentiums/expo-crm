@@ -38,7 +38,7 @@ export const WhatsAppContainer = styled(Pressable)`
   justify-content: center;
   border-width: 1px;
   border-color: ${({ theme }) => theme.colors.lightGray};
-  padding: 8px 16px;
+  padding: 8px 0px;
   border-radius: 16px;
   flex: 1;
 `;

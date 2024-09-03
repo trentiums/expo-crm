@@ -115,7 +115,6 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   return (
     <DetailContainer>
       <LeadInfoView isServices={isServices}>
-        {/* {isServices ? <ProductServices /> : <UserProfile />} */}
         <LeadDetailView>
           <NameAndStatusContainer>
             <NameText numberOfLines={1} isServices={isServices}>
@@ -140,23 +139,25 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           id={leadData?.leadId || leadData?.id}
         />
       </LeadInfoView>
-      <ContactBox>
-        {leadData?.email && (
-          <WhatsAppContainer onPress={handleEmail}>
-            <EmailSendBox />
-          </WhatsAppContainer>
-        )}
-        {leadData?.phone && (
-          <WhatsAppContainer onPress={() => handlePhoneCall(leadData?.phone)}>
-            <PhoneIcon />
-          </WhatsAppContainer>
-        )}
-        {leadData?.phone && (
-          <WhatsAppContainer onPress={() => handleWhatsApp(leadData?.phone)}>
-            <WhatsApp />
-          </WhatsAppContainer>
-        )}
-      </ContactBox>
+      {!isServices && (
+        <ContactBox>
+          {leadData?.email && (
+            <WhatsAppContainer onPress={handleEmail}>
+              <EmailSendBox />
+            </WhatsAppContainer>
+          )}
+          {leadData?.phone && (
+            <WhatsAppContainer onPress={() => handlePhoneCall(leadData?.phone)}>
+              <PhoneIcon />
+            </WhatsAppContainer>
+          )}
+          {leadData?.phone && (
+            <WhatsAppContainer onPress={() => handleWhatsApp(leadData?.phone)}>
+              <WhatsApp />
+            </WhatsAppContainer>
+          )}
+        </ContactBox>
+      )}
       {showModal && (
         <ActionModal
           isModal={showModal}
