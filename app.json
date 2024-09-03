@@ -44,7 +44,7 @@
       [
         "@sentry/react-native/expo",
         {
-          "organization": "Trentiums Solutions",
+          "organization": "Trentium Solutions",
           "project": "crm"
         }
       ]
