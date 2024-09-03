@@ -1,7 +1,7 @@
 export interface LeadsProgressDataProps {
-  leads: LeadsData[];
+  leads: Leads[];
 }
-export interface LeadsData {
+export interface Leads {
   color: string;
   title: string;
   progress: number;
