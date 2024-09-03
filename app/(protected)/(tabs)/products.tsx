@@ -55,7 +55,7 @@ const products = () => {
   const setSwipeAbleRef = (ref: RefObject<Swipeable>) => {
     setOpenSwipeAbleRef(ref);
   };
-  const RenderComponent = ({
+  const renderProducts = ({
     item,
     index,
   }: {
@@ -157,7 +157,7 @@ const products = () => {
         <FlatListCon
           data={products?.serviceList}
           keyExtractor={(item, index) => `${item.id}-${index}`}
-          renderItem={RenderComponent}
+          renderItem={renderProducts}
           showsVerticalScrollIndicator={false}
           onEndReached={handleGetMoreProductsData}
           ListFooterComponent={moreLoading ? <Loader size={24} /> : null}

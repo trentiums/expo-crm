@@ -141,7 +141,7 @@ const Leads = () => {
   useEffect(() => {
     openSwipeAbleRef?.current?.close();
   }, []);
-  const RenderComponent = ({
+  const renderLeads = ({
     item,
     index,
   }: {
@@ -367,7 +367,7 @@ const Leads = () => {
           contentContainerStyle={{ paddingBottom: ButtonSize + 20 }}
           data={leadsData}
           keyExtractor={(item: any, index: number) => `${item.id}-${index}`}
-          renderItem={RenderComponent}
+          renderItem={renderLeads}
           showsVerticalScrollIndicator={false}
           onEndReached={handleGetMoreData}
           ListFooterComponent={moreLoading ? <Loader size={24} /> : null}
