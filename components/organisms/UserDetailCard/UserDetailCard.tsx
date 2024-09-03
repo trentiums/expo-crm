@@ -1,32 +1,24 @@
 import React, { useState } from 'react';
-import { LeadDetailCardContainer } from './UserDetailCard.styles';
+import {
+  ActionMenuContainer,
+  LeadDetailCardContainer,
+} from './UserDetailCard.styles';
 import { UserDetailCardProps } from './UserDetailCard.props';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@constants/theme';
 import LeadDetail from '@molecules/LeadDetail/LeadDetail';
-import { RootState, useSelector } from '@redux/store';
-import { View } from 'react-native';
 import { IconButton, Menu } from 'react-native-paper';
 
 const UserDetailCard: React.FC<UserDetailCardProps> = ({
-  whatsAppNumber,
   phoneNumber,
   mailID,
   title,
-  cardImage,
   onDelete,
   onEdit,
-  dateTime,
-  closeSwipeAble,
-  setSwipeAbleRef,
-  cardIndex,
-  selectedCard,
-  setSelectedCard,
+  createdAt,
 }) => {
   const { t } = useTranslation('leadDetailCardDetails');
   const { colors } = useAppTheme();
-
-  const user = useSelector((state: RootState) => state.auth.user);
 
   const [visible, setVisible] = useState(false);
 
@@ -42,10 +34,10 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
             phone: phoneNumber,
             email: mailID,
             name: title,
-            createdAt: dateTime,
+            createdAt,
           }}
         />
-        <View style={{ position: 'absolute', top: 0, right: 0, width: 50 }}>
+        <ActionMenuContainer>
           <Menu
             visible={visible}
             onDismiss={closeMenu}
@@ -72,7 +64,7 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
               title={t('delete')}
             />
           </Menu>
-        </View>
+        </ActionMenuContainer>
       </LeadDetailCardContainer>
     </>
   );

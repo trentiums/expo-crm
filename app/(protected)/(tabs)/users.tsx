@@ -1,5 +1,5 @@
 import { useAppTheme } from '@constants/theme';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import UserDetailCard from '@organisms/UserDetailCard/UserDetailCard';
 import { UserDetailCardProps } from '@organisms/UserDetailCard/UserDetailCard.props';
 import {
@@ -59,7 +59,7 @@ const Users = () => {
         deleteUserAction({ user_id: deleteId }),
       ).unwrap();
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -67,7 +67,7 @@ const Users = () => {
       await dispatch(getAssignUserListAction());
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -104,7 +104,7 @@ const Users = () => {
         ).unwrap();
       } catch (error: any) {
         toast.show(error, {
-          type: 'customToast',
+          type: ToastType.Custom,
           data: {
             type: ToastTypeProps.Error,
           },
@@ -132,7 +132,7 @@ const Users = () => {
         onEdit={() => handleEdit(item?.id)}
         mailID={item.email}
         title={item.name}
-        dateTime={moment(item?.createdAt).format('DD MMM YYYY, hh:mm A')}
+        createdAt={item?.createdAt}
         closeSwipeAble={closeSwipeAble}
         setSwipeAbleRef={setSwipeAbleRef}
         selectedCard={selectedCard}
@@ -140,9 +140,6 @@ const Users = () => {
         cardIndex={index}
         id={0}
         cardImage={0}
-        name={''}
-        email={''}
-        createdAt={''}
       />
     </Pressable>
   );

@@ -1,10 +1,11 @@
 import { useAppTheme } from '@constants/theme';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconButton, Menu } from 'react-native-paper';
-import { ActionMenuComponent, ActionMenuIcon } from './ActionMenu.styles';
+import { Menu } from 'react-native-paper';
+import { ActionMenuContainer, ActionMenuIcon } from './ActionMenu.styles';
+import { ActionMenuProps } from './ActionMenu.props';
 
-const ActionMenu = ({ onEdit, onDelete }) => {
+const ActionMenu: React.FC<ActionMenuProps> = ({ onEdit, onDelete }) => {
   const { colors } = useAppTheme();
   const { t } = useTranslation('leadDetailCardDetails');
   const [visible, setVisible] = useState(false);
@@ -13,7 +14,7 @@ const ActionMenu = ({ onEdit, onDelete }) => {
 
   const closeMenu = () => setVisible(false);
   return (
-    <ActionMenuComponent
+    <ActionMenuContainer
       visible={visible}
       onDismiss={closeMenu}
       anchor={
@@ -43,7 +44,7 @@ const ActionMenu = ({ onEdit, onDelete }) => {
         }}
         title={t('delete')}
       />
-    </ActionMenuComponent>
+    </ActionMenuContainer>
   );
 };
 

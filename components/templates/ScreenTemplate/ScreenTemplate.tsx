@@ -3,7 +3,7 @@ import { AddButton, AddText, Container } from './ScreenTemplate.styles';
 import { ScreenTemplateProps } from './ScreenTemplate.props';
 import PlusIcon from '@atoms/Illustrations/PlusIcon';
 import { useAppTheme } from '@constants/theme';
-import DrawerBtn from '@molecules/DrawerBtn/DrawerBtn';
+import MoreMenuButton from '@molecules/MoreMenuButton/MoreMenuButton';
 
 const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
   children,
@@ -15,7 +15,7 @@ const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
   const { colors } = useAppTheme();
   return (
     <Container {...safeAreaProps} backgroundColor={backgroundColor}>
-      <DrawerBtn />
+      <MoreMenuButton />
       {children}
       {!!addButtonText && (
         <AddButton onPress={() => onAddButtonPress?.()}>

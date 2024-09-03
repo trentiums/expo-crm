@@ -1,8 +1,8 @@
 export interface DashBoardLeadCardProps {
-  leadData: LeadData;
+  leadData: Lead;
   onDelete: () => void;
 }
-export interface LeadData {
+export interface Lead {
   id?: number;
   name: string;
   phone: number;

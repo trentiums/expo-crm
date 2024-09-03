@@ -1,11 +1,11 @@
 import React from 'react';
-import { LeadStatusContainer, LeadStatusText } from './LeadStatusShow.styles';
-import { LeadStatusProps } from './LeadStatusShow.props';
+import { LeadStatusContainer, LeadStatusText } from './LeadStatus.styles';
+import { LeadStatusProps } from './LeadStatus.props';
 import { LeadStatusTypes } from '@organisms/LeadDetailCard/LeadDetailCard.props';
 import { useAppTheme } from '@constants/theme';
 import { useTranslation } from 'react-i18next';
 
-const LeadStatusShow: React.FC<LeadStatusProps> = ({ leadStatus }) => {
+const LeadStatus: React.FC<LeadStatusProps> = ({ leadStatus }) => {
   const { colors } = useAppTheme();
   const { t } = useTranslation('leadStatus');
   switch (leadStatus) {
@@ -48,4 +48,4 @@ const LeadStatusShow: React.FC<LeadStatusProps> = ({ leadStatus }) => {
   }
 };
 
-export default LeadStatusShow;
+export default LeadStatus;

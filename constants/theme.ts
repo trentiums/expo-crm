@@ -61,10 +61,10 @@ export const DefaultTheme = {
     blueLight: '#CDDFFF',
     grayLight: '#D9D9D9',
     boogieBlast12: '#13944B1F',
-    EnglishHolly: '#253E31',
-    LaurelGarland: '#686d5d',
-    AmericanSilver: '#CECECE',
-    BlueChaos: '#5892FF',
+    englishHolly: '#253E31',
+    laurelGarland: '#686d5d',
+    americanSilver: '#CECECE',
+    blueChaos: '#5892FF',
   },
 };
 
@@ -125,10 +125,10 @@ export const DarkTheme: AppTheme = {
     blueLight: '#CDDFFF',
     grayLight: '#D9D9D9',
     boogieBlast12: '#13944B1F',
-    EnglishHolly: '#253E31',
-    LaurelGarland: '#686d5d',
-    AmericanSilver: '#CECECE',
-    BlueChaos: '#5892FF',
+    englishHolly: '#253E31',
+    laurelGarland: '#686d5d',
+    americanSilver: '#CECECE',
+    blueChaos: '#5892FF',
   },
 };
 

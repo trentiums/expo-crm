@@ -1,5 +1,5 @@
 import { useAppTheme } from '@constants/theme';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import LeadDetailCard from '@organisms/LeadDetailCard/LeadDetailCard';
 import { ModalType } from '@organisms/LeadDetailCard/LeadDetailCard.props';
 import { deleteLeadAction, getLeadListAction } from '@redux/actions/lead';
@@ -94,7 +94,7 @@ const Leads = () => {
         deleteLeadAction({ lead_id: slug }),
       ).unwrap();
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -103,7 +103,7 @@ const Leads = () => {
       setDeleteCardId(null);
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -164,7 +164,7 @@ const Leads = () => {
         StageList={general.leadConversionList}
         LeadDetails={item.productService.map((item) => item.name)}
         title={item.name}
-        mailID={item.email}
+        email={item.email}
         dateTime={moment(item?.updatedAt || item?.createdAt).format(
           'DD MMM YYYY, hh:mm A',
         )}
@@ -186,7 +186,7 @@ const Leads = () => {
         handleGetLeadsData={getLeadListData}
         setLeadId={setLeadId}
         leadId={leadId}
-        assignTo={item.assignTo}
+        assignedTo={item.assignTo}
       />
     </Pressable>
   );
@@ -293,7 +293,7 @@ const Leads = () => {
       ).unwrap();
     } catch (error) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },

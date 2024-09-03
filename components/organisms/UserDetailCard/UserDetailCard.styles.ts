@@ -41,3 +41,9 @@ export const ViewContainer = styled(View)`
 export const RenderRightView = styled(View)`
   flex-direction: row;
 `;
+export const ActionMenuContainer = styled(View)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50;
+`;

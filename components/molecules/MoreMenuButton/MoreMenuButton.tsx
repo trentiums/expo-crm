@@ -4,7 +4,7 @@ import { IconButton } from 'react-native-paper';
 import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const DrawerBtn = () => {
+const MoreMenuButton = () => {
   const { colors } = useAppTheme();
   const { top } = useSafeAreaInsets();
   return (
@@ -18,4 +18,4 @@ const DrawerBtn = () => {
   );
 };
 
-export default DrawerBtn;
+export default MoreMenuButton;

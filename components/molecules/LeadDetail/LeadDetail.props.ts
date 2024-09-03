@@ -1,5 +1,5 @@
-import { LeadData } from '@organisms/DashBoardLeadCard/DashBoardLeadCard.props';
+import { Lead } from '@organisms/DashBoardLeadCard/DashBoardLeadCard.props';
 
 export interface LeadDetailsProps {
-  leadData: LeadData;
+  leadData: Lead;
 }

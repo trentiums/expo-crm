@@ -1,5 +1,5 @@
 import { useAppTheme } from '@constants/theme';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import DealCloseWinForm from '@organisms/DealCloseWinForm/DealCloseWinForm';
 import { DealWinCloseFormValues } from '@organisms/DealCloseWinForm/DealCloseWinForm.props';
 import { LeadStageType } from '@organisms/LeadDetailCard/LeadDetailCard.props';
@@ -94,14 +94,14 @@ const LeadStageCloseWonScreen = () => {
       router.navigate('/(protected)/(tabs)/leads');
 
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
       });
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },

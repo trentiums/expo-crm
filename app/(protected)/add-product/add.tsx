@@ -1,4 +1,4 @@
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import AddProductForm from '@organisms/AddProductForm/AddProductForm';
 import { AddProductFormValues } from '@organisms/AddProductForm/AddProductForm.props';
 import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
@@ -46,7 +46,7 @@ const addProducts = () => {
       setDocumentArray({});
 
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -55,7 +55,7 @@ const addProducts = () => {
       router.navigate('/products');
     } catch (error) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
