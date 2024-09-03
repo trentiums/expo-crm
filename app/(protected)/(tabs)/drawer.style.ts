@@ -77,7 +77,7 @@ export const ProductCardView = styled(Pressable)`
   margin-right: 16px;
 `;
 export const AddProductContainer = styled(View)`
-  padding: 16px;
+  padding: 16px 0px;
 `;
 
 export const FilterContainer = styled(View)`

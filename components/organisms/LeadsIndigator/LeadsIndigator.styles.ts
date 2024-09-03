@@ -40,7 +40,7 @@ export const FlatListCon = styled(FlatList).attrs({
 export const IndigatorValue = styled(Text)`
   font-size: 14px;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.darkText};
+  color: ${({ theme }) => theme.colors.textDark};
 `;
 
 export const LabelContainer = styled(View)`

@@ -149,7 +149,7 @@ const Dashboard = () => {
   );
 
   return (
-    <ScreenTemplate>
+    <ScreenTemplate isDrawerBtn>
       {loading && dashboardLeadList.leadStageCount.length === 0 ? (
         <Loader />
       ) : (

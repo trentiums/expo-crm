@@ -120,7 +120,7 @@ const LeadStatusChangeScreen = () => {
     });
   }, [navigation]);
   return (
-    <ScreenTemplate>
+    <ScreenTemplate title={t('leadStatusChange')}>
       <FormTemplate
         Component={LeadStatusChangeForm}
         loading={loading}

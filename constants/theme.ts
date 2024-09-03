@@ -30,7 +30,7 @@ export const DefaultTheme = {
     bgColor: '#030303',
     disabledTextColor: 'rgba(255, 255, 255, 0.60)',
     backgroundCardColor: '#161B22',
-    placeholderTextColor: 'rgba(255, 255, 255, 0.30)',
+    placeholderTextColor: '#0000006B',
     positionBg: '#212833',
     deleteColor: '#DF3E51',
     modalHeading: '#E6E0E9',
@@ -65,6 +65,12 @@ export const DefaultTheme = {
     LaurelGarland: '#686d5d',
     AmericanSilver: '#CECECE',
     BlueChaos: '#5892FF',
+    IcewindDale: '#E8Ecee',
+    ChristmasSilver: '#e0e0e0',
+    background: '#00000080',
+    twilightZone: '#1a1a17',
+    aria: '#E3E3E3',
+    lightBlack: '#0000004D',
   },
 };
 
@@ -94,7 +100,7 @@ export const DarkTheme: AppTheme = {
     bgColor: '#111',
     disabledTextColor: 'rgba(255, 255, 255, 0.60)',
     backgroundCardColor: '#161B22',
-    placeholderTextColor: 'rgba(255, 255, 255, 0.30)',
+    placeholderTextColor: '#0000006B',
     positionBg: '#212833',
     deleteColor: '#DF3E51',
     modalHeading: '#E6E0E9',
@@ -129,6 +135,12 @@ export const DarkTheme: AppTheme = {
     LaurelGarland: '#686d5d',
     AmericanSilver: '#CECECE',
     BlueChaos: '#5892FF',
+    IcewindDale: '#E8Ecee',
+    ChristmasSilver: '#e0e0e0',
+    background: '#00000080',
+    twilightZone: '#1a1a17',
+    aria: '#E3E3E3',
+    lightBlack: '#0000004D',
   },
 };
 

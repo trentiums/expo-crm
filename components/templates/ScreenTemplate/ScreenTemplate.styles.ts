@@ -1,4 +1,5 @@
 import Text from '@atoms/Text/Text';
+import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
 import { SafeAreaView, TouchableOpacity } from 'react-native';
 
@@ -8,6 +9,10 @@ export const Container = styled(SafeAreaView)<{
   flex: 1;
   background-color: ${({ backgroundColor, theme }) =>
     backgroundColor ? backgroundColor : theme.colors.screenTemplateColor};
+`;
+
+export const ScreenTemplateView = styled(View)`
+  padding: 0px 16px;
 `;
 
 export const AddButton = styled(TouchableOpacity)`

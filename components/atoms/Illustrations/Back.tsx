@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
-const Edit = (props) => (
+const Back = (props) => (
   <Svg
     width={22}
     height={15}
@@ -24,4 +24,4 @@ const Edit = (props) => (
     />
   </Svg>
 );
-export default Edit;
+export default Back;

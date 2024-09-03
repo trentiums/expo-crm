@@ -5,15 +5,15 @@ import styled from 'styled-components';
 
 export const LeadDetailCardContainer = styled(View)<{
   isActive?: boolean;
+  isServices?: boolean;
 }>`
-  background-color: ${({ theme }) => theme.colors.white};
   border-radius: 16px;
   padding: 14px 16px 16px 16px;
-  border-width: 1px;
-  border-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.primaryColor : theme.colors.transparent};
-  background-color: ${({ isActive, theme }) =>
-    isActive ? theme.colors.white : theme.colors.white};
+  background-color: ${({ theme, isServices }) =>
+    isServices ? undefined : theme.colors.white};
+  border-bottom-width: ${({ isServices }) => (isServices ? 1 : 0)}px;
+  border-bottom-color: ${({ isServices, theme }) =>
+    isServices ? theme?.colors?.aria : undefined};
 `;
 export const RequirementClubContainer = styled(View)`
   display: flex;

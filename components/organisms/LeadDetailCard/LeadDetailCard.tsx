@@ -6,7 +6,6 @@ import {
   LeadDetailCardProps,
   LeadStageType,
   LeadStatusTypes,
-  ModalType,
 } from './LeadDetailCard.props';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@constants/theme';
@@ -19,14 +18,8 @@ import { useToast } from 'react-native-toast-notifications';
 import { ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { router } from 'expo-router';
 import { LeadSelectView } from '@molecules/LeadSelect/LeadSelect.styles';
-import {
-  dashboardLeadListAction,
-  dashboardLeadStageCountAction,
-} from '@redux/actions/dashboard';
-import { Button, IconButton, Menu } from 'react-native-paper';
 
 const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
-  whatsAppNumber,
   phoneNumber,
   channelList,
   leadList,
@@ -37,11 +30,6 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
   title,
   mailID,
   dateTime,
-  closeSwipeAble,
-  setSwipeAbleRef,
-  cardIndex,
-  selectedCard,
-  setSelectedCard,
   setModal,
   modal,
   modalType,
@@ -50,16 +38,10 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
   leadChannelId,
   leadConversionId,
   leadCardId,
-  setCurrentId,
   currentId,
-  handleGetLeadsData,
-  setLeadId,
   leadId,
   assignTo,
 }) => {
-  const { t } = useTranslation('leadDetailCardDetails');
-  const { colors } = useAppTheme();
-  const swipeAbleRef = useRef(null);
   const dispatch = useAppDispatch();
   const toast = useToast();
   const leadsData = useSelector(
@@ -71,12 +53,6 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
 
   const [loading, setLoading] = useState(false);
   const [documents, setDocuments] = useState([]);
-
-  const [visible, setVisible] = useState(false);
-
-  const openMenu = () => setVisible(true);
-
-  const closeMenu = () => setVisible(false);
 
   const handleChangeLead = (leadId: number, value: number) => {
     if (
@@ -339,6 +315,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
           email: mailID,
           name: title,
           createdAt: dateTime,
+          leadId: leadId,
         }}
       />
 
@@ -365,40 +342,6 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
           setAssignTo={(leadId, value) => handleChangeAssignTo(leadId, value)}
         />
       </LeadSelectView>
-      <View
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          width: 50,
-        }}>
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
-          style={{ borderRadius: 16, overflow: 'hidden' }}>
-          <Menu.Item
-            leadingIcon="pencil"
-            onPress={() => {
-              closeMenu();
-              onEdit();
-            }}
-            style={{
-              borderBottomColor: colors.lightBorder,
-              borderBottomWidth: 1,
-            }}
-            title={t('edit')}
-          />
-          <Menu.Item
-            leadingIcon="delete"
-            onPress={() => {
-              closeMenu();
-              onDelete();
-            }}
-            title={t('delete')}
-          />
-        </Menu>
-      </View>
     </LeadDetailCardContainer>
   );
 };

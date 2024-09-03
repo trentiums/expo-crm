@@ -40,11 +40,7 @@ const LeadStatusShow: React.FC<LeadStatusProps> = ({ leadStatus }) => {
       );
 
     default:
-      return (
-        <LeadStatusContainer>
-          <LeadStatusText>{t('contacted')}</LeadStatusText>
-        </LeadStatusContainer>
-      );
+      return <></>;
   }
 };
 

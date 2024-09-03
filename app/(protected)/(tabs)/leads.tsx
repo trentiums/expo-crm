@@ -16,7 +16,6 @@ import { FlatList, Keyboard, Pressable, View } from 'react-native';
 import { RefreshControl, Swipeable } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
 import {
-  FlatListCon,
   LoaderView,
   NoDataFoundText,
   NoLeadsFoundContainer,
@@ -78,8 +77,6 @@ const Leads = () => {
     useState<RefObject<Swipeable> | null>(null);
   const [modal, setModal] = useState(false);
   const [currentId, setCurrentId] = useState<number>(0);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
   const [filterLoading, setFilterLoading] = useState(false);
   const [filterCount, setFilterCount] = useState(0);
   const handleDelete = async (slug: number) => {
@@ -165,9 +162,7 @@ const Leads = () => {
         LeadDetails={item.productService.map((item) => item.name)}
         title={item.name}
         mailID={item.email}
-        dateTime={moment(item?.updatedAt || item?.createdAt).format(
-          'DD MMM YYYY, hh:mm A',
-        )}
+        dateTime={item?.createdAt}
         closeSwipeAble={closeSwipeAble}
         setSwipeAbleRef={setSwipeAbleRef}
         selectedCard={selectedCard}
@@ -360,7 +355,7 @@ const Leads = () => {
     );
   }
   return (
-    <ScreenTemplate>
+    <ScreenTemplate isDrawerBtn>
       {renderHeader()}
       {leadsData?.length > 0 ? (
         <FlatList

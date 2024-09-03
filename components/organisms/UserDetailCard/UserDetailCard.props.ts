@@ -1,23 +1,19 @@
-import { RefObject } from "react";
-import { ImageSourcePropType } from "react-native";
-import { Swipeable } from "react-native-gesture-handler";
-
 export interface UserDetailCardProps {
-  id?: number;
-  whatsAppNumber?: string | number;
-  phoneNumber?: string | number;
-  mailID: string;
-  cardImage?: ImageSourcePropType;
-  title: string;
-  onDelete: () => void;
+  data: UserDetailCardValue;
+  setShowModal?: (value: boolean) => void;
+  showModal?: boolean;
+  onDelete: (id: number) => void;
   onEdit: () => void;
+  id?: number;
+  loading?: boolean;
+  isServices?: boolean;
+  setDeleteId?: (value: number) => void;
+}
+export interface UserDetailCardValue {
+  id?: number;
+  phone: number;
+  email: string;
+  name: string;
   dateTime?: string;
-  closeSwipeAble: () => void;
-  setSwipeAbleRef: (ref: RefObject<Swipeable>) => void;
-  selectedCard: number | null;
-  setSelectedCard: React.Dispatch<React.SetStateAction<number | null>>;
-  cardIndex: number;
-  name?: string;
-  email?: string;
   createdAt?: string;
 }

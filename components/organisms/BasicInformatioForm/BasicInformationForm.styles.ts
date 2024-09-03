@@ -30,7 +30,7 @@ export const ActionsText = styled(Text)`
 
 export const Label = styled(Text)`
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.gray};
+  color: ${({ theme }) => theme.colors.textDark};
   padding-bottom: 4px;
 `;
 
@@ -39,9 +39,10 @@ export const PickerContainer = styled(Pressable)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.darkBackground};
-  border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.lightGreen};
+  background-color: ${({ theme }) => theme.colors.white};
+  border-width: 2px;
+  border-color: ${({ theme }) => theme.colors.ChristmasSilver};
+  border-style: dashed;
 `;
 
 export const AddIconButton = styled(View)`
@@ -53,8 +54,8 @@ export const AddIconButton = styled(View)`
 `;
 
 export const UploadText = styled(Text)`
-  font-size: 16px;
-  color: ${({ theme }) => theme.colors.white};
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.black};
 `;
 
 export const DeleteDocumentView = styled(Pressable)`
@@ -88,16 +89,14 @@ export const DocumentView = styled(View)`
 
 export const HeaderText = styled(Text)`
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.textDark};
 `;
 
 export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   height: 48px;
   justify-content: center;
-  border-width: 1px;
-  border-color: ${({ valid, theme }) =>
-    valid ? theme.colors.primaryColor : theme.colors.lightGray};
-  background-color: ${({ theme }) => theme.colors.bgColor};
+  background-color: ${({ theme }) => theme.colors.BlueChaos};
+  border-radius: 50px;
 `;
 
 export const KeyboardAwareScrollViewContainer = styled(KeyboardAwareScrollView)`
@@ -122,7 +121,7 @@ export const ContainerView = styled(View)`
 export const FormButtonText = styled(Text)<{ valid?: boolean }>`
   font-weight: 700;
   color: ${({ valid, theme }) =>
-    valid ? theme.colors.primaryColor : theme.colors.lightGray};
+    valid ? theme.colors.white : theme.colors.white};
 `;
 
 export const FlatListCon = styled(FlatList).attrs({

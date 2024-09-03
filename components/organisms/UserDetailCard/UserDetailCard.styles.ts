@@ -41,3 +41,15 @@ export const ViewContainer = styled(View)`
 export const RenderRightView = styled(View)`
   flex-direction: row;
 `;
+export const PhoneInfoView = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+`;
+export const EmailText = styled(Text)`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.darkText};
+`;

@@ -21,3 +21,9 @@ export const LoaderView = styled(View)`
   align-items: center;
   justify-content: center;
 `;
+export const FormsView = styled(View)`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 16px;
+`;

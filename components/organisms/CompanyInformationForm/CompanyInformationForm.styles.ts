@@ -7,10 +7,8 @@ import styled from 'styled-components';
 export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   height: 48px;
   justify-content: center;
-  border-width: 1px;
-  border-color: ${({ valid, theme }) =>
-    valid ? theme.colors.primaryColor : theme.colors.lightGray};
-  background-color: ${({ theme }) => theme.colors.bgColor};
+  background-color: ${({ theme }) => theme.colors.BlueChaos};
+  border-radius: 50px;
 `;
 
 export const KeyboardAwareScrollViewContainer = styled(KeyboardAwareScrollView)`
@@ -36,5 +34,5 @@ export const SubContainerView = styled(View)`
 export const FormButtonText = styled(Text)`
   font-weight: 700;
   color: ${({ valid, theme }) =>
-    valid ? theme.colors.primaryColor : theme.colors.lightGray};
+    valid ? theme.colors.white : theme.colors.white};
 `;

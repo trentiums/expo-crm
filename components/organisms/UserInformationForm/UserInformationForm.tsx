@@ -19,7 +19,6 @@ import {
 import { Spacer } from '@atoms/common/common.styles';
 import { useAppTheme } from '@constants/theme';
 import { UserInformationFormProps } from './UserInformationForm.props';
-import { useRoute } from '@react-navigation/native';
 import LockIcon from '@atoms/Illustrations/Lock';
 import { Pressable } from 'react-native';
 import EyeCloseIcon from '@atoms/Illustrations/EyeClose';
@@ -30,11 +29,9 @@ import { useLocalSearchParams } from 'expo-router';
 const UserInformationForm: React.FC<UserInformationFormProps> = ({
   loading,
   form,
-  isSave,
 }) => {
   const params = useLocalSearchParams();
   const [slug] = useState(params?.slug);
-
   const { colors } = useAppTheme();
   const { t } = useTranslation('UserInformation');
   const { t: tb } = useTranslation('formButtonName');
