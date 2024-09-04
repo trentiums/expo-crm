@@ -26,7 +26,7 @@ const addProducts = () => {
   const navigation = useNavigation();
   const { t } = useTranslation('screenTitle');
   const [loading, setLoading] = useState(false);
-  const [documentArray, setDocumentArray] = useState<fileSystemProps>();
+  const [documentArray, setDocumentArray] = useState<fileSystemProps[]>([]);
 
   const handleAddServices = async (values: AddProductFormValues) => {
     try {
@@ -37,17 +37,19 @@ const addProducts = () => {
       }
       formData.append('name', values?.name || '');
       formData.append('description', values?.description || '');
-      if (documentArray.id) {
+      //here temporary extracting first index will change as api updated
+      //TODO: as api change send the array
+      if (documentArray?.[0]?.id) {
         formData.append('documents', {
-          uri: documentArray.uri,
-          name: documentArray.name,
-          type: documentArray.mimeType || documentArray.type,
+          uri: documentArray?.[0]?.uri,
+          name: documentArray?.[0]?.name,
+          type: documentArray?.[0]?.mimeType || documentArray?.[0]?.type,
         });
-      } else if (documentArray?.uri) {
+      } else if (documentArray?.[0]?.uri) {
         formData.append('documents', {
-          uri: documentArray.uri,
-          name: documentArray.name,
-          type: documentArray.mimeType || documentArray.type,
+          uri: documentArray?.[0]?.uri,
+          name: documentArray?.[0]?.name,
+          type: documentArray?.[0]?.mimeType || documentArray?.[0]?.type,
         });
       }
 
@@ -62,7 +64,7 @@ const addProducts = () => {
       } else {
         response = await dispatch(addProductServiceAction(formData)).unwrap();
         await dispatch(getProductServiceListAction({}));
-        setDocumentArray({});
+        setDocumentArray([]);
       }
       toast.show(response?.message, {
         type: 'customToast',

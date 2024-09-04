@@ -1,4 +1,4 @@
-import { userRole } from "./auth";
+import { userRole } from './auth';
 
 export interface UserListParams {
   page?: number;
@@ -17,6 +17,7 @@ export interface UserListResponse {
     current_page: number;
     last_page: number;
     per_page: number;
+    total: number;
     data: User[];
   };
 }

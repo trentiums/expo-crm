@@ -5,7 +5,12 @@ import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
-import { FlatListCon, HeadingText, HeadingView } from './tabs.style';
+import {
+  CountsText,
+  FlatListCon,
+  HeadingText,
+  HeadingView,
+} from './tabs.style';
 import { RefreshControl } from 'react-native';
 import { UserDetailCardProps } from '@organisms/UserDetailCard/UserDetailCard.props';
 import UserDetailCard from '@organisms/UserDetailCard/UserDetailCard';
@@ -15,9 +20,11 @@ import {
 } from '@redux/actions/productService';
 import { ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useTranslation } from 'react-i18next';
+import SearchFilter from '@molecules/Search/Search';
 
 const products = () => {
   const { t: ts } = useTranslation('drawer');
+  const { t } = useTranslation('modalText');
   const { colors } = useAppTheme();
   const toast = useToast();
   const dispatch = useAppDispatch();
@@ -30,6 +37,7 @@ const products = () => {
   const [deleteId, setDeleteId] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [productSearch, setProductUserSearch] = useState('');
 
   const handleEdit = (slug: string | number) => {
     router.navigate(`/add-product/${slug}`);
@@ -72,7 +80,15 @@ const products = () => {
       setMoreLoading(false);
     }
   };
-
+  const renderHeader = () => {
+    return (
+      <SearchFilter
+        search={productSearch}
+        setSearch={setProductUserSearch}
+        handleSearch={() => console.log('search')}
+      />
+    );
+  };
   const handleDeleteProduct = async () => {
     try {
       setDeleteLoading(true);
@@ -109,7 +125,11 @@ const products = () => {
     <ScreenTemplate isDrawerBtn>
       <HeadingView>
         <HeadingText>{ts('services')}</HeadingText>
+        <CountsText>{`${products?.total} ${
+          products?.total > 1 ? t('items') : t('item')
+        }`}</CountsText>
       </HeadingView>
+      {renderHeader()}
       {loading ? (
         <Loader />
       ) : (

@@ -92,6 +92,7 @@ export const DocumentView = styled(View)`
 export const HeaderText = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.textDark};
+  font-weight: 500;
 `;
 
 export const ButtonSubmit = styled(Button)<{ valid: boolean }>`

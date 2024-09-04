@@ -23,7 +23,7 @@ const addProducts = () => {
   const navigation = useNavigation();
   const { t } = useTranslation('screenTitle');
   const [loading, setLoading] = useState(false);
-  const [documentArray, setDocumentArray] = useState<fileSystemProps>();
+  const [documentArray, setDocumentArray] = useState<fileSystemProps[]>([]);
   const { colors } = useAppTheme();
   const handleAddServices = async (values: AddProductFormValues) => {
     try {
@@ -31,12 +31,13 @@ const addProducts = () => {
       let formData = new FormData();
       formData.append('name', values?.name || '');
       formData.append('description', values?.description || '');
-      console.log(documentArray, 'cosument');
-      if (documentArray?.uri) {
+      if (documentArray?.[0]?.uri) {
+        //here temporary extracting first index will change as api updated
+        //TODO: as api change send the array
         formData.append('documents', {
-          uri: documentArray.uri,
-          name: documentArray.name,
-          type: documentArray.mimeType || documentArray.type,
+          uri: documentArray?.[0]?.uri,
+          name: documentArray?.[0]?.name,
+          type: documentArray?.[0]?.mimeType || documentArray?.[0]?.type,
         });
       }
 
@@ -44,7 +45,7 @@ const addProducts = () => {
         addProductServiceAction(formData),
       ).unwrap();
       await dispatch(getProductServiceListAction({}));
-      setDocumentArray({});
+      setDocumentArray([]);
 
       toast.show(response?.message, {
         type: 'customToast',

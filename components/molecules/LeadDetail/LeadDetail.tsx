@@ -30,6 +30,7 @@ import EmailSendBox from '@atoms/Illustrations/EmailBox';
 import { useToast } from 'react-native-toast-notifications';
 import { ToastTypeProps } from '@molecules/Toast/Toast.props';
 import PhoneIcon from '@atoms/Illustrations/PhoneIcon';
+import ProductServices from '@atoms/Illustrations/ProductService';
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
   leadData,
@@ -116,6 +117,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   return (
     <DetailContainer isServices={isServices}>
       <LeadInfoView isServices={isServices}>
+        {isServices && <ProductServices />}
         <LeadDetailView>
           <NameAndStatusContainer>
             <NameText numberOfLines={1} isServices={isServices}>

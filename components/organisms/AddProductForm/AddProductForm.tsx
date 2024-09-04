@@ -40,6 +40,7 @@ import {
 import { useLocalSearchParams } from 'expo-router';
 import { Linking } from 'react-native';
 import UploadCon from '@atoms/Illustrations/UploadCon';
+import DocumentPick from '@molecules/DocumentPicker/DocumentPicker';
 
 const AddProductForm: React.FC<AddProductFormProps> = ({
   form,
@@ -51,20 +52,10 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
   const params = useLocalSearchParams();
   const { t } = useTranslation('addProduct');
   const { values, valid } = useFormState();
-  const { t: tm } = useTranslation('modalText');
-  const { t: tb } = useTranslation('BasicInformation');
-  const toast = useToast();
   const { colors } = useAppTheme();
-  const [ImageURI, setImageURI] = useState<{
-    name?: string;
-    uri?: string;
-  }>({});
   const productServiceDetail = useSelector(
     (state: RootState) => state.productService.productServiceDetail,
   );
-  const [deleteShowModal, setDeleteShowModal] = useState<Boolean>(false);
-  const [deleteDocumentUrl, setDeleteDocumentUrl] = useState(null);
-  const [deleteLoading, setDeleteLoading] = useState(false);
   const [detailLoading, setDetailLoading] = useState(false);
   const [isDisable, setIsDisable] = useState(true);
 
@@ -92,47 +83,17 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
     if (params?.slug) {
       form.change('name', productServiceDetail?.name);
       form.change('description', productServiceDetail?.description);
-      setDocumentArray(productServiceDetail?.documents);
+      console.log(
+        productServiceDetail?.documents,
+        'productServiceDetail?.documents',
+      );
+      productServiceDetail?.documents?.id &&
+        setDocumentArray([productServiceDetail?.documents]);
     } else {
       setDocumentArray([]);
     }
   }, [params?.slug, productServiceDetail]);
-  const onDeleteActionPress = async () => {
-    setDocumentArray(null);
-    setDeleteShowModal(false);
-  };
-  const pickFile = async () => {
-    try {
-      const { status } = await MediaLibrary.requestPermissionsAsync();
-      if (status !== 'granted') {
-        return;
-      }
-      const res = await DocumentPicker.getDocumentAsync({
-        type: ['application/pdf', 'image/*', 'text/plain'],
-        copyToCacheDirectory: true,
-      });
-      if (!res.canceled) {
-        res.assets.forEach((file) => {
-          const { size } = file;
-          if (size > MAX_FILE_SIZE) {
-            toast.show(t('fileSizeLimitExceed'), {
-              type: 'customToast',
-              data: {
-                type: ToastTypeProps.Error,
-              },
-            });
-          } else {
-            setDocumentArray(file);
-          }
-        });
-      } else if (res.type === 'cancel') {
-        console.log('cancelled');
-      }
-    } catch (err) {
-      console.log('error', err);
-      throw err;
-    }
-  };
+
   useEffect(() => {
     setIsDisable(true);
   }, [values]);
@@ -173,71 +134,17 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
               component={FieldTextInput}
               numberOfLines={8}
               style={{
-                height: 85,
+                height: 100,
                 backgroundColor: colors?.IcewindDale,
               }}
               multiline
               contentStyle={{ marginTop: -10 }}
             />
             <Spacer size={16} />
-            {!documentArray?.uri && (
-              <PickerContainer onPress={pickFile}>
-                <AddIconButton>
-                  <UploadCon />
-                  <UploadText>{t('uploadDocuments')}</UploadText>
-                </AddIconButton>
-              </PickerContainer>
-            )}
-            {documentArray?.uri && (
-              <>
-                <HeaderText>{tb('attachments')}</HeaderText>
-                <Spacer size={8} />
-
-                <PressAbleContainer
-                  onPress={() => {
-                    setImageURI(documentArray);
-                    if (documentArray && documentArray?.uri?.endsWith('pdf')) {
-                      Linking.openURL(documentArray.uri);
-                    }
-                  }}
-                  isWidthShort>
-                  <CrossIconContainer
-                    onPress={() => {
-                      setDeleteShowModal(true);
-                      setDeleteDocumentUrl(documentArray?.uri);
-                    }}>
-                    <CrossIcon color={colors.white} />
-                  </CrossIconContainer>
-                  {documentArray?.mimeType?.includes?.('image') ||
-                  documentArray?.type?.includes?.('image') ? (
-                    <ImagePreviewShow source={{ uri: documentArray?.uri }} />
-                  ) : (
-                    <SvgShowContainer>
-                      <DocumentIcon />
-                    </SvgShowContainer>
-                  )}
-                </PressAbleContainer>
-              </>
-            )}
-            {deleteShowModal && (
-              <ActionModal
-                isModal
-                onBackdropPress={() => {
-                  setDeleteShowModal(false);
-                }}
-                heading={tm('discardMedia')}
-                description={tm('disCardDescription')}
-                label={tm('yesDiscard')}
-                actionType={Actions.delete}
-                actiontext={tm('cancel')}
-                onCancelPress={() => {
-                  setDeleteShowModal(false);
-                }}
-                onActionPress={() => onDeleteActionPress()}
-                icon={<TrashIcon color={colors?.deleteColor} />}
-                loading={deleteLoading}
-              />
-            )}
+            <DocumentPick
+              setDocumentArray={setDocumentArray}
+              documentArray={documentArray}
+            />
           </KeyboardAwareScrollViewContainer>
           <ButtonSubmit
             onPress={handleAddProducts}

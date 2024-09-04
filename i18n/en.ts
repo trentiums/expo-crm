@@ -135,7 +135,7 @@ const English = {
     phoneNumberLabel: 'Phone Number',
     uploadDocuments: 'Upload Documents',
     documents: 'Documents',
-    attachments: 'Attachments',
+    attachments: 'Documents',
     storagePermission: 'Permission to access storage',
     storagePermissionDesc:
       'We need your permission to access your storage to pick files',
@@ -216,6 +216,7 @@ const English = {
     document: 'Documents',
     nameEg: 'Product or Services name',
     uploadDocuments: 'Upload Documents',
+    uploadAnotherDocument: 'Upload another document',
   },
   leadsFilter: {
     startDate: 'Start Date',
