@@ -18,4 +18,5 @@ export const InputErrorContainer = styled(View)<{ isError?: boolean }>`
   border-width: ${({ isError }) => (isError ? 1 : 0)}px;
   border-color: ${({ isError, theme }) =>
     isError ? theme.colors.errorText : undefined};
+  border-radius: 8px;
 `;
