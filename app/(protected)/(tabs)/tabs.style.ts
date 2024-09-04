@@ -99,3 +99,14 @@ export const CountsText = styled(Text)`
   font-weight: 400;
   color: ${({ theme }) => theme.colors.textGray};
 `;
+export const FilterIconView = styled(Pressable)`
+  width: 40px;
+  border-radius: 12px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 10;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+`;

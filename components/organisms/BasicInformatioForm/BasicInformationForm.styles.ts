@@ -31,7 +31,7 @@ export const ActionsText = styled(Text)`
 export const Label = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.textDark};
-  padding-bottom: 4px;
+  padding-bottom: 10px;
 `;
 
 export const PickerContainer = styled(Pressable)`
@@ -43,6 +43,7 @@ export const PickerContainer = styled(Pressable)`
   border-width: 2px;
   border-color: ${({ theme }) => theme.colors.ChristmasSilver};
   border-style: dashed;
+  margin-top: 4px;
 `;
 
 export const AddIconButton = styled(View)`
@@ -56,6 +57,7 @@ export const AddIconButton = styled(View)`
 export const UploadText = styled(Text)`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.black};
+  padding-top: 8px;
 `;
 
 export const DeleteDocumentView = styled(Pressable)`

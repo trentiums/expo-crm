@@ -114,7 +114,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   };
 
   return (
-    <DetailContainer>
+    <DetailContainer isServices={isServices}>
       <LeadInfoView isServices={isServices}>
         <LeadDetailView>
           <NameAndStatusContainer>

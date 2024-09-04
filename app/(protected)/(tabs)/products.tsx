@@ -5,7 +5,7 @@ import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
-import { FlatListCon } from './tabs.style';
+import { FlatListCon, HeadingText, HeadingView } from './tabs.style';
 import { RefreshControl } from 'react-native';
 import { UserDetailCardProps } from '@organisms/UserDetailCard/UserDetailCard.props';
 import UserDetailCard from '@organisms/UserDetailCard/UserDetailCard';
@@ -14,8 +14,10 @@ import {
   getProductServiceListAction,
 } from '@redux/actions/productService';
 import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { useTranslation } from 'react-i18next';
 
 const products = () => {
+  const { t: ts } = useTranslation('drawer');
   const { colors } = useAppTheme();
   const toast = useToast();
   const dispatch = useAppDispatch();
@@ -105,6 +107,9 @@ const products = () => {
   };
   return (
     <ScreenTemplate isDrawerBtn>
+      <HeadingView>
+        <HeadingText>{ts('services')}</HeadingText>
+      </HeadingView>
       {loading ? (
         <Loader />
       ) : (

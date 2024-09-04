@@ -8,12 +8,12 @@ export const LeadDetailCardContainer = styled(View)<{
   isServices?: boolean;
 }>`
   border-radius: 16px;
-  padding: 14px 16px 16px 16px;
+  padding-left: ${({ isServices }) => (isServices ? 0 : 16)}px;
+  padding-right: ${({ isServices }) => (isServices ? 0 : 16)}px;
+  padding-top: ${({ isServices }) => (isServices ? 0 : 14)}px;
+  padding-bottom: 16px;
   background-color: ${({ theme, isServices }) =>
     isServices ? undefined : theme.colors.white};
-  border-bottom-width: ${({ isServices }) => (isServices ? 1 : 0)}px;
-  border-bottom-color: ${({ isServices, theme }) =>
-    isServices ? theme?.colors?.aria : undefined};
 `;
 export const RequirementClubContainer = styled(View)`
   display: flex;

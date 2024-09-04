@@ -3,11 +3,15 @@ import View from '@atoms/View/View';
 import { Pressable } from 'react-native';
 import styled from 'styled-components';
 
-export const DetailContainer = styled(View)`
+export const DetailContainer = styled(View)<{ isServices?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-content: flex-start;
   gap: 8px;
+  border-bottom-width: ${({ isServices }) => (isServices ? 1 : 0)}px;
+  border-bottom-color: ${({ isServices, theme }) =>
+    isServices ? theme?.colors?.aria : undefined};
+  padding-bottom: ${({ isServices }) => (isServices ? 24 : 0)}px;
 `;
 export const LeadDetailView = styled(View)`
   flex: 1;

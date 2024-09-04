@@ -17,6 +17,7 @@ import { RefreshControl } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
 import {
   CountsText,
+  FilterIconView,
   HeadingText,
   HeadingView,
   LoaderView,
@@ -29,7 +30,6 @@ import { Spacer } from '@atoms/common/common.styles';
 import { FilterContainer, SearchInputContainer } from './drawer.style';
 import TextInput from '@atoms/TextInput/TextInput';
 import Search from '@atoms/Illustrations/Search';
-import View from '@atoms/View/View';
 
 const ButtonSize = 40;
 
@@ -152,14 +152,17 @@ const Users = () => {
                 borderRadius: 25,
                 overflow: 'hidden',
                 borderColor: colors.primaryColor,
-                paddingLeft: 10,
+                paddingLeft: -20,
                 paddingRight: 40,
               },
             ]}
             outlineColor="transparent"
             outlineStyle={{ borderWidth: 0 }}
-            left={<TextInput.Icon icon={() => <Search />} />}
+            left={<Search />}
           />
+          <FilterIconView>
+            <Search />
+          </FilterIconView>
         </SearchInputContainer>
       </FilterContainer>
     );

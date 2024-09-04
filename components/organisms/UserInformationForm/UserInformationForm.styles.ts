@@ -8,7 +8,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 export const Label = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.textDark};
-  padding-bottom: 4px;
+  padding-bottom: 8px;
 `;
 
 export const PickerContainer = styled(View)`

@@ -72,7 +72,8 @@ const English = {
     products: 'Product / Services',
     trentiums: 'Trentiums Solutions',
     welcome: 'Welcome,',
-    searchUsers: 'Search user',
+    searchUsers: 'Search User',
+    services: 'Services',
   },
   screenTitle: {
     notification: 'Notification',
@@ -211,8 +212,9 @@ const English = {
   addProduct: {
     name: 'Name',
     description: 'Description',
+    descriptionEg: 'Enter description here...',
     document: 'Documents',
-    nameEg: 'Product / Services name',
+    nameEg: 'Product or Services name',
     uploadDocuments: 'Upload Documents',
   },
   leadsFilter: {

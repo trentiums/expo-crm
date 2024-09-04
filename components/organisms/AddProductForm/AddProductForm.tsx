@@ -169,7 +169,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
             <Label>{t('description')}</Label>
             <Field
               name="description"
-              placeholder={t('description')}
+              placeholder={t('descriptionEg')}
               component={FieldTextInput}
               numberOfLines={8}
               style={{
