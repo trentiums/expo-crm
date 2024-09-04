@@ -45,5 +45,5 @@ export const ActionMenuContainer = styled(View)`
   position: absolute;
   top: 0;
   right: 0;
-  width: 50;
+  width: 50px;
 `;

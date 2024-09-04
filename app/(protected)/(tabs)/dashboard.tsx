@@ -15,7 +15,7 @@ import { RefObject, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useToast } from 'react-native-toast-notifications';
 import { useAppTheme } from '@constants/theme';
-import { DashboardLeadList } from '@type/redux/slices/dashboard';
+import { DashboardLeadsProps } from '@type/redux/slices/dashboard';
 import {
   dashboardLeadListAction,
   dashboardLeadStageCountAction,
@@ -47,7 +47,7 @@ const Dashboard = () => {
   const [openSwipeAbleRef, setOpenSwipeAbleRef] =
     useState<RefObject<Swipeable> | null>(null);
   const dashboardLeadList = useSelector((state: RootState) => state.dashboard);
-  const [leads, setLeads] = useState<DashboardLeadList[]>(
+  const [leads, setLeads] = useState<DashboardLeadsProps[]>(
     dashboardLeadList.leadList,
   );
   const dispatch = useAppDispatch();
@@ -131,7 +131,7 @@ const Dashboard = () => {
     lead,
     index,
   }: {
-    lead: DashboardLeadList;
+    lead: DashboardLeadsProps;
     index: number;
   }) => (
     <Pressable

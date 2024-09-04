@@ -34,8 +34,8 @@ export const FlatListCon = styled(FlatList).attrs({
     height: 200,
   },
 })`
-  height: ${({ height }) => `${height}px` || 'auto'};
-  max-height: ${({ maxHeight }) => `${maxHeight}px` || 'auto'};
+  height: ${({ height }) => (height ? `${height}px` : 'auto')};
+  max-height: ${({ maxHeight }) => (maxHeight ? `${maxHeight}px` : 'auto')};
 `;
 export const IndicatorValue = styled(Text)`
   font-size: 14px;

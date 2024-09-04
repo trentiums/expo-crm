@@ -20,9 +20,8 @@ const LeadsProgressChartItem: React.FC<LeadsIndicatorItemProps> = ({
   const height = useSharedValue(0);
   const { colors } = useAppTheme();
   useEffect(() => {
-    const containerHeight =
-      maxValue === 0 ? 0 : (item.progress / maxValue) * 70;
-    height.value = withTiming(containerHeight, { duration: 1000 });
+    const containerHeight = maxValue !== 0 && (item.progress / maxValue) * 70;
+    height.value = withTiming(containerHeight || 0, { duration: 1000 });
   }, [item.progress, maxValue]);
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -30,7 +29,7 @@ const LeadsProgressChartItem: React.FC<LeadsIndicatorItemProps> = ({
     width: 30,
     borderRadius: 15,
     backgroundColor: item?.color,
-    borderWidth: item?.progress !== 0 ? 2 : undefined,
+    borderWidth: (item?.progress && 2) || undefined,
     borderColor: colors.white,
   }));
 

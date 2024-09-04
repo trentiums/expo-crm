@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   DateTimeText,
   DetailContainer,
-  LeadDetailView,
   LeadInfoView,
   NameAndStatusContainer,
   NameText,
@@ -27,6 +26,7 @@ import { useToast } from 'react-native-toast-notifications';
 import LeadStatus from '@molecules/LeadStatus/LeadStatus';
 import moment from 'moment';
 import { dateTimeFormate } from '@constants/common';
+import { Flexed } from '@atoms/common/common.styles';
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({ leadData }) => {
   const { t } = useTranslation('leadDetailCardDetails');
@@ -55,9 +55,6 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({ leadData }) => {
   };
   const onDeleteLead = () => {
     setShowModal(true);
-  };
-  const onDeleteActionPress = async () => {
-    await handleDeleteLead();
   };
   const handleDeleteLead = async () => {
     try {
@@ -89,7 +86,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({ leadData }) => {
     <DetailContainer>
       <LeadInfoView>
         <UserProfile />
-        <LeadDetailView>
+        <Flexed>
           <NameAndStatusContainer>
             <NameText numberOfLines={1}>{leadData?.name}</NameText>
             <LeadStatus
@@ -103,7 +100,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({ leadData }) => {
           <DateTimeText>
             {moment(leadData?.createdAt).format(dateTimeFormate)}
           </DateTimeText>
-        </LeadDetailView>
+        </Flexed>
         <ActionMenu onEdit={onEditLead} onDelete={onDeleteLead} />
       </LeadInfoView>
       {leadData?.phone && (
@@ -122,7 +119,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({ leadData }) => {
           actionType={Actions.delete}
           actiontext={tm('cancel')}
           onCancelPress={hideActionModal}
-          onActionPress={() => onDeleteActionPress()}
+          onActionPress={() => handleDeleteLead()}
           icon={<Trash color={colors?.deleteColor} />}
           loading={isDeleteLoading}
         />
