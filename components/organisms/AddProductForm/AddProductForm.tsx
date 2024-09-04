@@ -24,7 +24,7 @@ import { Field, useFormState } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { MAX_FILE_SIZE } from '@utils/constant';
 import { useToast } from 'react-native-toast-notifications';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { AddProductFormProps } from './AddProductForm.props';
 import CrossIcon from '@atoms/Illustrations/Cross';
 import ActionModal from '@molecules/ActionModal/ActionModal';
@@ -117,7 +117,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
           const { size } = file;
           if (size > MAX_FILE_SIZE) {
             toast.show(t('fileSizeLimitExceed'), {
-              type: 'customToast',
+              type: ToastType.Custom,
               data: {
                 type: ToastTypeProps.Error,
               },

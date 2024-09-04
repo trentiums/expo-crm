@@ -114,6 +114,8 @@ const English = {
   leadDetailCardDetails: {
     edit: 'Edit',
     delete: 'Delete',
+    whatsapp: 'Whatsapp',
+    canNotFindId: 'can not found id plz try again',
   },
   modalText: {
     disCardDescription: 'Are you sure want to delete?',
@@ -223,6 +225,12 @@ const English = {
     list: 'List',
     applyFilter: 'Apply Filters',
     removeFilter: 'Clear All',
+  },
+  leadStatus: {
+    new: 'New',
+    contacted: 'Contacted',
+    qualified: 'Qualified',
+    unQualified: 'Unqualified',
   },
   tabs: {
     dashboard: 'Dashboard',

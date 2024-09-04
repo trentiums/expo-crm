@@ -15,7 +15,7 @@ import {
   deleteProductServiceAction,
   getProductServiceListAction,
 } from '@redux/actions/productService';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import TrashIcon from '@atoms/Illustrations/Trash';
@@ -55,7 +55,7 @@ const products = () => {
   const setSwipeAbleRef = (ref: RefObject<Swipeable>) => {
     setOpenSwipeAbleRef(ref);
   };
-  const RenderComponent = ({
+  const renderProducts = ({
     item,
     index,
   }: {
@@ -91,7 +91,7 @@ const products = () => {
         ).unwrap();
       } catch (error: any) {
         toast.show(error, {
-          type: 'customToast',
+          type: ToastType.Custom,
           data: {
             type: ToastTypeProps.Error,
           },
@@ -108,14 +108,14 @@ const products = () => {
         deleteProductServiceAction({ product_service_id: deleteId }),
       ).unwrap();
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
       });
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -157,7 +157,7 @@ const products = () => {
         <FlatListCon
           data={products?.serviceList}
           keyExtractor={(item, index) => `${item.id}-${index}`}
-          renderItem={RenderComponent}
+          renderItem={renderProducts}
           showsVerticalScrollIndicator={false}
           onEndReached={handleGetMoreProductsData}
           ListFooterComponent={moreLoading ? <Loader size={24} /> : null}

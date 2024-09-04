@@ -8,86 +8,48 @@ export const DetailContainer = styled(View)`
   justify-content: space-between;
   align-content: flex-start;
   gap: 8px;
-  width: 100%;
 `;
 
 export const LeadInfoView = styled(View)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  padding-left: 8px;
+  align-items: flex-start;
   flex: 1;
   flex-basis: auto;
+  gap: 14px;
 `;
-
-export const NameContainer = styled(View)`
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  padding: 0px 8px;
-  justify-content: space-between;
-`;
-export const TitleView = styled(View)`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 40%;
-  flex: 1;
-`;
-
-export const WhatsAppIconView = styled(View)<{ isShow?: boolean }>`
-  margin-top: 24px;
-  margin-right: 0px;
-`;
-
-export const NumberEmailView = styled(View)<{ isFull?: boolean }>`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  justify-content: space-between;
-  flex-basis: auto;
-`;
-
-export const NumberView = styled(View)<{ isFullNumber?: boolean }>`
-  margin-right: auto;
-`;
-
-export const EmailView = styled(View)<{ isFullEmail?: boolean }>``;
-
-export const TextView = styled(View)<{ isFull: boolean }>``;
 
 export const NameText = styled(Text)`
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 20px;
+  color: ${({ theme }) => theme.colors.textDark};
+  font-size: 18px;
   font-weight: 700;
 `;
 
-export const SubNameText = styled(Text)`
-  color: ${({ theme }) => theme.colors.white};
+export const DateTimeText = styled(Text)`
+  color: ${({ theme }) => theme.colors.textGray};
   font-size: 14px;
-  text-align: end;
-  margin-left: auto;
 `;
-
-export const PressAbleContainer = styled(Pressable)`
+export const WhatsAppContainer = styled(Pressable)`
   display: flex;
   flex-direction: row;
-  gap: 8px;
-  justify-content: flex-end;
-  flex: 1;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  border-width: 1px;
+  border-color: ${({ theme }) => theme.colors.lightGray};
+  padding: 8px 16px;
+  border-radius: 16px;
 `;
-
-export const DateTimeText = styled(Text)`
-  color: ${({ theme }) => theme.colors.lightGrayColor};
-  font-size: 10px;
+export const WhatsAppText = styled(Text)`
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.textDark};
+  font-weight: 500;
 `;
-export const WhatsAppIcon = styled(Pressable)`
-  padding: 4px;
-`;
-export const SubNumberText = styled(Text)`
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 14px;
-  text-align: start;
+export const NameAndStatusContainer = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 4px;
 `;

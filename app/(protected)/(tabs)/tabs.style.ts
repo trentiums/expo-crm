@@ -15,12 +15,14 @@ export const styles = StyleSheet.create({
   },
 });
 export const DashboardScreenContainer = styled(ScrollView)`
-  padding: 16px;
+  padding-left: 16px;
+  padding-bottom: 16px;
+  padding-right: 16px;
 `;
 export const TitleText = styled(Text)`
   font-size: 22px;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.textDark};
 `;
 export const NoDataFoundText = styled(Text)`
   font-size: 16px;
@@ -59,6 +61,16 @@ export const AddLeadContainer = styled(View)`
   padding: 16px;
   flex: 1;
 `;
+export const GreetingText = styled(Text)`
+  font-size: 36px;
+  color: ${({ theme }) => theme.colors.textDark};
+  font-weight: 600;
+`;
+export const NameText = styled(Text)`
+  font-size: 36px;
+  color: ${({ theme }) => theme.colors.blueChaos};
+  font-weight: 600;
+`;
 
 export const AddLeadTabContainer = styled(View)`
   align-items: center;
@@ -67,9 +79,9 @@ export const AddLeadTabContainer = styled(View)`
 `;
 
 export const TabLabelText = styled(Text)<{ focused?: boolean }>`
-  margin-top: 5;
-  font-size: 12;
+  margin-top: 5px;
+  font-size: 12px;
   font-weight: ${({ focused }) => (focused ? 'bold' : 'lighter')};
   color: ${({ focused, theme }) =>
-    focused ? theme.colors.EnglishHolly : theme.colors.LaurelGarland};
+    focused ? theme.colors.englishHolly : theme.colors.laurelGarland};
 `;

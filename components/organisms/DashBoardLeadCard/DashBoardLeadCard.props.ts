@@ -1,17 +1,12 @@
-import { RefObject } from 'react';
-import { Swipeable } from 'react-native-gesture-handler';
-
 export interface DashBoardLeadCardProps {
-  id?: number;
-  title: string;
-  whatsAppNumber: number;
-  phoneNumber: number;
+  leadData: Lead;
   onDelete: () => void;
-  mailID: string;
-  dateTime: string;
-  closeSwipeAble: () => void;
-  setSwipeAbleRef: (ref: RefObject<Swipeable>) => void;
-  selectedCard: number | null;
-  setSelectedCard: React.Dispatch<React.SetStateAction<number | null>>;
-  cardIndex: number;
+}
+export interface Lead {
+  id?: number;
+  name: string;
+  phone: number;
+  email: string;
+  createdAt: string;
+  leadId?: number;
 }

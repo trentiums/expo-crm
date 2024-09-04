@@ -6,7 +6,6 @@ import {
   LeadDetailCardProps,
   LeadStageType,
   LeadStatusTypes,
-  ModalType,
 } from './LeadDetailCard.props';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@constants/theme';
@@ -16,17 +15,12 @@ import { initialModalType } from '@utils/constant';
 import LeadDetail from '@molecules/LeadDetail/LeadDetail';
 import { getLeadDetailsAction, updateLeadAction } from '@redux/actions/lead';
 import { useToast } from 'react-native-toast-notifications';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { router } from 'expo-router';
 import { LeadSelectView } from '@molecules/LeadSelect/LeadSelect.styles';
-import {
-  dashboardLeadListAction,
-  dashboardLeadStageCountAction,
-} from '@redux/actions/dashboard';
-import { Button, IconButton, Menu } from 'react-native-paper';
+import { IconButton, Menu } from 'react-native-paper';
 
 const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
-  whatsAppNumber,
   phoneNumber,
   channelList,
   leadList,
@@ -35,27 +29,18 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
   onEdit,
   LeadDetails,
   title,
-  mailID,
+  email,
   dateTime,
-  closeSwipeAble,
-  setSwipeAbleRef,
-  cardIndex,
-  selectedCard,
-  setSelectedCard,
   setModal,
-  modal,
   modalType,
   setModalType,
   leadStatusId,
   leadChannelId,
   leadConversionId,
   leadCardId,
-  setCurrentId,
   currentId,
-  handleGetLeadsData,
-  setLeadId,
   leadId,
-  assignTo,
+  assignedTo,
 }) => {
   const { t } = useTranslation('leadDetailCardDetails');
   const { colors } = useAppTheme();
@@ -241,7 +226,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       const response = await dispatch(updateLeadAction(formData)).unwrap();
       setDocuments([]);
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -251,7 +236,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       );
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -311,7 +296,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       const response = await dispatch(updateLeadAction(formData)).unwrap();
       setDocuments([]);
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -320,7 +305,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       await dispatch(getLeadDetailsAction({ lead_id: leadId }));
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -334,11 +319,12 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
   return (
     <LeadDetailCardContainer isActive={false}>
       <LeadDetail
-        phoneNumber={phoneNumber}
-        whatsAppNumber={whatsAppNumber}
-        mailID={mailID}
-        title={title}
-        dateTime={dateTime}
+        leadData={{
+          phone: phoneNumber,
+          email: email,
+          name: title,
+          createdAt: dateTime,
+        }}
       />
 
       <View style={{ flex: 1 }}>
@@ -360,7 +346,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
             handleChangeLeadStage(leadId, value)
           }
           leadCardId={leadCardId}
-          assignTo={assignTo}
+          assignedTo={assignedTo}
           setAssignTo={(leadId, value) => handleChangeAssignTo(leadId, value)}
         />
       </LeadSelectView>

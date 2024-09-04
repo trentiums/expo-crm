@@ -24,8 +24,8 @@ const TabsLayout = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: true,
-        tabBarActiveTintColor: colors.EnglishHolly,
-        tabBarInactiveTintColor: colors.LaurelGarland,
+        tabBarActiveTintColor: colors.englishHolly,
+        tabBarInactiveTintColor: colors.laurelGarland,
         tabBarStyle: [
           styles.barStyle,
           {
@@ -46,7 +46,7 @@ const TabsLayout = () => {
             renderTabBarLabel(focused, t('dashboard')),
           tabBarIcon: ({ focused }) => (
             <DashboardIcon
-              color={focused ? colors.EnglishHolly : colors.AmericanSilver}
+              color={focused ? colors.englishHolly : colors.americanSilver}
             />
           ),
         }}
@@ -59,7 +59,7 @@ const TabsLayout = () => {
           tabBarLabel: ({ focused }) => renderTabBarLabel(focused, t('leads')),
           tabBarIcon: ({ focused }) => (
             <LeadsIcon
-              color={focused ? colors.EnglishHolly : colors.AmericanSilver}
+              color={focused ? colors.englishHolly : colors.americanSilver}
             />
           ),
         }}
@@ -73,7 +73,7 @@ const TabsLayout = () => {
           tabBarIcon: ({ focused }) => {
             return (
               <AddLeadTabContainer>
-                <AddCircleIcon color={colors.BlueChaos} />
+                <AddCircleIcon color={colors.blueChaos} />
               </AddLeadTabContainer>
             );
           },
@@ -88,7 +88,7 @@ const TabsLayout = () => {
           tabBarLabel: ({ focused }) => renderTabBarLabel(focused, t('users')),
           tabBarIcon: ({ focused }) => (
             <UsersIcon
-              color={focused ? colors.EnglishHolly : colors.AmericanSilver}
+              color={focused ? colors.englishHolly : colors.americanSilver}
             />
           ),
         }}
@@ -103,7 +103,7 @@ const TabsLayout = () => {
             renderTabBarLabel(focused, t('services')),
           tabBarIcon: ({ focused }) => (
             <ProductIcon
-              color={focused ? colors.EnglishHolly : colors.AmericanSilver}
+              color={focused ? colors.englishHolly : colors.americanSilver}
             />
           ),
         }}

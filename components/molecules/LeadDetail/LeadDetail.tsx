@@ -1,123 +1,129 @@
-import React from "react";
+import React, { useState } from 'react';
 import {
   DateTimeText,
   DetailContainer,
-  EmailView,
   LeadInfoView,
-  NameContainer,
+  NameAndStatusContainer,
   NameText,
-  NumberEmailView,
-  NumberView,
-  PressAbleContainer,
-  SubNameText,
-  SubNumberText,
-  TextView,
-  TitleView,
-  WhatsAppIcon,
-  WhatsAppIconView,
-} from "./LeadDetail.styles";
-import { Linking, Pressable } from "react-native";
-import { Spacer } from "@atoms/common/common.styles";
-import { useTranslation } from "react-i18next";
-import PhoneIcon from "@atoms/Illustrations/PhoneIcon";
-import MailIcon from "@atoms/Illustrations/MailIcon";
-import View from "@atoms/View/View";
-import { callToAction } from "@utils/common";
-import WhatsApp from "@atoms/Illustrations/WhatsApp";
-import { ToastTypeProps } from "@molecules/Toast/Toast.props";
-import { useToast } from "react-native-toast-notifications";
-import { telLink, whatsAppLink } from "@utils/config";
-import { LeadDetailsProps } from "./LeadDetail.props";
-import * as Clipboard from "expo-clipboard";
+  WhatsAppContainer,
+  WhatsAppText,
+} from './LeadDetail.styles';
+import { useTranslation } from 'react-i18next';
+import { generateWhatsAppUrl } from '@utils/common';
+import WhatsApp from '@atoms/Illustrations/WhatsApp';
+import { LeadDetailsProps } from './LeadDetail.props';
+import UserProfile from '@atoms/Illustrations/UserProfile';
+import ActionMenu from '@molecules/ActionMenu/ActionMenu';
+import { router } from 'expo-router';
+import Trash from '@atoms/Illustrations/Trash';
+import { useAppTheme } from '@constants/theme';
+import { Actions } from '@molecules/ActionModal/ActionModal.props';
+import ActionModal from '@molecules/ActionModal/ActionModal';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
+import { deleteLeadAction } from '@redux/actions/lead';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { useToast } from 'react-native-toast-notifications';
+import LeadStatus from '@molecules/LeadStatus/LeadStatus';
+import moment from 'moment';
+import { dateTimeFormate } from '@constants/common';
+import { Flexed } from '@atoms/common/common.styles';
 
-const LeadDetail: React.FC<LeadDetailsProps> = ({
-  phoneNumber,
-  whatsAppNumber,
-  mailID,
-  title,
-  dateTime,
-}) => {
-  const { t } = useTranslation("errorMessage");
+const LeadDetail: React.FC<LeadDetailsProps> = ({ leadData }) => {
+  const { t } = useTranslation('leadDetailCardDetails');
+  const { t: tm } = useTranslation('modalText');
+  const { colors } = useAppTheme();
+  const dispatch = useAppDispatch();
   const toast = useToast();
-  const handleWhatsApp = (phoneNumber: number | string) => {
-    Linking.canOpenURL(whatsAppLink + phoneNumber)
-      .then((supported) => {
-        if (supported) {
-          callToAction(whatsAppLink + phoneNumber);
-        } else {
-          callToAction(
-            `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-              "Join WhatsApp using this link: https://whatsapp.com/dl/"
-            )}`
-          );
-        }
-      })
-      .catch((err) => {
-        console.error("An error occurred", err);
-      });
-  };
+  const leads = useSelector((state: RootState) => state.leads.leadList.leads);
+  const [showModal, setShowModal] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
 
+  const handleWhatsApp = (phoneNumber: number | string) => {
+    generateWhatsAppUrl(phoneNumber);
+  };
+  const onEditLead = () => {
+    if (leadData?.id) {
+      router.navigate(`/(protected)/add-lead/${leadData?.id}`);
+    } else {
+      toast.show(t('canNotFindId'), {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
+  };
+  const onDeleteLead = () => {
+    setShowModal(true);
+  };
+  const handleDeleteLead = async () => {
+    try {
+      setIsDeleteLoading(true);
+      const response = await dispatch(
+        deleteLeadAction({ lead_id: leadData?.leadId }),
+      ).unwrap();
+      toast.show(response?.message, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Success,
+        },
+      });
+    } catch (error: any) {
+      toast.show(error, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
+    hideActionModal();
+    setIsDeleteLoading(false);
+  };
+  const hideActionModal = () => {
+    setShowModal(false);
+  };
   return (
     <DetailContainer>
       <LeadInfoView>
-        <View style={{ flex: 1 }}>
-          <NameText numberOfLines={1}>{title}</NameText>
-          <DateTimeText>{dateTime}</DateTimeText>
-        </View>
-        <WhatsAppIconView isShow={whatsAppNumber}>
-          {whatsAppNumber && (
-            <WhatsAppIcon
-              onPress={() => {
-                handleWhatsApp(`${whatsAppNumber}`);
-              }}>
-              <WhatsApp />
-            </WhatsAppIcon>
-          )}
-        </WhatsAppIconView>
+        <UserProfile />
+        <Flexed>
+          <NameAndStatusContainer>
+            <NameText numberOfLines={1}>{leadData?.name}</NameText>
+            <LeadStatus
+              leadStatus={
+                leads?.filter((item) => item?.id === leadData?.id)[0]
+                  ?.leadStatusId
+              }
+            />
+          </NameAndStatusContainer>
+
+          <DateTimeText>
+            {moment(leadData?.createdAt).format(dateTimeFormate)}
+          </DateTimeText>
+        </Flexed>
+        <ActionMenu onEdit={onEditLead} onDelete={onDeleteLead} />
       </LeadInfoView>
-      <NameContainer>
-        <NumberEmailView isFull={!whatsAppNumber}>
-          {phoneNumber && (
-            <NumberView>
-              <PressAbleContainer
-                onPress={() => {
-                  callToAction(`${telLink}${phoneNumber}`);
-                }}>
-                <View>
-                  <Spacer size={3} />
-                  <PhoneIcon />
-                </View>
-                <TextView isFull={!mailID}>
-                  <SubNumberText numberOfLines={1}>{phoneNumber}</SubNumberText>
-                </TextView>
-              </PressAbleContainer>
-              <Spacer size={8} />
-            </NumberView>
-          )}
-          {mailID && (
-            <EmailView>
-              <PressAbleContainer
-                onPress={() => {
-                  Clipboard.setStringAsync(mailID);
-                  toast.show(t("copyText"), {
-                    type: "customToast",
-                    data: {
-                      type: ToastTypeProps.Copy,
-                    },
-                  });
-                }}>
-                <View>
-                  <Spacer size={2} />
-                  <MailIcon />
-                </View>
-                <TextView isFull={!phoneNumber}>
-                  <SubNameText numberOfLines={1}>{mailID}</SubNameText>
-                </TextView>
-              </PressAbleContainer>
-            </EmailView>
-          )}
-        </NumberEmailView>
-      </NameContainer>
+      {leadData?.phone && (
+        <WhatsAppContainer onPress={handleWhatsApp}>
+          <WhatsApp />
+          <WhatsAppText>{t('whatsapp')}</WhatsAppText>
+        </WhatsAppContainer>
+      )}
+      {showModal && (
+        <ActionModal
+          isModal={showModal}
+          onBackdropPress={hideActionModal}
+          heading={tm('discardMedia')}
+          description={tm('disCardDescription')}
+          label={tm('yesDiscard')}
+          actionType={Actions.delete}
+          actiontext={tm('cancel')}
+          onCancelPress={hideActionModal}
+          onActionPress={() => handleDeleteLead()}
+          icon={<Trash color={colors?.deleteColor} />}
+          loading={isDeleteLoading}
+        />
+      )}
     </DetailContainer>
   );
 };

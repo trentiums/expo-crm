@@ -1,7 +1,5 @@
+import { Lead } from '@organisms/DashBoardLeadCard/DashBoardLeadCard.props';
+
 export interface LeadDetailsProps {
-  phoneNumber: number | string;
-  whatsAppNumber: number | string;
-  mailID: string;
-  title: string;
-  dateTime: string;
+  leadData: Lead;
 }
