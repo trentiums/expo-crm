@@ -4,10 +4,6 @@ import { styled } from '@utils/styled';
 import { FlatList, Pressable } from 'react-native';
 
 export const PickerContainer = styled(Pressable)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background-color: ${({ theme }) => theme.colors.white};
   border-width: 2px;
   border-color: ${({ theme }) => theme.colors.ChristmasSilver};
@@ -15,17 +11,18 @@ export const PickerContainer = styled(Pressable)`
   margin-top: 4px;
 `;
 export const AddIconButton = styled(View)`
-  padding: 32px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
+  padding: 16px 0px 16px 24px;
+  gap: 8px;
 `;
 
 export const UploadText = styled(Text)<{ textColor?: string }>`
   font-size: 14px;
   color: ${({ theme, textColor }) => textColor || theme.colors.black};
-  padding-top: 8px;
+  text-align: center;
 `;
 export const FlatListCon = styled(FlatList).attrs({
   contentContainerStyle: {},
@@ -38,7 +35,7 @@ export const DocumentView = styled(View)`
 export const PressAbleContainer = styled(Pressable)<{ isWidthShort?: boolean }>`
   position: relative;
   width: ${({ isWidthShort }) => (isWidthShort ? 30 : 100)}%;
-  height: 120px;
+  height: 60px;
   background-color: ${({ theme }) => theme.colors.backgroundCardColor};
   border-radius: 8px;
 `;

@@ -19,6 +19,7 @@ const English = {
       websiteLink: 'Link is invalid',
       passwordError:
         'Password Must Contain 1 upper Case , 1Lower Case and 1 Number',
+      passwordMissMatch: 'Passwords do not match',
     },
   },
   login: {
@@ -186,14 +187,15 @@ const English = {
   },
   UserInformation: {
     firstNameLabel: 'User Name',
-    emailLabel: 'Email',
+    emailLabel: 'Email address',
     phoneNumberLabel: 'Phone Number',
     uploadProfileImage: 'Upload Profile Image',
     documents: 'Documents',
     profileImage: 'Profile Image',
     addProfile: 'Add Profile',
     editProfile: 'Edit Profile',
-    password: 'Password',
+    password: 'Create password',
+    confirmPassword: 'Confirm password',
   },
   dealWinClose: {
     dealAmount: 'Deal Amount',

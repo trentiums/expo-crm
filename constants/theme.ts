@@ -72,6 +72,7 @@ export const DefaultTheme = {
     aria: '#E3E3E3',
     lightBlack: '#0000004D',
     snowflake: '#F0F0F0',
+    roseMadder: '#e33a3a',
   },
 };
 
@@ -143,6 +144,7 @@ export const DarkTheme: AppTheme = {
     aria: '#E3E3E3',
     snowflake: '#F0F0F0',
     lightBlack: '#0000004D',
+    roseMadder: '#e33a3a',
   },
 };
 

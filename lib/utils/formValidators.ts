@@ -24,7 +24,11 @@ export const emailOrPhoneValidator = (value: any, allValues: any) => {
   }
   return undefined;
 };
-
+export const confirmPasswordValidator = (confirmPassword: string, allValues: any) => {
+  return confirmPassword === allValues.password
+    ? undefined
+    : 'errors:form.passwordMissMatch';
+};
 export const maxLengthValidator = (length: number) => (value: string) =>
   value && value.length > length ? 'errors:form.maxLengthError' : undefined;
 export const numberValidator: Validator = (value) => {

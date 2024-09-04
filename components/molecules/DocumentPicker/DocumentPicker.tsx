@@ -29,6 +29,7 @@ import Delete from '@atoms/Illustrations/Delete';
 import Plus from '@atoms/Illustrations/Plus';
 import Trash from '@atoms/Illustrations/Trash';
 import Task from '@atoms/Illustrations/Task';
+import { useAppTheme } from '@constants/theme';
 
 const DocumentPick: React.FC<DocumentPickerProps> = ({
   setDocumentArray,
@@ -39,6 +40,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
   const { t: tm } = useTranslation('modalText');
   const dispatch = useAppDispatch();
   const toast = useToast();
+  const { colors } = useAppTheme();
   const [deleteDocumentUrl, setDeleteDocumentUrl] = useState(null);
   const [deleteShowModal, setDeleteShowModal] = useState<Boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -87,7 +89,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
             setDeleteShowModal(true);
             setDeleteDocumentUrl(file?.uri);
           }}>
-          <Delete color={'#E33A3A'} />
+          <Delete color={colors.roseMadder} />
         </Pressable>
       </DocumentDetailContainer>
     );

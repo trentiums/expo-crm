@@ -12,6 +12,7 @@ import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
 import {
   complexPasswordValidator,
   composeValidators,
+  confirmPasswordValidator,
   emailValidator,
   minLengthValidator,
   requiredValidator,
@@ -39,6 +40,7 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
   const userList = useSelector((state: RootState) => state.user.userList.users);
   const [isActivePassword, setIsActivePassword] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [secureConfirmTextEntry, setSecureConfirmTextEntry] = useState(true);
 
   useEffect(() => {
     const user = userList?.filter((item) => item?.id === +slug)?.[0];
@@ -100,6 +102,32 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
           )}
           right
           secureTextEntry={secureTextEntry}
+        />
+        <Spacer size={16} />
+        <Label>{`${t('confirmPassword')}`}</Label>
+        <Field
+          name="confirmPassword"
+          placeholder={t('confirmPassword')}
+          component={FieldTextInput}
+          validate={composeValidators(
+            requiredValidator,
+            confirmPasswordValidator,
+          )}
+          left={() => (
+            <LockIcon
+              color={isActivePassword ? colors.primaryColor : colors.gray}
+            />
+          )}
+          password={() => (
+            <Pressable
+              onPress={() =>
+                setSecureConfirmTextEntry(!secureConfirmTextEntry)
+              }>
+              {secureConfirmTextEntry ? <EyeCloseIcon /> : <EyeOpenIcon />}
+            </Pressable>
+          )}
+          right
+          secureTextEntry={secureConfirmTextEntry}
         />
 
         <Spacer size={50} />
