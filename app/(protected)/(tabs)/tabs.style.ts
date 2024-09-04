@@ -72,7 +72,7 @@ export const NameText = styled(Text)`
   font-weight: 600;
 `;
 
-export const AddLeadTabContainer = styled(View)`
+export const AddLeadTabContainer = styled(Pressable)`
   align-items: center;
   justify-content: center;
   top: -4px;
