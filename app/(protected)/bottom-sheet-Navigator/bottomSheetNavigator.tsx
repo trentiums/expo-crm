@@ -96,20 +96,6 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
               <BottomSheetAddOption {...props} setSnapPoints={setSnapPoints} />
             )}
           </Stack.Screen>
-          <Stack.Screen
-            name="ScreenTwo"
-            options={({ navigation }) => ({
-              header: () => (
-                <CustomHeader
-                  title={t('ChooseOptionToAdd')}
-                  onClose={() => bottomSheetRef.current?.close()}
-                  showBackButton={true}
-                  onBackPress={() => navigation.goBack()}
-                />
-              ),
-            })}
-            component={ScreenTwo}
-          />
         </Stack.Navigator>
       </NavigationContainer>
     </BottomSheet>
