@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { Field, useFormState } from 'react-final-form';
 import { LoginFormProps } from './LoginForm.props';
 
-import { ButtonSubmit, LoginFormContainer } from './LoginForm.styles';
+import {
+  ButtonSubmit,
+  ForgotPasswordContainer,
+  ForgotText,
+  LoginFormContainer,
+  LoginFormView,
+} from './LoginForm.styles';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@constants/theme';
 import { RootState, useSelector } from '@redux/store';
@@ -16,11 +22,11 @@ import {
   complexPasswordValidator,
   composeValidators,
   emailValidator,
-  lowercaseValidator,
   minLengthValidator,
   requiredValidator,
 } from '@utils/formValidators';
 import { Spacer } from '@atoms/common/common.styles';
+import { FormButtonText } from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
 
 const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
   const { t } = useTranslation('login');
@@ -32,7 +38,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
   const { valid } = useFormState({ subscription: { valid: true } });
 
   return (
-    <>
+    <LoginFormView>
       <LoginFormContainer>
         <Field
           name="username"
@@ -71,8 +77,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
           right
           secureTextEntry={secureTextEntry}
         />
+        <ForgotPasswordContainer>
+          <ForgotText>{t('forgotPassword')}</ForgotText>
+        </ForgotPasswordContainer>
       </LoginFormContainer>
-      <LoginFormContainer></LoginFormContainer>
 
       <ButtonSubmit
         onPress={form.submit}
@@ -80,9 +88,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
         textColor={valid ? colors.black : colors.disabledTextColor}
         valid={valid}
         disabled={!valid}>
-        {t('login')}
+        <FormButtonText valid={valid}>{t('login')}</FormButtonText>
       </ButtonSubmit>
-    </>
+    </LoginFormView>
   );
 };
 
