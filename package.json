@@ -28,7 +28,6 @@
     "babel-plugin-styled-components": "^2.1.4",
     "date-fns": "^3.6.0",
     "expo": "~51.0.18",
-    "expo-blur": "^13.0.2",
     "expo-clipboard": "^6.0.3",
     "expo-constants": "~16.0.2",
     "expo-dev-client": "~4.0.21",

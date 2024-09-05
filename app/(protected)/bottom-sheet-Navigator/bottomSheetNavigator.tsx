@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Pressable } from 'react-native';
-import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import ScreenTwo from '../bottom-sheet-Navigator-Screen/screenTwo';
@@ -28,7 +28,6 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
 }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [snapPoints, setSnapPoints] = useState(['50%', '90%']);
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { colors } = useAppTheme();
   const { t } = useTranslation('bottomSheetNavigator');
 
@@ -51,20 +50,16 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
     </BottomSheetHeaderCon>
   );
 
-  const handleSheetChange = useCallback((index: number) => {
-    setIsSheetOpen(index >= 0);
-  }, []);
-
-  const renderBackdrop = useCallback(() => {
-    return (
-      <BottomSheetBackDropCon
-        intensity={20}
-        // experimentalBlurMethod="dimezisBlurView"
-        tint="dark"
-        isSheetOpen={isSheetOpen}
+  const renderBackdrop = useCallback(
+    (props: any) => (
+      <BottomSheetBackdrop
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+        {...props}
       />
-    );
-  }, [isSheetOpen]);
+    ),
+    [],
+  );
 
   const handleClosePress = () => {
     bottomSheetRef.current?.close();
@@ -74,7 +69,6 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
     <BottomSheet
       ref={bottomSheetRef}
       index={0}
-      onChange={handleSheetChange}
       backdropComponent={renderBackdrop}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
