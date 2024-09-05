@@ -85,11 +85,15 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
           name="password"
           placeholder={t('password')}
           component={FieldTextInput}
-          validate={composeValidators(
-            ...(!slug ? [requiredValidator] : []),
-            ...(!slug ? [minLengthValidator] : []),
-            ...(!slug ? [complexPasswordValidator] : []),
-          )}
+          validate={
+            slug
+              ? composeValidators(minLengthValidator, complexPasswordValidator)
+              : composeValidators(
+                  requiredValidator,
+                  minLengthValidator,
+                  complexPasswordValidator,
+                )
+          }
           left={() => (
             <LockIcon
               color={isActivePassword ? colors.primaryColor : colors.gray}
@@ -109,13 +113,16 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
           name="confirmPassword"
           placeholder={t('confirmPassword')}
           component={FieldTextInput}
-          validate={composeValidators(
-            ...(!slug ? [requiredValidator, confirmPasswordValidator] : []),
-            ...(!slug ? [minLengthValidator, confirmPasswordValidator] : []),
-            ...(!slug
-              ? [complexPasswordValidator, confirmPasswordValidator]
-              : []),
-          )}
+          validate={
+            slug
+              ? confirmPasswordValidator
+              : composeValidators(
+                  requiredValidator,
+                  minLengthValidator,
+                  complexPasswordValidator,
+                  confirmPasswordValidator,
+                )
+          }
           left={() => (
             <LockIcon
               color={isActivePassword ? colors.primaryColor : colors.gray}

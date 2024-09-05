@@ -18,7 +18,7 @@ export const ProductDetailContainer = styled(View)`
   flex-direction: row;
   justify-content: space-between;
   border-bottom-width: 1px;
-  border-bottom-color: ${({ theme }) => theme?.colors?.aria};
+  border-bottom-color: ${({ theme }) => theme.colors.aria};
 `;
 export const NameText = styled(Text)`
   color: ${({ theme }) => theme.colors.textDark};

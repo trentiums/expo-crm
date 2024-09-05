@@ -30,7 +30,7 @@ const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
           type: ToastTypeProps.Success,
         },
       });
-      await dispatch(dashboardLeadListAction({ page: 1 }));
+      await dispatch(dashboardLeadListAction({}));
     } catch (error: any) {
       toast.show(error, {
         type: ToastType.Custom,
