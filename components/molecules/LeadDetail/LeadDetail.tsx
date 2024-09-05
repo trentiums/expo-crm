@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   ContactBox,
   DateTimeText,
@@ -7,10 +7,13 @@ import {
   NameAndStatusContainer,
   NameText,
   WhatsAppContainer,
-  WhatsAppText,
 } from './LeadDetail.styles';
 import { useTranslation } from 'react-i18next';
-import { generateWhatsAppUrl } from '@utils/common';
+import {
+  generateWhatsAppUrl,
+  handleEmail,
+  handlePhoneCall,
+} from '@utils/common';
 import WhatsApp from '@atoms/Illustrations/WhatsApp';
 import { LeadDetailsProps } from './LeadDetail.props';
 import ActionMenu from '@molecules/ActionMenu/ActionMenu';
@@ -27,7 +30,6 @@ import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
 import moment from 'moment';
 import { dateTimeFormate } from '@constants/common';
-import { Linking } from 'react-native';
 import { Flexed } from '@atoms/common/common.styles';
 import LeadStatus from '@molecules/LeadStatus/LeadStatus';
 
@@ -42,33 +44,11 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   setDeleteId,
   showSocialMedia,
 }) => {
+  const { t } = useTranslation('leadDetailCardDetails');
   const { t: tm } = useTranslation('modalText');
   const toast = useToast();
   const { colors } = useAppTheme();
   const leads = useSelector((state: RootState) => state.leads.leadList.leads);
-
-  const handleEmail = () => {
-    const email = leadData?.email;
-    if (email) {
-      const emailUrl = `mailto:${email}?subject=Your%20Subject%20Here&body=Your%20Message%20Here`;
-
-      Linking.openURL(emailUrl).catch((err) => {
-        toast.show(tm('emailOpenFailed'), {
-          type: 'customToast',
-          data: {
-            type: ToastTypeProps.Error,
-          },
-        });
-      });
-    } else {
-      toast.show(tm('emailNotAvailable'), {
-        type: 'customToast',
-        data: {
-          type: ToastTypeProps.Error,
-        },
-      });
-    }
-  };
 
   const handleWhatsApp = (phoneNumber: number | string) => {
     generateWhatsAppUrl(phoneNumber);
@@ -95,18 +75,9 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   const onDeleteLead = (id: number) => {
     setShowModal(true);
     setDeleteId?.(id);
-    onDelete(leadData?.leadId || leadData?.id);
   };
   const handleDeleteLead = async () => {
-    onDelete(leadData?.leadId || leadData?.id);
-  };
-  const handlePhoneCall = (phoneNumber) => {
-    if (phoneNumber) {
-      const phoneUrl = `tel:${phoneNumber}`;
-      Linking.openURL(phoneUrl).catch((err) => {
-        console.error('Failed to open dialer', err);
-      });
-    }
+    onDelete();
   };
 
   return (
@@ -140,7 +111,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
       {showSocialMedia && (
         <ContactBox>
           {leadData?.email && (
-            <WhatsAppContainer onPress={handleEmail}>
+            <WhatsAppContainer onPress={() => handleEmail(leadData?.email)}>
               <EmailSendBox />
             </WhatsAppContainer>
           )}

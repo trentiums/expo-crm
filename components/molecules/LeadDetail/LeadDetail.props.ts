@@ -9,5 +9,5 @@ export interface LeadDetailsProps {
   showModal: Boolean;
   setShowModal?: (value: boolean) => void;
   isServices: boolean;
-  setDeleteId?: () => void;
+  setDeleteId?: (id: number) => void;
 }
