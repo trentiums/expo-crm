@@ -27,7 +27,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
   onClosePress,
 }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const [snapPoints, setSnapPoints] = useState(['50%', '90%']); // Default snap points
+  const [snapPoints, setSnapPoints] = useState(['50%', '90%']);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { colors } = useAppTheme();
   const { t } = useTranslation('bottomSheetNavigator');
