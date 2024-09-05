@@ -11,8 +11,11 @@ import {
   IndicatorText,
   IndicatorValue,
   LabelContainer,
+  NoLeadsProgressContainer,
+  NoLeadsProgressView,
 } from '@organisms/LeadsProgressChart/LeadsProgressChart.styles';
 import BlockIcon from '@atoms/Illustrations/Block';
+import { Spacer } from '@atoms/common/common.styles';
 
 const LeadsProgressChartItem: React.FC<LeadsIndicatorItemProps> = ({
   item,
@@ -33,16 +36,25 @@ const LeadsProgressChartItem: React.FC<LeadsIndicatorItemProps> = ({
     borderWidth: (item?.progress && 2) || undefined,
     borderColor: colors.white,
   }));
-
+  const NoLeadsProgress = ({ bgColor }: { bgColor: string }) => (
+    <NoLeadsProgressView>
+      <NoLeadsProgressContainer bgColor={bgColor} />
+    </NoLeadsProgressView>
+  );
   return (
     <IndicatorContainer>
       {item?.progress > 0 ? (
         <IndicatorValue>{item?.progress}</IndicatorValue>
       ) : (
-        <BlockIcon />
+        <>
+          <BlockIcon />
+          <NoLeadsProgress bgColor={colors.grayLight} />
+          <NoLeadsProgress bgColor={colors.greenLight} />
+        </>
       )}
       <Animated.View style={animatedStyle} />
       <LabelContainer>
+        <Spacer size={8} />
         <IndicatorText>{item.label}</IndicatorText>
       </LabelContainer>
     </IndicatorContainer>

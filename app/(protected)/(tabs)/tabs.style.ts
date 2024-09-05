@@ -110,3 +110,16 @@ export const FilterIconView = styled(Pressable)`
   bottom: 0;
   z-index: 1;
 `;
+export const DashboardFilterView = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+`;
+
+export const LineContainer = styled(View)`
+  flex: 0.8;
+  height: 2px;
+  background-color: ${({ theme }) => theme.colors.aria};
+`;

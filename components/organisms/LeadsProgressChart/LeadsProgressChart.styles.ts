@@ -8,7 +8,6 @@ export const IndicatorContainer = styled(View)`
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  gap: 8px;
   flex: 1;
 `;
 export const IndicatorText = styled(Text)`
@@ -46,4 +45,18 @@ export const IndicatorValue = styled(Text)`
 export const LabelContainer = styled(View)`
   justify-content: flex-start;
   height: 30px;
+`;
+export const NoLeadsProgressContainer = styled(View)<{ bgColor: string }>`
+  background-color: ${({ bgColor }) => bgColor};
+  border-radius: 43px;
+  height: 3px;
+  width: 70%;
+`;
+export const NoLeadsProgressView = styled(View)`
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 43px;
+  width: 80%;
+  height: 7px;
+  align-items: center;
+  justify-content: center;
 `;

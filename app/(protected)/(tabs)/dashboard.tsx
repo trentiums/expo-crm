@@ -2,8 +2,10 @@ import Loader from '@atoms/Loader/Loader';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
 import {
+  DashboardFilterView,
   DashboardScreenContainer,
   GreetingText,
+  LineContainer,
   NameText,
   NoDataFoundText,
   TitleText,
@@ -34,7 +36,7 @@ import Button from '@atoms/Button/Button';
 import LeadsProgressChart from '@organisms/LeadsProgressChart/LeadsProgressChart';
 import CompanyDashboardCard from '@molecules/CompanyDashboardCard/CompanyDashboardCard';
 import NoData from '@molecules/NoData/NoData';
-import View from '@atoms/View/View';
+import QuickFilter from '@molecules/QuickFilter/QuickFilter';
 
 const Dashboard = () => {
   const { colors } = useAppTheme();
@@ -185,8 +187,13 @@ const Dashboard = () => {
                   };
                 })}
               />
-              <Spacer size={32} />
+              <Spacer size={16} />
               <TitleText>{t('newLeads')}</TitleText>
+              <Spacer size={16} />
+              <DashboardFilterView>
+                <LineContainer />
+                <QuickFilter filterTitle="Leads count" filterType="SortBy" />
+              </DashboardFilterView>
               <Spacer size={16} />
               <CompanyDashboardCard
                 leads={dashboardLeadList.leadStageCount?.map((item, index) => {
