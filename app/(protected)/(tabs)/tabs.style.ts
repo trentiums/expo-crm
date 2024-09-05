@@ -87,7 +87,7 @@ export const HeadingView = styled(View)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
 `;
 export const HeadingText = styled(Text)`
   font-size: 36px;

@@ -82,7 +82,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
       <DocumentDetailContainer>
         <DocumentInfoContainer>
           <Task />
-          <DocumentName>{file?.name}</DocumentName>
+          <DocumentName numberOfLines={1}>{file?.name}</DocumentName>
         </DocumentInfoContainer>
         <Pressable
           onPress={() => {

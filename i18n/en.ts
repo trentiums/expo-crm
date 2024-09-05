@@ -135,7 +135,7 @@ const English = {
     lastNameLabel: 'Last Name',
     emailLabel: 'Email',
     phoneNumberLabel: 'Phone Number',
-    uploadDocuments: 'Upload Documents',
+    uploadDocuments: 'Upload Document',
     documents: 'Documents',
     attachments: 'Documents',
     storagePermission: 'Permission to access storage',
@@ -218,7 +218,7 @@ const English = {
     descriptionEg: 'Enter description here...',
     document: 'Documents',
     nameEg: 'Product or Services name',
-    uploadDocuments: 'Upload Documents',
+    uploadDocuments: 'Upload Document',
     uploadAnotherDocument: 'Upload another document',
   },
   leadsFilter: {

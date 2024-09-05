@@ -27,8 +27,8 @@ const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
       {title && (
         <TitleWithButton text={title} btnBackPress={() => router?.back()} />
       )}
+      {isDrawerBtn && <MoreMenuButton />}
       <ScreenTemplateView>
-        {isDrawerBtn && <MoreMenuButton />}
         {children}
         {!!addButtonText && (
           <AddButton onPress={() => onAddButtonPress?.()}>

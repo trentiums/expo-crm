@@ -9,6 +9,7 @@ export const PickerContainer = styled(Pressable)`
   border-color: ${({ theme }) => theme.colors.ChristmasSilver};
   border-style: dashed;
   margin-top: 4px;
+  border-radius: 10px;
 `;
 export const AddIconButton = styled(View)`
   display: flex;
