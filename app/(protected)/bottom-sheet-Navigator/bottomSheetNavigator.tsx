@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import BottomSheet from '@gorhom/bottom-sheet';
+import React, { useCallback, useRef, useState } from 'react';
+import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomSheetAddOption from '../bottom-sheet-Navigator-Screen/addOptions';
@@ -23,7 +23,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
   initialRouteName,
 }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = ['25%', '50%']; // Use static snap points here
+  const snapPoints = ['20%', '50%']; // Use static snap points here
   const { colors } = useAppTheme();
 
   const CustomHeader = ({
@@ -45,10 +45,22 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
     </BottomSheetHeaderCon>
   );
 
+  const renderBackdrop = useCallback(
+    (props: any) => (
+      <BottomSheetBackdrop
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+        {...props}
+      />
+    ),
+    [],
+  );
+
   return (
     <BottomSheet
       ref={bottomSheetRef}
       index={0}
+      backdropComponent={renderBackdrop}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
       handleComponent={null}
