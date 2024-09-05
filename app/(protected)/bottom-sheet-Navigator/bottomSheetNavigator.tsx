@@ -1,32 +1,34 @@
 import React, { useCallback, useRef, useState } from 'react';
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import { Pressable } from 'react-native';
+import BottomSheet from '@gorhom/bottom-sheet';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import BottomSheetAddOption from '../bottom-sheet-Navigator-Screen/addOptions';
 import ScreenTwo from '../bottom-sheet-Navigator-Screen/screenTwo';
-import {
-  BottomSheetCustomHeaderProps,
-  BottomSheetNavigatorProps,
-} from './bottomSheetNavigator.props';
-import { Pressable } from 'react-native';
-import BottomSheetClose from '@atoms/Illustrations/BottomSheetClose';
-import ArrowLeft from '@atoms/Illustrations/ArrowLeft';
+
+import BottomSheetAddOption from '../bottom-sheet-Navigator-Screen/addOptions';
 import {
   BottomSheetBackDropCon,
   BottomSheetHeaderCon,
   BottomSheetHeaderTitle,
 } from './bottomSheetNavigator.style';
-import { useAppTheme } from '@constants/theme';
 import { useTranslation } from 'react-i18next';
+import {
+  BottomSheetCustomHeaderProps,
+  BottomSheetNavigatorProps,
+} from './bottomSheetNavigator.props';
+import ArrowLeft from '@atoms/Illustrations/ArrowLeft';
+import { useAppTheme } from '@constants/theme';
+import BottomSheetClose from '@atoms/Illustrations/BottomSheetClose';
 
 const Stack = createNativeStackNavigator();
 
 const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
   initialRouteName,
+  onClosePress,
 }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
+  const [snapPoints, setSnapPoints] = useState(['50%', '90%']); // Default snap points
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const snapPoints = ['20%', '50%'];
   const { colors } = useAppTheme();
   const { t } = useTranslation('bottomSheetNavigator');
 
@@ -53,20 +55,21 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
     setIsSheetOpen(index >= 0);
   }, []);
 
-  const renderBackdrop = useCallback(
-    (props: any) => {
-      return (
-        <BottomSheetBackDropCon
-          intensity={20}
-          experimentalBlurMethod="dimezisBlurView"
-          tint="dark"
-          isSheetOpen={isSheetOpen}
-        />
-      );
-    },
-    [isSheetOpen],
-  );
+  const renderBackdrop = useCallback(() => {
+    return (
+      <BottomSheetBackDropCon
+        intensity={20}
+        // experimentalBlurMethod="dimezisBlurView"
+        tint="dark"
+        isSheetOpen={isSheetOpen}
+      />
+    );
+  }, [isSheetOpen]);
 
+  const handleClosePress = () => {
+    bottomSheetRef.current?.close();
+    onClosePress?.();
+  };
   return (
     <BottomSheet
       ref={bottomSheetRef}
@@ -76,7 +79,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
       snapPoints={snapPoints}
       enablePanDownToClose={true}
       handleComponent={null}
-      onClose={() => bottomSheetRef.current?.close()}>
+      onClose={() => handleClosePress()}>
       <NavigationContainer independent={true}>
         <Stack.Navigator initialRouteName={initialRouteName}>
           <Stack.Screen
@@ -85,11 +88,27 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
               header: () => (
                 <CustomHeader
                   title={t('ChooseOptionToAdd')}
+                  onClose={() => handleClosePress()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <BottomSheetAddOption {...props} setSnapPoints={setSnapPoints} />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="ScreenTwo"
+            options={({ navigation }) => ({
+              header: () => (
+                <CustomHeader
+                  title={t('ChooseOptionToAdd')}
                   onClose={() => bottomSheetRef.current?.close()}
+                  showBackButton={true}
+                  onBackPress={() => navigation.goBack()}
                 />
               ),
             })}
-            component={BottomSheetAddOption}
+            component={ScreenTwo}
           />
         </Stack.Navigator>
       </NavigationContainer>

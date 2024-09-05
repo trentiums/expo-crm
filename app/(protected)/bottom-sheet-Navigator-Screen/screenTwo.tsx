@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 
 const ScreenTwo = () => {
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <View>
       <Text>Screen Two</Text>
     </View>
   );

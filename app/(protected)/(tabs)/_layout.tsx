@@ -128,7 +128,10 @@ const TabsLayout = () => {
       </Tabs>
 
       {isBottomSheetVisible && (
-        <BottomSheetNavigator initialRouteName="ScreenOne" />
+        <BottomSheetNavigator
+          initialRouteName="ScreenOne"
+          onClosePress={handleAddLeadPress}
+        />
       )}
     </>
   );

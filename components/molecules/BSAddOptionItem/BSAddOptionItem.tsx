@@ -12,7 +12,7 @@ const AddOptionsItem: React.FC<BSAddOptionItemProps> = ({
   handlePress,
 }) => {
   return (
-    <ItemContainer onPress={handlePress}>
+    <ItemContainer onPress={() => handlePress()}>
       <IconContainer>{icon}</IconContainer>
       <LabelText>{label}</LabelText>
     </ItemContainer>

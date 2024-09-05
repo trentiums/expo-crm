@@ -1,5 +1,6 @@
 export type BottomSheetNavigatorProps = {
   initialRouteName: string;
+  onClosePress?: () => void;
 };
 
 export type BottomSheetCustomHeaderProps = {
