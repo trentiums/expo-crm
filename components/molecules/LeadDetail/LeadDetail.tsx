@@ -113,13 +113,13 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           )}
           {leadData?.phone && (
             <CommunicationOptionCon
-              onPress={() => handlePhoneCall(leadData?.phone)}>
+              onPress={() => handlePhoneCall(leadData.phone)}>
               <PhoneIcon />
             </CommunicationOptionCon>
           )}
           {leadData?.phone && (
             <CommunicationOptionCon
-              onPress={() => handleWhatsApp(leadData?.phone)}>
+              onPress={() => handleWhatsApp(leadData.phone)}>
               <WhatsApp />
             </CommunicationOptionCon>
           )}
