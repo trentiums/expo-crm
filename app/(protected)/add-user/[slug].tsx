@@ -1,6 +1,6 @@
 import { Spacer } from '@atoms/common/common.styles';
 import { useAppTheme } from '@constants/theme';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import UserInformationForm from '@organisms/UserInformationForm/UserInformationForm';
 import { UserInformationFormValues } from '@organisms/UserInformationForm/UserInformationForm.props';
 import {
@@ -55,7 +55,7 @@ const addUser = () => {
       }
       await dispatch(getAssignUserListAction());
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -64,7 +64,7 @@ const addUser = () => {
     } catch (error: any) {
       console.log(error, 'error');
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },

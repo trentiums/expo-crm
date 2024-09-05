@@ -110,8 +110,11 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
           placeholder={t('confirmPassword')}
           component={FieldTextInput}
           validate={composeValidators(
-            requiredValidator,
-            confirmPasswordValidator,
+            ...(!slug ? [requiredValidator, confirmPasswordValidator] : []),
+            ...(!slug ? [minLengthValidator, confirmPasswordValidator] : []),
+            ...(!slug
+              ? [complexPasswordValidator, confirmPasswordValidator]
+              : []),
           )}
           left={() => (
             <LockIcon

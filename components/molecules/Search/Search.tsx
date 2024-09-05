@@ -11,6 +11,7 @@ import Search from '@atoms/Illustrations/Search';
 import { SearchFilterProps } from './Search.props';
 import { useDebounce } from '@utils/useDebounce';
 import isEmpty from 'lodash/isEmpty';
+import { debounceTime } from '@utils/constant';
 
 const SearchFilter: React.FC<SearchFilterProps> = ({
   setSearch,
@@ -19,7 +20,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
 }) => {
   const { t: ts } = useTranslation('drawer');
   const { colors } = useAppTheme();
-  const debouncedLeadSearch = useDebounce(search || undefined, 300);
+  const debouncedSearch = useDebounce(search || undefined, debounceTime);
   const searchFilter = useMemo(() => {
     if (isEmpty(search)) {
       return {};
@@ -27,10 +28,10 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
     const filtersValue = {};
     filtersValue['search'] = search;
     return filtersValue;
-  }, [search, debouncedLeadSearch]);
+  }, [search, debouncedSearch]);
   useEffect(() => {
     handleSearch(searchFilter);
-  }, [debouncedLeadSearch]);
+  }, [debouncedSearch]);
   return (
     <FilterContainer>
       <SearchInputContainer>
@@ -49,7 +50,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
               paddingRight: 40,
             },
           ]}
-          textColor={colors?.textDark}
+          textColor={colors.textDark}
           outlineColor="transparent"
           outlineStyle={{ borderWidth: 0 }}
           left={<Search />}

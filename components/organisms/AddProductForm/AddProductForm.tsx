@@ -60,10 +60,6 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
     if (params?.slug) {
       form.change('name', productServiceDetail?.name);
       form.change('description', productServiceDetail?.description);
-      console.log(
-        productServiceDetail?.documents,
-        'productServiceDetail?.documents',
-      );
       productServiceDetail?.documents?.id &&
         setDocumentArray([productServiceDetail?.documents]);
     } else {
@@ -111,7 +107,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
               numberOfLines={8}
               style={{
                 height: 100,
-                backgroundColor: colors?.IcewindDale,
+                backgroundColor: colors?.iceWindDale,
               }}
               multiline
               contentStyle={{ marginTop: -10 }}

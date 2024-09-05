@@ -59,10 +59,10 @@ const FieldTextInput = forwardRef<CustomTextInputProps, FieldTextInputProps>(
             autoCapitalize="none"
             style={
               rest?.style || {
-                backgroundColor: colors?.IcewindDale,
+                backgroundColor: colors?.iceWindDale,
               }
             }
-            textColor={rest?.textDark || colors?.textDark}
+            textColor={rest?.textDark || colors.textDark}
             enterKeyHint="done"
             autoCorrect={false}
             left={left}
@@ -77,7 +77,7 @@ const FieldTextInput = forwardRef<CustomTextInputProps, FieldTextInputProps>(
             secureTextEntry={rest?.secureTextEntry}
             placeholderTextColor={colors.placeholderTextColor}
             outlineStyle={{
-              borderColor: colors.IcewindDale,
+              borderColor: colors.iceWindDale,
               borderWidth: 3,
               borderRadius: 10,
             }}

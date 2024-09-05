@@ -41,7 +41,7 @@ export const PickerContainer = styled(Pressable)`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.white};
   border-width: 2px;
-  border-color: ${({ theme }) => theme.colors.ChristmasSilver};
+  border-color: ${({ theme }) => theme.colors.christmasSilver};
   border-style: dashed;
   margin-top: 4px;
 `;
@@ -124,7 +124,7 @@ export const ContainerView = styled(View)`
 export const FormButtonText = styled(Text)<{ valid?: boolean }>`
   font-weight: 700;
   color: ${({ valid, theme }) =>
-    valid ? theme.colors.white : theme.colors.white};
+    valid ? theme.colors.white : theme.colors.lightGray};
 `;
 
 export const FlatListCon = styled(FlatList).attrs({

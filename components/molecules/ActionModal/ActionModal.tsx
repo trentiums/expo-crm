@@ -63,7 +63,7 @@ const ActionModal: React.FC<RNModalProps> = memo(
                 <SecondaryLabel>{actiontext}</SecondaryLabel>
               </CancelPressable>
               <ActionPressable onPress={handleSubmit}>
-                {loading && <Loader size={16} color={colors?.BlueChaos} />}
+                {loading && <Loader size={16} color={colors?.blueChaos} />}
                 <PrimaryLabel actionType={actionType || Actions.default}>
                   {label}
                 </PrimaryLabel>

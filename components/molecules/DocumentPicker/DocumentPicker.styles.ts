@@ -6,7 +6,7 @@ import { FlatList, Pressable } from 'react-native';
 export const PickerContainer = styled(Pressable)`
   background-color: ${({ theme }) => theme.colors.white};
   border-width: 2px;
-  border-color: ${({ theme }) => theme.colors.ChristmasSilver};
+  border-color: ${({ theme }) => theme.colors.christmasSilver};
   border-style: dashed;
   margin-top: 4px;
   border-radius: 10px;
@@ -69,5 +69,5 @@ export const DocumentName = styled(Text)`
 `;
 export const UploadAnotherDocumentText = styled(Text)`
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.BlueChaos};
+  color: ${({ theme }) => theme.colors.blueChaos};
 `;

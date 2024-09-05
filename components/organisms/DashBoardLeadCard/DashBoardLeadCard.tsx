@@ -7,7 +7,7 @@ import { router } from 'expo-router';
 import { useAppDispatch } from '@redux/store';
 import { deleteLeadAction } from '@redux/actions/lead';
 import { useToast } from 'react-native-toast-notifications';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { dashboardLeadListAction } from '@redux/actions/dashboard';
 
 const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
@@ -25,7 +25,7 @@ const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
         deleteLeadAction({ lead_id: leadData?.id }),
       ).unwrap();
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -33,7 +33,7 @@ const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
       await dispatch(dashboardLeadListAction({ page: 1 }));
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },

@@ -32,7 +32,7 @@ const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
         {children}
         {!!addButtonText && (
           <AddButton onPress={() => onAddButtonPress?.()}>
-            <PlusIcon color={colors?.bgColor} />
+            <PlusIcon color={colors.bgColor} />
             <AddText>{addButtonText}</AddText>
           </AddButton>
         )}

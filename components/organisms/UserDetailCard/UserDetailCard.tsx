@@ -14,13 +14,12 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
   onDelete,
   showModal,
   loading,
-  isServices,
   setDeleteId,
 }) => {
   const { colors } = useAppTheme();
   return (
     <>
-      <LeadDetailCardContainer isActive={false} isServices={isServices}>
+      <LeadDetailCardContainer isActive={false}>
         <LeadDetail
           leadData={data}
           onEdit={onEdit}
@@ -28,14 +27,13 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
           showModal={showModal}
           setShowModal={setShowModal}
           loading={loading}
-          isServices={isServices}
           setDeleteId={setDeleteId}
         />
         <Spacer size={8} />
         {data?.email && (
           <PhoneInfoView>
-            <EmailIcon color={colors?.gray} />
-            <EmailText>{data?.email}</EmailText>
+            <EmailIcon color={colors.gray} />
+            <EmailText>{data.email}</EmailText>
           </PhoneInfoView>
         )}
       </LeadDetailCardContainer>

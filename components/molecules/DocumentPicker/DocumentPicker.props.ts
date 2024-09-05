@@ -4,3 +4,6 @@ export interface DocumentPickerProps {
   documentArray: fileSystemProps[];
   setDocumentArray: React.Dispatch<React.SetStateAction<fileSystemProps[]>>;
 }
+export enum PermissionType {
+  Granted = 'granted',
+}

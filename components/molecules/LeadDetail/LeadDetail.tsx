@@ -6,7 +6,7 @@ import {
   LeadInfoView,
   NameAndStatusContainer,
   NameText,
-  WhatsAppContainer,
+  CommunicationOptionCon,
 } from './LeadDetail.styles';
 import { useTranslation } from 'react-i18next';
 import {
@@ -40,7 +40,6 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   isDeleteLoading,
   showModal,
   setShowModal,
-  isServices,
   setDeleteId,
   showSocialMedia,
 }) => {
@@ -58,7 +57,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
       onEdit();
     } else {
       if (leadData?.id) {
-        router.navigate(`/(protected)/add-lead/${leadData?.id}`);
+        router.navigate(`/(protected)/add-lead/${leadData.id}`);
       } else {
         toast.show(t('canNotFindId'), {
           type: ToastType.Custom,
@@ -81,14 +80,11 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   };
 
   return (
-    <DetailContainer isServices={isServices}>
-      <LeadInfoView isServices={isServices}>
-        {isServices && <ProductServices />}
+    <DetailContainer>
+      <LeadInfoView>
         <Flexed>
           <NameAndStatusContainer>
-            <NameText numberOfLines={1} isServices={isServices}>
-              {leadData?.name}
-            </NameText>
+            <NameText numberOfLines={1}>{leadData?.name}</NameText>
             <LeadStatus
               leadStatus={
                 leads?.filter((item) => item?.id === leadData?.id)[0]
@@ -111,19 +107,21 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
       {showSocialMedia && (
         <ContactBox>
           {leadData?.email && (
-            <WhatsAppContainer onPress={() => handleEmail(leadData?.email)}>
+            <CommunicationOptionCon onPress={() => handleEmail(leadData.email)}>
               <EmailSendBox />
-            </WhatsAppContainer>
+            </CommunicationOptionCon>
           )}
           {leadData?.phone && (
-            <WhatsAppContainer onPress={() => handlePhoneCall(leadData?.phone)}>
+            <CommunicationOptionCon
+              onPress={() => handlePhoneCall(leadData?.phone)}>
               <PhoneIcon />
-            </WhatsAppContainer>
+            </CommunicationOptionCon>
           )}
           {leadData?.phone && (
-            <WhatsAppContainer onPress={() => handleWhatsApp(leadData?.phone)}>
+            <CommunicationOptionCon
+              onPress={() => handleWhatsApp(leadData?.phone)}>
               <WhatsApp />
-            </WhatsAppContainer>
+            </CommunicationOptionCon>
           )}
         </ContactBox>
       )}

@@ -10,10 +10,8 @@ import { Pressable } from 'react-native';
 import Back from '@atoms/Illustrations/Back';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
-interface TitleWithButtonProps {
-  text?: string;
-  btnBackPress?: () => void;
-}
+import { TitleWithButtonProps } from './TitleWithButton.props';
+
 const TitleWithButton: React.FC<TitleWithButtonProps> = ({
   text,
   btnBackPress,
@@ -33,7 +31,7 @@ const TitleWithButton: React.FC<TitleWithButtonProps> = ({
       </IconCon>
       {text && (
         <HeaderTextCon>
-          <TextInHeader variant="Inter_600SemiBold">{text}</TextInHeader>
+          <TextInHeader>{text}</TextInHeader>
         </HeaderTextCon>
       )}
     </HeaderWithTextContainer>

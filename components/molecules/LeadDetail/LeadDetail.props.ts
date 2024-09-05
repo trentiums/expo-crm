@@ -8,6 +8,5 @@ export interface LeadDetailsProps {
   onEdit: () => void;
   showModal: Boolean;
   setShowModal?: (value: boolean) => void;
-  isServices: boolean;
   setDeleteId?: (id: number) => void;
 }

@@ -47,7 +47,7 @@ export const PrimaryLabel = styled(Text)<{ actionType: Actions }>`
     actionType === Actions.success
       ? theme.colors.primaryColor
       : actionType === Actions.delete
-      ? theme.colors.BlueChaos
+      ? theme.colors.blueChaos
       : actionType === Actions.default
       ? theme.colors.white
       : 'none'};

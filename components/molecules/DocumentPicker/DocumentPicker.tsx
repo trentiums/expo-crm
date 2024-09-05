@@ -15,9 +15,9 @@ import UploadCon from '@atoms/Illustrations/UploadCon';
 import * as MediaLibrary from 'expo-media-library';
 import { MAX_FILE_SIZE } from '@utils/constant';
 import { useToast } from 'react-native-toast-notifications';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useTranslation } from 'react-i18next';
-import { DocumentPickerProps } from './DocumentPicker.props';
+import { DocumentPickerProps, PermissionType } from './DocumentPicker.props';
 import { HeaderText } from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
 import { Spacer } from '@atoms/common/common.styles';
 import ActionModal from '@molecules/ActionModal/ActionModal';
@@ -27,8 +27,8 @@ import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import { Pressable } from 'react-native';
 import Delete from '@atoms/Illustrations/Delete';
 import Plus from '@atoms/Illustrations/Plus';
-import Trash from '@atoms/Illustrations/Trash';
-import Task from '@atoms/Illustrations/Task';
+import TrashIcon from '@atoms/Illustrations/Trash';
+import TaskIcon from '@atoms/Illustrations/Task';
 import { useAppTheme } from '@constants/theme';
 
 const DocumentPick: React.FC<DocumentPickerProps> = ({
@@ -47,7 +47,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
   const pickFile = async () => {
     try {
       const { status } = await MediaLibrary.requestPermissionsAsync();
-      if (status !== 'granted') {
+      if (status !== PermissionType.Granted) {
         return;
       }
       const res = await DocumentPicker.getDocumentAsync({
@@ -59,7 +59,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
         res.assets.forEach((file) => {
           if (file.size > MAX_FILE_SIZE) {
             toast.show(t('fileSizeExceeded'), {
-              type: 'customToast',
+              type: ToastType.Custom,
               data: {
                 type: ToastTypeProps.Error,
               },
@@ -81,7 +81,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
     return (
       <DocumentDetailContainer>
         <DocumentInfoContainer>
-          <Task />
+          <TaskIcon />
           <DocumentName numberOfLines={1}>{file?.name}</DocumentName>
         </DocumentInfoContainer>
         <Pressable
@@ -107,17 +107,17 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
       try {
         setDeleteLoading(true);
         const response = await dispatch(
-          deleteLeadDocumentsAction({ media_id: deletedDocument?.[0]?.id }),
+          deleteLeadDocumentsAction({ media_id: deletedDocument[0].id }),
         ).unwrap();
         toast.show(response?.message, {
-          type: 'customToast',
+          type: ToastType.Custom,
           data: {
             type: ToastTypeProps.Success,
           },
         });
       } catch (error) {
         toast.show(error, {
-          type: 'customToast',
+          type: ToastType.Custom,
           data: {
             type: ToastTypeProps.Error,
           },
@@ -151,10 +151,6 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
             )}
             keyExtractor={(item, index) => index.toString()}
           />
-        </>
-      )}
-      {documentArray?.length > 0 && (
-        <>
           <Spacer size={8} />
           <Pressable onPress={pickFile}>
             <DocumentInfoContainer>
@@ -166,6 +162,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
           </Pressable>
         </>
       )}
+
       {deleteShowModal && (
         <ActionModal
           isModal
@@ -182,7 +179,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
           }}
           onActionPress={() => onDeleteActionPress()}
           loading={deleteLoading}
-          icon={<Trash />}
+          icon={<TrashIcon />}
         />
       )}
     </>

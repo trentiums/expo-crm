@@ -13,7 +13,6 @@ import {
 } from './tabs.style';
 import { RefreshControl } from 'react-native';
 import { UserDetailCardProps } from '@organisms/UserDetailCard/UserDetailCard.props';
-import UserDetailCard from '@organisms/UserDetailCard/UserDetailCard';
 import {
   deleteProductServiceAction,
   getProductServiceListAction,
@@ -22,6 +21,7 @@ import { ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useTranslation } from 'react-i18next';
 import SearchFilter from '@molecules/Search/Search';
 import { ToastType } from '@molecules/Toast/Toast.props';
+import ProductCard from '@molecules/ProductCard/ProductCard';
 
 const products = () => {
   const { t: ts } = useTranslation('drawer');
@@ -51,7 +51,7 @@ const products = () => {
     item: UserDetailCardProps;
     index: number;
   }) => (
-    <UserDetailCard
+    <ProductCard
       key={`${item.id}-${index}`}
       onDelete={handleDeleteProduct}
       onEdit={() => handleEdit(item?.id)}
@@ -60,7 +60,6 @@ const products = () => {
       setShowModal={setShowModal}
       loading={deleteLoading}
       setDeleteId={setDeleteId}
-      isServices
     />
   );
 
