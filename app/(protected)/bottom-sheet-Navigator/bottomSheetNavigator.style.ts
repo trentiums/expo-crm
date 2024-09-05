@@ -1,6 +1,7 @@
 import Text from '@atoms/Text/Text';
 import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
+import { BlurView } from 'expo-blur';
 
 export const BottomSheetHeaderCon = styled(View)`
   flex-direction: row;
@@ -17,4 +18,14 @@ export const BottomSheetHeaderTitle = styled(Text)`
   flex: 1;
   color: #253e31;
   font-weight: bold;
+`;
+
+export const BottomSheetBackDropCon = styled(BlurView)<{
+  isSheetOpen: boolean;
+}>`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  z-index: ${({ isSheetOpen }) => (isSheetOpen ? 0 : -1)};
 `;

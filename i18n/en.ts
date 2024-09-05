@@ -238,6 +238,7 @@ const English = {
     users: 'Users',
     services: 'Services',
   },
+  bottomSheetNavigator: { ChooseOptionToAdd: 'Choose option to add' },
 };
 
 export default English;

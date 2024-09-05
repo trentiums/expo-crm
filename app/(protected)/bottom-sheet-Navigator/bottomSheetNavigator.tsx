@@ -12,10 +12,12 @@ import { Pressable } from 'react-native';
 import BottomSheetClose from '@atoms/Illustrations/BottomSheetClose';
 import ArrowLeft from '@atoms/Illustrations/ArrowLeft';
 import {
+  BottomSheetBackDropCon,
   BottomSheetHeaderCon,
   BottomSheetHeaderTitle,
 } from './bottomSheetNavigator.style';
 import { useAppTheme } from '@constants/theme';
+import { useTranslation } from 'react-i18next';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,8 +25,10 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
   initialRouteName,
 }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = ['20%', '50%']; // Use static snap points here
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const snapPoints = ['20%', '50%'];
   const { colors } = useAppTheme();
+  const { t } = useTranslation('bottomSheetNavigator');
 
   const CustomHeader = ({
     title,
@@ -45,21 +49,29 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
     </BottomSheetHeaderCon>
   );
 
+  const handleSheetChange = useCallback((index: number) => {
+    setIsSheetOpen(index >= 0);
+  }, []);
+
   const renderBackdrop = useCallback(
-    (props: any) => (
-      <BottomSheetBackdrop
-        appearsOnIndex={0}
-        disappearsOnIndex={-1}
-        {...props}
-      />
-    ),
-    [],
+    (props: any) => {
+      return (
+        <BottomSheetBackDropCon
+          intensity={20}
+          experimentalBlurMethod="dimezisBlurView"
+          tint="dark"
+          isSheetOpen={isSheetOpen}
+        />
+      );
+    },
+    [isSheetOpen],
   );
 
   return (
     <BottomSheet
       ref={bottomSheetRef}
       index={0}
+      onChange={handleSheetChange}
       backdropComponent={renderBackdrop}
       snapPoints={snapPoints}
       enablePanDownToClose={true}
@@ -72,26 +84,12 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
             options={() => ({
               header: () => (
                 <CustomHeader
-                  title="Choose option to add"
+                  title={t('ChooseOptionToAdd')}
                   onClose={() => bottomSheetRef.current?.close()}
                 />
               ),
             })}
             component={BottomSheetAddOption}
-          />
-          <Stack.Screen
-            name="ScreenTwo"
-            options={({ navigation }) => ({
-              header: () => (
-                <CustomHeader
-                  title="Choose option to add"
-                  onClose={() => bottomSheetRef.current?.close()}
-                  showBackButton={true}
-                  onBackPress={() => navigation.goBack()}
-                />
-              ),
-            })}
-            component={ScreenTwo}
           />
         </Stack.Navigator>
       </NavigationContainer>
