@@ -12,6 +12,7 @@ import {
   IndicatorValue,
   LabelContainer,
 } from '@organisms/LeadsProgressChart/LeadsProgressChart.styles';
+import BlockIcon from '@atoms/Illustrations/Block';
 
 const LeadsProgressChartItem: React.FC<LeadsIndicatorItemProps> = ({
   item,
@@ -35,7 +36,11 @@ const LeadsProgressChartItem: React.FC<LeadsIndicatorItemProps> = ({
 
   return (
     <IndicatorContainer>
-      <IndicatorValue>{item?.progress}</IndicatorValue>
+      {item?.progress > 0 ? (
+        <IndicatorValue>{item?.progress}</IndicatorValue>
+      ) : (
+        <BlockIcon />
+      )}
       <Animated.View style={animatedStyle} />
       <LabelContainer>
         <IndicatorText>{item.label}</IndicatorText>

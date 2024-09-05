@@ -213,6 +213,9 @@ const English = {
       ' Oops ! No Leads Found want to add lead then click on add button',
     noUsersFound: 'Oops ! No Users Found',
     addLeads: 'Add Lead',
+    totalLeads: 'Total leads',
+    noLeadsTitle: 'No leads available yet.',
+    noLeadsDesc: 'Currently, there are no leads in the database.',
   },
   addProduct: {
     name: 'Name',

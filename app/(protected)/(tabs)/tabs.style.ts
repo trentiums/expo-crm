@@ -1,8 +1,8 @@
 import Text from '@atoms/Text/Text';
 import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
-import { StyleSheet, Platform, FlatList, Pressable } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, FlatList, Pressable } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const styles = StyleSheet.create({
   badgeStyle: {
@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     paddingTop: 16,
   },
 });
-export const DashboardScreenContainer = styled(ScrollView)`
+export const DashboardScreenContainer = styled(KeyboardAwareScrollView)`
   padding-bottom: 16px;
 `;
 export const TitleText = styled(Text)`

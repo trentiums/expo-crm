@@ -1,12 +1,17 @@
 import React from 'react';
-import { NoDataContainer, NoDataImage, NoDataText } from './NoData.styles';
+import { NoDataContainer, NoDataDesc, NoDataText } from './NoData.styles';
 import { NoDataProps } from './NoData.props';
+import NoDataIcon from '@atoms/Illustrations/NoData';
+import { Spacer } from '@atoms/common/common.styles';
 
-const NoData: React.FC<NoDataProps> = ({ image, text }) => {
+const NoData: React.FC<NoDataProps> = ({ text, description }) => {
   return (
     <NoDataContainer>
-      <NoDataImage source={image}></NoDataImage>
+      <NoDataIcon />
+      <Spacer size={12} />
       <NoDataText>{text}</NoDataText>
+      <Spacer size={6} />
+      <NoDataDesc>{description}</NoDataDesc>
     </NoDataContainer>
   );
 };

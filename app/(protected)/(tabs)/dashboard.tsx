@@ -32,6 +32,9 @@ import { router } from 'expo-router';
 import { useFocusEffect } from 'expo-router';
 import Button from '@atoms/Button/Button';
 import LeadsProgressChart from '@organisms/LeadsProgressChart/LeadsProgressChart';
+import CompanyDashboardCard from '@molecules/CompanyDashboardCard/CompanyDashboardCard';
+import NoData from '@molecules/NoData/NoData';
+import View from '@atoms/View/View';
 
 const Dashboard = () => {
   const { colors } = useAppTheme();
@@ -63,6 +66,13 @@ const Dashboard = () => {
     colors.redLight,
     colors.blueLight,
     colors.grayLight,
+  ];
+  const companyLeadTextColor = [
+    colors.green,
+    colors.yellow,
+    colors.red,
+    colors.blue,
+    colors.englishHolly,
   ];
   const handleMoreData = async () => {
     if (
@@ -154,74 +164,96 @@ const Dashboard = () => {
       {loading && dashboardLeadList.leadStageCount.length === 0 ? (
         <Loader />
       ) : (
-        <DashboardScreenContainer
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}>
+        <>
           <GreetingText>{tr('welcome')}</GreetingText>
           <NameText>{user?.name}</NameText>
           <Spacer size={16} />
-          <LeadsProgressChart
-            leads={dashboardLeadList.leadStageCount?.map((item, index) => {
-              return {
-                label: item?.name,
-                progress: item?.leadCount,
-                color: chartColors[index],
-              };
-            })}
-          />
-          <Spacer size={32} />
-          <TitleText>{t('newLeads')}</TitleText>
-          <Spacer size={16} />
-          {leads?.length > 0 ? (
-            <FlatList
-              data={leads}
-              renderItem={({ item: lead, index }) =>
-                renderLeads({ lead, index })
-              }
-              keyExtractor={(lead, index) =>
-                `${lead.name.toString()} - ${index}`
-              }
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              onEndReached={() => handleMoreData()}
-            />
+          {dashboardLeadList.leadStageCount?.every(
+            (item) => item.leadCount === 0,
+          ) ? (
+            <NoData text={t('noLeadsTitle')} description={t('noLeadsDesc')} />
           ) : (
-            <>
-              <NoDataFoundText>{t('noLeadsDashboard')}</NoDataFoundText>
-              <Spacer size={12} />
-              <Button
-                mode="contained"
-                buttonColor={colors.primaryColor}
-                textColor={colors.white}
-                onPress={() => router.navigate(`./addLead`)}
-                uppercase={false}>
-                {t('addLeads')}
-              </Button>
-            </>
+            <DashboardScreenContainer
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}>
+              <LeadsProgressChart
+                leads={dashboardLeadList.leadStageCount?.map((item, index) => {
+                  return {
+                    label: item?.name,
+                    progress: item?.leadCount,
+                    color: chartColors[index],
+                  };
+                })}
+              />
+              <Spacer size={32} />
+              <TitleText>{t('newLeads')}</TitleText>
+              <Spacer size={16} />
+              <CompanyDashboardCard
+                leads={dashboardLeadList.leadStageCount?.map((item, index) => {
+                  return {
+                    title: item?.name,
+                    value: item?.leadCount,
+                    bgColor: chartColors[index],
+                    color: companyLeadTextColor[index],
+                  };
+                })}
+                name="Romes Smith"
+                leadsCount={12}
+              />
+              {leads?.length > 0 ? (
+                <FlatList
+                  data={leads}
+                  renderItem={({ item: lead, index }) =>
+                    renderLeads({ lead, index })
+                  }
+                  keyExtractor={(lead, index) =>
+                    `${lead.name.toString()} - ${index}`
+                  }
+                  showsHorizontalScrollIndicator={false}
+                  showsVerticalScrollIndicator={false}
+                  onEndReached={() => handleMoreData()}
+                />
+              ) : (
+                <>
+                  <NoDataFoundText>{t('noLeadsDashboard')}</NoDataFoundText>
+                  <Spacer size={12} />
+                  <Button
+                    mode="contained"
+                    buttonColor={colors.primaryColor}
+                    textColor={colors.white}
+                    onPress={() => router.navigate(`./addLead`)}
+                    uppercase={false}>
+                    {t('addLeads')}
+                  </Button>
+                </>
+              )}
+              <Spacer size={16} />
+
+              {showModal && (
+                <ActionModal
+                  isModal
+                  onBackdropPress={() => {
+                    setShowModal(false);
+                    closeSwipeAble();
+                  }}
+                  heading={tm('discardMedia')}
+                  description={tm('disCardDescription')}
+                  label={tm('yesDiscard')}
+                  actionType={Actions.delete}
+                  actiontext={tm('cancel')}
+                  onCancelPress={() => {
+                    setShowModal(false);
+                    closeSwipeAble();
+                  }}
+                  onActionPress={() => onDeleteActionPress()}
+                  icon={<TrashIcon color={colors?.deleteColor} />}
+                  loading={deleteLoading}
+                />
+              )}
+              <Spacer size={100} />
+            </DashboardScreenContainer>
           )}
-          <Spacer size={16} />
-          {showModal && (
-            <ActionModal
-              isModal
-              onBackdropPress={() => {
-                setShowModal(false);
-                closeSwipeAble();
-              }}
-              heading={tm('discardMedia')}
-              description={tm('disCardDescription')}
-              label={tm('yesDiscard')}
-              actionType={Actions.delete}
-              actiontext={tm('cancel')}
-              onCancelPress={() => {
-                setShowModal(false);
-                closeSwipeAble();
-              }}
-              onActionPress={() => onDeleteActionPress()}
-              icon={<TrashIcon color={colors?.deleteColor} />}
-              loading={deleteLoading}
-            />
-          )}
-        </DashboardScreenContainer>
+        </>
       )}
     </ScreenTemplate>
   );
