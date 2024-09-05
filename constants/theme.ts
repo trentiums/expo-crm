@@ -73,6 +73,10 @@ export const DefaultTheme = {
     lightBlack: '#0000004D',
     snowflake: '#F0F0F0',
     roseMadder: '#e33a3a',
+    englishHolly: '#253E31',
+    laurelGarland: '#686d5d',
+    americanSilver: '#CECECE',
+    blueChaos: '#5892FF',
   },
 };
 
@@ -145,6 +149,10 @@ export const DarkTheme: AppTheme = {
     snowflake: '#F0F0F0',
     lightBlack: '#0000004D',
     roseMadder: '#e33a3a',
+    englishHolly: '#253E31',
+    laurelGarland: '#686d5d',
+    americanSilver: '#CECECE',
+    blueChaos: '#5892FF',
   },
 };
 

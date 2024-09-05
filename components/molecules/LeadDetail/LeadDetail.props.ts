@@ -1,13 +1,13 @@
-import { LeadData } from '@organisms/DashBoardLeadCard/DashBoardLeadCard.props';
+import { Lead } from '@organisms/DashBoardLeadCard/DashBoardLeadCard.props';
 
 export interface LeadDetailsProps {
-  leadData: LeadData;
-  onDelete?: (id: number) => void;
-  onEdit?: () => void;
-  loading?: boolean;
-  setShowModal?: (value: boolean) => void;
-  showModal?: boolean;
-  isServices?: boolean;
-  setDeleteId?: (value: number) => void;
+  leadData: Lead;
   showSocialMedia?: boolean;
+  isDeleteLoading?: boolean;
+  onDelete: () => void;
+  onEdit: () => void;
+  showModal: Boolean;
+  setShowModal?: (value: boolean) => void;
+  isServices: boolean;
+  setDeleteId?: () => void;
 }

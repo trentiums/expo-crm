@@ -8,7 +8,7 @@ export const Container = styled(SafeAreaView)<{
 }>`
   flex: 1;
   background-color: ${({ backgroundColor, theme }) =>
-    backgroundColor ? backgroundColor : theme.colors.screenTemplateColor};
+    backgroundColor || theme.colors.screenTemplateColor};
 `;
 
 export const ScreenTemplateView = styled(View)`

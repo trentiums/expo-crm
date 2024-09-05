@@ -8,9 +8,9 @@ import {
 import { ScreenTemplateProps } from './ScreenTemplate.props';
 import PlusIcon from '@atoms/Illustrations/PlusIcon';
 import { useAppTheme } from '@constants/theme';
-import DrawerBtn from '@molecules/DrawerBtn/DrawerBtn';
 import TitleWithButton from '@molecules/TitleWithButton/TitleWithButton';
 import { router } from 'expo-router';
+import MoreMenuButton from '@molecules/MoreMenuButton/MoreMenuButton';
 
 const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
   children,
@@ -28,7 +28,7 @@ const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
         <TitleWithButton text={title} btnBackPress={() => router?.back()} />
       )}
       <ScreenTemplateView>
-        {isDrawerBtn && <DrawerBtn />}
+        {isDrawerBtn && <MoreMenuButton />}
         {children}
         {!!addButtonText && (
           <AddButton onPress={() => onAddButtonPress?.()}>

@@ -13,9 +13,7 @@ export const DetailContainer = styled(View)<{ isServices?: boolean }>`
     isServices ? theme?.colors?.aria : undefined};
   padding-bottom: ${({ isServices }) => (isServices ? 24 : 0)}px;
 `;
-export const LeadDetailView = styled(View)`
-  flex: 1;
-`;
+
 export const LeadInfoView = styled(View)<{ isServices?: boolean }>`
   display: flex;
   flex-direction: row;

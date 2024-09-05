@@ -2,7 +2,7 @@ import Text from '@atoms/Text/Text';
 import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
 
-export const LeadStatusContainer = styled(View)<{ bgColor: string }>`
+export const LeadStatusContainer = styled(View)<{ bgColor?: string }>`
   background-color: ${({ theme, bgColor }) =>
     bgColor || theme.colors.lightBlue};
   width: fit-content;

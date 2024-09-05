@@ -15,7 +15,7 @@ import { initialModalType } from '@utils/constant';
 import LeadDetail from '@molecules/LeadDetail/LeadDetail';
 import { getLeadDetailsAction, updateLeadAction } from '@redux/actions/lead';
 import { useToast } from 'react-native-toast-notifications';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { router } from 'expo-router';
 import { LeadSelectView } from '@molecules/LeadSelect/LeadSelect.styles';
 
@@ -28,10 +28,9 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
   onEdit,
   LeadDetails,
   title,
-  mailID,
+  email,
   dateTime,
   setModal,
-  modal,
   modalType,
   setModalType,
   leadStatusId,
@@ -40,7 +39,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
   leadCardId,
   currentId,
   leadId,
-  assignTo,
+  assignedTo,
 }) => {
   const dispatch = useAppDispatch();
   const toast = useToast();
@@ -217,7 +216,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       const response = await dispatch(updateLeadAction(formData)).unwrap();
       setDocuments([]);
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -227,7 +226,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       );
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -287,7 +286,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       const response = await dispatch(updateLeadAction(formData)).unwrap();
       setDocuments([]);
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -296,7 +295,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       await dispatch(getLeadDetailsAction({ lead_id: leadId }));
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -312,7 +311,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
       <LeadDetail
         leadData={{
           phone: phoneNumber,
-          email: mailID,
+          email: email,
           name: title,
           createdAt: dateTime,
           leadId: leadId,
@@ -338,7 +337,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
             handleChangeLeadStage(leadId, value)
           }
           leadCardId={leadCardId}
-          assignTo={assignTo}
+          assignedTo={assignedTo}
           setAssignTo={(leadId, value) => handleChangeAssignTo(leadId, value)}
         />
       </LeadSelectView>

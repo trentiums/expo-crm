@@ -1,45 +1,22 @@
-import * as DocumentPicker from 'expo-document-picker';
 import { Spacer } from '@atoms/common/common.styles';
 import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
 import {
-  AddIconButton,
   ButtonSubmit,
-  CrossIconContainer,
   FormButtonText,
-  HeaderText,
   Label,
-  PickerContainer,
-  PressAbleContainer,
-  SvgShowContainer,
-  UploadText,
 } from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
 import { KeyboardAwareScrollViewContainer } from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
 import { composeValidators, requiredValidator } from '@utils/formValidators';
 import React, { useEffect, useState } from 'react';
 import { Field, useFormState } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
-import { MAX_FILE_SIZE } from '@utils/constant';
-import { useToast } from 'react-native-toast-notifications';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { AddProductFormProps } from './AddProductForm.props';
-import CrossIcon from '@atoms/Illustrations/Cross';
-import ActionModal from '@molecules/ActionModal/ActionModal';
-import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import TrashIcon from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
-import DocumentIcon from '@atoms/Illustrations/Document';
 import { getProductServiceDetailAction } from '@redux/actions/productService';
 import Loader from '@atoms/Loader/Loader';
-import * as MediaLibrary from 'expo-media-library';
-import {
-  FormsView,
-  ImagePreviewShow,
-  LoaderView,
-} from './AddProductForm.styles';
+import { FormsView, LoaderView } from './AddProductForm.styles';
 import { useLocalSearchParams } from 'expo-router';
-import { Linking } from 'react-native';
-import UploadCon from '@atoms/Illustrations/UploadCon';
 import DocumentPick from '@molecules/DocumentPicker/DocumentPicker';
 
 const AddProductForm: React.FC<AddProductFormProps> = ({
@@ -93,7 +70,6 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
       setDocumentArray([]);
     }
   }, [params?.slug, productServiceDetail]);
-
   useEffect(() => {
     setIsDisable(true);
   }, [values]);

@@ -1,4 +1,4 @@
-import { GeneralList } from "@type/redux/slices/general";
+import { GeneralList } from '@type/redux/slices/general';
 
 export interface LeadListProps {
   value: number;
@@ -17,6 +17,6 @@ export interface LeadSelectProps {
   setSelectedStage: (leadId: number, value: number) => void;
   leadCardId: number;
   isAdmin?: boolean;
-  assignTo: number;
+  assignedTo: number;
   setAssignTo: (value: number) => void;
 }

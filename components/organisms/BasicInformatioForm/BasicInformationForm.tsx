@@ -57,7 +57,7 @@ import {
   getLeadDetailsAction,
 } from '@redux/actions/lead';
 import { useToast } from 'react-native-toast-notifications';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { MAX_FILE_SIZE } from '@utils/constant';
 import { SvgUri } from 'react-native-svg';
 import { addLeadInformation } from '@redux/slices/leads';
@@ -174,7 +174,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
         res.assets.forEach((file) => {
           if (file.size > MAX_FILE_SIZE) {
             toast.show(t('fileSizeExceeded'), {
-              type: 'customToast',
+              type: ToastType.Custom,
               data: {
                 type: ToastTypeProps.Error,
               },
@@ -208,14 +208,14 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
           deleteLeadDocumentsAction({ media_id: deletedDocument?.[0]?.id }),
         ).unwrap();
         toast.show(response?.message, {
-          type: 'customToast',
+          type: ToastType.Custom,
           data: {
             type: ToastTypeProps.Success,
           },
         });
       } catch (error) {
         toast.show(error, {
-          type: 'customToast',
+          type: ToastType.Custom,
           data: {
             type: ToastTypeProps.Error,
           },
