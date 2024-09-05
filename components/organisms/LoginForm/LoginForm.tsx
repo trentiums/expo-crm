@@ -31,9 +31,6 @@ import { FormButtonText } from '@organisms/BasicInformatioForm/BasicInformationF
 const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
   const { t } = useTranslation('login');
   const { colors } = useAppTheme();
-  const { user } = useSelector((state: RootState) => state?.auth);
-  const [isActive, setIsActive] = useState(false);
-  const [isActivePassword, setIsActivePassword] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const { valid } = useFormState({ subscription: { valid: true } });
 
@@ -50,9 +47,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
             minLengthValidator,
             emailValidator,
           )}
-          left={() => (
-            <EmailIcon color={isActive ? colors.primaryColor : colors.gray} />
-          )}
+          left={() => <EmailIcon color={colors.gray} />}
         />
         <Spacer size={16} />
         <Field
@@ -64,11 +59,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
             minLengthValidator,
             complexPasswordValidator,
           )}
-          left={() => (
-            <LockIcon
-              color={isActivePassword ? colors.primaryColor : colors.gray}
-            />
-          )}
+          left={() => <LockIcon color={colors.gray} />}
           password={() => (
             <Pressable onPress={() => setSecureTextEntry(!secureTextEntry)}>
               {secureTextEntry ? <EyeCloseIcon /> : <EyeOpenIcon />}
@@ -80,14 +71,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
         <ForgotPasswordContainer>
           <ForgotText>{t('forgotPassword')}</ForgotText>
         </ForgotPasswordContainer>
+        <Spacer size={16} />
       </LoginFormContainer>
 
       <ButtonSubmit
         onPress={form.submit}
         loading={loading}
         textColor={valid ? colors.black : colors.disabledTextColor}
-        valid={valid}
-        disabled={!valid}>
+        valid={valid}>
         <FormButtonText valid={valid}>{t('login')}</FormButtonText>
       </ButtonSubmit>
     </LoginFormView>

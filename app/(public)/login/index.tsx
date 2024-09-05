@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import FormTemplate from '@templates/FormTemplate/FormTemplate';
-import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
 import {
   Container,
   ImageView,
@@ -12,7 +11,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import LoginForm from '@organisms/LoginForm/LoginForm';
 import images from '../../../assets/images/index';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LoginFormData } from './LoginScreen.props';
 import { loginUserAction } from '@redux/actions/auth';
 import { useAppDispatch } from '@redux/store';
@@ -31,7 +29,6 @@ import {
   getAssignUserListAction,
   getUserListAction,
 } from '@redux/actions/user';
-import View from '@atoms/View/View';
 
 const LoginScreen = () => {
   const { t } = useTranslation('login');
