@@ -98,7 +98,7 @@ export const HeaderText = styled(Text)`
 export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   height: 48px;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.BlueChaos};
+  background-color: ${({ theme }) => theme.colors.blueChaos};
   border-radius: 50px;
 `;
 
