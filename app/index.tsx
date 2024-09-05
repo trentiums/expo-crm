@@ -28,7 +28,6 @@ const App = () => {
     }
   };
   useEffect(() => {
-    Sentry.captureException(new Error('This is a test error from Expo build'));
     handleSetToken();
   }, [token]);
   return (
