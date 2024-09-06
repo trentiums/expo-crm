@@ -24,7 +24,6 @@ import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import EmailSendBox from '@atoms/Illustrations/EmailBox';
 import PhoneIcon from '@atoms/Illustrations/PhoneIcon';
-import ProductServices from '@atoms/Illustrations/ProductService';
 import { RootState, useSelector } from '@redux/store';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
@@ -32,6 +31,7 @@ import moment from 'moment';
 import { dateTimeFormate } from '@constants/common';
 import { Flexed } from '@atoms/common/common.styles';
 import LeadStatus from '@molecules/LeadStatus/LeadStatus';
+import LeadInfoCard from '@molecules/LeadInfoCard/LeadInfoCard';
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
   leadData,
@@ -42,13 +42,13 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   setShowModal,
   setDeleteId,
   showSocialMedia,
+  isShowLeadInfo,
 }) => {
   const { t } = useTranslation('leadDetailCardDetails');
   const { t: tm } = useTranslation('modalText');
   const toast = useToast();
   const { colors } = useAppTheme();
   const leads = useSelector((state: RootState) => state.leads.leadList.leads);
-
   const handleWhatsApp = (phoneNumber: number | string) => {
     generateWhatsAppUrl(phoneNumber);
   };
@@ -104,6 +104,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           id={leadData?.leadId || leadData?.id}
         />
       </LeadInfoView>
+      {isShowLeadInfo && <LeadInfoCard leadId={leadData.leadId} />}
       {showSocialMedia && (
         <ContactBox>
           {leadData?.email && (

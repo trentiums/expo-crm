@@ -6,9 +6,12 @@ import styled from 'styled-components';
 export const LeadDetailCardContainer = styled(View)<{
   isActive?: boolean;
 }>`
-  padding: 16px 8px;
-  border-bottom-width: 1px;
-  border-bottom-color: ${({ theme }) => theme.colors.lightBorder};
+  border-radius: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 14px;
+  padding-bottom: 16px;
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 export const RequirementClubContainer = styled(View)`
   display: flex;

@@ -75,6 +75,8 @@ export const DefaultTheme = {
     blueChaos: '#5892FF',
     zhuBaiPearl: '#f8f8f8',
     namaraGrey: ' #7c7c7d',
+    modernLavender: '#A8AcB3',
+    plaster: '#EAEAEA',
   },
 };
 
@@ -149,6 +151,8 @@ export const DarkTheme: AppTheme = {
     blueChaos: '#5892FF',
     zhuBaiPearl: '#f8f8f8',
     namaraGrey: ' #7c7c7d',
+    modernLavender: '#A8AcB3',
+    plaster: '#EAEAEA',
   },
 };
 

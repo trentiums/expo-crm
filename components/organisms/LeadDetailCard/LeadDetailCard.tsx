@@ -305,7 +305,6 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
     setModalType(initialModalType);
     setModal(false);
   };
-
   return (
     <LeadDetailCardContainer isActive={false}>
       <LeadDetail
@@ -316,31 +315,9 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
           createdAt: dateTime,
           leadId: leadId,
         }}
+        isShowLeadInfo
+        showSocialMedia
       />
-
-      <View style={{ flex: 1 }}>
-        <LeadDetailsList LeadDetails={LeadDetails} />
-      </View>
-      <LeadSelectView>
-        <LeadSelect
-          channelList={channelList}
-          leadList={leadList}
-          StageList={StageList}
-          selectedChannel={leadChannelId}
-          setSelectedChannel={(leadId, value) =>
-            handleChangeChannelId(leadId, value)
-          }
-          selectedLead={leadStatusId}
-          setSelectedLead={(leadId, value) => handleChangeLead(leadId, value)}
-          selectedStage={leadConversionId}
-          setSelectedStage={(leadId, value) =>
-            handleChangeLeadStage(leadId, value)
-          }
-          leadCardId={leadCardId}
-          assignedTo={assignedTo}
-          setAssignTo={(leadId, value) => handleChangeAssignTo(leadId, value)}
-        />
-      </LeadSelectView>
     </LeadDetailCardContainer>
   );
 };

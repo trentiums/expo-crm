@@ -172,7 +172,7 @@ const Leads = () => {
         currentId={currentId}
         handleGetLeadsData={getLeadListData}
         setLeadId={setLeadId}
-        leadId={leadId}
+        leadId={item.id}
         assignedTo={item.assignTo}
       />
     </Pressable>
