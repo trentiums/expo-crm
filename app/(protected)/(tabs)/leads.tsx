@@ -79,6 +79,8 @@ const Leads = () => {
   const [currentId, setCurrentId] = useState<number>(0);
   const [filterLoading, setFilterLoading] = useState(false);
   const [filterCount, setFilterCount] = useState(0);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const handleDelete = async (slug: number) => {
     setShowModal(true);
     setDeleteCardId(slug);
@@ -162,7 +164,9 @@ const Leads = () => {
         LeadDetails={item.productService.map((item) => item.name)}
         title={item.name}
         email={item.email}
-        dateTime={item?.createdAt}
+        dateTime={moment(item?.updatedAt || item?.createdAt).format(
+          'DD MMM YYYY, hh:mm A',
+        )}
         closeSwipeAble={closeSwipeAble}
         setSwipeAbleRef={setSwipeAbleRef}
         selectedCard={selectedCard}
@@ -355,7 +359,7 @@ const Leads = () => {
     );
   }
   return (
-    <ScreenTemplate isDrawerBtn>
+    <ScreenTemplate>
       {renderHeader()}
       {leadsData?.length > 0 ? (
         <FlatList
