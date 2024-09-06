@@ -11,7 +11,11 @@ import {
   WhatsAppText,
 } from './LeadDetail.styles';
 import { useTranslation } from 'react-i18next';
-import { generateWhatsAppUrl } from '@utils/common';
+import {
+  generateWhatsAppUrl,
+  handleOpenDialCall,
+  handleOpenEmail,
+} from '@utils/common';
 import WhatsApp from '@atoms/Illustrations/WhatsApp';
 import { LeadDetailsProps } from './LeadDetail.props';
 import ActionMenu from '@molecules/ActionMenu/ActionMenu';
@@ -50,16 +54,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   const handleEmail = () => {
     const email = leadData?.email;
     if (email) {
-      const emailUrl = `mailto:${email}?subject=Your%20Subject%20Here&body=Your%20Message%20Here`;
-
-      Linking.openURL(emailUrl).catch((err) => {
-        toast.show(tm('emailOpenFailed'), {
-          type: 'customToast',
-          data: {
-            type: ToastTypeProps.Error,
-          },
-        });
-      });
+      handleOpenEmail(email);
     } else {
       toast.show(tm('emailNotAvailable'), {
         type: 'customToast',
@@ -101,10 +96,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   };
   const handlePhoneCall = (phoneNumber) => {
     if (phoneNumber) {
-      const phoneUrl = `tel:${phoneNumber}`;
-      Linking.openURL(phoneUrl).catch((err) => {
-        console.error('Failed to open dialer', err);
-      });
+      handleOpenDialCall(phoneNumber);
     }
   };
 
