@@ -1,7 +1,6 @@
-import { Dispatch, ReactNode, SetStateAction } from 'react';
-import { NativeStackNavigationProp } from 'react-native-screens/lib/typescript/native-stack/types';
+import {  ReactNode } from 'react';
 
-export type AddOptionProps = {
+export type CreateOptionProps = {
   changeSnapPoints: (points: string[]) => void;
 };
 

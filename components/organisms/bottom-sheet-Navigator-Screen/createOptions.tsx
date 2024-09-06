@@ -4,12 +4,12 @@ import { CreateOptionContainer, CreateOptionsFlatList } from './screen.style';
 import SingleUser from '@atoms/Illustrations/SingleUser';
 import LeadDocument from '@atoms/Illustrations/LeadDocument';
 import ServicesComputer from '@atoms/Illustrations/ServicesComputer';
-import { CreateOptionItemProps, AddOptionProps } from './screen.props';
+import { CreateOptionItemProps, CreateOptionProps } from './screen.props';
 
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 
-const CreateOptions: React.FC<AddOptionProps> = ({ changeSnapPoints }) => {
+const CreateOptions: React.FC<CreateOptionProps> = ({ changeSnapPoints }) => {
   const { t } = useTranslation();
   const onLayout = useCallback(() => {
     changeSnapPoints(['20%', '90%']);
