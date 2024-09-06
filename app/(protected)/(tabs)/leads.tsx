@@ -25,24 +25,16 @@ import Loader from '@atoms/Loader/Loader';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import TrashIcon from '@atoms/Illustrations/Trash';
-import TextInput from '@atoms/TextInput/TextInput';
 import isEmpty from 'lodash/isEmpty';
 import { useDebounce } from '@utils/useDebounce';
-import {
-  ActionBtnView,
-  FilterContainer,
-  FilterCountText,
-  FilterCountView,
-  FilterIconView,
-  SearchInputContainer,
-  SeparatorComponent,
-} from './drawer.style';
+import { ActionBtnView, SeparatorComponent } from './drawer.style';
 import FilterIcon from '@atoms/Illustrations/Filter';
 import { DropdownBottomSheetSnapPoints } from '@constants/common';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import FormTemplate from '@templates/FormTemplate/FormTemplate';
 import LeadsFilterForm from '@organisms/LeadsFilterForm/LeadsFilterForm';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import SearchFilter from '@molecules/Search/Search';
 
 const ButtonSize = 40;
 
@@ -313,40 +305,18 @@ const Leads = () => {
 
   const renderHeader = () => {
     return (
-      <FilterContainer>
-        <SearchInputContainer>
-          <TextInput
-            mode="outlined"
-            value={leadSearch}
-            onChangeText={(text) => setLeadSearch(text)}
-            placeholder={t('searchLeads')}
-            style={[
-              {
-                borderRadius: 25,
-                overflow: 'hidden',
-                borderColor: colors.primaryColor,
-                paddingLeft: 10,
-                paddingRight: 40,
-              },
-            ]}
-            outlineColor="transparent"
-            outlineStyle={{ borderWidth: 0 }}
-          />
-          <FilterIconView onPress={handleOpenBottomSheetOpen}>
-            {filterCount > 0 && (
-              <FilterCountView>
-                <FilterCountText>{filterCount}</FilterCountText>
-              </FilterCountView>
-            )}
-            <FilterIcon color={colors.primaryColor} />
-          </FilterIconView>
-        </SearchInputContainer>
-      </FilterContainer>
+      <SearchFilter
+        search={leadSearch}
+        setSearch={setLeadSearch}
+        handleSearch={handleSearchLead}
+        rightIcon={<FilterIcon />}
+        onRightIconPress={() => console.log('hello')}
+      />
     );
   };
   if (leadsLoading) {
     return (
-      <ScreenTemplate>
+      <ScreenTemplate isDrawerBtn>
         {renderHeader()}
         <LoaderView>
           <ActivityIndicator color={colors.primaryColor} />

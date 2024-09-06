@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import {
   FilterContainer,
   FilterIconView,
+  FilterRightIconView,
   SearchInputContainer,
 } from './Search.styles';
 import TextInput from '@atoms/TextInput/TextInput';
@@ -17,6 +18,8 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   setSearch,
   search,
   handleSearch,
+  rightIcon,
+  onRightIconPress,
 }) => {
   const { t: ts } = useTranslation('drawer');
   const { colors } = useAppTheme();
@@ -58,6 +61,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         <FilterIconView>
           <Search />
         </FilterIconView>
+        {rightIcon && <FilterRightIconView>{rightIcon}</FilterRightIconView>}
       </SearchInputContainer>
     </FilterContainer>
   );
