@@ -10,11 +10,9 @@ import {
   WhatsAppContainer,
   WhatsAppText,
 } from './LeadDetail.styles';
-import { Linking } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { callToAction } from '@utils/common';
+import { generateWhatsAppUrl } from '@utils/common';
 import WhatsApp from '@atoms/Illustrations/WhatsApp';
-import { whatsAppLink } from '@utils/config';
 import { LeadDetailsProps } from './LeadDetail.props';
 import ActionMenu from '@molecules/ActionMenu/ActionMenu';
 import { router } from 'expo-router';
@@ -22,20 +20,22 @@ import Trash from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import ActionModal from '@molecules/ActionModal/ActionModal';
-import { RootState, useSelector } from '@redux/store';
-import LeadStatusShow from '@molecules/LeadStatusShow/LeadStatusShow';
+import EmailSendBox from '@atoms/Illustrations/EmailBox';
+import PhoneIcon from '@atoms/Illustrations/PhoneIcon';
+import { RootState,  useSelector } from '@redux/store';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { useToast } from 'react-native-toast-notifications';
 import moment from 'moment';
 import { dateTimeFormate } from '@constants/common';
-import EmailSendBox from '@atoms/Illustrations/EmailBox';
-import { useToast } from 'react-native-toast-notifications';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
-import PhoneIcon from '@atoms/Illustrations/PhoneIcon';
+import { Flexed } from '@atoms/common/common.styles';
+import { Linking } from 'react-native';
+import LeadStatus from '@molecules/LeadStatus/LeadStatus';
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
   leadData,
   onEdit,
   onDelete,
-  loading,
+  isDeleteLoading,
   showModal,
   setShowModal,
   isServices,
@@ -70,27 +70,22 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   };
 
   const handleWhatsApp = (phoneNumber: number | string) => {
-    Linking.canOpenURL(whatsAppLink + phoneNumber)
-      .then((supported) => {
-        if (supported) {
-          callToAction(whatsAppLink + phoneNumber);
-        } else {
-          callToAction(
-            `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-              'Join WhatsApp using this link: https://whatsapp.com/dl/',
-            )}`,
-          );
-        }
-      })
-      .catch((err) => {
-        console.error('An error occurred', err);
-      });
+    generateWhatsAppUrl(phoneNumber);
   };
   const onEditLead = () => {
     if (onEdit) {
       onEdit();
     } else {
-      router.navigate(`/(protected)/add-lead/${leadData?.leadId}`);
+      if (leadData?.id) {
+        router.navigate(`/(protected)/add-lead/${leadData?.id}`);
+      } else {
+        toast.show(t('canNotFindId'), {
+          type: ToastType.Custom,
+          data: {
+            type: ToastTypeProps.Error,
+          },
+        });
+      }
     }
   };
   const onDeleteLead = (id: number) => {
@@ -110,18 +105,22 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
         console.error('Failed to open dialer', err);
       });
     }
+  }
+
+  const hideActionModal = () => {
+    setShowModal(false);
   };
 
   return (
     <DetailContainer>
       <LeadInfoView isServices={isServices}>
         {/* {isServices ? <ProductServices /> : <UserProfile />} */}
-        <LeadDetailView>
+        <Flexed>
           <NameAndStatusContainer>
             <NameText numberOfLines={1} isServices={isServices}>
               {leadData?.name}
             </NameText>
-            <LeadStatusShow
+            <LeadStatus
               leadStatus={
                 leads?.filter((item) => item?.id === leadData?.id)[0]
                   ?.leadStatusId
@@ -133,7 +132,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
               {moment(leadData.createdAt).format(dateTimeFormate)}
             </DateTimeText>
           )}
-        </LeadDetailView>
+        </Flexed>
         <ActionMenu
           onEdit={onEditLead}
           onDelete={(id) => onDeleteLead(id)}
@@ -160,20 +159,16 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
       {showModal && (
         <ActionModal
           isModal={showModal}
-          onBackdropPress={() => {
-            setShowModal(false);
-          }}
+          onBackdropPress={hideActionModal}
           heading={tm('discardMedia')}
           description={tm('disCardDescription')}
           label={tm('yesDiscard')}
           actionType={Actions.delete}
           actiontext={tm('cancel')}
-          onCancelPress={() => {
-            setShowModal(false);
-          }}
-          onActionPress={() => onDeleteActionPress()}
+          onCancelPress={hideActionModal}
+          onActionPress={() => handleDeleteLead()}
           icon={<Trash color={colors?.deleteColor} />}
-          loading={loading}
+          loading={isDeleteLoading}
         />
       )}
     </DetailContainer>

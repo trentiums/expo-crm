@@ -13,7 +13,7 @@ export interface LeadDetailCardProps {
   onDelete: () => void;
   onEdit: () => void;
   LeadDetails: string[];
-  mailID: string;
+  email: string;
   dateTime: string;
   closeSwipeAble: () => void;
   setSwipeAbleRef: (ref: RefObject<Swipeable>) => void;
@@ -33,7 +33,7 @@ export interface LeadDetailCardProps {
   handleGetLeadsData: () => void;
   setLeadId: (value: number) => void;
   leadId: number;
-  assignTo?: number;
+  assignedTo?: number;
 }
 export enum LeadStatusTypes {
   NEW = 1,

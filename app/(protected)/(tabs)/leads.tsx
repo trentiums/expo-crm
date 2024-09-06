@@ -1,5 +1,5 @@
 import { useAppTheme } from '@constants/theme';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import LeadDetailCard from '@organisms/LeadDetailCard/LeadDetailCard';
 import { ModalType } from '@organisms/LeadDetailCard/LeadDetailCard.props';
 import { deleteLeadAction, getLeadListAction } from '@redux/actions/lead';
@@ -91,7 +91,7 @@ const Leads = () => {
         deleteLeadAction({ lead_id: slug }),
       ).unwrap();
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -100,7 +100,7 @@ const Leads = () => {
       setDeleteCardId(null);
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -138,7 +138,7 @@ const Leads = () => {
   useEffect(() => {
     openSwipeAbleRef?.current?.close();
   }, []);
-  const RenderComponent = ({
+  const renderLeads = ({
     item,
     index,
   }: {
@@ -161,7 +161,7 @@ const Leads = () => {
         StageList={general.leadConversionList}
         LeadDetails={item.productService.map((item) => item.name)}
         title={item.name}
-        mailID={item.email}
+        email={item.email}
         dateTime={item?.createdAt}
         closeSwipeAble={closeSwipeAble}
         setSwipeAbleRef={setSwipeAbleRef}
@@ -181,7 +181,7 @@ const Leads = () => {
         handleGetLeadsData={getLeadListData}
         setLeadId={setLeadId}
         leadId={leadId}
-        assignTo={item.assignTo}
+        assignedTo={item.assignTo}
       />
     </Pressable>
   );
@@ -288,7 +288,7 @@ const Leads = () => {
       ).unwrap();
     } catch (error) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -362,7 +362,7 @@ const Leads = () => {
           contentContainerStyle={{ paddingBottom: ButtonSize + 20 }}
           data={leadsData}
           keyExtractor={(item: any, index: number) => `${item.id}-${index}`}
-          renderItem={RenderComponent}
+          renderItem={renderLeads}
           showsVerticalScrollIndicator={false}
           onEndReached={handleGetMoreData}
           ListFooterComponent={moreLoading ? <Loader size={24} /> : null}

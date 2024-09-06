@@ -65,7 +65,7 @@ export const GreetingText = styled(Text)`
 `;
 export const NameText = styled(Text)`
   font-size: 36px;
-  color: ${({ theme }) => theme.colors.BlueChaos};
+  color: ${({ theme }) => theme.colors.blueChaos};
   font-weight: 600;
 `;
 
@@ -80,5 +80,5 @@ export const TabLabelText = styled(Text)<{ focused?: boolean }>`
   font-size: 12px;
   font-weight: ${({ focused }) => (focused ? 'bold' : 'lighter')};
   color: ${({ focused, theme }) =>
-    focused ? theme.colors.EnglishHolly : theme.colors.LaurelGarland};
+    focused ? theme.colors.englishHolly : theme.colors.laurelGarland};
 `;

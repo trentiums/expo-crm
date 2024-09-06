@@ -1,7 +1,7 @@
 import { styled } from '@utils/styled';
 import { IconButton, Menu } from 'react-native-paper';
 
-export const ActionMenuComponent = styled(Menu)`
+export const ActionMenuContainer = styled(Menu)`
   border-radius: 16px;
   overflow: hidden;
 `;
