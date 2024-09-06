@@ -1,26 +1,24 @@
 import * as React from 'react';
-import Svg, { Path } from 'react-native-svg';
-const Edit = (props) => (
-  <Svg
-    width={22}
-    height={15}
-    viewBox="0 0 22 15"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}>
+import Svg, { SvgProps, Path } from 'react-native-svg';
+const Edit = ({ color, ...props }: SvgProps) => (
+  <Svg width={14} height={14} {...props}>
     <Path
-      d="M7 1L1 7.5L7 14"
-      stroke="black"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      d="m4.543 8.906.426-1.988a1.52 1.52 0 0 1 .402-.73l3.89-3.856a2.16 2.16 0 0 1 1.497-.644 1.59 1.59 0 0 1 1.137.453 1.885 1.885 0 0 1-.192 2.632l-3.89 3.891c-.204.2-.454.34-.731.402l-1.988.426H4.98a.452.452 0 0 1-.37-.18.454.454 0 0 1-.067-.406Zm1.45-2.094a.563.563 0 0 0-.165.293l-.285 1.36 1.36-.293a.567.567 0 0 0 .288-.164l3.891-3.89c.426-.34.512-.958.195-1.4a.735.735 0 0 0-.52-.198 1.28 1.28 0 0 0-.874.398Zm0 0"
+      style={{
+        stroke: 'none',
+        fillRule: 'evenodd',
+        fill: color || '#969a99',
+        fillOpacity: 1,
+      }}
     />
     <Path
-      d="M2 7.5L21 7.5"
-      stroke="black"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      d="M11.613 6.375a.447.447 0 0 0-.437.438v3.32c.008.469-.172.922-.5 1.258-.332.332-.781.52-1.25.52H3.867a1.783 1.783 0 0 1-1.75-1.778V4.598a1.779 1.779 0 0 1 1.781-1.75h3.317a.437.437 0 1 0 0-.875H3.867a2.652 2.652 0 0 0-2.652 2.625v5.535a2.652 2.652 0 0 0 2.652 2.652h5.535a2.649 2.649 0 0 0 2.649-2.652v-3.32a.444.444 0 0 0-.438-.438Zm0 0"
+      style={{
+        stroke: 'none',
+        fillRule: 'nonzero',
+        fill: color || '#969a99',
+        fillOpacity: 1,
+      }}
     />
   </Svg>
 );
