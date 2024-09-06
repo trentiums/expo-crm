@@ -258,6 +258,14 @@ const English = {
     closedWon: 'Closed-won',
     closedLost: 'Closed-lost',
   },
+  LeadInfoCard: {
+    phone: 'phone',
+    email: 'email',
+    services: 'Services',
+    stage: 'Stage',
+    channel: 'Channel',
+    assignedTo: 'Assigned To',
+  },
 };
 
 export default English;

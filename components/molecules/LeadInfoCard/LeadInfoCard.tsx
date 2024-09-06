@@ -5,7 +5,6 @@ import {
   LeadInfoContainer,
   LeadInfoTitle,
   LeadInfoValue,
-  LeadServicesContainer,
   LeadServicesText,
   ServiceListContainer,
 } from './LeadInfoCard.styles';
@@ -20,10 +19,11 @@ import { FlatList, ListRenderItem } from 'react-native';
 import { useAppTheme } from '@constants/theme';
 import LeadStage from '@molecules/LeadStage/LeadStage';
 import ProfileIcon from '@atoms/Illustrations/Profile';
-import ProductServices from '@atoms/Illustrations/ProductService';
-import View from '@atoms/View/View';
+import ServicesIcon from '@atoms/Illustrations/Services';
+import { useTranslation } from 'react-i18next';
 
 const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
+  const { t } = useTranslation('LeadInfoCard');
   const { colors } = useAppTheme();
   const leads = useSelector((state: RootState) => state.leads.leadList.leads);
   const leadDetail = leads.find((item) => item.id === leadId);
@@ -31,26 +31,26 @@ const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
   const leadAssignToData = useSelector(
     (state: RootState) => state.user.assignUserList,
   );
-  const servicesTitle = ['xyz', 'abc'];
+  const servicesTitle = leadDetail.productService.map((item) => item.name);
   const leadInfo = [
     {
-      key: 'phone',
+      key: t('phone'),
       icon: <PhoneIcon />,
       value: leadDetail.phone && (
         <LeadInfoValue>{leadDetail.phone}</LeadInfoValue>
       ),
     },
     {
-      key: 'email',
+      key: t('email'),
       icon: <EmailIcon color={colors.modernLavender} />,
       value: leadDetail.email && (
         <LeadInfoValue>{leadDetail.email}</LeadInfoValue>
       ),
     },
     {
-      key: 'services',
-      title: 'Services',
-      icon: <ProductServices />,
+      key: t('services'),
+      title: t('services'),
+      icon: <ServicesIcon />,
       value: (
         <ServiceListContainer
           data={servicesTitle}
@@ -60,14 +60,14 @@ const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
       ),
     },
     {
-      key: 'stage',
-      title: 'Stage',
+      key: t('stage'),
+      title: t('stage'),
       icon: <StageIcon />,
       value: <LeadStage leadStage={leadDetail.leadStatusId} />,
     },
     {
-      key: 'channel',
-      title: 'Channel',
+      key: t('channel'),
+      title: t('channel'),
       icon: <ChannelIcon />,
       value: (
         <LeadInfoValue>
@@ -80,8 +80,8 @@ const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
       ),
     },
     {
-      key: 'assignedTo',
-      title: 'Assigned To',
+      key: t('assignedTo'),
+      title: t('assignedTo'),
       icon: <AssignedToIcon />,
       value: leadDetail.assignTo && (
         <LeadAssignedToContainer>
@@ -97,8 +97,11 @@ const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
       ),
     },
   ];
-  const renderLeadInfo: ListRenderItem<(typeof leadInfo)[0]> = ({ item }) => (
-    <LeadInfoContainer>
+  const renderLeadInfo: ListRenderItem<(typeof leadInfo)[0]> = ({
+    item,
+    index,
+  }) => (
+    <LeadInfoContainer isItemsStarts={item.key === t('services')}>
       {item.icon}
       {item.title && <LeadInfoTitle>{`${item.title}: `}</LeadInfoTitle>}
       {item.value}

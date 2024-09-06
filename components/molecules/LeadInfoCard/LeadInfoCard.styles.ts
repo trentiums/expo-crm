@@ -8,11 +8,12 @@ export const LeadInfoCardContainer = styled(View)`
   padding: 16px;
   border-radius: 10px;
 `;
-export const LeadInfoContainer = styled(View)`
+export const LeadInfoContainer = styled(View)<{ isItemsStarts: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: center;
+  align-items: ${({ isItemsStarts }) =>
+    isItemsStarts ? 'flex-start' : 'center'};
   margin-bottom: 12px;
 `;
 export const LeadInfoTitle = styled(Text)`
@@ -30,7 +31,6 @@ export const LeadAssignedToContainer = styled(View)`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
   background-color: ${({ theme }) => theme.colors.plaster};
   padding: 2px 8px 4px 8px;
   border-radius: 15px;
@@ -56,4 +56,6 @@ export const ServiceListContainer = styled(FlatList).attrs({
   flex-direction: row;
   gap: 4px;
   flex-wrap: wrap;
+  flex: 1;
+  flex-basis: auto;
 `;
