@@ -42,6 +42,8 @@ export enum LeadStatusTypes {
   UNQUALIFIED = 4,
 }
 export enum LeadStageType {
+  INITIAL = 1,
+  PROPOSED = 2,
   NEGOTIATION = 3,
   CLOSEWON = 4,
   CLOSELOST = 5,
