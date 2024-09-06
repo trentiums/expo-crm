@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface BSCreateOptionItemProps {
+export interface CreateOptionItemProps {
   icon: ReactNode;
   label: string;
   handlePress: () => void;

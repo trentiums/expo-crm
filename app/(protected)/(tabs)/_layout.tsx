@@ -3,7 +3,7 @@ import { Tabs } from 'expo-router';
 import DashboardIcon from '@atoms/Illustrations/Dashboard';
 import { useAppTheme } from '@constants/theme';
 import LeadsIcon from '@atoms/Illustrations/Leads';
-import { AddLeadTabContainer, styles, TabLabel } from './tabs.style';
+import { CreateOptionTabContainer, styles, TabLabel } from './tabs.style';
 import { RootState, useSelector } from '@redux/store';
 import UsersIcon from '@atoms/Illustrations/Users';
 import AddCircleIcon from '@atoms/Illustrations/addCircle';
@@ -75,13 +75,11 @@ const TabsLayout = () => {
         <Tabs.Screen
           name="create-new"
           options={{
-            title: '',
-            headerTitle: '',
             tabBarLabel: () => null,
             tabBarIcon: () => (
-              <AddLeadTabContainer onPress={handleAddLeadPress}>
+              <CreateOptionTabContainer onPress={handleAddLeadPress}>
                 <AddCircleIcon color={colors.blueChaos} />
-              </AddLeadTabContainer>
+              </CreateOptionTabContainer>
             ),
           }}
           listeners={{
@@ -126,7 +124,7 @@ const TabsLayout = () => {
 
       {visibleCreateOptionSheet && (
         <BottomSheetNavigator
-          initialRouteName="BottomSheetAddOption"
+          initialRouteName="BottomSheetCreateOption"
           onClosePress={handleAddLeadPress}
         />
       )}

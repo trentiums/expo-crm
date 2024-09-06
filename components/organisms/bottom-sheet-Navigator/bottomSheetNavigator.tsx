@@ -3,7 +3,6 @@ import { Pressable } from 'react-native';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-
 import BottomSheetCreateOption from '../bottom-sheet-Navigator-Screen/createOptions';
 import {
   BottomSheetHeaderContainer,
@@ -14,9 +13,9 @@ import {
   BottomSheetHeaderProps,
   BottomSheetNavigatorProps,
 } from './bottomSheetNavigator.props';
-import ArrowLeft from '@atoms/Illustrations/ArrowLeft';
+import ArrowLeftIcon from '@atoms/Illustrations/ArrowLeft';
 import { useAppTheme } from '@constants/theme';
-import BottomSheetClose from '@atoms/Illustrations/BottomSheetClose';
+import BottomSheetCloseIcon from '@atoms/Illustrations/BottomSheetClose';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,12 +37,12 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
     <BottomSheetHeaderContainer>
       {backVisible && (
         <Pressable onPress={onBackPress}>
-          <ArrowLeft color={colors.black} />
+          <ArrowLeftIcon color={colors.black} />
         </Pressable>
       )}
       <BottomSheetHeaderTitle>{title}</BottomSheetHeaderTitle>
       <Pressable onPress={onClose}>
-        <BottomSheetClose />
+        <BottomSheetCloseIcon />
       </Pressable>
     </BottomSheetHeaderContainer>
   );

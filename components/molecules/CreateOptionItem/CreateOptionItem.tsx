@@ -2,11 +2,11 @@ import React from 'react';
 import {
   IconContainer,
   ItemContainer,
-  LabelText,
-} from './BSCreateOptionItem.styles';
-import { BSCreateOptionItemProps } from './BSCreateOptionItem.props';
+  OptionLabel,
+} from './CreateOptionItem.styles';
+import { CreateOptionItemProps } from './CreateOptionItem.props';
 
-const CreateOptionsItem: React.FC<BSCreateOptionItemProps> = ({
+const CreateOptionsItem: React.FC<CreateOptionItemProps> = ({
   icon,
   label,
   handlePress,
@@ -14,7 +14,7 @@ const CreateOptionsItem: React.FC<BSCreateOptionItemProps> = ({
   return (
     <ItemContainer onPress={() => handlePress()}>
       <IconContainer>{icon}</IconContainer>
-      <LabelText>{label}</LabelText>
+      <OptionLabel>{label}</OptionLabel>
     </ItemContainer>
   );
 };

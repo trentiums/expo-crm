@@ -2,7 +2,7 @@ import Text from '@atoms/Text/Text';
 import { styled } from '@utils/styled';
 import { Pressable, View } from 'react-native';
 
-export const LabelText = styled(Text)`
+export const OptionLabel = styled(Text)`
   font-size: 14px;
   margin-top: 8px;
   color: ${({ theme }) => theme.colors.englishHolly};

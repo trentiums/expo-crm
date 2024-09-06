@@ -14,7 +14,6 @@ export const styles = StyleSheet.create({
     paddingTop: 16,
     minHeight: 60,
     paddingBottom: 8,
-    backgroundColor: 'red',
   },
   barLabelStyle: {
     fontSize: 12,
@@ -79,7 +78,7 @@ export const NameText = styled(Text)`
   font-weight: 600;
 `;
 
-export const AddLeadTabContainer = styled(Pressable)`
+export const CreateOptionTabContainer = styled(Pressable)`
   align-items: center;
   justify-content: center;
   top: -4px;
