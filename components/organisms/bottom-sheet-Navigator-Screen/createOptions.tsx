@@ -8,7 +8,10 @@ import { CreateOptionItemProps, CreateOptionProps } from './screen.props';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 
-const CreateOptions: React.FC<CreateOptionProps> = ({ changeSnapPoints }) => {
+const CreateOptions: React.FC<CreateOptionProps> = ({
+  changeSnapPoints,
+  changeRoute,
+}) => {
   const { t } = useTranslation('bottomSheetCreatePotion');
   const onLayout = useCallback(() => {
     changeSnapPoints(['20%', '90%']);
@@ -32,6 +35,11 @@ const CreateOptions: React.FC<CreateOptionProps> = ({ changeSnapPoints }) => {
     },
   ];
 
+  const handleRedirection = (route: string) => {
+    changeRoute?.();
+    router.navigate(route);
+  };
+
   const renderCreateOption = ({
     item,
     index,
@@ -41,7 +49,7 @@ const CreateOptions: React.FC<CreateOptionProps> = ({ changeSnapPoints }) => {
   }) => {
     return (
       <CreateOptionsItem
-        handlePress={() => router.navigate(item.route)}
+        handlePress={() => handleRedirection(item.route)}
         icon={item.icon}
         label={t(`${item.label}`)}
         key={`${item.label}-${index}`}

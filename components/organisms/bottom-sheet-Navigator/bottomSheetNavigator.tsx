@@ -1,6 +1,9 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Pressable } from 'react-native';
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetModal,
+} from '@gorhom/bottom-sheet';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomSheetCreateOption from '../bottom-sheet-Navigator-Screen/createOptions';
@@ -47,6 +50,10 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
     </BottomSheetHeaderContainer>
   );
 
+  useEffect(() => {
+    bottomSheetRef.current?.present();
+  });
+
   const changeSnapPoints = (points: string[]) => {
     setSnapPoints(points);
   };
@@ -66,7 +73,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
     onClosePress?.();
   };
   return (
-    <BottomSheet
+    <BottomSheetModal
       ref={bottomSheetRef}
       index={0}
       backdropComponent={renderBackdrop}
@@ -90,12 +97,13 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
               <BottomSheetCreateOption
                 {...props}
                 changeSnapPoints={changeSnapPoints}
+                changeRoute={handleClosePress}
               />
             )}
           </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
-    </BottomSheet>
+    </BottomSheetModal>
   );
 };
 

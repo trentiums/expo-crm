@@ -1,7 +1,8 @@
-import {  ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 export type CreateOptionProps = {
   changeSnapPoints: (points: string[]) => void;
+  changeRoute?: () => void;
 };
 
 export type CreateOptionItemProps = {
