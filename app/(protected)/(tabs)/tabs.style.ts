@@ -1,7 +1,7 @@
 import Text from '@atoms/Text/Text';
 import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
-import { StyleSheet, Platform, FlatList, Pressable } from 'react-native';
+import { StyleSheet, FlatList, Pressable } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export const styles = StyleSheet.create({
@@ -12,6 +12,13 @@ export const styles = StyleSheet.create({
   },
   barStyle: {
     paddingTop: 16,
+    minHeight: 60,
+    paddingBottom: 8,
+    backgroundColor: 'red',
+  },
+  barLabelStyle: {
+    fontSize: 12,
+    marginTop: 4,
   },
 });
 export const DashboardScreenContainer = styled(ScrollView)`
@@ -78,7 +85,7 @@ export const AddLeadTabContainer = styled(Pressable)`
   top: -4px;
 `;
 
-export const TabLabelText = styled(Text)<{ focused?: boolean }>`
+export const TabLabel = styled(Text)<{ focused?: boolean }>`
   margin-top: 5px;
   font-size: 12px;
   font-weight: ${({ focused }) => (focused ? 'bold' : 'lighter')};

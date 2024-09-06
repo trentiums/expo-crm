@@ -1,9 +1,9 @@
-import { userRole } from 'src/type/api/auth';
+import { UserRole } from '@type/api/auth';
 
 export interface User {
   name: string;
   email: string;
-  userRole: userRole | undefined;
+  userRole: UserRole | undefined;
   userId: number;
   token: string;
 }

@@ -48,6 +48,9 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
     </BottomSheetHeaderContainer>
   );
 
+  const changeSnapPoints = (points: string[]) => {
+    setSnapPoints(points);
+  };
   const renderBackdrop = useCallback(
     (props: any) => (
       <BottomSheetBackdrop
@@ -85,7 +88,10 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
               ),
             })}>
             {(props) => (
-              <BottomSheetCreateOption {...props} changeSnapPoints={setSnapPoints} />
+              <BottomSheetCreateOption
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+              />
             )}
           </Stack.Screen>
         </Stack.Navigator>
