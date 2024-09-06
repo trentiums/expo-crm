@@ -251,6 +251,13 @@ const English = {
     users: 'Users',
     services: 'Services',
   },
+  leadStage: {
+    initial: 'Initial',
+    proposed: 'Proposed',
+    negotiation: 'Negotiation',
+    closedWon: 'Closed-won',
+    closedLost: 'Closed-lost',
+  },
 };
 
 export default English;
