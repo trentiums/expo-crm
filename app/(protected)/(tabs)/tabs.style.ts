@@ -29,7 +29,7 @@ export const NoDataFoundText = styled(Text)`
   max-width: 300px;
   margin: auto;
 `;
-export const FlatListCon = styled(FlatList).attrs({
+export const ProductsFlatList = styled(FlatList).attrs({
   contentContainerStyle: {
     paddingTop: 16,
     paddingBottom: 48,

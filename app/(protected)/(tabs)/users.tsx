@@ -36,7 +36,7 @@ const Users = () => {
   const userList = useSelector((state: RootState) => state.user?.userList);
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const [deleteId, setDeleteId] = useState(0);
+  const [deleteUserId, setDeleteUserId] = useState(0);
   const [moreLoading, setMoreLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -44,7 +44,7 @@ const Users = () => {
     try {
       setDeleteLoading(true);
       const response = await dispatch(
-        deleteUserAction({ user_id: deleteId }),
+        deleteUserAction({ user_id: deleteUserId }),
       ).unwrap();
       toast.show(response?.message, {
         type: ToastType.Custom,
@@ -88,7 +88,7 @@ const Users = () => {
     }
   };
 
-  const renderUsers = ({
+  const renderUser = ({
     item,
     index,
   }: {
@@ -101,10 +101,10 @@ const Users = () => {
         onDelete={handleDeleteUser}
         onEdit={() => handleEdit(item?.id)}
         data={item}
-        setShowModal={setShowModal}
+        onChangeModalState={(value) => setShowModal(value)}
         showModal={showModal}
         loading={deleteLoading}
-        setDeleteId={setDeleteId}
+        onChangeDeleteId={(id) => setDeleteUserId(id)}
       />
       <Spacer size={12} />
     </>
@@ -130,13 +130,13 @@ const Users = () => {
   }
 
   return (
-    <ScreenTemplate isDrawerBtn>
+    <ScreenTemplate moreVisible>
       {userList?.users?.length > 0 ? (
         <FlatList
           data={userList?.users}
           contentContainerStyle={{ paddingBottom: ButtonSize + 20 }}
           keyExtractor={(item, index) => `${item.id}-${index}`}
-          renderItem={renderUsers}
+          renderItem={renderUser}
           showsVerticalScrollIndicator={false}
           onEndReached={handleGetMoreUserData}
           ListFooterComponent={moreLoading ? <Loader size={24} /> : null}

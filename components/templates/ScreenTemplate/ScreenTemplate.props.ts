@@ -5,7 +5,7 @@ export type ScreenTemplateProps = {
   safeAreaProps?: SafeAreaViewProps;
   backgroundColor?: string;
   addButtonText?: string;
-  isDrawerBtn?: boolean;
+  moreVisible?: boolean;
   onAddButtonPress?: () => void;
   title?: string;
 };

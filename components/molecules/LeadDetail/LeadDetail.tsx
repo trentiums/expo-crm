@@ -32,7 +32,6 @@ import { useToast } from 'react-native-toast-notifications';
 import moment from 'moment';
 import { dateTimeFormate } from '@constants/common';
 import { Flexed } from '@atoms/common/common.styles';
-import { Linking } from 'react-native';
 import LeadStatus from '@molecules/LeadStatus/LeadStatus';
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
@@ -41,11 +40,12 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   onDelete,
   isDeleteLoading,
   showModal,
-  setShowModal,
+  onChangeModalState,
   isServices,
-  setDeleteId,
-  isShowSocialMedia,
+  onChangeDeleteId,
+  isSocialMediaVisible,
 }) => {
+  const { t } = useTranslation('leadDetailCardDetails');
   const { t: tm } = useTranslation('modalText');
   const toast = useToast();
   const { colors } = useAppTheme();
@@ -85,8 +85,8 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
     }
   };
   const onDeleteLead = (id: number) => {
-    setShowModal(true);
-    setDeleteId?.(id);
+    onChangeModalState(true);
+    onChangeDeleteId?.(id);
   };
   const onDeleteActionPress = async () => {
     await handleDeleteLead();
@@ -95,13 +95,20 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
     onDelete(leadData?.leadId || leadData?.id);
   };
   const handlePhoneCall = (phoneNumber) => {
-    if (phoneNumber) {
+    try {
       handleOpenDialCall(phoneNumber);
+    } catch (error) {
+      toast.show(t('phoneNumberIsNotAvailable'), {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
     }
   };
 
   const hideActionModal = () => {
-    setShowModal(false);
+    onChangeModalState(false);
   };
 
   return (
@@ -132,7 +139,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           id={leadData?.leadId || leadData?.id}
         />
       </LeadInfoView>
-      {isShowSocialMedia && (
+      {isSocialMediaVisible && (
         <ContactBox>
           {leadData?.email && (
             <WhatsAppContainer onPress={handleEmail}>

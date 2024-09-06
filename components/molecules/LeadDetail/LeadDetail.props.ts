@@ -5,9 +5,9 @@ export interface LeadDetailsProps {
   onDelete?: (id: number) => void;
   onEdit?: () => void;
   isDeleteLoading?: boolean;
-  setShowModal?: (value: boolean) => void;
+  onChangeModalState?: (value: boolean) => void;
   showModal?: boolean;
   isServices?: boolean;
-  setDeleteId?: (value: number) => void;
-  isShowSocialMedia?: boolean;
+  onChangeDeleteId?: (value: number) => void;
+  isSocialMediaVisible?: boolean;
 }

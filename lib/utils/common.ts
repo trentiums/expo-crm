@@ -130,7 +130,5 @@ export const handleOpenEmail = (email: string) => {
 };
 export const handleOpenDialCall = (phoneNumber: number) => {
   const phoneUrl = `tel:${phoneNumber}`;
-  Linking.openURL(phoneUrl).catch((err) => {
-    console.error('Failed to open dialer', err);
-  });
+  Linking.openURL(phoneUrl);
 };

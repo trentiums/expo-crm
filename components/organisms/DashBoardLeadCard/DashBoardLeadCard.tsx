@@ -12,7 +12,7 @@ import { dashboardLeadListAction } from '@redux/actions/dashboard';
 
 const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
   leadData,
-  isShowSocialMedia,
+  isSocialMediaVisible,
 }) => {
   const dispatch = useAppDispatch();
   const toast = useToast();
@@ -51,9 +51,9 @@ const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
           }
           onDelete={handleDeleteLead}
           loading={deleteLoading}
-          setShowModal={setShowModal}
+          onChangeModalState={(value) => setShowModal(value)}
           showModal={showModal}
-          isShowSocialMedia={isShowSocialMedia}
+          isSocialMediaVisible={isSocialMediaVisible}
         />
       </LeadDetailCardContainer>
       <Spacer size={16} />

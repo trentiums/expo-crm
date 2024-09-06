@@ -62,7 +62,7 @@ const Leads = () => {
   const toast = useToast();
   const general = useSelector((state: RootState) => state.general);
   const [showModal, setShowModal] = useState(false);
-  const [deleteCardId, setDeleteCardId] = useState<number | null>();
+  const [deleteLeadId, setDeleteLeadId] = useState<number | null>();
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [modalType, setModalType] = useState<ModalType>(initialModalType);
   const [leadId, setLeadId] = useState(0);
@@ -73,17 +73,14 @@ const Leads = () => {
   const [filterSheet, setFilterSheet] = useState(false);
   const dispatch = useAppDispatch();
   const [refreshing, setRefreshing] = useState(false);
-  const [openSwipeAbleRef, setOpenSwipeAbleRef] =
-    useState<RefObject<Swipeable> | null>(null);
   const [modal, setModal] = useState(false);
   const [currentId, setCurrentId] = useState<number>(0);
   const [filterLoading, setFilterLoading] = useState(false);
-  const [filterCount, setFilterCount] = useState(0);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const handleDelete = async (slug: number) => {
     setShowModal(true);
-    setDeleteCardId(slug);
+    setDeleteLeadId(slug);
   };
   const debouncedLeadSearch = useDebounce(leadSearch || undefined, 300);
   const onDeleteActionPress = async (slug: number) => {
@@ -99,7 +96,7 @@ const Leads = () => {
         },
       });
       setShowModal(false);
-      setDeleteCardId(null);
+      setDeleteLeadId(null);
     } catch (error: any) {
       toast.show(error, {
         type: ToastType.Custom,
@@ -111,7 +108,6 @@ const Leads = () => {
     setShowModal(false);
     setLoading(false);
     setModal(false);
-    openSwipeAbleRef?.current?.close();
   };
 
   const handleEdit = (slug: string | number) => {
@@ -119,15 +115,6 @@ const Leads = () => {
     router.navigate(`/(protected)/add-lead/${slug}`);
   };
 
-  const closeSwipeAble = () => {
-    if (openSwipeAbleRef && openSwipeAbleRef.current) {
-      openSwipeAbleRef.current.close();
-    }
-  };
-
-  const setSwipeAbleRef = (ref: RefObject<Swipeable>) => {
-    setOpenSwipeAbleRef(ref);
-  };
   const getLeadListData = async () => {
     try {
       setLeadsLoading(true);
@@ -137,9 +124,7 @@ const Leads = () => {
     }
     setLeadsLoading(false);
   };
-  useEffect(() => {
-    openSwipeAbleRef?.current?.close();
-  }, []);
+
   const renderLeads = ({
     item,
     index,
@@ -167,8 +152,6 @@ const Leads = () => {
         dateTime={moment(item?.updatedAt || item?.createdAt).format(
           'DD MMM YYYY, hh:mm A',
         )}
-        closeSwipeAble={closeSwipeAble}
-        setSwipeAbleRef={setSwipeAbleRef}
         selectedCard={selectedCard}
         setSelectedCard={setSelectedCard}
         cardIndex={index}
@@ -238,8 +221,7 @@ const Leads = () => {
     }
     setLeadsLoading(false);
   };
-
-  useEffect(() => {
+  const filterCount = useMemo(() => {
     const states = [
       leadsFilter?.startDate,
       leadsFilter?.endDate,
@@ -249,10 +231,9 @@ const Leads = () => {
       leadsFilter?.orderBy,
       leadsFilter?.sortBy,
     ];
-    const count = states.filter(
+    return states.filter(
       (state) => state !== null && state !== undefined && state !== '',
     ).length;
-    setFilterCount(count);
   }, [leadsFilter]);
 
   const handleApplyFilter = async (values: any) => {
@@ -269,7 +250,6 @@ const Leads = () => {
     const count = states.filter(
       (state) => state !== null && state !== undefined && state !== '',
     ).length;
-    setFilterCount(count);
     dispatch(setLeadsFilters(values));
     try {
       setFilterLoading(true);
@@ -414,7 +394,6 @@ const Leads = () => {
           onSubmit={(values) => handleApplyFilter(values)}
           handleDropDownClose={handleOpenBottomSheetOpen}
           loading={filterLoading}
-          setFilterCount={setFilterCount}
           bottomSheetClose={handleBottomSheetClose}
         />
       </BottomSheetModal>
@@ -424,8 +403,7 @@ const Leads = () => {
           isModal
           onBackdropPress={() => {
             setShowModal(false);
-            setDeleteCardId(null);
-            closeSwipeAble();
+            setDeleteLeadId(null);
           }}
           heading={t('discardMedia')}
           description={t('disCardDescription')}
@@ -434,10 +412,9 @@ const Leads = () => {
           actiontext={t('cancel')}
           onCancelPress={() => {
             setShowModal(false);
-            setDeleteCardId(null);
-            closeSwipeAble();
+            setDeleteLeadId(null);
           }}
-          onActionPress={() => onDeleteActionPress(deleteCardId || 0)}
+          onActionPress={() => onDeleteActionPress(deleteLeadId || 0)}
           icon={<TrashIcon color={colors?.deleteColor} />}
           loading={loading}
         />

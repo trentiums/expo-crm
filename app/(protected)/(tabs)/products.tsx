@@ -5,7 +5,7 @@ import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
-import { FlatListCon } from './tabs.style';
+import { ProductsFlatList } from './tabs.style';
 import { RefreshControl } from 'react-native';
 import { UserDetailCardProps } from '@organisms/UserDetailCard/UserDetailCard.props';
 import UserDetailCard from '@organisms/UserDetailCard/UserDetailCard';
@@ -25,7 +25,7 @@ const products = () => {
   const [showModal, setShowModal] = useState(false);
   const [moreLoading, setMoreLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const [deleteId, setDeleteId] = useState(0);
+  const [deleteProductId, setDeleteProductId] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -46,9 +46,9 @@ const products = () => {
       data={item}
       isServices
       showModal={showModal}
-      setShowModal={setShowModal}
+      onChangeModalState={(value) => setShowModal(value)}
       loading={deleteLoading}
-      setDeleteId={setDeleteId}
+      onChangeDeleteId={(id) => setDeleteProductId(id)}
     />
   );
 
@@ -75,7 +75,7 @@ const products = () => {
     try {
       setDeleteLoading(true);
       const response = await dispatch(
-        deleteProductServiceAction({ product_service_id: deleteId }),
+        deleteProductServiceAction({ product_service_id: deleteProductId }),
       ).unwrap();
       toast.show(response?.message, {
         type: ToastType.Custom,
@@ -104,11 +104,11 @@ const products = () => {
     setRefreshing(false);
   };
   return (
-    <ScreenTemplate isDrawerBtn>
+    <ScreenTemplate moreVisible>
       {loading ? (
         <Loader />
       ) : (
-        <FlatListCon
+        <ProductsFlatList
           data={products?.serviceList}
           keyExtractor={(item, index) => `${item.id}-${index}`}
           renderItem={renderProducts}

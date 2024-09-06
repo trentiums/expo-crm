@@ -17,13 +17,13 @@ const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
   backgroundColor,
   addButtonText,
   onAddButtonPress,
-  isDrawerBtn,
+  moreVisible,
   title,
 }) => {
   const { colors } = useAppTheme();
   return (
     <Container {...safeAreaProps} backgroundColor={backgroundColor}>
-      {isDrawerBtn && <MoreMenuButton />}
+      {moreVisible && <MoreMenuButton />}
       <ScreenTemplateView>
         {children}
         {!!addButtonText && (
