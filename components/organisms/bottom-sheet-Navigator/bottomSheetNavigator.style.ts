@@ -2,7 +2,7 @@ import Text from '@atoms/Text/Text';
 import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
 
-export const BottomSheetHeaderCon = styled(View)`
+export const BottomSheetHeaderContainer = styled(View)`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

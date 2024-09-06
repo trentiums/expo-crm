@@ -9,7 +9,7 @@ import UsersIcon from '@atoms/Illustrations/Users';
 import AddCircleIcon from '@atoms/Illustrations/addCircle';
 import ProductIcon from '@atoms/Illustrations/Product';
 import { useTranslation } from 'react-i18next';
-import BottomSheetNavigator from '../bottom-sheet-Navigator/bottomSheetNavigator';
+import BottomSheetNavigator from '../../../components/organisms/bottom-sheet-Navigator/bottomSheetNavigator';
 
 const TabsLayout = () => {
   const { colors } = useAppTheme();
@@ -74,7 +74,7 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen
-          name="customTabAdd"
+          name="create-new"
           options={{
             title: '',
             headerTitle: '',
@@ -129,7 +129,7 @@ const TabsLayout = () => {
 
       {isBottomSheetVisible && (
         <BottomSheetNavigator
-          initialRouteName="ScreenOne"
+          initialRouteName="BottomSheetAddOption"
           onClosePress={handleAddLeadPress}
         />
       )}

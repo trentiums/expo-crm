@@ -3,17 +3,15 @@ import { Pressable } from 'react-native';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
-import ScreenTwo from '../bottom-sheet-Navigator-Screen/screenTwo';
 
-import BottomSheetAddOption from '../bottom-sheet-Navigator-Screen/addOptions';
+import BottomSheetCreateOption from '../bottom-sheet-Navigator-Screen/createOptions';
 import {
-  BottomSheetBackDropCon,
-  BottomSheetHeaderCon,
+  BottomSheetHeaderContainer,
   BottomSheetHeaderTitle,
 } from './bottomSheetNavigator.style';
 import { useTranslation } from 'react-i18next';
 import {
-  BottomSheetCustomHeaderProps,
+  BottomSheetHeaderProps,
   BottomSheetNavigatorProps,
 } from './bottomSheetNavigator.props';
 import ArrowLeft from '@atoms/Illustrations/ArrowLeft';
@@ -34,11 +32,11 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
   const CustomHeader = ({
     title,
     onClose,
-    showBackButton,
+    backVisible,
     onBackPress,
-  }: BottomSheetCustomHeaderProps) => (
-    <BottomSheetHeaderCon>
-      {showBackButton && (
+  }: BottomSheetHeaderProps) => (
+    <BottomSheetHeaderContainer>
+      {backVisible && (
         <Pressable onPress={onBackPress}>
           <ArrowLeft color={colors.black} />
         </Pressable>
@@ -47,7 +45,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
       <Pressable onPress={onClose}>
         <BottomSheetClose />
       </Pressable>
-    </BottomSheetHeaderCon>
+    </BottomSheetHeaderContainer>
   );
 
   const renderBackdrop = useCallback(
@@ -77,7 +75,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
       <NavigationContainer independent={true}>
         <Stack.Navigator initialRouteName={initialRouteName}>
           <Stack.Screen
-            name="BottomSheetAddOption"
+            name="BottomSheetCreateOption"
             options={() => ({
               header: () => (
                 <CustomHeader
@@ -87,7 +85,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
               ),
             })}>
             {(props) => (
-              <BottomSheetAddOption {...props} setSnapPoints={setSnapPoints} />
+              <BottomSheetCreateOption {...props} setSnapPoints={setSnapPoints} />
             )}
           </Stack.Screen>
         </Stack.Navigator>

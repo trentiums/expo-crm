@@ -3,10 +3,10 @@ import {
   IconContainer,
   ItemContainer,
   LabelText,
-} from './BSAddOptionItem.styles';
-import { BSAddOptionItemProps } from './BSAddOptionItem.props';
+} from './BSCreateOptionItem.styles';
+import { BSCreateOptionItemProps } from './BSCreateOptionItem.props';
 
-const AddOptionsItem: React.FC<BSAddOptionItemProps> = ({
+const CreateOptionsItem: React.FC<BSCreateOptionItemProps> = ({
   icon,
   label,
   handlePress,
@@ -19,4 +19,4 @@ const AddOptionsItem: React.FC<BSAddOptionItemProps> = ({
   );
 };
 
-export default AddOptionsItem;
+export default CreateOptionsItem;

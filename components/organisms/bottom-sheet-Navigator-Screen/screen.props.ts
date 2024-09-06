@@ -5,8 +5,8 @@ export type AddOptionProps = {
   setSnapPoints: Dispatch<SetStateAction<string[]>>;
 };
 
-export type AddOptionItemProps = {
+export type CreateOptionItemProps = {
   label: string;
   icon: ReactNode;
-  navigationScreen: string;
+  route: string;
 };

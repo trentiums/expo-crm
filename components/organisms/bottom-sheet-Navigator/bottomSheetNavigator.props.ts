@@ -3,9 +3,9 @@ export type BottomSheetNavigatorProps = {
   onClosePress?: () => void;
 };
 
-export type BottomSheetCustomHeaderProps = {
+export type BottomSheetHeaderProps = {
   title: string;
   onClose: () => void;
-  showBackButton?: boolean;
+  backVisible?: boolean;
   onBackPress?: () => void;
 };
