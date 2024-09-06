@@ -8,6 +8,7 @@ export interface UserDetailCardProps {
   loading?: boolean;
   isServices?: boolean;
   setDeleteId?: (value: number) => void;
+  isShowSocialMedia?: boolean;
 }
 export interface UserDetailCardValue {
   id?: number;

@@ -22,7 +22,7 @@ import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import EmailSendBox from '@atoms/Illustrations/EmailBox';
 import PhoneIcon from '@atoms/Illustrations/PhoneIcon';
-import { RootState,  useSelector } from '@redux/store';
+import { RootState, useSelector } from '@redux/store';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
 import moment from 'moment';
@@ -40,6 +40,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   setShowModal,
   isServices,
   setDeleteId,
+  isShowSocialMedia,
 }) => {
   const { t: tm } = useTranslation('modalText');
   const toast = useToast();
@@ -105,7 +106,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
         console.error('Failed to open dialer', err);
       });
     }
-  }
+  };
 
   const hideActionModal = () => {
     setShowModal(false);
@@ -139,23 +140,25 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           id={leadData?.leadId || leadData?.id}
         />
       </LeadInfoView>
-      <ContactBox>
-        {leadData?.email && (
-          <WhatsAppContainer onPress={handleEmail}>
-            <EmailSendBox />
-          </WhatsAppContainer>
-        )}
-        {leadData?.phone && (
-          <WhatsAppContainer onPress={() => handlePhoneCall(leadData?.phone)}>
-            <PhoneIcon />
-          </WhatsAppContainer>
-        )}
-        {leadData?.phone && (
-          <WhatsAppContainer onPress={() => handleWhatsApp(leadData?.phone)}>
-            <WhatsApp />
-          </WhatsAppContainer>
-        )}
-      </ContactBox>
+      {isShowSocialMedia && (
+        <ContactBox>
+          {leadData?.email && (
+            <WhatsAppContainer onPress={handleEmail}>
+              <EmailSendBox />
+            </WhatsAppContainer>
+          )}
+          {leadData?.phone && (
+            <WhatsAppContainer onPress={() => handlePhoneCall(leadData?.phone)}>
+              <PhoneIcon />
+            </WhatsAppContainer>
+          )}
+          {leadData?.phone && (
+            <WhatsAppContainer onPress={() => handleWhatsApp(leadData?.phone)}>
+              <WhatsApp />
+            </WhatsAppContainer>
+          )}
+        </ContactBox>
+      )}
       {showModal && (
         <ActionModal
           isModal={showModal}

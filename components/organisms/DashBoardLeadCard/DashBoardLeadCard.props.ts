@@ -1,6 +1,7 @@
 export interface DashBoardLeadCardProps {
   leadData: Lead;
   onDelete: () => void;
+  isShowSocialMedia?: boolean;
 }
 export interface Lead {
   id?: number;

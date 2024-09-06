@@ -15,6 +15,7 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
   showModal,
   loading,
   isServices,
+  isShowSocialMedia,
   setDeleteId,
 }) => {
   const { colors } = useAppTheme();
@@ -30,6 +31,7 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
           loading={loading}
           isServices={isServices}
           setDeleteId={setDeleteId}
+          isShowSocialMedia={isShowSocialMedia}
         />
         <Spacer size={8} />
         {data?.email && (

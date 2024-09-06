@@ -144,6 +144,7 @@ const Dashboard = () => {
         key={`${lead?.id}-${index}`}
         onDelete={() => handleDelete(lead?.id)}
         leadData={lead}
+        isShowSocialMedia
       />
     </Pressable>
   );

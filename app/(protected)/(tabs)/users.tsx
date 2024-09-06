@@ -88,7 +88,7 @@ const Users = () => {
     }
   };
 
-  const renderTabs = ({
+  const renderUsers = ({
     item,
     index,
   }: {
@@ -136,7 +136,7 @@ const Users = () => {
           data={userList?.users}
           contentContainerStyle={{ paddingBottom: ButtonSize + 20 }}
           keyExtractor={(item, index) => `${item.id}-${index}`}
-          renderItem={renderTabs}
+          renderItem={renderUsers}
           showsVerticalScrollIndicator={false}
           onEndReached={handleGetMoreUserData}
           ListFooterComponent={moreLoading ? <Loader size={24} /> : null}
