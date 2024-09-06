@@ -85,7 +85,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
               ),
             })}>
             {(props) => (
-              <BottomSheetCreateOption {...props} setSnapPoints={setSnapPoints} />
+              <BottomSheetCreateOption {...props} changeSnapPoints={setSnapPoints} />
             )}
           </Stack.Screen>
         </Stack.Navigator>

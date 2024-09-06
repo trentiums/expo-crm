@@ -9,10 +9,10 @@ import { CreateOptionItemProps, AddOptionProps } from './screen.props';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 
-const AddOptions: React.FC<AddOptionProps> = ({ setSnapPoints }) => {
+const CreateOptions: React.FC<AddOptionProps> = ({ changeSnapPoints }) => {
   const { t } = useTranslation();
   const onLayout = useCallback(() => {
-    setSnapPoints(['20%', '90%']);
+    changeSnapPoints(['20%', '90%']);
   }, []);
 
   const createOptions = [
@@ -64,4 +64,4 @@ const AddOptions: React.FC<AddOptionProps> = ({ setSnapPoints }) => {
   );
 };
 
-export default AddOptions;
+export default CreateOptions;
