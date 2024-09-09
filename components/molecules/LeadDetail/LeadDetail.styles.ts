@@ -9,9 +9,7 @@ export const DetailContainer = styled(View)`
   align-content: flex-start;
   gap: 8px;
 `;
-export const LeadDetailView = styled(View)`
-  flex: 1;
-`;
+
 export const LeadInfoView = styled(View)<{ isServices?: boolean }>`
   display: flex;
   flex-direction: row;
@@ -42,11 +40,7 @@ export const WhatsAppContainer = styled(Pressable)`
   border-radius: 16px;
   flex: 1;
 `;
-export const WhatsAppText = styled(Text)`
-  font-size: 16px;
-  color: ${({ theme }) => theme.colors.textDark};
-  font-weight: 500;
-`;
+
 export const NameAndStatusContainer = styled(View)`
   display: flex;
   flex-direction: row;

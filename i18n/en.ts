@@ -241,9 +241,28 @@ const English = {
     users: 'Users',
     services: 'Services',
   },
-  bottomSheetNavigator: { ChooseOptionToAdd: 'Choose option to add',chooseOption:'Choose option' },
-  bottomSheetCreatePotion: { user: 'User', lead: 'Lead', service: 'Service',edit:'Edit',delete:'Delete',updateStatus:'Update status',updateStage:'Update stage' },
-  bottomSheetModifyLead: { edit:'Edit',delete:'Delete',updateStatus:'Update status',updateStage:'Update stage' }
+  bottomSheetNavigator: {
+    ChooseOptionToAdd: 'Choose option to add',
+    chooseOption: 'Choose option',
+    updateAssignedUsers: 'Update assigned users',
+    updateStatus: 'Update status',
+    changeLeadStatus: 'Change lead status',
+  },
+  bottomSheetCreatePotion: {
+    user: 'User',
+    lead: 'Lead',
+    service: 'Service',
+    edit: 'Edit',
+    delete: 'Delete',
+    updateStatus: 'Update status',
+    updateStage: 'Update stage',
+  },
+  bottomSheetModifyLead: {
+    edit: 'Edit',
+    delete: 'Delete',
+    updateStatus: 'Update status',
+    updateStage: 'Update stage',
+  },
 };
 
 export default English;
