@@ -26,10 +26,7 @@ import {
 import { ActivityIndicator } from 'react-native-paper';
 import Loader from '@atoms/Loader/Loader';
 import { Spacer } from '@atoms/common/common.styles';
-import { FilterContainer, SearchInputContainer } from './drawer.style';
-import TextInput from '@atoms/TextInput/TextInput';
-import Search from '@atoms/Illustrations/Search';
-import View from '@atoms/View/View';
+import SearchFilter from '@molecules/Search/Search';
 
 const ButtonSize = 40;
 
@@ -42,11 +39,11 @@ const Users = () => {
   const dispatch = useAppDispatch();
   const toast = useToast();
   const userList = useSelector((state: RootState) => state.user?.userList);
-  const [leadSearch, setLeadSearch] = useState('');
   const [loadingStatus, setLoadingStatus] = useState<
     'NONE' | 'DELETE' | 'MORE' | 'REFRESH'
   >('NONE');
   const [deleteUserId, setDeleteUserId] = useState(0);
+  const [userSearch, setUserSearch] = useState('');
 
   const handleDeleteUser = async () => {
     try {
@@ -139,29 +136,11 @@ const Users = () => {
   }
   const renderHeader = () => {
     return (
-      <FilterContainer>
-        <SearchInputContainer>
-          <TextInput
-            mode="outlined"
-            value={leadSearch}
-            onChangeText={(text) => setLeadSearch(text)}
-            placeholder={ts('searchUsers')}
-            style={[
-              {
-                backgroundColor: colors.snowflake,
-                borderRadius: 25,
-                overflow: 'hidden',
-                borderColor: colors.primaryColor,
-                paddingLeft: 10,
-                paddingRight: 40,
-              },
-            ]}
-            outlineColor="transparent"
-            outlineStyle={{ borderWidth: 0 }}
-            left={<TextInput.Icon icon={() => <Search />} />}
-          />
-        </SearchInputContainer>
-      </FilterContainer>
+      <SearchFilter
+        search={userSearch}
+        setSearch={setUserSearch}
+        handleSearch={() => console.log('search')}
+      />
     );
   };
 
@@ -169,7 +148,9 @@ const Users = () => {
     <ScreenTemplate moreVisible>
       <HeadingView>
         <HeadingText>{ts('users')}</HeadingText>
-        <CountsText>{`${userList?.users?.length} ${t('items')}`}</CountsText>
+        <CountsText>{`${userList?.total} ${
+          userList?.total > 1 ? t('items') : t('item')
+        }`}</CountsText>
       </HeadingView>
       {renderHeader()}
       {userList?.users?.length > 0 ? (

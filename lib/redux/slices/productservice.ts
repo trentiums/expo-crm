@@ -20,6 +20,7 @@ export interface ProductServiceState {
     currentPage: number;
     lastPage: number;
     perPage: number;
+    total: number;
     serviceList: ProductService[];
   };
   productServiceDetail: ProductService;
@@ -29,6 +30,7 @@ const initialState: ProductServiceState = {
     currentPage: 1,
     lastPage: 1,
     perPage: 10,
+    total: 0,
     serviceList: [],
   },
   productServiceDetail: {
@@ -69,6 +71,7 @@ const productServiceSlice = createSlice({
           action.payload.data?.current_page;
         state.productServiceList.lastPage = action.payload.data?.last_page;
         state.productServiceList.perPage = action.payload.data?.per_page;
+        state.productServiceList.total = action?.payload?.data?.total;
       },
     );
     builder.addCase(logoutUserAction.fulfilled, () => {
