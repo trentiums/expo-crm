@@ -65,6 +65,8 @@ export const DefaultTheme = {
     laurelGarland: '#686d5d',
     americanSilver: '#CECECE',
     blueChaos: '#5892FF',
+    black15: '#00000026',
+    boysenberryShadow: '#f3f4f8',
   },
 };
 
@@ -129,6 +131,8 @@ export const DarkTheme: AppTheme = {
     laurelGarland: '#686d5d',
     americanSilver: '#CECECE',
     blueChaos: '#5892FF',
+    black15: '#00000026',
+    boysenberryShadow: '#f3f4f8',
   },
 };
 

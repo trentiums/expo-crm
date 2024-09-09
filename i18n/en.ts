@@ -238,6 +238,8 @@ const English = {
     users: 'Users',
     services: 'Services',
   },
+  bottomSheetNavigator: { ChooseOptionToAdd: 'Choose option to add' },
+  bottomSheetCreatePotion: { user: 'User', lead: 'Lead', service: 'Service' },
 };
 
 export default English;
