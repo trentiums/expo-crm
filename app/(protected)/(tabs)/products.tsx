@@ -125,16 +125,16 @@ const products = () => {
     <ScreenTemplate moreVisible>
       <HeadingView>
         <HeadingText>{ts('services')}</HeadingText>
-        <CountsText>{`${products?.total} ${
-          products?.total > 1 ? t('items') : t('item')
-        }`}</CountsText>
+        <CountsText>
+          {t('itemWithCount', { count: products?.total })}
+        </CountsText>
       </HeadingView>
       {renderHeader()}
       {loading ? (
         <Loader />
       ) : (
         <ProductsFlatList
-          data={products?.serviceList}
+          data={products?.serviceList?.slice(0, 1)}
           keyExtractor={(item, index) => `${item.id}-${index}`}
           renderItem={renderProducts}
           showsVerticalScrollIndicator={false}

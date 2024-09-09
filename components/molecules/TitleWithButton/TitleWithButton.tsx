@@ -14,11 +14,11 @@ import Back from '@atoms/Illustrations/Back';
 
 const TitleWithButton: React.FC<TitleWithButtonProps> = ({
   text,
-  btnBackPress,
+  onBackPress,
 }) => {
   const onBackPressed = () => {
-    if (btnBackPress) {
-      btnBackPress();
+    if (onBackPress) {
+      onBackPress();
     } else router.back();
   };
   const { top } = useSafeAreaInsets();

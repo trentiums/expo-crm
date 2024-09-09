@@ -98,7 +98,7 @@ export const HeadingView = styled(View)`
 export const HeadingText = styled(Text)`
   font-size: 36px;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.EnglishHolly};
+  color: ${({ theme }) => theme.colors.englishHolly};
 `;
 export const CountsText = styled(Text)`
   font-size: 16px;

@@ -128,6 +128,8 @@ const English = {
     emailOpenFailed: 'Failed to open email client',
     emailNotAvailable: 'Email address is not available',
     phoneNumberIsNotAvailable: 'Phone Number address is not available',
+    itemWithCount: '{{count}} item',
+    itemWithCount_plural: '{{count}} items',
   },
   BasicInformation: {
     firstNameLabel: 'Full Name',

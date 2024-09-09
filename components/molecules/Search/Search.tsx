@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo } from 'react';
-import TextInput from '@atoms/TextInput/TextInput';
 import { useAppTheme } from '@constants/theme';
 import { useTranslation } from 'react-i18next';
 import Search from '@atoms/Illustrations/Search';
@@ -11,6 +10,7 @@ import {
   FilterContainer,
   FilterIconView,
   SearchInputContainer,
+  SearchTextInput,
 } from './Search.styles';
 
 const SearchFilter: React.FC<SearchFilterProps> = ({
@@ -35,21 +35,11 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   return (
     <FilterContainer>
       <SearchInputContainer>
-        <TextInput
+        <SearchTextInput
           mode="outlined"
           value={search}
-          onChangeText={(text) => setSearch(text)}
+          onChangeText={setSearch}
           placeholder={ts('searchUsers')}
-          style={[
-            {
-              backgroundColor: colors.snowflake,
-              borderRadius: 25,
-              overflow: 'hidden',
-              borderColor: colors.primaryColor,
-              paddingLeft: -20,
-              paddingRight: 40,
-            },
-          ]}
           textColor={colors.textDark}
           outlineColor="transparent"
           outlineStyle={{ borderWidth: 0 }}

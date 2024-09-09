@@ -27,6 +27,7 @@ import { ActivityIndicator } from 'react-native-paper';
 import Loader from '@atoms/Loader/Loader';
 import { Spacer } from '@atoms/common/common.styles';
 import SearchFilter from '@molecules/Search/Search';
+import { LoadingStatus } from '../../(public)/login/LoginScreen.props';
 
 const ButtonSize = 40;
 
@@ -39,9 +40,7 @@ const Users = () => {
   const dispatch = useAppDispatch();
   const toast = useToast();
   const userList = useSelector((state: RootState) => state.user?.userList);
-  const [loadingStatus, setLoadingStatus] = useState<
-    'NONE' | 'DELETE' | 'MORE' | 'REFRESH'
-  >('NONE');
+  const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>('NONE');
   const [deleteUserId, setDeleteUserId] = useState(0);
   const [userSearch, setUserSearch] = useState('');
 
@@ -148,9 +147,9 @@ const Users = () => {
     <ScreenTemplate moreVisible>
       <HeadingView>
         <HeadingText>{ts('users')}</HeadingText>
-        <CountsText>{`${userList?.total} ${
-          userList?.total > 1 ? t('items') : t('item')
-        }`}</CountsText>
+        <CountsText>
+          {t('itemWithCount', { count: userList?.total })}
+        </CountsText>
       </HeadingView>
       {renderHeader()}
       {userList?.users?.length > 0 ? (
