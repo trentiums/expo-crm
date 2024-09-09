@@ -18,7 +18,7 @@ const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
   backgroundColor,
   addButtonText,
   onAddButtonPress,
-  isDrawerBtn,
+  moreVisible,
   title,
 }) => {
   const { colors } = useAppTheme();
@@ -27,7 +27,7 @@ const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
       {title && (
         <TitleWithButton text={title} btnBackPress={() => router?.back()} />
       )}
-      {isDrawerBtn && <MoreMenuButton />}
+      {moreVisible && <MoreMenuButton />}
       <ScreenTemplateView>
         {children}
         {!!addButtonText && (

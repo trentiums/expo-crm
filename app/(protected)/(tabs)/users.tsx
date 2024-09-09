@@ -39,18 +39,17 @@ const Users = () => {
   const dispatch = useAppDispatch();
   const toast = useToast();
   const userList = useSelector((state: RootState) => state.user?.userList);
-  const [loading, setLoading] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState<
+    'NONE' | 'DELETE' | 'MORE' | 'REFRESH'
+  >('NONE');
+  const [deleteUserId, setDeleteUserId] = useState(0);
   const [userSearch, setUserSearch] = useState('');
-  const [deleteLoading, setDeleteLoading] = useState(false);
-  const [deleteId, setDeleteId] = useState(0);
-  const [moreLoading, setMoreLoading] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
 
   const handleDeleteUser = async () => {
     try {
-      setDeleteLoading(true);
+      setLoadingStatus('DELETE');
       const response = await dispatch(
-        deleteUserAction({ user_id: deleteId }),
+        deleteUserAction({ user_id: deleteUserId }),
       ).unwrap();
       toast.show(response?.message, {
         type: ToastType.Custom,
@@ -68,7 +67,7 @@ const Users = () => {
       });
     }
     setShowModal(false);
-    setDeleteLoading(false);
+    setLoadingStatus('NONE');
   };
 
   const handleEdit = (slug: string | number) => {
@@ -78,7 +77,7 @@ const Users = () => {
   const handleGetMoreUserData = async () => {
     if (userList?.currentPage !== userList?.lastPage) {
       try {
-        setMoreLoading(true);
+        setLoadingStatus('MORE');
         await dispatch(
           getUserListAction({ page: userList?.currentPage + 1 }),
         ).unwrap();
@@ -90,11 +89,21 @@ const Users = () => {
           },
         });
       }
-      setMoreLoading(false);
+      setLoadingStatus('NONE');
     }
   };
 
-  const renderTabs = ({
+  const onRefreshUserList = async () => {
+    try {
+      setLoadingStatus('REFRESH');
+      await dispatch(getUserListAction({}));
+    } catch (error) {
+      console.log(error);
+    }
+    setLoadingStatus('NONE');
+  };
+
+  const renderUser = ({
     item,
     index,
   }: {
@@ -107,25 +116,16 @@ const Users = () => {
         onDelete={handleDeleteUser}
         onEdit={() => handleEdit(item?.id)}
         data={item}
-        setShowModal={setShowModal}
+        onChangeModalState={(value) => setShowModal(value)}
         showModal={showModal}
-        loading={deleteLoading}
-        setDeleteId={setDeleteId}
+        loading={loadingStatus === 'DELETE'}
+        onChangeDeleteId={(id) => setDeleteUserId(id)}
       />
       <Spacer size={12} />
     </>
   );
-  const onRefreshUserList = async () => {
-    try {
-      setRefreshing(true);
-      await dispatch(getUserListAction({}));
-    } catch (error) {
-      console.log(error);
-    }
-    setRefreshing(false);
-  };
 
-  if (loading) {
+  if (loadingStatus === 'NONE' && !userList?.users?.length) {
     return (
       <ScreenTemplate>
         <LoaderView>
@@ -145,7 +145,7 @@ const Users = () => {
   };
 
   return (
-    <ScreenTemplate isDrawerBtn>
+    <ScreenTemplate moreVisible>
       <HeadingView>
         <HeadingText>{ts('users')}</HeadingText>
         <CountsText>{`${userList?.total} ${
@@ -158,13 +158,15 @@ const Users = () => {
           data={userList?.users}
           contentContainerStyle={{ paddingBottom: ButtonSize + 20 }}
           keyExtractor={(item, index) => `${item.id}-${index}`}
-          renderItem={renderTabs}
+          renderItem={renderUser}
           showsVerticalScrollIndicator={false}
           onEndReached={handleGetMoreUserData}
-          ListFooterComponent={moreLoading ? <Loader size={24} /> : null}
+          ListFooterComponent={
+            loadingStatus === 'MORE' ? <Loader size={24} /> : null
+          }
           refreshControl={
             <RefreshControl
-              refreshing={refreshing}
+              refreshing={loadingStatus === 'REFRESH'}
               onRefresh={onRefreshUserList}
               colors={[colors.primaryColor]}
             />

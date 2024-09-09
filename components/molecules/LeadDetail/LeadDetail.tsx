@@ -3,6 +3,7 @@ import {
   ContactBox,
   DateTimeText,
   DetailContainer,
+  LeadDetailView,
   LeadInfoView,
   NameAndStatusContainer,
   NameText,
@@ -11,8 +12,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import {
   generateWhatsAppUrl,
-  handleEmail,
-  handlePhoneCall,
+  handleOpenDialCall,
+  handleOpenEmail,
 } from '@utils/common';
 import WhatsApp from '@atoms/Illustrations/WhatsApp';
 import { LeadDetailsProps } from './LeadDetail.props';
@@ -39,15 +40,31 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   onDelete,
   isDeleteLoading,
   showModal,
-  setShowModal,
+  onChangeModalState,
+  isServices,
   setDeleteId,
-  showSocialMedia,
+  onChangeDeleteId,
+  isSocialMediaVisible,
 }) => {
   const { t } = useTranslation('leadDetailCardDetails');
   const { t: tm } = useTranslation('modalText');
   const toast = useToast();
   const { colors } = useAppTheme();
   const leads = useSelector((state: RootState) => state.leads.leadList.leads);
+
+  const handleEmail = () => {
+    const email = leadData?.email;
+    if (email) {
+      handleOpenEmail(email);
+    } else {
+      toast.show(tm('emailNotAvailable'), {
+        type: 'customToast',
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
+  };
 
   const handleWhatsApp = (phoneNumber: number | string) => {
     generateWhatsAppUrl(phoneNumber);
@@ -68,15 +85,30 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
       }
     }
   };
-  const hideActionModal = () => {
-    setShowModal(false);
-  };
+
   const onDeleteLead = (id: number) => {
-    setShowModal(true);
-    setDeleteId?.(id);
+    onChangeModalState(true);
+    onChangeDeleteId?.(id);
   };
+
   const handleDeleteLead = async () => {
-    onDelete();
+    onDelete(leadData?.leadId || leadData?.id);
+  };
+  const handlePhoneCall = (phoneNumber) => {
+    try {
+      handleOpenDialCall(phoneNumber);
+    } catch (error) {
+      toast.show(t('phoneNumberIsNotAvailable'), {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
+  };
+
+  const hideActionModal = () => {
+    onChangeModalState(false);
   };
 
   return (
@@ -104,22 +136,22 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           id={leadData?.leadId || leadData?.id}
         />
       </LeadInfoView>
-      {showSocialMedia && (
+      {isSocialMediaVisible && (
         <ContactBox>
           {leadData?.email && (
-            <CommunicationOptionCon onPress={() => handleEmail(leadData.email)}>
+            <CommunicationOptionCon onPress={handleEmail}>
               <EmailSendBox />
             </CommunicationOptionCon>
           )}
           {leadData?.phone && (
             <CommunicationOptionCon
-              onPress={() => handlePhoneCall(leadData.phone)}>
+              onPress={() => handlePhoneCall(leadData?.phone)}>
               <PhoneIcon />
             </CommunicationOptionCon>
           )}
           {leadData?.phone && (
             <CommunicationOptionCon
-              onPress={() => handleWhatsApp(leadData.phone)}>
+              onPress={() => handleWhatsApp(leadData?.phone)}>
               <WhatsApp />
             </CommunicationOptionCon>
           )}

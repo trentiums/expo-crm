@@ -9,8 +9,10 @@ export const DetailContainer = styled(View)`
   align-content: flex-start;
   gap: 8px;
 `;
-
-export const LeadInfoView = styled(View)`
+export const LeadDetailView = styled(View)`
+  flex: 1;
+`;
+export const LeadInfoView = styled(View)<{ isServices?: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;

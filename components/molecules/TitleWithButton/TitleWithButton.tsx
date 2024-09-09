@@ -7,10 +7,10 @@ import {
   HeaderTextCon,
 } from './TitleWithButton.styles';
 import { Pressable } from 'react-native';
-import Back from '@atoms/Illustrations/Back';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { TitleWithButtonProps } from './TitleWithButton.props';
+import Back from '@atoms/Illustrations/Back';
 
 const TitleWithButton: React.FC<TitleWithButtonProps> = ({
   text,

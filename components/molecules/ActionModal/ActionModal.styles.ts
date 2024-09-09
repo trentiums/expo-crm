@@ -42,15 +42,8 @@ export const AllButtonView = styled(View)`
   align-self: flex-end;
 `;
 
-export const PrimaryLabel = styled(Text)<{ actionType: Actions }>`
-  color: ${({ actionType, theme }) =>
-    actionType === Actions.success
-      ? theme.colors.primaryColor
-      : actionType === Actions.delete
-      ? theme.colors.blueChaos
-      : actionType === Actions.default
-      ? theme.colors.white
-      : 'none'};
+export const PrimaryLabel = styled(Text)`
+  color: ${({ theme }) => theme.colors.blueChaos};
   font-size: 17px;
   font-weight: 600;
   justify-content: center;

@@ -13,27 +13,29 @@ import { StatusBar } from 'expo-status-bar';
 
 const RootStack = () => {
   return (
-    <GestureHandlerRootContainer>
-      <StatusBar style="light" />
-      <ReduxProvider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <ThemeProvider>
-            <ToastProviderContainer>
-              <BottomSheetModalProvider>
-                <View style={{ flex: 1 }}>
-                  <Stack
-                    initialRouteName="(public)/login/index"
-                    screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name="(public)/login/index" />
-                    <Stack.Screen name="(protected)/(tabs)/dashboard" />
-                  </Stack>
-                </View>
-              </BottomSheetModalProvider>
-            </ToastProviderContainer>
-          </ThemeProvider>
-        </PersistGate>
-      </ReduxProvider>
-    </GestureHandlerRootContainer>
+    <BottomSheetModalProvider>
+      <GestureHandlerRootContainer>
+        <StatusBar style="light" />
+        <ReduxProvider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <ThemeProvider>
+              <ToastProviderContainer>
+                <BottomSheetModalProvider>
+                  <View style={{ flex: 1 }}>
+                    <Stack
+                      initialRouteName="(public)/login/index"
+                      screenOptions={{ headerShown: false }}>
+                      <Stack.Screen name="(public)/login/index" />
+                      <Stack.Screen name="(protected)/(tabs)/dashboard" />
+                    </Stack>
+                  </View>
+                </BottomSheetModalProvider>
+              </ToastProviderContainer>
+            </ThemeProvider>
+          </PersistGate>
+        </ReduxProvider>
+      </GestureHandlerRootContainer>
+    </BottomSheetModalProvider>
   );
 };
 

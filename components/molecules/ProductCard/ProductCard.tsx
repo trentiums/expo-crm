@@ -5,15 +5,13 @@ import {
   ProductDetailContainer,
   ProductInfoView,
 } from './ProductCard.styles';
-import ProductServices from '@atoms/Illustrations/ProductService';
-import { Flexed } from '@atoms/common/common.styles';
 import ActionMenu from '@molecules/ActionMenu/ActionMenu';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
 import { useTranslation } from 'react-i18next';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import View from '@atoms/View/View';
+import Service from '@atoms/Illustrations/Services';
 
 const ProductCard = ({
   onEdit,
@@ -39,7 +37,7 @@ const ProductCard = ({
   return (
     <DetailContainer>
       <ProductInfoView>
-        <ProductServices />
+        <Service />
         <ProductDetailContainer>
           <NameText numberOfLines={1}>{data?.name}</NameText>
           <ActionMenu

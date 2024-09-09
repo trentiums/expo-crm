@@ -141,3 +141,12 @@ export const handleEmail = (email: string) => {
   } else {
   }
 };
+export const handleOpenEmail = (email: string) => {
+  const emailUrl = `mailto:${email}?subject=Your%20Subject%20Here&body=Your%20Message%20Here`;
+
+  Linking.openURL(emailUrl);
+};
+export const handleOpenDialCall = (phoneNumber: number) => {
+  const phoneUrl = `tel:${phoneNumber}`;
+  Linking.openURL(phoneUrl);
+};

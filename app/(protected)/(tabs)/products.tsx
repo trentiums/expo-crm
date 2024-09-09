@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
 import {
   CountsText,
-  FlatListCon,
+  ProductsFlatList,
   HeadingText,
   HeadingView,
 } from './tabs.style';
@@ -17,11 +17,10 @@ import {
   deleteProductServiceAction,
   getProductServiceListAction,
 } from '@redux/actions/productService';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useTranslation } from 'react-i18next';
 import SearchFilter from '@molecules/Search/Search';
-import { ToastType } from '@molecules/Toast/Toast.props';
 import ProductCard from '@molecules/ProductCard/ProductCard';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 
 const products = () => {
   const { t: ts } = useTranslation('drawer');
@@ -35,7 +34,7 @@ const products = () => {
   const [showModal, setShowModal] = useState(false);
   const [moreLoading, setMoreLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const [deleteId, setDeleteId] = useState(0);
+  const [deleteProductId, setDeleteProductId] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [productSearch, setProductUserSearch] = useState('');
@@ -57,9 +56,9 @@ const products = () => {
       onEdit={() => handleEdit(item?.id)}
       data={item}
       showModal={showModal}
-      setShowModal={setShowModal}
+      onChangeModalState={(value) => setShowModal(value)}
       loading={deleteLoading}
-      setDeleteId={setDeleteId}
+      onChangeDeleteId={(id) => setDeleteProductId(id)}
     />
   );
 
@@ -94,7 +93,7 @@ const products = () => {
     try {
       setDeleteLoading(true);
       const response = await dispatch(
-        deleteProductServiceAction({ product_service_id: deleteId }),
+        deleteProductServiceAction({ product_service_id: deleteProductId }),
       ).unwrap();
       toast.show(response?.message, {
         type: ToastType.Custom,
@@ -123,7 +122,7 @@ const products = () => {
     setRefreshing(false);
   };
   return (
-    <ScreenTemplate isDrawerBtn>
+    <ScreenTemplate moreVisible>
       <HeadingView>
         <HeadingText>{ts('services')}</HeadingText>
         <CountsText>{`${products?.total} ${
@@ -134,7 +133,7 @@ const products = () => {
       {loading ? (
         <Loader />
       ) : (
-        <FlatListCon
+        <ProductsFlatList
           data={products?.serviceList}
           keyExtractor={(item, index) => `${item.id}-${index}`}
           renderItem={renderProducts}
