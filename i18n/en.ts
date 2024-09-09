@@ -272,6 +272,8 @@ const English = {
   bottomSheetNavigator: {
     ChooseOptionToAdd: 'Choose option to add',
     filter: 'Filter',
+    sortBy: 'Sort by',
+    select: 'Select',
   },
   bottomSheetCreatePotion: { user: 'User', lead: 'Lead', service: 'Service' },
 };

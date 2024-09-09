@@ -10,3 +10,11 @@ export type CreateOptionItemProps = {
   icon: ReactNode;
   route: string;
 };
+export interface LeadSortFilterItemProp {
+  id: number;
+  title: string;
+  filters: {
+    sort_order: number;
+    order_by: number;
+  };
+}

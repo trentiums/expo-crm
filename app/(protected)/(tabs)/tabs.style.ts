@@ -129,3 +129,10 @@ export const LineContainer = styled(View)`
   height: 2px;
   background-color: ${({ theme }) => theme.colors.aria};
 `;
+export const LeadsHeadingView = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0px 4px;
+`;

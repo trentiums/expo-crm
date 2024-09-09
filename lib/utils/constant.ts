@@ -28,3 +28,56 @@ export const initialModalType = {
 };
 export const MAX_FILE_SIZE = 5 * 1024 * 1024;
 export const debounceTime = 300;
+export const leadsQuickFilters = [
+  {
+    id: 1,
+    title: 'Latest date',
+    filters: {
+      sort_order: 1,
+      order_by: 1,
+    },
+  },
+  {
+    id: 2,
+    title: 'Oldest date',
+    filters: {
+      sort_order: 2,
+      order_by: 1,
+    },
+  },
+  {
+    id: 3,
+    title: 'Name: A-Z',
+    filters: {
+      sort_order: 1,
+      order_by: 2,
+    },
+  },
+
+  {
+    id: 4,
+    title: 'Name: Z-A',
+    filters: {
+      sort_order: 2,
+      order_by: 2,
+    },
+  },
+
+  {
+    id: 5,
+    title: 'Email: A-Z',
+    filters: {
+      sort_order: 1,
+      order_by: 3,
+    },
+  },
+
+  {
+    id: 6,
+    title: 'Email: Z-A',
+    filters: {
+      sort_order: 2,
+      order_by: 3,
+    },
+  },
+];

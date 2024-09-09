@@ -15,7 +15,13 @@ import { useTranslation } from 'react-i18next';
 import { FlatList, Keyboard, Pressable } from 'react-native';
 import { RefreshControl, Swipeable } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
-import { LoaderView } from './tabs.style';
+import {
+  CountsText,
+  HeadingText,
+  HeadingView,
+  LeadsHeadingView,
+  LoaderView,
+} from './tabs.style';
 import { ActivityIndicator } from 'react-native-paper';
 import Loader from '@atoms/Loader/Loader';
 import ActionModal from '@molecules/ActionModal/ActionModal';
@@ -33,18 +39,20 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import SearchFilter from '@molecules/Search/Search';
 import NoData from '@molecules/NoData/NoData';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
+import QuickFilter from '@molecules/QuickFilter/QuickFilter';
+import { Spacer } from '@atoms/common/common.styles';
 
 const ButtonSize = 40;
 
 const Leads = () => {
   const { t } = useTranslation('modalText');
+  const { t: ts } = useTranslation('drawer');
   const { top } = useSafeAreaInsets();
   const { t: td } = useTranslation('dashBoard');
+  const { t: tb } = useTranslation('bottomSheetNavigator');
   const { colors } = useAppTheme();
   const bottomSheetRef = useRef<any>(null);
-  const leadsData = useSelector(
-    (state: RootState) => state.leads.leadList?.leads,
-  );
+  const leadsData = useSelector((state: RootState) => state.leads.leadList);
   const leadsFilter = useSelector(
     (state: RootState) => state.leads.leadsFilter,
   );
@@ -67,6 +75,8 @@ const Leads = () => {
   const [currentId, setCurrentId] = useState<number>(0);
   const [filterLoading, setFilterLoading] = useState(false);
   const [visibleLeadsFilterSheet, setVisibleLeadsFilterSheet] = useState(false);
+  const [visibleLeadsSortFilterSheet, setVisibleLeadsSortFilterSheet] =
+    useState(false);
   const handleDelete = async (slug: number) => {
     setShowModal(true);
     setDeleteLeadId(slug);
@@ -303,13 +313,31 @@ const Leads = () => {
   const handleCloseVisibleFilter = () => {
     setVisibleLeadsFilterSheet(false);
   };
+  const handleVisibleLeadsSortFilter = () => {
+    setVisibleLeadsSortFilterSheet(true);
+  };
+  const handleCloseVisibleSortFilter = () => {
+    setVisibleLeadsSortFilterSheet(false);
+  };
+
   return (
     <ScreenTemplate moreVisible>
       {renderHeader()}
-      {leadsData?.length > 0 ? (
+      <LeadsHeadingView>
+        <CountsText>
+          {t('itemWithCount', { count: leadsData?.total })}
+        </CountsText>
+        <QuickFilter
+          filterTitle={tb('select')}
+          filterType={tb('sortBy')}
+          onFilterPress={handleVisibleLeadsSortFilter}
+        />
+      </LeadsHeadingView>
+      <Spacer size={16} />
+      {leadsData?.leads?.length > 0 ? (
         <FlatList
           contentContainerStyle={{ paddingBottom: ButtonSize + 20 }}
-          data={leadsData}
+          data={leadsData?.leads}
           keyExtractor={(item: any, index: number) => `${item.id}-${index}`}
           renderItem={renderLeads}
           showsVerticalScrollIndicator={false}
@@ -377,6 +405,12 @@ const Leads = () => {
         <BottomSheetNavigator
           initialRouteName="LeadsFilter"
           onClosePress={handleCloseVisibleFilter}
+        />
+      )}
+      {visibleLeadsSortFilterSheet && (
+        <BottomSheetNavigator
+          initialRouteName="LeadsSortFilter"
+          onClosePress={handleCloseVisibleSortFilter}
         />
       )}
     </ScreenTemplate>
