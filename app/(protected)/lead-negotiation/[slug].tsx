@@ -108,7 +108,7 @@ const LeadStageNegotiationScreen = () => {
     });
   }, [navigation]);
   return (
-    <ScreenTemplate>
+    <ScreenTemplate title={t('leadStageChange')}>
       <FormTemplate
         Component={LeadProposalNegotiationForm}
         loading={loading}

@@ -6,5 +6,5 @@ export enum ToastTypeProps {
   Copy = 'copy',
 }
 export enum ToastType {
-  Custom = ToastType.Custom,
+  Custom = 'custom',
 }

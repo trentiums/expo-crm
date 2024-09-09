@@ -1,8 +1,14 @@
 import React from 'react';
-import { AddButton, AddText, Container } from './ScreenTemplate.styles';
+import {
+  AddButton,
+  AddText,
+  Container,
+  ScreenTemplateView,
+} from './ScreenTemplate.styles';
 import { ScreenTemplateProps } from './ScreenTemplate.props';
 import PlusIcon from '@atoms/Illustrations/PlusIcon';
 import { useAppTheme } from '@constants/theme';
+import { router } from 'expo-router';
 import MoreMenuButton from '@molecules/MoreMenuButton/MoreMenuButton';
 
 const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
@@ -11,18 +17,22 @@ const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
   backgroundColor,
   addButtonText,
   onAddButtonPress,
+  moreVisible,
+  title,
 }) => {
   const { colors } = useAppTheme();
   return (
     <Container {...safeAreaProps} backgroundColor={backgroundColor}>
-      <MoreMenuButton />
-      {children}
-      {!!addButtonText && (
-        <AddButton onPress={() => onAddButtonPress?.()}>
-          <PlusIcon color={colors?.bgColor} />
-          <AddText>{addButtonText}</AddText>
-        </AddButton>
-      )}
+      {moreVisible && <MoreMenuButton />}
+      <ScreenTemplateView>
+        {children}
+        {!!addButtonText && (
+          <AddButton onPress={() => onAddButtonPress?.()}>
+            <PlusIcon color={colors?.bgColor} />
+            <AddText>{addButtonText}</AddText>
+          </AddButton>
+        )}
+      </ScreenTemplateView>
     </Container>
   );
 };

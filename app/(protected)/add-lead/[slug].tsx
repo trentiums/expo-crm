@@ -38,7 +38,6 @@ const AddLead = () => {
   const [selectedCountryCodeValue, setSelectedCountryCodeValue] =
     useState<string>('');
   const { colors } = useAppTheme();
-  const addLeadData = useSelector((state: RootState) => state.leads.addLead);
   const leadsDetail = useSelector(
     (state: RootState) => state.leads.leadsDetail,
   );
@@ -77,15 +76,6 @@ const AddLead = () => {
   useEffect(() => {
     getLeadDetails();
   }, [id]);
-  useEffect(() => {
-    navigation.setOptions({
-      title: t('editLead'),
-      headerStyle: {
-        backgroundColor: colors.tabBar,
-      },
-      headerTintColor: colors.white,
-    });
-  }, [navigation]);
 
   useEffect(() => {
     setSelectedData(leadsDetail);
@@ -354,8 +344,9 @@ const AddLead = () => {
     }
   };
   return (
-    <ScreenTemplate>
+    <ScreenTemplate title={id ? t('editLead') : t('addLead')}>
       <AddLeadContainer>
+        <Spacer size={16} />
         <TabBar
           selectedActiveTab={selectedTabNav}
           setSelectedTabNav={setSelectedTabNav}
