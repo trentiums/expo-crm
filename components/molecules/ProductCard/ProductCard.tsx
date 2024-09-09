@@ -19,16 +19,16 @@ const ProductCard = ({
   data,
   setDeleteId,
   showModal,
-  setShowModal,
+  onChangeModalState,
   isDeleteLoading,
 }) => {
   const { t: tm } = useTranslation('modalText');
   const { colors } = useAppTheme();
   const hideActionModal = () => {
-    setShowModal(false);
+    onChangeModalState(false);
   };
   const onDeleteLead = (id: number) => {
-    setShowModal(true);
+    onChangeModalState(true);
     setDeleteId?.(id);
   };
   const handleDeleteLead = async () => {
