@@ -4,8 +4,8 @@ import Text from '@atoms/Text/Text';
 import Modal from '@atoms/Modal/Modal';
 
 export const Container = styled(View)`
-  background-color: ${({ theme }) => theme.colors.transparent};
-  border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.iceWindDale};
+  border-radius: 10px;
   flex-direction: row;
   padding: 16px;
   border-width: 1px;

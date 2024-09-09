@@ -16,7 +16,6 @@ const Button: React.FC<ButtonProps> = ({
     <RNPButton
       mode={mode}
       onPress={onPress}
-      uppercase={true}
       labelStyle={[styles.labelStyle, labelStyle]}
       contentStyle={[styles.contentStyle, contentStyle]}
       style={[styles.buttonStyle, style]}

@@ -15,19 +15,15 @@ import { useTranslation } from 'react-i18next';
 import { FlatList, Keyboard, Pressable } from 'react-native';
 import { RefreshControl, Swipeable } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
-import {
-  LoaderView,
-  NoDataFoundText,
-  NoLeadsFoundContainer,
-} from './tabs.style';
-import { ActivityIndicator, IconButton } from 'react-native-paper';
+import { LoaderView } from './tabs.style';
+import { ActivityIndicator } from 'react-native-paper';
 import Loader from '@atoms/Loader/Loader';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import isEmpty from 'lodash/isEmpty';
 import { useDebounce } from '@utils/useDebounce';
-import { ActionBtnView, SeparatorComponent } from './drawer.style';
+import { SeparatorComponent } from './drawer.style';
 import FilterIcon from '@atoms/Illustrations/Filter';
 import { DropdownBottomSheetSnapPoints } from '@constants/common';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
@@ -235,8 +231,6 @@ const Leads = () => {
       leadsFilter?.selectedChannel,
       leadsFilter?.selectedStatus,
       leadsFilter?.selectedStage,
-      leadsFilter?.orderBy,
-      leadsFilter?.sortBy,
     ];
     const count = states.filter(
       (state) => state !== null && state !== undefined && state !== '',
@@ -251,8 +245,6 @@ const Leads = () => {
       values?.selectedChannel || leadsFilter?.selectedChannel,
       values?.selectedStatus || leadsFilter?.selectedStatus,
       values?.selectedStage || leadsFilter?.selectedStage,
-      values?.orderBy || leadsFilter?.orderBy,
-      values?.sortBy || leadsFilter?.sortBy,
     ];
 
     const count = states.filter(
@@ -275,8 +267,6 @@ const Leads = () => {
           lead_channel_id: values?.selectedChannel,
           lead_conversion_id: values?.selectedStage,
           lead_status_id: values?.selectedStatus,
-          order_by: values?.orderBy,
-          sort_order: values?.sortBy,
         }),
       ).unwrap();
     } catch (error) {
@@ -311,7 +301,7 @@ const Leads = () => {
         setSearch={setLeadSearch}
         handleSearch={handleSearchLead}
         rightIcon={<FilterIcon />}
-        onRightIconPress={() => console.log('hello')}
+        onRightIconPress={handleOpenBottomSheetOpen}
       />
     );
   };
@@ -352,7 +342,7 @@ const Leads = () => {
 
       <BottomSheetModal
         backgroundStyle={{
-          backgroundColor: colors.darkBackground,
+          backgroundColor: colors.screenTemplateColor,
         }}
         ref={bottomSheetRef}
         enablePanDownToClose={true}

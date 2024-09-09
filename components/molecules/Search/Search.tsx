@@ -61,7 +61,11 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         <FilterIconView>
           <Search />
         </FilterIconView>
-        {rightIcon && <FilterRightIconView>{rightIcon}</FilterRightIconView>}
+        {rightIcon && (
+          <FilterRightIconView onPress={onRightIconPress}>
+            {rightIcon}
+          </FilterRightIconView>
+        )}
       </SearchInputContainer>
     </FilterContainer>
   );
