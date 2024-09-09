@@ -21,9 +21,7 @@ export const styles = StyleSheet.create({
   },
 });
 export const DashboardScreenContainer = styled(ScrollView)`
-  padding-left: 16px;
   padding-bottom: 16px;
-  padding-right: 16px;
 `;
 export const TitleText = styled(Text)`
   font-size: 22px;
@@ -37,7 +35,7 @@ export const NoDataFoundText = styled(Text)`
   max-width: 300px;
   margin: auto;
 `;
-export const FlatListCon = styled(FlatList).attrs({
+export const ProductsFlatList = styled(FlatList).attrs({
   contentContainerStyle: {
     paddingTop: 16,
     paddingBottom: 48,
@@ -65,7 +63,6 @@ export const NoLeadsFoundContainer = styled(View)`
 `;
 export const AddLeadContainer = styled(View)`
   padding: 16px;
-  flex: 1;
 `;
 export const GreetingText = styled(Text)`
   font-size: 36px;

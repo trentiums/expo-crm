@@ -92,7 +92,7 @@ const addProducts = () => {
     });
   }, [navigation]);
   return (
-    <ScreenTemplate>
+    <ScreenTemplate title={t('editProducts')}>
       <AddProductContainer>
         <FormTemplate
           Component={AddProductForm}

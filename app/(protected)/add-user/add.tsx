@@ -65,7 +65,7 @@ const addUser = () => {
     });
   }, [navigation]);
   return (
-    <ScreenTemplate>
+    <ScreenTemplate title={t('addUser')}>
       <PaddingSpace>
         <Spacer size={16} />
         <FormTemplate

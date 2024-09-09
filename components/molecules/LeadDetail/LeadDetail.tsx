@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
+  ContactBox,
   DateTimeText,
   DetailContainer,
+  LeadDetailView,
   LeadInfoView,
   NameAndStatusContainer,
   NameText,
@@ -9,86 +11,115 @@ import {
   WhatsAppText,
 } from './LeadDetail.styles';
 import { useTranslation } from 'react-i18next';
-import { generateWhatsAppUrl } from '@utils/common';
+import {
+  generateWhatsAppUrl,
+  handleOpenDialCall,
+  handleOpenEmail,
+} from '@utils/common';
 import WhatsApp from '@atoms/Illustrations/WhatsApp';
 import { LeadDetailsProps } from './LeadDetail.props';
-import UserProfile from '@atoms/Illustrations/UserProfile';
 import ActionMenu from '@molecules/ActionMenu/ActionMenu';
 import { router } from 'expo-router';
 import Trash from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import ActionModal from '@molecules/ActionModal/ActionModal';
-import { RootState, useAppDispatch, useSelector } from '@redux/store';
-import { deleteLeadAction } from '@redux/actions/lead';
+import EmailSendBox from '@atoms/Illustrations/EmailBox';
+import PhoneIcon from '@atoms/Illustrations/PhoneIcon';
+import { RootState, useSelector } from '@redux/store';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
-import LeadStatus from '@molecules/LeadStatus/LeadStatus';
 import moment from 'moment';
 import { dateTimeFormate } from '@constants/common';
 import { Flexed } from '@atoms/common/common.styles';
+import LeadStatus from '@molecules/LeadStatus/LeadStatus';
 
-const LeadDetail: React.FC<LeadDetailsProps> = ({ leadData }) => {
+const LeadDetail: React.FC<LeadDetailsProps> = ({
+  leadData,
+  onEdit,
+  onDelete,
+  isDeleteLoading,
+  showModal,
+  onChangeModalState,
+  isServices,
+  onChangeDeleteId,
+  isSocialMediaVisible,
+}) => {
   const { t } = useTranslation('leadDetailCardDetails');
   const { t: tm } = useTranslation('modalText');
-  const { colors } = useAppTheme();
-  const dispatch = useAppDispatch();
   const toast = useToast();
+  const { colors } = useAppTheme();
   const leads = useSelector((state: RootState) => state.leads.leadList.leads);
-  const [showModal, setShowModal] = useState(false);
-  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+
+  const handleEmail = () => {
+    const email = leadData?.email;
+    if (email) {
+      handleOpenEmail(email);
+    } else {
+      toast.show(tm('emailNotAvailable'), {
+        type: 'customToast',
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
+  };
 
   const handleWhatsApp = (phoneNumber: number | string) => {
     generateWhatsAppUrl(phoneNumber);
   };
   const onEditLead = () => {
-    if (leadData?.id) {
-      router.navigate(`/(protected)/add-lead/${leadData?.id}`);
+    if (onEdit) {
+      onEdit();
     } else {
-      toast.show(t('canNotFindId'), {
-        type: ToastType.Custom,
-        data: {
-          type: ToastTypeProps.Error,
-        },
-      });
+      if (leadData?.id) {
+        router.navigate(`/(protected)/add-lead/${leadData?.id}`);
+      } else {
+        toast.show(t('canNotFindId'), {
+          type: ToastType.Custom,
+          data: {
+            type: ToastTypeProps.Error,
+          },
+        });
+      }
     }
   };
-  const onDeleteLead = () => {
-    setShowModal(true);
+  const onDeleteLead = (id: number) => {
+    onChangeModalState(true);
+    onChangeDeleteId?.(id);
+  };
+  const onDeleteActionPress = async () => {
+    await handleDeleteLead();
   };
   const handleDeleteLead = async () => {
+    onDelete(leadData?.leadId || leadData?.id);
+  };
+  const handlePhoneCall = (phoneNumber) => {
     try {
-      setIsDeleteLoading(true);
-      const response = await dispatch(
-        deleteLeadAction({ lead_id: leadData?.leadId }),
-      ).unwrap();
-      toast.show(response?.message, {
-        type: ToastType.Custom,
-        data: {
-          type: ToastTypeProps.Success,
-        },
-      });
-    } catch (error: any) {
-      toast.show(error, {
+      handleOpenDialCall(phoneNumber);
+    } catch (error) {
+      toast.show(t('phoneNumberIsNotAvailable'), {
         type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
       });
     }
-    hideActionModal();
-    setIsDeleteLoading(false);
   };
+
   const hideActionModal = () => {
-    setShowModal(false);
+    onChangeModalState(false);
   };
+
   return (
     <DetailContainer>
-      <LeadInfoView>
-        <UserProfile />
+      <LeadInfoView isServices={isServices}>
+        {/* {isServices ? <ProductServices /> : <UserProfile />} */}
         <Flexed>
           <NameAndStatusContainer>
-            <NameText numberOfLines={1}>{leadData?.name}</NameText>
+            <NameText numberOfLines={1} isServices={isServices}>
+              {leadData?.name}
+            </NameText>
             <LeadStatus
               leadStatus={
                 leads?.filter((item) => item?.id === leadData?.id)[0]
@@ -96,18 +127,36 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({ leadData }) => {
               }
             />
           </NameAndStatusContainer>
-
-          <DateTimeText>
-            {moment(leadData?.createdAt).format(dateTimeFormate)}
-          </DateTimeText>
+          {leadData?.createdAt && (
+            <DateTimeText>
+              {moment(leadData.createdAt).format(dateTimeFormate)}
+            </DateTimeText>
+          )}
         </Flexed>
-        <ActionMenu onEdit={onEditLead} onDelete={onDeleteLead} />
+        <ActionMenu
+          onEdit={onEditLead}
+          onDelete={(id) => onDeleteLead(id)}
+          id={leadData?.leadId || leadData?.id}
+        />
       </LeadInfoView>
-      {leadData?.phone && (
-        <WhatsAppContainer onPress={handleWhatsApp}>
-          <WhatsApp />
-          <WhatsAppText>{t('whatsapp')}</WhatsAppText>
-        </WhatsAppContainer>
+      {isSocialMediaVisible && (
+        <ContactBox>
+          {leadData?.email && (
+            <WhatsAppContainer onPress={handleEmail}>
+              <EmailSendBox />
+            </WhatsAppContainer>
+          )}
+          {leadData?.phone && (
+            <WhatsAppContainer onPress={() => handlePhoneCall(leadData?.phone)}>
+              <PhoneIcon />
+            </WhatsAppContainer>
+          )}
+          {leadData?.phone && (
+            <WhatsAppContainer onPress={() => handleWhatsApp(leadData?.phone)}>
+              <WhatsApp />
+            </WhatsAppContainer>
+          )}
+        </ContactBox>
       )}
       {showModal && (
         <ActionModal

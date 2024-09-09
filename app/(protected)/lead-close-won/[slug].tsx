@@ -119,7 +119,7 @@ const LeadStageCloseWonScreen = () => {
     });
   }, [navigation]);
   return (
-    <ScreenTemplate>
+    <ScreenTemplate title={t('leadStageChange')}>
       <FormTemplate
         Component={DealCloseWinForm}
         loading={loading}

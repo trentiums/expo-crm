@@ -54,16 +54,16 @@ const ActionModal: React.FC<RNModalProps> = memo(
           )}
           {icon || null}
           <Header isIcon={isIcon}>{heading}</Header>
-          <Spacer size={16} />
+          <Spacer size={8} />
           <Description>{description}</Description>
-          <Spacer size={36} />
+          <Spacer size={16} />
           <ButtonContainer>
             <AllButtonView>
               <CancelPressable onPress={onCancelPress}>
                 <SecondaryLabel>{actiontext}</SecondaryLabel>
               </CancelPressable>
               <ActionPressable onPress={handleSubmit}>
-                {loading && <Loader size={16} color={colors?.deleteColor} />}
+                {loading && <Loader size={16} color={colors?.blueChaos} />}
                 <PrimaryLabel actionType={actionType || Actions.default}>
                   {label}
                 </PrimaryLabel>

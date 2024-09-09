@@ -119,11 +119,14 @@ const English = {
   },
   modalText: {
     disCardDescription: 'Are you sure want to delete?',
-    discardMedia: 'Delete',
+    discardMedia: 'Confirmation',
     yesDiscard: 'Delete',
     cancel: 'Cancel',
     searchLeads: 'Search Leads',
     addProduct: 'P/S',
+    emailOpenFailed: 'Failed to open email client',
+    emailNotAvailable: 'Email address is not available',
+    phoneNumberIsNotAvailable: 'Phone Number address is not available',
   },
   BasicInformation: {
     firstNameLabel: 'Full Name',

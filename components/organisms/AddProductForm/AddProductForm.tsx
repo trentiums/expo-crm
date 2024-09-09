@@ -1,4 +1,3 @@
-import AddIcon from '@atoms/Illustrations/AddIcon';
 import * as DocumentPicker from 'expo-document-picker';
 import { Spacer } from '@atoms/common/common.styles';
 import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
@@ -14,21 +13,17 @@ import {
   SvgShowContainer,
   UploadText,
 } from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
-import {
-  FormsView,
-  KeyboardAwareScrollViewContainer,
-} from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
+import { KeyboardAwareScrollViewContainer } from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
 import { composeValidators, requiredValidator } from '@utils/formValidators';
 import React, { useEffect, useState } from 'react';
 import { Field, useFormState } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { MAX_FILE_SIZE } from '@utils/constant';
 import { useToast } from 'react-native-toast-notifications';
-import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { AddProductFormProps } from './AddProductForm.props';
 import CrossIcon from '@atoms/Illustrations/Cross';
 import ActionModal from '@molecules/ActionModal/ActionModal';
-import Pdf from 'react-native-pdf';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
@@ -37,9 +32,14 @@ import DocumentIcon from '@atoms/Illustrations/Document';
 import { getProductServiceDetailAction } from '@redux/actions/productService';
 import Loader from '@atoms/Loader/Loader';
 import * as MediaLibrary from 'expo-media-library';
-import { ImagePreviewShow, LoaderView } from './AddProductForm.styles';
+import {
+  FormsView,
+  ImagePreviewShow,
+  LoaderView,
+} from './AddProductForm.styles';
 import { useLocalSearchParams } from 'expo-router';
 import { Linking } from 'react-native';
+import UploadCon from '@atoms/Illustrations/UploadCon';
 
 const AddProductForm: React.FC<AddProductFormProps> = ({
   form,
@@ -55,7 +55,6 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
   const { t: tb } = useTranslation('BasicInformation');
   const toast = useToast();
   const { colors } = useAppTheme();
-  const [showModal, setShowModal] = useState<Boolean>(false);
   const [ImageURI, setImageURI] = useState<{
     name?: string;
     uri?: string;
@@ -117,7 +116,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
           const { size } = file;
           if (size > MAX_FILE_SIZE) {
             toast.show(t('fileSizeLimitExceed'), {
-              type: ToastType.Custom,
+              type: 'customToast',
               data: {
                 type: ToastTypeProps.Error,
               },
@@ -172,10 +171,10 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
               name="description"
               placeholder={t('description')}
               component={FieldTextInput}
-              numberOfLines={5}
+              numberOfLines={8}
               style={{
                 height: 85,
-                backgroundColor: colors?.transparent,
+                backgroundColor: colors?.IcewindDale,
               }}
               multiline
               contentStyle={{ marginTop: -10 }}
@@ -184,7 +183,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
             {!documentArray?.uri && (
               <PickerContainer onPress={pickFile}>
                 <AddIconButton>
-                  <AddIcon />
+                  <UploadCon />
                   <UploadText>{t('uploadDocuments')}</UploadText>
                 </AddIconButton>
               </PickerContainer>
@@ -200,7 +199,6 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                     if (documentArray && documentArray?.uri?.endsWith('pdf')) {
                       Linking.openURL(documentArray.uri);
                     }
-                    // setShowModal(true);
                   }}
                   isWidthShort>
                   <CrossIconContainer
@@ -240,37 +238,6 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
                 loading={deleteLoading}
               />
             )}
-            {/* <StyledModal
-              animationType="slide"
-              transparent={true}
-              onRequestClose={() => setShowModal(false)}
-              visible={showModal}>
-              <ModalView>
-                <CloseButton onPress={() => setShowModal(false)}>
-                  <CrossIcon color={colors.black} />
-                </CloseButton>
-                <Spacer size={64} />
-                {ImageURI && ImageURI?.uri?.endsWith("pdf") ? (
-                  <>
-                    <Pdf
-                      source={{
-                        uri: ImageURI?.uri,
-                      }}
-                      trustAllCerts={false}
-                      style={{
-                        flex: 1,
-                        width: "100%",
-                      }}
-                      onError={(error) => {
-                        console.error(error, "error");
-                      }}
-                    />
-                  </>
-                ) : (
-                  <PreviewImageView source={{ uri: ImageURI?.uri }} />
-                )}
-              </ModalView>
-            </StyledModal> */}
           </KeyboardAwareScrollViewContainer>
           <ButtonSubmit
             onPress={handleAddProducts}

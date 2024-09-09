@@ -5,7 +5,7 @@ import { Menu } from 'react-native-paper';
 import { ActionMenuContainer, ActionMenuIcon } from './ActionMenu.styles';
 import { ActionMenuProps } from './ActionMenu.props';
 
-const ActionMenu: React.FC<ActionMenuProps> = ({ onEdit, onDelete }) => {
+const ActionMenu: React.FC<ActionMenuProps> = ({ onEdit, onDelete, id }) => {
   const { colors } = useAppTheme();
   const { t } = useTranslation('leadDetailCardDetails');
   const [visible, setVisible] = useState(false);
@@ -40,7 +40,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ onEdit, onDelete }) => {
         leadingIcon="delete"
         onPress={() => {
           closeMenu();
-          onDelete();
+          onDelete(id);
         }}
         title={t('delete')}
       />

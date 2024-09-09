@@ -1,70 +1,45 @@
-import React, { useState } from 'react';
-import {
-  ActionMenuContainer,
-  LeadDetailCardContainer,
-} from './UserDetailCard.styles';
+import React from 'react';
 import { UserDetailCardProps } from './UserDetailCard.props';
-import { useTranslation } from 'react-i18next';
-import { useAppTheme } from '@constants/theme';
 import LeadDetail from '@molecules/LeadDetail/LeadDetail';
-import { IconButton, Menu } from 'react-native-paper';
+import { LeadDetailCardContainer } from '@organisms/DashBoardLeadCard/DashBoardLeadCard.styles';
+import { EmailText, PhoneInfoView } from './UserDetailCard.styles';
+import EmailIcon from '@atoms/Illustrations/Email';
+import { useAppTheme } from '@constants/theme';
+import { Spacer } from '@atoms/common/common.styles';
 
 const UserDetailCard: React.FC<UserDetailCardProps> = ({
-  phoneNumber,
-  mailID,
-  title,
-  onDelete,
+  data,
+  onChangeModalState,
   onEdit,
-  createdAt,
+  onDelete,
+  showModal,
+  loading,
+  isServices,
+  isSocialMediaVisible,
+  onChangeDeleteId,
 }) => {
-  const { t } = useTranslation('leadDetailCardDetails');
   const { colors } = useAppTheme();
-
-  const [visible, setVisible] = useState(false);
-
-  const openMenu = () => setVisible(true);
-
-  const closeMenu = () => setVisible(false);
-
   return (
     <>
-      <LeadDetailCardContainer isActive={false}>
+      <LeadDetailCardContainer isActive={false} isServices={isServices}>
         <LeadDetail
-          leadData={{
-            phone: phoneNumber,
-            email: mailID,
-            name: title,
-            createdAt,
-          }}
+          leadData={data}
+          onEdit={onEdit}
+          onDelete={onDelete}
+          showModal={showModal}
+          onChangeModalState={(value) => onChangeModalState(value)}
+          loading={loading}
+          isServices={isServices}
+          setDeleteId={(id) => onChangeDeleteId(id)}
+          onChangeDeleteId={isSocialMediaVisible}
         />
-        <ActionMenuContainer>
-          <Menu
-            visible={visible}
-            onDismiss={closeMenu}
-            anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
-            style={{ borderRadius: 16, overflow: 'hidden' }}>
-            <Menu.Item
-              leadingIcon="pencil"
-              onPress={() => {
-                closeMenu();
-                onEdit();
-              }}
-              style={{
-                borderBottomColor: colors.lightBorder,
-                borderBottomWidth: 1,
-              }}
-              title={t('edit')}
-            />
-            <Menu.Item
-              leadingIcon="delete"
-              onPress={() => {
-                closeMenu();
-                onDelete();
-              }}
-              title={t('delete')}
-            />
-          </Menu>
-        </ActionMenuContainer>
+        <Spacer size={8} />
+        {data?.email && (
+          <PhoneInfoView>
+            <EmailIcon color={colors?.gray} />
+            <EmailText>{data?.email}</EmailText>
+          </PhoneInfoView>
+        )}
       </LeadDetailCardContainer>
     </>
   );

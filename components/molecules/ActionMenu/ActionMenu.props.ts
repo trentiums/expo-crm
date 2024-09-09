@@ -1,4 +1,5 @@
 export interface ActionMenuProps {
-  onEdit?: () => void;
-  onDelete?: () => void;
+  onDelete?: (id: number) => void;
+  onEdit: () => void;
+  id: number;
 }
