@@ -35,6 +35,7 @@ import FormTemplate from '@templates/FormTemplate/FormTemplate';
 import LeadsFilterForm from '@organisms/LeadsFilterForm/LeadsFilterForm';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import SearchFilter from '@molecules/Search/Search';
+import NoData from '@molecules/NoData/NoData';
 
 const ButtonSize = 40;
 
@@ -346,9 +347,7 @@ const Leads = () => {
           ItemSeparatorComponent={() => <SeparatorComponent />}
         />
       ) : (
-        <NoLeadsFoundContainer>
-          <NoDataFoundText>{td('noLeadsFound')}</NoDataFoundText>
-        </NoLeadsFoundContainer>
+        <NoData text={td('noLeadsTitle')} description={td('noLeadsDesc')} />
       )}
       <ActionBtnView>
         <IconButton
