@@ -349,15 +349,6 @@ const Leads = () => {
       ) : (
         <NoData text={td('noLeadsTitle')} description={td('noLeadsDesc')} />
       )}
-      <ActionBtnView>
-        <IconButton
-          icon="plus"
-          iconColor={colors.white}
-          size={ButtonSize}
-          containerColor={colors.primaryColor}
-          onPress={onAddButtonPress}
-        />
-      </ActionBtnView>
 
       <BottomSheetModal
         backgroundStyle={{
