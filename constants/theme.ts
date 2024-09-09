@@ -79,6 +79,8 @@ export const DefaultTheme = {
     plaster: '#EAEAEA',
     flyByNight: '#181D4B',
     carolinaBlue: '89b2ff',
+    black15: '#00000026',
+    boysenberryShadow: '#f3f4f8',
   },
 };
 
@@ -157,6 +159,8 @@ export const DarkTheme: AppTheme = {
     plaster: '#EAEAEA',
     flyByNight: '#181D4B',
     carolinaBlue: '89b2ff',
+    black15: '#00000026',
+    boysenberryShadow: '#f3f4f8',
   },
 };
 

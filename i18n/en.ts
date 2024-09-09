@@ -131,6 +131,9 @@ const English = {
     addProduct: 'P/S',
     emailOpenFailed: 'Failed to open email client',
     emailNotAvailable: 'Email address is not available',
+    phoneNumberIsNotAvailable: 'Phone Number address is not available',
+    itemWithCount: '{{count}} item',
+    itemWithCount_plural: '{{count}} items',
   },
   BasicInformation: {
     firstNameLabel: 'Full Name',
@@ -266,6 +269,8 @@ const English = {
     channel: 'Channel',
     assignedTo: 'Assigned To',
   },
+  bottomSheetNavigator: { ChooseOptionToAdd: 'Choose option to add' },
+  bottomSheetCreatePotion: { user: 'User', lead: 'Lead', service: 'Service' },
 };
 
 export default English;

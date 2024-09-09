@@ -98,8 +98,10 @@ export const HeaderText = styled(Text)`
 export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   height: 48px;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.BlueChaos};
-  border-radius: 50px;
+  border-width: 1px;
+  border-color: ${({ valid, theme }) =>
+    valid ? theme.colors.primaryColor : theme.colors.lightGray};
+  background-color: ${({ theme }) => theme.colors.bgColor};
 `;
 
 export const KeyboardAwareScrollViewContainer = styled(KeyboardAwareScrollView)`

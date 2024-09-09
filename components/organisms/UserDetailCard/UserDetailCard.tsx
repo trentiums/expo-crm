@@ -9,12 +9,15 @@ import { Spacer } from '@atoms/common/common.styles';
 
 const UserDetailCard: React.FC<UserDetailCardProps> = ({
   data,
-  setShowModal,
+  onChangeModalState,
   onEdit,
   onDelete,
   showModal,
   loading,
   setDeleteId,
+  isServices,
+  isSocialMediaVisible,
+  onChangeDeleteId,
 }) => {
   const { colors } = useAppTheme();
   return (
@@ -25,9 +28,12 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
           onEdit={onEdit}
           onDelete={onDelete}
           showModal={showModal}
-          setShowModal={setShowModal}
+          onChangeModalState={(value) => onChangeModalState(value)}
           loading={loading}
           setDeleteId={setDeleteId}
+          isServices={isServices}
+          setDeleteId={(id) => onChangeDeleteId(id)}
+          onChangeDeleteId={isSocialMediaVisible}
         />
         <Spacer size={8} />
         {data?.email && (

@@ -26,6 +26,7 @@ const FieldTextInput = forwardRef<CustomTextInputProps, FieldTextInputProps>(
     ref,
   ) => {
     const { colors } = useAppTheme();
+    const resetValue = () => input.onChange('');
     const handleOnChange = (value: string) => {
       if (keyboardType === 'numeric') {
         const pattern = isFloatValue ? /^\s*\d*\.?\d*\s*$/ : /^\s*\d*\d*\s*$/;

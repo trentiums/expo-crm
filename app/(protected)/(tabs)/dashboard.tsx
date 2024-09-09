@@ -49,8 +49,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deletedId, setDeletedId] = useState<number | undefined>();
-  const [openSwipeAbleRef, setOpenSwipeAbleRef] =
-    useState<RefObject<Swipeable> | null>(null);
   const dashboardLeadList = useSelector((state: RootState) => state.dashboard);
   const [leads, setLeads] = useState<DashboardLeadsProps[]>(
     dashboardLeadList.leadList,
@@ -107,12 +105,6 @@ const Dashboard = () => {
     setDeletedId(id);
   };
 
-  const closeSwipeAble = () => {
-    if (openSwipeAbleRef && openSwipeAbleRef.current) {
-      openSwipeAbleRef.current.close();
-    }
-  };
-
   const onDeleteActionPress = async () => {
     setDeleteLoading(true);
     try {
@@ -134,7 +126,6 @@ const Dashboard = () => {
         },
       });
     }
-    closeSwipeAble();
     setDeleteLoading(false);
     setShowModal(false);
   };
@@ -156,13 +147,13 @@ const Dashboard = () => {
         key={`${lead?.id}-${index}`}
         onDelete={() => handleDelete(lead?.id)}
         leadData={lead}
-        showSocialMedia
+        isSocialMediaVisible
       />
     </Pressable>
   );
 
   return (
-    <ScreenTemplate isDrawerBtn>
+    <ScreenTemplate moreVisible>
       {loading && dashboardLeadList.leadStageCount.length === 0 ? (
         <Loader />
       ) : (
@@ -241,7 +232,6 @@ const Dashboard = () => {
                   isModal
                   onBackdropPress={() => {
                     setShowModal(false);
-                    closeSwipeAble();
                   }}
                   heading={tm('discardMedia')}
                   description={tm('disCardDescription')}
@@ -250,7 +240,6 @@ const Dashboard = () => {
                   actiontext={tm('cancel')}
                   onCancelPress={() => {
                     setShowModal(false);
-                    closeSwipeAble();
                   }}
                   onActionPress={() => onDeleteActionPress()}
                   icon={<TrashIcon color={colors?.deleteColor} />}

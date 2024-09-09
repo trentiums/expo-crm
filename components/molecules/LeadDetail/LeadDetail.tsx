@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import {
   generateWhatsAppUrl,
   handleEmail,
+  handleOpenDialCall,
   handlePhoneCall,
 } from '@utils/common';
 import WhatsApp from '@atoms/Illustrations/WhatsApp';
@@ -39,9 +40,10 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   onDelete,
   isDeleteLoading,
   showModal,
-  setShowModal,
-  setDeleteId,
-  showSocialMedia,
+  onChangeModalState,
+  isServices,
+  onChangeDeleteId,
+  isSocialMediaVisible,
   isShowLeadInfo,
 }) => {
   const { t } = useTranslation('leadDetailCardDetails');
@@ -49,6 +51,21 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   const toast = useToast();
   const { colors } = useAppTheme();
   const leads = useSelector((state: RootState) => state.leads.leadList.leads);
+
+  const handleEmail = () => {
+    const email = leadData?.email;
+    if (email) {
+      handleOpenEmail(email);
+    } else {
+      toast.show(tm('emailNotAvailable'), {
+        type: 'customToast',
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
+  };
+
   const handleWhatsApp = (phoneNumber: number | string) => {
     generateWhatsAppUrl(phoneNumber);
   };
@@ -68,15 +85,33 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
       }
     }
   };
-  const hideActionModal = () => {
-    setShowModal(false);
-  };
+
   const onDeleteLead = (id: number) => {
-    setShowModal(true);
-    setDeleteId?.(id);
+    onChangeModalState(true);
+    onChangeDeleteId?.(id);
+  };
+
+  const onDeleteActionPress = async () => {
+    await handleDeleteLead();
   };
   const handleDeleteLead = async () => {
-    onDelete();
+    onDelete(leadData?.leadId || leadData?.id);
+  };
+  const handlePhoneCall = (phoneNumber) => {
+    try {
+      handleOpenDialCall(phoneNumber);
+    } catch (error) {
+      toast.show(t('phoneNumberIsNotAvailable'), {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
+  };
+
+  const hideActionModal = () => {
+    onChangeModalState(false);
   };
 
   return (
@@ -105,10 +140,10 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
         />
       </LeadInfoView>
       {isShowLeadInfo && <LeadInfoCard leadId={leadData.leadId} />}
-      {showSocialMedia && (
+      {isSocialMediaVisible && (
         <ContactBox>
           {leadData?.email && (
-            <CommunicationOptionCon onPress={() => handleEmail(leadData.email)}>
+            <CommunicationOptionCon onPress={handleEmail}>
               <EmailSendBox />
             </CommunicationOptionCon>
           )}
