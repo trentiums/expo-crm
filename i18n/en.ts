@@ -240,7 +240,7 @@ const English = {
     search: 'Search',
     list: 'List',
     applyFilter: 'Apply Filters',
-    removeFilter: 'Clear All',
+    removeFilter: 'Clear all',
   },
   leadStatus: {
     new: 'New',
@@ -269,7 +269,10 @@ const English = {
     channel: 'Channel',
     assignedTo: 'Assigned To',
   },
-  bottomSheetNavigator: { ChooseOptionToAdd: 'Choose option to add' },
+  bottomSheetNavigator: {
+    ChooseOptionToAdd: 'Choose option to add',
+    filter: 'Filter',
+  },
   bottomSheetCreatePotion: { user: 'User', lead: 'Lead', service: 'Service' },
 };
 

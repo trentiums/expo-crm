@@ -83,44 +83,6 @@ const DropDown: React.FC<DropDownProps> = ({
   return (
     <>
       <DropDownContainer>
-        {/* <DropdownLeftView
-            isImage={data?.filter((item) => item.id === value)[0]?.image}
-            isFullWidth={isFullWidth}>
-            {
-              <ImageView
-                source={data?.filter((item) => item.id === value)[0]?.image}
-                contentFit="cover"
-              />
-            }
-            <DropDownSelectedView>
-              {isMultiple && Array.isArray(value) ? (
-                <>
-                  {value?.length > 0 ? (
-                    <ShowMultipleDataList
-                      data={value}
-                      renderItem={({ item }) =>
-                        renderMultipleData({ selectedData: item })
-                      }
-                      keyExtractor={(item, index) => `${item} - ${index}`}
-                    />
-                  ) : (
-                    <PlaceHolderText>{placeholder}</PlaceHolderText>
-                  )}
-                </>
-              ) : (
-                <>
-                  {data?.filter((item) => item.id === value)?.[0]?.title ? (
-                    <SelectedText numberOfLines={1}>
-                      {data?.filter((item) => item.id === value)?.[0]?.title}
-                    </SelectedText>
-                  ) : (
-                    <PlaceHolderText>{placeholder}</PlaceHolderText>
-                  )}
-                </>
-              )}
-            </DropDownSelectedView>
-          </DropdownLeftView>
-          <ArrowDownIcon /> */}
         <ShowMultipleDataList
           data={data}
           renderItem={({ item }) => renderMultipleData({ selectedData: item })}

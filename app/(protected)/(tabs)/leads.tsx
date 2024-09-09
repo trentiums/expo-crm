@@ -32,6 +32,7 @@ import LeadsFilterForm from '@organisms/LeadsFilterForm/LeadsFilterForm';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import SearchFilter from '@molecules/Search/Search';
 import NoData from '@molecules/NoData/NoData';
+import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
 
 const ButtonSize = 40;
 
@@ -65,8 +66,7 @@ const Leads = () => {
   const [modal, setModal] = useState(false);
   const [currentId, setCurrentId] = useState<number>(0);
   const [filterLoading, setFilterLoading] = useState(false);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [visibleLeadsFilterSheet, setVisibleLeadsFilterSheet] = useState(false);
   const handleDelete = async (slug: number) => {
     setShowModal(true);
     setDeleteLeadId(slug);
@@ -283,7 +283,7 @@ const Leads = () => {
         setSearch={setLeadSearch}
         handleSearch={handleSearchLead}
         rightIcon={<FilterIcon />}
-        onRightIconPress={handleOpenBottomSheetOpen}
+        onRightIconPress={handleVisibleLeadsFilter}
       />
     );
   };
@@ -297,8 +297,14 @@ const Leads = () => {
       </ScreenTemplate>
     );
   }
+  const handleVisibleLeadsFilter = () => {
+    setVisibleLeadsFilterSheet(true);
+  };
+  const handleCloseVisibleFilter = () => {
+    setVisibleLeadsFilterSheet(false);
+  };
   return (
-    <ScreenTemplate>
+    <ScreenTemplate moreVisible>
       {renderHeader()}
       {leadsData?.length > 0 ? (
         <FlatList
@@ -365,6 +371,12 @@ const Leads = () => {
           onActionPress={() => onDeleteActionPress(deleteLeadId || 0)}
           icon={<TrashIcon color={colors?.deleteColor} />}
           loading={loading}
+        />
+      )}
+      {visibleLeadsFilterSheet && (
+        <BottomSheetNavigator
+          initialRouteName="LeadsFilter"
+          onClosePress={handleCloseVisibleFilter}
         />
       )}
     </ScreenTemplate>

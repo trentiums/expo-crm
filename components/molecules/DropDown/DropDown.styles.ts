@@ -78,7 +78,7 @@ export const MultipleSelectedText = styled(Text)<{ isSelected: boolean }>`
   font-size: 16px;
   padding: 8px 12px;
   color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.carolinaBlue : theme.colors.lightGray};
+    isSelected ? theme.colors.flyByNight : theme.colors.lightGray};
 `;
 
 export const ShowMultipleDataList = styled(FlatList).attrs({

@@ -19,7 +19,7 @@ export const DateView = styled(View)`
 export const DateText = styled(Text)<{ input?: string }>`
   font-size: 16px;
   color: ${({ theme, input }) =>
-    input ? theme.colors.white : theme.colors.placeholderTextColor};
+    input ? theme.colors.englishHolly : theme.colors.placeholderTextColor};
   margin: 0px 0px 2px;
   padding-top: 2px;
 `;

@@ -19,6 +19,7 @@ import {
 import ArrowLeftIcon from '@atoms/Illustrations/ArrowLeft';
 import { useAppTheme } from '@constants/theme';
 import BottomSheetCloseIcon from '@atoms/Illustrations/BottomSheetClose';
+import LeadsFilter from '@organisms/bottom-sheet-Navigator-Screen/leadsFilter';
 
 const Stack = createNativeStackNavigator();
 
@@ -95,6 +96,24 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
             })}>
             {(props) => (
               <BottomSheetCreateOption
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+                changeRoute={handleClosePress}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="LeadsFilter"
+            options={() => ({
+              header: () => (
+                <CustomHeader
+                  title={t('filter')}
+                  onClose={() => handleClosePress()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <LeadsFilter
                 {...props}
                 changeSnapPoints={changeSnapPoints}
                 changeRoute={handleClosePress}

@@ -25,13 +25,7 @@ import { getLeadListAction } from '@redux/actions/lead';
 import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
 import { setLeadsFilters } from '@redux/slices/leads';
 
-const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
-  form,
-  handleDropDownClose,
-  loading,
-  bottomSheetClose,
-  setFilterCount,
-}) => {
+const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({ form, loading }) => {
   const { t } = useTranslation('leadsFilter');
   const { values } = useFormState();
   const general = useSelector((state: RootState) => state.general);
@@ -53,9 +47,6 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
   const handleRemoveFilters = () => {
     form.reset();
     handleGetLeadList();
-    handleDropDownClose();
-    setFilterCount(0);
-    bottomSheetClose();
     dispatch(setLeadsFilters({}));
   };
   useEffect(() => {
@@ -101,7 +92,6 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             })}
             placeholder={t('channel')}
             dropDownTitle={`${t('channel')} ${t('list')}`}
-            handleBottomSheetClose={handleDropDownClose}
             isAllowDeselect
             isMultiple
           />
@@ -118,7 +108,6 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             })}
             placeholder={t('status')}
             dropDownTitle={`${t('status')} ${t('list')}`}
-            handleBottomSheetClose={handleDropDownClose}
             isAllowDeselect
           />
           <Spacer size={16} />
@@ -134,7 +123,6 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             })}
             placeholder={t('conversion')}
             dropDownTitle={`${t('conversion')} ${t('list')}`}
-            handleBottomSheetClose={handleDropDownClose}
             isAllowDeselect
           />
           <Spacer size={16} />
@@ -144,7 +132,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
         <RemoveFilterButton onPress={handleRemoveFilters}>
           <RemoveButtonText>{t('removeFilter')}</RemoveButtonText>
         </RemoveFilterButton>
-        <FilterApplyButton loading={loading}>
+        <FilterApplyButton loading={loading} onPress={form.submit}>
           <FormButtonText valid={true}>{t('applyFilter')}</FormButtonText>
         </FilterApplyButton>
       </LeadsFilterButton>
