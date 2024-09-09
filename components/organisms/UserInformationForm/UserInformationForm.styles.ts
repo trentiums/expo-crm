@@ -7,7 +7,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 export const Label = styled(Text)`
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.textDark};
+  color: ${({ theme }) => theme.colors.gray};
   padding-bottom: 4px;
 `;
 
@@ -42,8 +42,12 @@ export const PreviewImageView = styled(Image)`
 export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   height: 48px;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.BlueChaos};
-  border-radius: 50px;
+  border-width: 1px;
+  margin-bottom: -16px;
+  border-color: ${({ valid, theme }) =>
+    valid ? theme.colors.primaryColor : theme.colors.lightGray};
+  background-color: ${({ theme }) => theme.colors.bgColor};
+  z-index: 10;
 `;
 
 export const ViewMainContainer = styled(View)`
@@ -51,7 +55,7 @@ export const ViewMainContainer = styled(View)`
   flex-direction: column;
   justify-content: space-between;
   align-content: space-between;
-  margin-bottom: 100px;
+  margin-bottom: 32px;
 `;
 
 export const PressAbleView = styled(Pressable)`
@@ -70,7 +74,7 @@ export const KeyboardAwareScrollViewContainer = styled(KeyboardAwareScrollView)`
 export const FormButtonText = styled(Text)<{ valid: boolean }>`
   font-weight: 700;
   color: ${({ valid, theme }) =>
-    valid ? theme.colors.white : theme.colors.white};
+    valid ? theme.colors.primaryColor : theme.colors.lightGray};
 `;
 
 export const MainProfileView = styled(View)`

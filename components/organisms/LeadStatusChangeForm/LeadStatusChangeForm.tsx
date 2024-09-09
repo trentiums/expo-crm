@@ -37,7 +37,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import AddIcon from '@atoms/Illustrations/AddIcon';
 import { MAX_FILE_SIZE } from '@utils/constant';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
 import DocumentIcon from '@atoms/Illustrations/Document';
 import CrossIcon from '@atoms/Illustrations/Cross';
@@ -114,7 +114,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
           deleteLeadDocumentsAction({ media_id: deletedDocument?.[0]?.id }),
         ).unwrap();
         toast.show(response?.message, {
-          type: 'customToast',
+          type: ToastType.Custom,
           data: {
             type: ToastTypeProps.Success,
           },
@@ -122,7 +122,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
         await dispatch(getLeadDetailsAction({ lead_id: leadCardId }));
       } catch (error: any) {
         toast.show(error, {
-          type: 'customToast',
+          type: ToastType.Custom,
           data: {
             type: ToastTypeProps.Error,
           },
@@ -148,7 +148,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
         res.assets.forEach((file: any) => {
           if (file.size > MAX_FILE_SIZE) {
             toast.show(t('fileSizeLimitExceed'), {
-              type: 'customToast',
+              type: ToastType.Custom,
               data: {
                 type: ToastTypeProps.Error,
               },

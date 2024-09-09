@@ -3,7 +3,7 @@ import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
 import { FlatList } from 'react-native';
 
-export const IndigatorContainer = styled(View)`
+export const IndicatorContainer = styled(View)`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -11,13 +11,13 @@ export const IndigatorContainer = styled(View)`
   gap: 8px;
   flex: 1;
 `;
-export const IndigatorText = styled(Text)`
+export const IndicatorText = styled(Text)`
   color: ${({ theme }) => theme.colors.textGray};
-  font-size: 12px;
+  font-size: 9px;
   max-width: 60px;
   text-align: center;
 `;
-export const IndigatorValueContainer = styled(View)<{
+export const IndicatorValueContainer = styled(View)<{
   color?: string;
   height?: number;
 }>`
@@ -34,10 +34,10 @@ export const FlatListCon = styled(FlatList).attrs({
     height: 200,
   },
 })`
-  height: ${({ height }) => `${height}px` || 'auto'};
-  max-height: ${({ maxHeight }) => `${maxHeight}px` || 'auto'};
+  height: ${({ height }) => (height ? `${height}px` : 'auto')};
+  max-height: ${({ maxHeight }) => (maxHeight ? `${maxHeight}px` : 'auto')};
 `;
-export const IndigatorValue = styled(Text)`
+export const IndicatorValue = styled(Text)`
   font-size: 14px;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.textDark};

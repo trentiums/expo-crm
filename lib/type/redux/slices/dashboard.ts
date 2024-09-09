@@ -1,4 +1,4 @@
-export interface DashboardLeadList {
+export interface DashboardLeadsProps {
   id: number;
   name: string;
   email: string;

@@ -116,6 +116,7 @@ const English = {
     edit: 'Edit',
     delete: 'Delete',
     whatsapp: 'Whatsapp',
+    canNotFindId: 'can not found id plz try again',
   },
   modalText: {
     disCardDescription: 'Are you sure want to delete?',
@@ -126,6 +127,7 @@ const English = {
     addProduct: 'P/S',
     emailOpenFailed: 'Failed to open email client',
     emailNotAvailable: 'Email address is not available',
+    phoneNumberIsNotAvailable: 'Phone Number address is not available',
   },
   BasicInformation: {
     firstNameLabel: 'Full Name',
@@ -240,6 +242,8 @@ const English = {
     users: 'Users',
     services: 'Services',
   },
+  bottomSheetNavigator: { ChooseOptionToAdd: 'Choose option to add' },
+  bottomSheetCreatePotion: { user: 'User', lead: 'Lead', service: 'Service' },
 };
 
 export default English;

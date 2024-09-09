@@ -3,7 +3,7 @@ import Loader from '@atoms/Loader/Loader';
 import { AddLeadTabBarData } from '@constants/dummyData';
 import { useAppTheme } from '@constants/theme';
 import TabBar from '@molecules/TabBar/TabBar';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import BasicInformationForm from '@organisms/BasicInformatioForm/BasicInformationForm';
 import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
 import CompanyInformationForm from '@organisms/CompanyInformationForm/CompanyInformationForm';
@@ -24,7 +24,7 @@ import { router, useNavigation } from 'expo-router';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
-import { AddLeadContainer } from './tabs.style';
+import { AddLeadContainer } from '../(tabs)/tabs.style';
 import { useTranslation } from 'react-i18next';
 
 const AddLead = () => {
@@ -181,7 +181,7 @@ const AddLead = () => {
       await dispatch(getLeadListAction({}));
       await dispatch(setLeadsInformation());
       toast.show(response.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -190,7 +190,7 @@ const AddLead = () => {
       setDocumentArray([]);
     } catch (error: string | any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },

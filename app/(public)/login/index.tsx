@@ -10,7 +10,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { LoginFormData } from './LoginScreen.props';
 import { loginUserAction } from '@redux/actions/auth';
 import { useAppDispatch } from '@redux/store';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
 import {
   countryListAction,
@@ -55,7 +55,7 @@ const LoginScreen = () => {
       router.replace('/(protected)/(tabs)/dashboard');
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },

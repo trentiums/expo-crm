@@ -2,7 +2,7 @@ import { useAppTheme } from '@constants/theme';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Menu } from 'react-native-paper';
-import { ActionMenuComponent, ActionMenuIcon } from './ActionMenu.styles';
+import { ActionMenuContainer, ActionMenuIcon } from './ActionMenu.styles';
 import { ActionMenuProps } from './ActionMenu.props';
 
 const ActionMenu: React.FC<ActionMenuProps> = ({ onEdit, onDelete, id }) => {
@@ -14,7 +14,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ onEdit, onDelete, id }) => {
 
   const closeMenu = () => setVisible(false);
   return (
-    <ActionMenuComponent
+    <ActionMenuContainer
       visible={visible}
       onDismiss={closeMenu}
       anchor={
@@ -44,7 +44,7 @@ const ActionMenu: React.FC<ActionMenuProps> = ({ onEdit, onDelete, id }) => {
         }}
         title={t('delete')}
       />
-    </ActionMenuComponent>
+    </ActionMenuContainer>
   );
 };
 

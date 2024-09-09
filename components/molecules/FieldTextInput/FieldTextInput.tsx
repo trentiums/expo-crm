@@ -24,6 +24,7 @@ const FieldTextInput = forwardRef<CustomTextInputProps, FieldTextInputProps>(
     ref,
   ) => {
     const { colors } = useAppTheme();
+    const resetValue = () => input.onChange('');
     const handleOnChange = (value: string) => {
       if (keyboardType === 'numeric') {
         const pattern = isFloatValue ? /^\s*\d*\.?\d*\s*$/ : /^\s*\d*\d*\s*$/;
@@ -56,10 +57,10 @@ const FieldTextInput = forwardRef<CustomTextInputProps, FieldTextInputProps>(
           autoCapitalize="none"
           style={
             rest?.style || {
-              backgroundColor: colors?.IcewindDale,
+              backgroundColor: colors?.transparent,
             }
           }
-          textColor={rest?.textDark || colors?.textDark}
+          textColor={rest?.textColor || colors?.white}
           enterKeyHint="done"
           autoCorrect={false}
           left={left}
@@ -73,11 +74,6 @@ const FieldTextInput = forwardRef<CustomTextInputProps, FieldTextInputProps>(
           right={rightIcon}
           secureTextEntry={rest?.secureTextEntry}
           placeholderTextColor={colors.placeholderTextColor}
-          outlineStyle={{
-            borderColor: colors.IcewindDale,
-            borderWidth: 3,
-            borderRadius: 10,
-          }}
           {...rest}
         />
         {!!(meta.touched && meta.error) && (

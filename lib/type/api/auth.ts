@@ -1,4 +1,4 @@
-export enum userRole {
+export enum UserRole {
   'Admin' = 1,
   'CompanyAdmin' = 2,
   'CompanyStaff' = 3,
@@ -12,7 +12,7 @@ export interface LoginParams {
 export interface LoginDataResponse {
   name: string;
   email: string;
-  user_role: userRole;
+  user_role: UserRole;
   id: number;
   token: string;
 }
