@@ -30,6 +30,7 @@ export const LeadsFilterContainer = styled(Pressable)`
 `;
 export const LeasFilterScreenContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
+  padding-top: 16px;
 `;
 export const LeadsFilterButton = styled(View)`
   display: flex;
@@ -38,5 +39,5 @@ export const LeadsFilterButton = styled(View)`
   align-items: center;
   width: 100%;
   gap: 8px;
-  padding: 12px;
+  padding: 16px;
 `;

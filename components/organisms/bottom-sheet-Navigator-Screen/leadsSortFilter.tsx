@@ -32,6 +32,7 @@ const LeadsSortFilter: React.FC<CreateOptionProps> = ({ changeRoute }) => {
   }) => (
     <LeadsFilterContainer onPress={() => setSelectedSort(item)}>
       <LeadsSortFilterText>{item.title}</LeadsSortFilterText>
+      {/* TODO: here icon is temporary replace as pr merge */}
       {selectedSort?.id === item.id && <Back />}
     </LeadsFilterContainer>
   );
