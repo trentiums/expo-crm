@@ -41,7 +41,6 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   isDeleteLoading,
   showModal,
   onChangeModalState,
-  isServices,
   onChangeDeleteId,
   isSocialMediaVisible,
 }) => {
@@ -113,13 +112,10 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
 
   return (
     <DetailContainer>
-      <LeadInfoView isServices={isServices}>
-        {/* {isServices ? <ProductServices /> : <UserProfile />} */}
+      <LeadInfoView>
         <Flexed>
           <NameAndStatusContainer>
-            <NameText numberOfLines={1} isServices={isServices}>
-              {leadData?.name}
-            </NameText>
+            <NameText numberOfLines={1}>{leadData?.name}</NameText>
             <LeadStatus
               leadStatus={
                 leads?.filter((item) => item?.id === leadData?.id)[0]

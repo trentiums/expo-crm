@@ -14,14 +14,13 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
   onDelete,
   showModal,
   loading,
-  isServices,
   isSocialMediaVisible,
   onChangeDeleteId,
 }) => {
   const { colors } = useAppTheme();
   return (
     <>
-      <LeadDetailCardContainer isActive={false} isServices={isServices}>
+      <LeadDetailCardContainer isActive={false}>
         <LeadDetail
           leadData={data}
           onEdit={onEdit}
@@ -29,9 +28,8 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
           showModal={showModal}
           onChangeModalState={(value) => onChangeModalState(value)}
           loading={loading}
-          isServices={isServices}
-          setDeleteId={(id) => onChangeDeleteId(id)}
-          onChangeDeleteId={isSocialMediaVisible}
+          onChangeDeleteId={(id) => onChangeDeleteId(id)}
+          isSocialMediaVisible={isSocialMediaVisible}
         />
         <Spacer size={8} />
         {data?.email && (
