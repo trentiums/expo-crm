@@ -2,7 +2,6 @@ import { Spacer } from '@atoms/common/common.styles';
 import Loader from '@atoms/Loader/Loader';
 import { AddLeadTabBarData } from '@constants/dummyData';
 import { useAppTheme } from '@constants/theme';
-import TabBar from '@molecules/TabBar/TabBar';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import BasicInformationForm from '@organisms/BasicInformatioForm/BasicInformationForm';
 import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
@@ -26,6 +25,8 @@ import React, { useEffect, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
 import { AddLeadContainer } from '../(tabs)/tabs.style';
 import { useTranslation } from 'react-i18next';
+import Stepper from '@molecules/Stepper/Stepper';
+import { stepData } from '@utils/constant';
 
 const AddLead = () => {
   const dispatch = useAppDispatch();
@@ -262,17 +263,7 @@ const AddLead = () => {
   return (
     <ScreenTemplate>
       <AddLeadContainer>
-        <TabBar
-          selectedActiveTab={selectedTabNav}
-          setSelectedTabNav={setSelectedTabNav}
-          tab={AddLeadTabBarData?.map(({ title }) => title)}
-          selectedTabColor={colors.selectedTabColor}
-          color={colors.primaryColor}
-          radius={20}
-          selectedTab={(val: any) => {
-            setSelectedTabNav(val);
-          }}
-        />
+        <Stepper stepData={stepData} currentId={2} />
         <Spacer size={32} />
         {leadsDetailLoading ? <Loader /> : renderForm()}
       </AddLeadContainer>
