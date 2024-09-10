@@ -218,3 +218,17 @@ export interface LeadDetailsResponse {
   message: string;
   data: LeadListData;
 }
+
+export interface UpdateLeadStatusParams {
+  lead_id: number;
+  lead_status_id?: number;
+  lead_channel_id?: number;
+  lead_conversion_id?: number;
+  type: updateLeadStatusTypes;
+}
+
+export enum updateLeadStatusTypes {
+  STATUS = 1,
+  CHANNEL = 2,
+  CONVERSION = 3,
+}

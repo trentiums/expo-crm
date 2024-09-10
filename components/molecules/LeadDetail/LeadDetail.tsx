@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  ActionMenuIcon,
   ContactBox,
   DateTimeText,
   DetailContainer,
-  LeadDetailView,
   LeadInfoView,
   NameAndStatusContainer,
   NameText,
   WhatsAppContainer,
-  WhatsAppText,
 } from './LeadDetail.styles';
 import { useTranslation } from 'react-i18next';
 import {
@@ -18,8 +17,6 @@ import {
 } from '@utils/common';
 import WhatsApp from '@atoms/Illustrations/WhatsApp';
 import { LeadDetailsProps } from './LeadDetail.props';
-import ActionMenu from '@molecules/ActionMenu/ActionMenu';
-import { router } from 'expo-router';
 import Trash from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
@@ -33,6 +30,7 @@ import moment from 'moment';
 import { dateTimeFormate } from '@constants/common';
 import { Flexed } from '@atoms/common/common.styles';
 import LeadStatus from '@molecules/LeadStatus/LeadStatus';
+import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
   leadData,
@@ -49,6 +47,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   const toast = useToast();
   const { colors } = useAppTheme();
   const leads = useSelector((state: RootState) => state.leads.leadList.leads);
+  const [visibleBottomSheet, setVisibleBottomSheet] = useState(false);
 
   const handleEmail = () => {
     const email = leadData?.email;
@@ -67,29 +66,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   const handleWhatsApp = (phoneNumber: number | string) => {
     generateWhatsAppUrl(phoneNumber);
   };
-  const onEditLead = () => {
-    if (onEdit) {
-      onEdit();
-    } else {
-      if (leadData?.id) {
-        router.navigate(`/(protected)/add-lead/${leadData?.id}`);
-      } else {
-        toast.show(t('canNotFindId'), {
-          type: ToastType.Custom,
-          data: {
-            type: ToastTypeProps.Error,
-          },
-        });
-      }
-    }
-  };
-  const onDeleteLead = (id: number) => {
-    onChangeModalState(true);
-    onChangeDeleteId?.(id);
-  };
-  const onDeleteActionPress = async () => {
-    await handleDeleteLead();
-  };
+
   const handleDeleteLead = async () => {
     onDelete(leadData?.leadId || leadData?.id);
   };
@@ -110,6 +87,10 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
     onChangeModalState(false);
   };
 
+  const openBottomSheet = () => setVisibleBottomSheet(true);
+
+  const closeBottomSheet = () => setVisibleBottomSheet(false);
+
   return (
     <DetailContainer>
       <LeadInfoView>
@@ -129,10 +110,10 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
             </DateTimeText>
           )}
         </Flexed>
-        <ActionMenu
-          onEdit={onEditLead}
-          onDelete={(id) => onDeleteLead(id)}
-          id={leadData?.leadId || leadData?.id}
+        <ActionMenuIcon
+          icon="dots-vertical"
+          onPress={openBottomSheet}
+          iconColor={colors.textDark}
         />
       </LeadInfoView>
       {isSocialMediaVisible && (
@@ -167,6 +148,13 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           onActionPress={() => handleDeleteLead()}
           icon={<Trash color={colors?.deleteColor} />}
           loading={isDeleteLoading}
+        />
+      )}
+      {visibleBottomSheet && (
+        <BottomSheetNavigator
+          initialRouteName="ModifyLeadOption"
+          onClosePress={closeBottomSheet}
+          extraInfo={{ leadId: leadData?.id }}
         />
       )}
     </DetailContainer>

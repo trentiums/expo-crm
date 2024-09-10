@@ -9,6 +9,7 @@ import {
   LeadListResponse,
   SaveLeadParams,
   UpdateLeadParams,
+  UpdateLeadStatusParams,
 } from '@type/api/lead';
 import { ApiResponse } from '@type/api/api';
 import {
@@ -18,6 +19,7 @@ import {
   leadList,
   saveLead,
   updateLead,
+  updateLeadStatus,
 } from '@api/lead';
 export const saveLeadAction = createAsyncThunk(
   'lead/saveLead',
@@ -50,6 +52,15 @@ export const updateLeadAction = createAsyncThunk(
     return response.data;
   }),
 );
+
+export const updateLeadStatusAction = createAsyncThunk(
+  'lead/updateLeadStatus',
+  withToastForError<UpdateLeadStatusParams, ApiResponse>(async (data) => {
+    const response = await updateLeadStatus(data);
+    return response.data;
+  }),
+);
+
 export const deleteLeadDocumentsAction = createAsyncThunk(
   'lead/deleteDocument',
   withToastForError<DeleteLeadDocumentsParams, ApiResponse>(async (data) => {
