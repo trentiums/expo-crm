@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { DealWinCloseFormValues } from '@organisms/DealCloseWinForm/DealCloseWinForm.props';
-import LeadProposalNegotiationForm from '@organisms/LeadProposolNagotioationForm/LeadProposolNagotioationForm';
+import LeadProposalNegotiationForm from '@organisms/LeadProposalNegotiationForm/LeadProposalNegotiationForm';
 import { getLeadDetailsAction, updateLeadAction } from '@redux/actions/lead';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import FormTemplate from '@templates/FormTemplate/FormTemplate';

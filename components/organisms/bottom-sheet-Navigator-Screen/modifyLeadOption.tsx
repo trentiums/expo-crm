@@ -7,7 +7,7 @@ import {
   FunctionType,
   ModifyLeadOptionItemProps,
   ModifyLeadOptionProps,
-  OptionType,
+  ScreenOptionType,
 } from './screen.props';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
@@ -39,9 +39,9 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
   const [showModal, setShowModal] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const onLayout = useCallback(() => {
-    if (optionType === OptionType.DASHBOARD) {
+    if (optionType === ScreenOptionType.DASHBOARD) {
       changeSnapPoints(['31%', '90%']);
-    } else if (optionType === OptionType.LEAD) {
+    } else if (optionType === ScreenOptionType.LEAD) {
       changeSnapPoints(['31%', '90%']);
     } else {
       changeSnapPoints(['21%', '90%']);
@@ -64,7 +64,7 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
     },
   ];
 
-  if (optionType === OptionType.DASHBOARD) {
+  if (optionType === ScreenOptionType.DASHBOARD) {
     modifyLeadOption.splice(1, 0, {
       label: 'updateStage',
       icon: <StageIcon />,

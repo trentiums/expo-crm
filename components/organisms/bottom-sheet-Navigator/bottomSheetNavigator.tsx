@@ -32,7 +32,7 @@ const Stack = createNativeStackNavigator();
 const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
   initialRouteName,
   onClosePress,
-  extraInfo,
+  meta,
 }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [snapPoints, setSnapPoints] = useState(['50%', '90%']);
@@ -124,8 +124,8 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 {...props}
                 changeSnapPoints={changeSnapPoints}
                 handleBottomSheetClose={handleClosePress}
-                leadId={extraInfo.leadId}
-                optionType={extraInfo.optionType}
+                leadId={meta.leadId}
+                optionType={meta.optionType}
               />
             )}
           </Stack.Screen>
@@ -145,7 +145,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
               <AssignedUserList
                 {...props}
                 handleBottomSheetClose={handleClosePress}
-                leadId={extraInfo.leadId}
+                leadId={meta.leadId}
               />
             )}
           </Stack.Screen>
@@ -165,7 +165,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
               <LeadStatusList
                 {...props}
                 handleBottomSheetClose={handleClosePress}
-                leadId={extraInfo.leadId}
+                leadId={meta.leadId}
               />
             )}
           </Stack.Screen>
@@ -186,7 +186,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 {...props}
                 changeSnapPoints={changeSnapPoints}
                 handleBottomSheetClose={handleClosePress}
-                leadId={extraInfo.leadId}
+                leadId={meta.leadId}
               />
             )}
           </Stack.Screen>
@@ -207,7 +207,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 {...props}
                 changeSnapPoints={changeSnapPoints}
                 handleBottomSheetClose={handleClosePress}
-                leadId={extraInfo.leadId}
+                leadId={meta.leadId}
               />
             )}
           </Stack.Screen>
@@ -228,7 +228,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 {...props}
                 changeSnapPoints={changeSnapPoints}
                 handleBottomSheetClose={handleClosePress}
-                leadId={extraInfo.leadId}
+                leadId={meta.leadId}
               />
             )}
           </Stack.Screen>
@@ -249,7 +249,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 {...props}
                 changeSnapPoints={changeSnapPoints}
                 handleBottomSheetClose={handleClosePress}
-                leadId={extraInfo.leadId}
+                leadId={meta.leadId}
               />
             )}
           </Stack.Screen>

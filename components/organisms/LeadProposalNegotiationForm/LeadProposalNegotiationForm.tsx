@@ -9,17 +9,15 @@ import React from 'react';
 import { Field, useFormState } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { ButtonSubmit } from '@organisms/LoginForm/LoginForm.styles';
-import { LeadProposalNegotiationFormProps } from './LeadProposolNegotiationForm.props';
+import { LeadProposalNegotiationFormProps } from './LeadProposalNegotiationForm.props';
 import {
   CancelButtonView,
   CancelText,
   FormsView,
 } from '@organisms/LeadStatusChangeForm/LeadStatusChangeForm.styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { CrossIconView } from '@screens/LeadListScreen/LeadListScreen.styles';
-import CloseIcon from '@atoms/Illustrations/Close';
 import { Spacer } from '@atoms/common/common.styles';
-import { Label } from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
+import { Label } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
 import { useAppTheme } from '@constants/theme';
 
 const LeadProposalNegotiationForm: React.FC<
@@ -30,7 +28,6 @@ const LeadProposalNegotiationForm: React.FC<
   const { valid } = useFormState();
   const { colors } = useAppTheme();
 
-   
   return (
     <FormsView>
       <KeyboardAwareScrollView

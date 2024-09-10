@@ -12,7 +12,7 @@ import {
   PressAbleContainer,
   SvgShowContainer,
   UploadText,
-} from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
+} from '@organisms/BasicInformationForm/BasicInformationForm.styles';
 import { KeyboardAwareScrollViewContainer } from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
 import { composeValidators, requiredValidator } from '@utils/formValidators';
 import React, { useEffect, useState } from 'react';

@@ -1,11 +1,11 @@
-import { OptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
+import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
 
 export type BottomSheetNavigatorProps = {
   initialRouteName: string;
   onClosePress?: () => void;
-  extraInfo?: {
+  meta?: {
     leadId?: number;
-    optionType?: OptionType;
+    optionType?: ScreenOptionType;
   };
 };
 

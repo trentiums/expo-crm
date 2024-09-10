@@ -9,7 +9,7 @@ import FormTemplate from '@templates/FormTemplate/FormTemplate';
 import { useToast } from 'react-native-toast-notifications';
 import { LeadStageChangeProps } from './screen.props';
 import { BottomSheetListContainer } from './screen.style';
-import { getLeadStageCLoseWonPreparedData } from '@utils/functions';
+import { getLeadStagePreparedDataForCLoseWonType } from '@utils/functions';
 import {
   dashboardLeadListAction,
   dashboardLeadStageCountAction,
@@ -42,7 +42,7 @@ const LeadStageCloseWon: React.FC<LeadStageChangeProps> = ({
     try {
       leadConversionId;
       setLoading(true);
-      let formData = await getLeadStageCLoseWonPreparedData(
+      let formData = await getLeadStagePreparedDataForCLoseWonType(
         values,
         leadsDetail,
         leadId,

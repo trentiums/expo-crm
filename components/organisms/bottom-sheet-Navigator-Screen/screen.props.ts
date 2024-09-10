@@ -16,10 +16,10 @@ export type ModifyLeadOptionProps = {
   handleBottomSheetClose?: () => void;
   navigation: any;
   leadId?: number;
-  optionType: OptionType;
+  optionType: ScreenOptionType;
 };
 
-export enum OptionType {
+export enum ScreenOptionType {
   DEFAULT = 'default',
   DASHBOARD = 'dashboard',
   LEAD = 'lead',

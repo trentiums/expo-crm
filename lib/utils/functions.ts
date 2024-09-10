@@ -92,7 +92,7 @@ export const getLeadStatusPreparedData = async (
   return formData;
 };
 
-export const getLeadStageCLoseWonPreparedData = async (
+export const getLeadStagePreparedDataForCLoseWonType = async (
   values: any,
   leadsDetail: LeadListState,
   leadId: number,
