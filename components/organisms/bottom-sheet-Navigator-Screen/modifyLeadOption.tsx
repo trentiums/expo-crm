@@ -7,6 +7,7 @@ import {
   FunctionType,
   ModifyLeadOptionItemProps,
   ModifyLeadOptionProps,
+  ScreenOptionType,
 } from './screen.props';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
@@ -29,6 +30,7 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
   handleBottomSheetClose,
   navigation,
   leadId,
+  optionType,
 }) => {
   const { t } = useTranslation('bottomSheetModifyLead');
   const { t: tm } = useTranslation('modalText');
@@ -37,7 +39,13 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
   const [showModal, setShowModal] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const onLayout = useCallback(() => {
-    changeSnapPoints(['31%', '90%']);
+    if (optionType === ScreenOptionType.DASHBOARD) {
+      changeSnapPoints(['31%', '90%']);
+    } else if (optionType === ScreenOptionType.LEAD) {
+      changeSnapPoints(['31%', '90%']);
+    } else {
+      changeSnapPoints(['21%', '90%']);
+    }
   }, []);
   const modifyLeadOption = [
     {
@@ -46,18 +54,7 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
       route: `/(protected)/add-lead/${leadId}`,
       bottomSheetRoute: '',
     },
-    {
-      label: 'updateStatus',
-      icon: <SyncIcon />,
-      route: '',
-      bottomSheetRoute: 'LeadStatusList',
-    },
-    {
-      label: 'updateStage',
-      icon: <StageIcon />,
-      route: '../../(protected)/add-product/add',
-      bottomSheetRoute: '',
-    },
+
     {
       label: 'delete',
       icon: <TrashIcon />,
@@ -66,6 +63,21 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
       functionType: FunctionType.DELETE,
     },
   ];
+
+  if (optionType === ScreenOptionType.DASHBOARD) {
+    modifyLeadOption.splice(1, 0, {
+      label: 'updateStage',
+      icon: <StageIcon />,
+      route: '',
+      bottomSheetRoute: 'LeadStageList',
+    });
+    modifyLeadOption.splice(1, 0, {
+      label: 'updateStatus',
+      icon: <SyncIcon />,
+      route: '',
+      bottomSheetRoute: 'LeadStatusList',
+    });
+  }
 
   const getLeadDetails = async () => {
     if (leadId) {

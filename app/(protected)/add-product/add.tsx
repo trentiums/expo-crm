@@ -1,7 +1,7 @@
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import AddProductForm from '@organisms/AddProductForm/AddProductForm';
 import { AddProductFormValues } from '@organisms/AddProductForm/AddProductForm.props';
-import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
+import { fileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 import {
   addProductServiceAction,
   getProductServiceListAction,
