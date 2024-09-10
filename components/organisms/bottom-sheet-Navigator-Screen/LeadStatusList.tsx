@@ -14,6 +14,10 @@ import {
   updateLeadStatusAction,
 } from '@redux/actions/lead';
 import { UpdateLeadStatusParams, updateLeadStatusTypes } from '@type/api/lead';
+import {
+  dashboardLeadListAction,
+  dashboardLeadStageCountAction,
+} from '@redux/actions/dashboard';
 
 const LeadStatusList: React.FC<LeadStatusListProps> = ({
   handleBottomSheetClose,
@@ -56,6 +60,8 @@ const LeadStatusList: React.FC<LeadStatusListProps> = ({
           updateLeadStatusAction(updatedLeadStatusRequestParams),
         ).unwrap();
         await dispatch(getLeadDetailsAction({ lead_id: leadId }));
+        dispatch(dashboardLeadListAction({}));
+        dispatch(dashboardLeadStageCountAction());
       }
       handleBottomSheetClose?.();
     }

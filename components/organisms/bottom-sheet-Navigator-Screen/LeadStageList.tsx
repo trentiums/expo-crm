@@ -14,6 +14,10 @@ import {
   updateLeadStatusAction,
 } from '@redux/actions/lead';
 import { UpdateLeadStatusParams, updateLeadStatusTypes } from '@type/api/lead';
+import {
+  dashboardLeadListAction,
+  dashboardLeadStageCountAction,
+} from '@redux/actions/dashboard';
 
 const LeadStageList: React.FC<LeadStageListProps> = ({
   handleBottomSheetClose,
@@ -38,21 +42,17 @@ const LeadStageList: React.FC<LeadStageListProps> = ({
 
   const handleItemPress = async (ItemId: number) => {
     const leadConversionId = leadsDetail.leadConversionId;
+    const slug = { leadId: leadId, leadConversionId: ItemId };
     if (
       (ItemId === LeadStageType.CLOSELOST ||
         ItemId === LeadStageType.CLOSEWON) &&
       ItemId !== leadConversionId
     ) {
-      const slug = { leadId: leadId, leadConversionId: ItemId };
       navigation.navigate('LeadStageCloseWon', slug);
     } else if (
       ItemId === LeadStageType?.NEGOTIATION &&
       leadConversionId !== ItemId
     ) {
-      const slug = {
-        leadId: leadId,
-        leadConversionId: ItemId,
-      };
       navigation.navigate('LeadStageNegotiation', slug);
     } else {
       if (leadConversionId !== ItemId) {
@@ -65,6 +65,8 @@ const LeadStageList: React.FC<LeadStageListProps> = ({
           updateLeadStatusAction(updatedLeadStatusRequestParams),
         ).unwrap();
         await dispatch(getLeadDetailsAction({ lead_id: leadId }));
+        dispatch(dashboardLeadListAction({}));
+        dispatch(dashboardLeadStageCountAction());
       }
       handleBottomSheetClose?.();
     }
