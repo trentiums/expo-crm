@@ -10,14 +10,14 @@ import CircleCheckIcon from '@atoms/Illustrations/CircleCheck';
 const BottomSheetItemListing: React.FC<BottomSheetItemListingProps> = ({
   label,
   handlePress,
-  VisibleSelected,
+  isSelected,
 }) => {
   return (
-    <ItemContainer onPress={() => handlePress()}>
+    <ItemContainer onPress={handlePress}>
       <OptionLabelContainer>
         <OptionLabel>{label}</OptionLabel>
       </OptionLabelContainer>
-      {VisibleSelected && <CircleCheckIcon />}
+      {isSelected && <CircleCheckIcon />}
     </ItemContainer>
   );
 };

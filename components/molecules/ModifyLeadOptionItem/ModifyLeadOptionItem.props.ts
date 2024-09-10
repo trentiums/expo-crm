@@ -4,5 +4,5 @@ export interface ModifyLeadOptionItemProps {
   icon: ReactNode;
   label: string;
   handlePress: () => void;
-  bottomSheetRoute?: boolean;
+  canNavigate?: boolean;
 }

@@ -14,17 +14,17 @@ const ModifyLeadOptionItem: React.FC<ModifyLeadOptionItemProps> = ({
   icon,
   label,
   handlePress,
-  bottomSheetRoute,
+  canNavigate,
 }) => {
   return (
-    <ItemContainer onPress={() => handlePress()}>
+    <ItemContainer onPress={handlePress}>
       <IconContainer>{icon}</IconContainer>
       <Spacer size={15} />
       <OptionLabelContainer>
         <Flexed>
           <OptionLabel>{label}</OptionLabel>
         </Flexed>
-        {bottomSheetRoute && (
+        {canNavigate && (
           <Pressable>
             <ArrowRightIcon />
           </Pressable>

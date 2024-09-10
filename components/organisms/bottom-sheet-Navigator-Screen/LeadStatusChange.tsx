@@ -8,10 +8,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
 import { LeadStatusChangeProps } from './screen.props';
 import { BottomSheetListContainer } from './screen.style';
+import { getLeadStatusPreparedData } from '@utils/functions';
 
 const LeadStatusChange: React.FC<LeadStatusChangeProps> = ({
   changeSnapPoints,
-  changeRoute,
+  handleBottomSheetClose,
   route,
 }) => {
   const toast = useToast();
@@ -33,59 +34,16 @@ const LeadStatusChange: React.FC<LeadStatusChangeProps> = ({
   }, []);
 
   const handleSaveLeadsStatusChange = async (values: any) => {
-    const data = leadsDetail;
     try {
       setLoading(true);
-      let formData = new FormData();
-      formData.append('lead_id', `${leadId}`);
-      if (data?.email) {
-        formData.append('email', data?.email);
-      }
-      formData.append('lead_channel_id', `${data?.leadChannelId}`);
-      formData.append('lead_conversion_id', `${data?.leadConversionId}`);
-      formData.append('lead_status_id', `${leadStatusId}`);
-      formData.append('name', data?.name);
-      formData.append('product_services', data.productService);
-      formData.append('company_name', values?.companyName || '');
-      if (values?.budget) {
-        formData.append('budget', values?.budget);
-      }
-      if (data?.companySize) {
-        formData.append('company_size', data?.companySize);
-      }
-      if (data?.assignTo) {
-        formData.append('assign_to_user_id', `${data?.assignTo}`);
-      }
-      formData.append('company_website', values?.webSite || '');
-      formData.append('time_line', values?.timeFrame || '');
-      formData.append('description', values?.comments || '');
-      if (values?.dealAmount || data?.dealAmount) {
-        formData.append('deal_amount', values?.dealAmount || data?.dealAmount);
-      }
-      if (data?.dealCloseDate) {
-        formData.append('deal_close_date', data?.dealCloseDate);
-      }
-      formData.append(
-        'win_close_reason',
-        values?.reason || data?.winCloseReason || '',
+      let formData = await getLeadStatusPreparedData(
+        values,
+        leadsDetail,
+        leadId,
+        leadStatusId,
+        countryList,
+        documents,
       );
-      const countryCodeAlpha = countryList?.filter(
-        (item) => item?.id === data?.countryId,
-      )?.[0]?.countryCodeAlpha;
-      if (countryCodeAlpha && data?.phone) {
-        formData.append('country_code_alpha', countryCodeAlpha);
-        formData.append('phone', values?.phoneNumber || data?.phone);
-      }
-      const newDocumentsArray = documents?.filter((item) => !item.id);
-      if (newDocumentsArray?.length > 0) {
-        newDocumentsArray.forEach((document, index) => {
-          formData.append(`documents[${index}]`, {
-            uri: document.uri,
-            name: document.name,
-            type: document.mimeType,
-          });
-        });
-      }
       const response = await dispatch(updateLeadAction(formData)).unwrap();
       await dispatch(getLeadDetailsAction({ lead_id: leadId }));
       setDocuments([]);
@@ -104,7 +62,7 @@ const LeadStatusChange: React.FC<LeadStatusChangeProps> = ({
       });
     }
     setLoading(false);
-    changeRoute?.();
+    handleBottomSheetClose?.();
   };
 
   return (
@@ -118,7 +76,7 @@ const LeadStatusChange: React.FC<LeadStatusChangeProps> = ({
         leadCardId={slug?.leadId}
         setDocuments={setDocuments}
         documents={documents}
-        onCancelPress={() => changeRoute?.()}
+        onCancelPress={() => handleBottomSheetClose?.()}
       />
     </BottomSheetListContainer>
   );
