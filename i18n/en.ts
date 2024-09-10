@@ -251,6 +251,7 @@ const English = {
     updateStatus: 'Update status',
     changeLeadStatus: 'Change lead status',
     updateStage: 'Update stage',
+    changeLeadStage: 'Change lead stage',
   },
   bottomSheetCreatePotion: {
     user: 'User',

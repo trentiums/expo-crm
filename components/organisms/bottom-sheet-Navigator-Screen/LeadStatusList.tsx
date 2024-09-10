@@ -28,7 +28,7 @@ const LeadStatusList: React.FC<LeadStatusListProps> = ({
   const leadsDetail = useSelector(
     (state: RootState) => state.leads.leadsDetail,
   );
-  const getAssignUserList = async () => {
+  const getLeadStatusList = async () => {
     await dispatch(leadStatusListAction());
   };
 
@@ -62,7 +62,7 @@ const LeadStatusList: React.FC<LeadStatusListProps> = ({
   };
 
   const handleRefresh = useCallback(() => {
-    getAssignUserList();
+    getLeadStatusList();
   }, []);
 
   const renderModifyLeadOption = ({

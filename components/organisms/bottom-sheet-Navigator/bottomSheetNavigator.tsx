@@ -24,6 +24,8 @@ import AssignedUserList from '@organisms/bottom-sheet-Navigator-Screen/assignedU
 import LeadStatusList from '@organisms/bottom-sheet-Navigator-Screen/LeadStatusList';
 import LeadStatusChange from '@organisms/bottom-sheet-Navigator-Screen/LeadStatusChange';
 import LeadStageList from '@organisms/bottom-sheet-Navigator-Screen/LeadStageList';
+import LeadStageCloseWon from '@organisms/bottom-sheet-Navigator-Screen/LeadStageCloseWon';
+import LeadStageNegotiation from '@organisms/bottom-sheet-Navigator-Screen/LeadStageNegotiation';
 
 const Stack = createNativeStackNavigator();
 
@@ -123,6 +125,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 changeSnapPoints={changeSnapPoints}
                 handleBottomSheetClose={handleClosePress}
                 leadId={extraInfo.leadId}
+                optionType={extraInfo.optionType}
               />
             )}
           </Stack.Screen>
@@ -182,7 +185,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
               <LeadStageList
                 {...props}
                 changeSnapPoints={changeSnapPoints}
-                changeRoute={handleClosePress}
+                handleBottomSheetClose={handleClosePress}
                 leadId={extraInfo.leadId}
               />
             )}
@@ -201,6 +204,48 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
             })}>
             {(props) => (
               <LeadStatusChange
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+                handleBottomSheetClose={handleClosePress}
+                leadId={extraInfo.leadId}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="LeadStageCloseWon"
+            options={({ navigation }) => ({
+              header: () => (
+                <CustomHeader
+                  title={t('changeLeadStage')}
+                  onClose={() => handleClosePress()}
+                  backVisible={true}
+                  onBackPress={() => navigation.goBack()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <LeadStageCloseWon
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+                handleBottomSheetClose={handleClosePress}
+                leadId={extraInfo.leadId}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="LeadStageNegotiation"
+            options={({ navigation }) => ({
+              header: () => (
+                <CustomHeader
+                  title={t('changeLeadStage')}
+                  onClose={() => handleClosePress()}
+                  backVisible={true}
+                  onBackPress={() => navigation.goBack()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <LeadStageNegotiation
                 {...props}
                 changeSnapPoints={changeSnapPoints}
                 handleBottomSheetClose={handleClosePress}
