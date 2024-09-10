@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  ActionMenuIcon,
   ContactBox,
   DateTimeText,
   DetailContainer,
@@ -29,7 +30,6 @@ import moment from 'moment';
 import { dateTimeFormate } from '@constants/common';
 import { Flexed } from '@atoms/common/common.styles';
 import LeadStatus from '@molecules/LeadStatus/LeadStatus';
-import { ActionMenuIcon } from '@molecules/ActionMenu/ActionMenu.styles';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
