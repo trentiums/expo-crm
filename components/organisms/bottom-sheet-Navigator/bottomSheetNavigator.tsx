@@ -307,6 +307,9 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 {...props}
                 changeSnapPoints={changeSnapPoints}
                 changeRoute={handleClosePress}
+                handleSearch={(search) => meta.handleSearch(search)}
+                dropdownData={meta.dropdownData}
+                handelSelectData={(id) => meta.handelSelectData(id)}
               />
             )}
           </Stack.Screen>

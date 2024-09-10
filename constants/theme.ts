@@ -82,6 +82,7 @@ export const DefaultTheme = {
     black15: '#00000026',
     boysenberryShadow: '#f3f4f8',
     moreThan: '#8d8d8d',
+    lightHouse: '#f4f4f4',
   },
 };
 
@@ -163,6 +164,7 @@ export const DarkTheme: AppTheme = {
     black15: '#00000026',
     boysenberryShadow: '#f3f4f8',
     moreThan: '#8d8d8d',
+    lightHouse: '#f4f4f4',
   },
 };
 

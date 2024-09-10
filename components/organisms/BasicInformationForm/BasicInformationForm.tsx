@@ -270,7 +270,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
           <CountryCodeInput>
             <DropDown
               data={countryListData?.map((item) => ({
-                title: item?.dialCode,
+                title: `+${item?.dialCode} ${item.name}`,
                 id: item?.id,
                 image: item?.flag,
               }))}

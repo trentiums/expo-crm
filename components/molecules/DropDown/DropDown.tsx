@@ -39,6 +39,7 @@ const DropDown: React.FC<DropDownProps> = ({
   isStaff,
 }) => {
   const [showDropList, setShowDropList] = useState(false);
+  const [dropListData, setDropListData] = useState(data);
   const renderMultipleData = ({ selectedData }) => {
     const isSelectedData = Array.isArray(value)
       ? value.includes(selectedData.id)
@@ -60,6 +61,12 @@ const DropDown: React.FC<DropDownProps> = ({
   };
   const handleCloseDropList = () => {
     setShowDropList(false);
+  };
+  const handleSearch = (search: string) => {
+    const filtered = dropListData.filter((item) =>
+      item.title.toLowerCase().includes(search.toLowerCase()),
+    );
+    setDropListData(filtered);
   };
 
   return (
@@ -116,9 +123,11 @@ const DropDown: React.FC<DropDownProps> = ({
         <BottomSheetNavigator
           initialRouteName="DropdownListing"
           onClosePress={handleCloseDropList}
-          dropdownData={data}
-          handelSelectData={(id) => handelSelectData(id)}
-          handleSearch={() => console.log('hello')}
+          meta={{
+            dropdownData: dropListData,
+            handelSelectData: (id) => handelSelectData(id),
+            handleSearch: (search) => handleSearch(search),
+          }}
         />
       )}
     </>

@@ -5,7 +5,6 @@ import {
   ProductDetailContainer,
   ProductInfoView,
 } from './ProductCard.styles';
-import ActionMenu from '@molecules/ActionMenu/ActionMenu';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
@@ -40,11 +39,6 @@ const ProductCard = ({
         <Service />
         <ProductDetailContainer>
           <NameText numberOfLines={1}>{data?.name}</NameText>
-          <ActionMenu
-            onEdit={onEdit}
-            onDelete={(id) => onDeleteLead(id)}
-            id={data?.id}
-          />
         </ProductDetailContainer>
       </ProductInfoView>
       {showModal && (

@@ -18,7 +18,6 @@ import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useTranslation } from 'react-i18next';
 import { DocumentPickerProps, PermissionType } from './DocumentPicker.props';
-import { HeaderText } from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
 import { Spacer } from '@atoms/common/common.styles';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { deleteLeadDocumentsAction } from '@redux/actions/lead';
@@ -30,6 +29,7 @@ import Plus from '@atoms/Illustrations/Plus';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import TaskIcon from '@atoms/Illustrations/Task';
 import { useAppTheme } from '@constants/theme';
+import { HeaderText } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
 
 const DocumentPick: React.FC<DocumentPickerProps> = ({
   setDocumentArray,
