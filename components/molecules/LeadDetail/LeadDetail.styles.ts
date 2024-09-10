@@ -1,6 +1,7 @@
 import Text from '@atoms/Text/Text';
 import View from '@atoms/View/View';
 import { Pressable } from 'react-native';
+import { IconButton } from 'react-native-paper';
 import styled from 'styled-components';
 
 export const DetailContainer = styled(View)`
@@ -39,11 +40,7 @@ export const CommunicationOptionCon = styled(Pressable)`
   border-radius: 16px;
   flex: 1;
 `;
-export const WhatsAppText = styled(Text)`
-  font-size: 16px;
-  color: ${({ theme }) => theme.colors.textDark};
-  font-weight: 500;
-`;
+
 export const NameAndStatusContainer = styled(View)`
   display: flex;
   flex-direction: row;
@@ -57,4 +54,9 @@ export const ContactBox = styled(View)`
   justify-content: space-around;
   align-items: center;
   gap: 12px;
+`;
+
+export const ActionMenuIcon = styled(IconButton)`
+  margin-right: -5px;
+  margin-top: -5px;
 `;

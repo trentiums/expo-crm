@@ -1,3 +1,4 @@
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { styled } from '@utils/styled';
 import { FlatList, View, Pressable } from 'react-native';
 import Text from '@atoms/Text/Text';
@@ -59,4 +60,35 @@ export const DropDownImage = styled(Image)`
   height: 23px;
   width: 28px;
   border-radius: 4px;
+`;
+export const ModifyLeadOptionContainer = styled(View)`
+  flex-direction: row;
+  justify-content: space-around;
+  flex: 1;
+  padding-top: 15px;
+  background-color: ${({ theme }) => theme.colors.white};
+`;
+
+export const ModifyLeadOptionFlatList = styled(FlatList).attrs({
+  contentContainerStyle: {
+    flexDirection: 'column',
+  },
+})`
+  padding: 0px 20px;
+`;
+
+export const BottomSheetListContainer = styled(View)`
+  flex-direction: row;
+  justify-content: space-around;
+  flex: 1;
+  padding-top: 15px;
+  background-color: ${({ theme }) => theme.colors.white};
+`;
+
+export const BottomSheetFlatListContainer = styled(BottomSheetFlatList).attrs({
+  contentContainerStyle: {
+    flexDirection: 'column',
+  },
+})`
+  padding: 0px 20px;
 `;

@@ -269,13 +269,32 @@ const English = {
     channel: 'Channel',
     assignedTo: 'Assigned To',
   },
+
   bottomSheetNavigator: {
     ChooseOptionToAdd: 'Choose option to add',
+    chooseOption: 'Choose option',
+    updateAssignedUsers: 'Update assigned users',
+    updateStatus: 'Update status',
+    changeLeadStatus: 'Change lead status',
     filter: 'Filter',
     sortBy: 'Sort by',
     select: 'Select',
   },
-  bottomSheetCreatePotion: { user: 'User', lead: 'Lead', service: 'Service' },
+  bottomSheetCreatePotion: {
+    user: 'User',
+    lead: 'Lead',
+    service: 'Service',
+    edit: 'Edit',
+    delete: 'Delete',
+    updateStatus: 'Update status',
+    updateStage: 'Update stage',
+  },
+  bottomSheetModifyLead: {
+    edit: 'Edit',
+    delete: 'Delete',
+    updateStatus: 'Update status',
+    updateStage: 'Update stage',
+  },
 };
 
 export default English;
