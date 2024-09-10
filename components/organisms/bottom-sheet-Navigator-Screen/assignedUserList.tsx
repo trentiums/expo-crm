@@ -13,7 +13,7 @@ import { getAssignUserListAction } from '@redux/actions/user';
 import BottomSheetItemListing from '@molecules/BottomSheetItemListing/BottomSheetItemListing';
 
 const AssignedUserList: React.FC<AssignedUsersListProps> = ({
-  changeRoute,
+  handleBottomSheetClose,
 }) => {
   const { t } = useTranslation('bottomSheetModifyLead');
   const dispatch = useAppDispatch();
@@ -28,7 +28,7 @@ const AssignedUserList: React.FC<AssignedUsersListProps> = ({
   };
 
   const handleItemPress = (ItemId: number) => {
-    changeRoute?.();
+    handleBottomSheetClose?.();
   };
 
   const handleRefresh = useCallback(() => {
@@ -48,7 +48,7 @@ const AssignedUserList: React.FC<AssignedUsersListProps> = ({
         handlePress={() => handleItemPress(item.id)}
         label={t(`${item.title}`)}
         key={`${item.id}-${index}`}
-        VisibleSelected={isStatusSelected}
+        isSelected={isStatusSelected}
       />
     );
   };

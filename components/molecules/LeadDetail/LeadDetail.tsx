@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  ActionMenuIcon,
   ContactBox,
   DateTimeText,
   DetailContainer,
@@ -29,7 +30,6 @@ import moment from 'moment';
 import { dateTimeFormate } from '@constants/common';
 import { Flexed } from '@atoms/common/common.styles';
 import LeadStatus from '@molecules/LeadStatus/LeadStatus';
-import { ActionMenuIcon } from '@molecules/ActionMenu/ActionMenu.styles';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
@@ -39,7 +39,6 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   isDeleteLoading,
   showModal,
   onChangeModalState,
-  isServices,
   onChangeDeleteId,
   isSocialMediaVisible,
 }) => {
@@ -94,13 +93,10 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
 
   return (
     <DetailContainer>
-      <LeadInfoView isServices={isServices}>
-        {/* {isServices ? <ProductServices /> : <UserProfile />} */}
+      <LeadInfoView>
         <Flexed>
           <NameAndStatusContainer>
-            <NameText numberOfLines={1} isServices={isServices}>
-              {leadData?.name}
-            </NameText>
+            <NameText numberOfLines={1}>{leadData?.name}</NameText>
             <LeadStatus
               leadStatus={
                 leads?.filter((item) => item?.id === leadData?.id)[0]

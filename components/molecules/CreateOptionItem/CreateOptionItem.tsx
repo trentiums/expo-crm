@@ -12,7 +12,7 @@ const CreateOptionsItem: React.FC<CreateOptionItemProps> = ({
   handlePress,
 }) => {
   return (
-    <ItemContainer onPress={() => handlePress()}>
+    <ItemContainer onPress={handlePress}>
       <IconContainer>{icon}</IconContainer>
       <OptionLabel>{label}</OptionLabel>
     </ItemContainer>

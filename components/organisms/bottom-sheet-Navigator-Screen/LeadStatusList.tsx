@@ -16,7 +16,7 @@ import {
 import { UpdateLeadStatusParams, updateLeadStatusTypes } from '@type/api/lead';
 
 const LeadStatusList: React.FC<LeadStatusListProps> = ({
-  changeRoute,
+  handleBottomSheetClose,
   leadId,
   navigation,
 }) => {
@@ -57,7 +57,7 @@ const LeadStatusList: React.FC<LeadStatusListProps> = ({
         ).unwrap();
         await dispatch(getLeadDetailsAction({ lead_id: leadId }));
       }
-      changeRoute?.();
+      handleBottomSheetClose?.();
     }
   };
 
@@ -78,7 +78,7 @@ const LeadStatusList: React.FC<LeadStatusListProps> = ({
         handlePress={() => handleItemPress(item.id)}
         label={t(`${item.name}`)}
         key={`${item.id}-${index}`}
-        VisibleSelected={isStatusSelected}
+        isSelected={isStatusSelected}
       />
     );
   };

@@ -26,7 +26,7 @@ import { dashboardLeadListAction } from '@redux/actions/dashboard';
 
 const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
   changeSnapPoints,
-  changeRoute,
+  handleBottomSheetClose,
   navigation,
   leadId,
 }) => {
@@ -72,7 +72,12 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
       try {
         await dispatch(getLeadDetailsAction({ lead_id: leadId })).unwrap();
       } catch (error) {
-        console.log(error, 'error');
+        toast.show(error, {
+          type: ToastType.Custom,
+          data: {
+            type: ToastTypeProps.Error,
+          },
+        });
       }
     }
   };
@@ -83,17 +88,12 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
 
   const handleRedirection = (leadItemDetails: ModifyLeadOptionItemProps) => {
     if (leadItemDetails.route) {
-      changeRoute?.();
+      handleBottomSheetClose?.();
       router.navigate(leadItemDetails.route);
     } else if (leadItemDetails.bottomSheetRoute) {
       navigation.navigate(leadItemDetails.bottomSheetRoute);
-    } else if (leadItemDetails?.functionType) {
-      switch (leadItemDetails.functionType) {
-        case FunctionType.DELETE:
-          setShowModal(true);
-        default:
-          return null;
-      }
+    } else if (leadItemDetails?.functionType === FunctionType.DELETE) {
+      setShowModal(true);
     }
   };
 
@@ -110,7 +110,7 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
         },
       });
       setShowModal(false);
-      changeRoute?.();
+      handleBottomSheetClose?.();
       await dispatch(dashboardLeadListAction({}));
     } catch (error: any) {
       toast.show(error, {
@@ -136,7 +136,7 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
         icon={item.icon}
         label={t(`${item.label}`)}
         key={`${item.label}-${index}`}
-        bottomSheetRoute={!!item.bottomSheetRoute}
+        canNavigate={!!item.bottomSheetRoute}
       />
     );
   };
