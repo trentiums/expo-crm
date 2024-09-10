@@ -24,7 +24,14 @@ export type ModifyLeadOptionProps = {
   handleBottomSheetClose?: () => void;
   navigation: any;
   leadId?: number;
+  optionType: ScreenOptionType;
 };
+
+export enum ScreenOptionType {
+  DEFAULT = 'default',
+  DASHBOARD = 'dashboard',
+  LEAD = 'lead',
+}
 
 export type ModifyLeadOptionItemProps = {
   label: string;
@@ -67,4 +74,24 @@ export enum FunctionType {
   DELETE = 'delete',
 }
 
+export type LeadStageListProps = {
+  changeSnapPoints: (points: string[]) => void;
+  handleBottomSheetClose?: () => void;
+  leadId?: number;
+  navigation: any;
+};
+
+export type LeadStageListItemProps = {
+  name: string;
+  id: number;
+};
+
 export type MediaDocumentType = { uri: string; name: string; mimeType: string };
+
+export type LeadStageChangeProps = {
+  changeSnapPoints: (points: string[]) => void;
+  handleBottomSheetClose?: () => void;
+  navigation: any;
+  leadId?: number;
+  route?: any;
+};

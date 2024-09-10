@@ -279,6 +279,8 @@ const English = {
     filter: 'Filter',
     sortBy: 'Sort by',
     select: 'Select',
+    updateStage: 'Update stage',
+    changeLeadStage: 'Change lead stage',
   },
   bottomSheetCreatePotion: {
     user: 'User',

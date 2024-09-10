@@ -14,7 +14,7 @@ import {
   StyledModal,
   SvgShowContainer,
   UploadText,
-} from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
+} from '@organisms/BasicInformationForm/BasicInformationForm.styles';
 import {
   ContainerView,
   FormButtonText,

@@ -1,4 +1,4 @@
-import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
+import { fileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 import { FormRenderProps } from 'react-final-form';
 
 export type LeadStatusChangeFormValues = {

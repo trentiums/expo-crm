@@ -33,6 +33,7 @@ import { Flexed } from '@atoms/common/common.styles';
 import LeadStatus from '@molecules/LeadStatus/LeadStatus';
 import LeadInfoCard from '@molecules/LeadInfoCard/LeadInfoCard';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
+import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
   leadData,
@@ -159,7 +160,10 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
         <BottomSheetNavigator
           initialRouteName="ModifyLeadOption"
           onClosePress={closeBottomSheet}
-          extraInfo={{ leadId: leadData?.id }}
+          meta={{
+            leadId: leadData?.id,
+            optionType: ScreenOptionType.DASHBOARD,
+          }}
         />
       )}
     </DetailContainer>
