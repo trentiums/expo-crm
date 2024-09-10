@@ -33,7 +33,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
     return filtersValue;
   }, [search, debouncedSearch]);
   useEffect(() => {
-    handleSearch(searchFilter);
+    // handleSearch(searchFilter);
   }, [debouncedSearch]);
   return (
     <FilterContainer>

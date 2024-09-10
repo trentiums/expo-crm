@@ -11,6 +11,7 @@ export interface DropDownProps {
   isFullWidth?: boolean;
   isStaff?: boolean;
   handleBottomSheetClose?: () => void;
+  isShowSelected?: boolean;
 }
 
 export interface DropDownData {

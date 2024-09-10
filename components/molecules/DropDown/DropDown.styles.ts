@@ -4,7 +4,7 @@ import { styled } from '@utils/styled';
 import { FlatList, Pressable } from 'react-native';
 import { Image } from 'expo-image';
 
-export const DropDownContainer = styled(View)``;
+export const DropDownContainer = styled(Pressable)``;
 
 export const DropDownTitleText = styled(Text)`
   font-size: 18px;
@@ -29,6 +29,7 @@ export const DropdownLeftView = styled(View)<{
   margin-left: ${({ isImage }) => (isImage ? 4 : -20)}px;
   align-items: center;
   gap: 8px;
+
   width: ${({ isFullWidth }) => (isFullWidth ? 100 : 80)}%;
 `;
 export const PressableView = styled(Pressable)<{ isSelected: boolean }>`
@@ -72,7 +73,7 @@ export const ImageView = styled(Image)`
 `;
 export const PlaceHolderText = styled(Text)`
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.disabledTextColor};
+  color: ${({ theme }) => theme.colors.moreThan};
 `;
 export const MultipleSelectedText = styled(Text)<{ isSelected: boolean }>`
   font-size: 16px;

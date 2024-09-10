@@ -81,6 +81,7 @@ export const DefaultTheme = {
     carolinaBlue: '#adcaff',
     black15: '#00000026',
     boysenberryShadow: '#f3f4f8',
+    moreThan: '#8d8d8d',
   },
 };
 
@@ -161,6 +162,7 @@ export const DarkTheme: AppTheme = {
     carolinaBlue: '#adcaff',
     black15: '#00000026',
     boysenberryShadow: '#f3f4f8',
+    moreThan: '#8d8d8d',
   },
 };
 

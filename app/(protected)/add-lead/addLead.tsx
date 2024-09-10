@@ -33,7 +33,7 @@ const AddLead = () => {
   const { t } = useTranslation('screenTitle');
   const navigation = useNavigation();
   const [selectedTabNav, setSelectedTabNav] = useState(
-    AddLeadTabBarData?.[0].title || '',
+    AddLeadTabBarData?.[0] || '',
   );
   const [selectedCountryCodeValue, setSelectedCountryCodeValue] =
     useState<string>('');
@@ -81,7 +81,7 @@ const AddLead = () => {
         countryCode: selectedCountryCodeValue,
       }),
     );
-    setSelectedTabNav(AddLeadTabBarData?.[1].title);
+    setSelectedTabNav(AddLeadTabBarData?.[1]);
   };
   const handleSaveCompanyInformation = async (
     values: CompanyInformationFromValueTypes,
@@ -94,7 +94,7 @@ const AddLead = () => {
         webSite: values.webSite,
       }),
     );
-    setSelectedTabNav(AddLeadTabBarData?.[2].title);
+    setSelectedTabNav(AddLeadTabBarData?.[2]);
   };
 
   const handleSaveLeadDetailsInformation = async (
@@ -200,7 +200,7 @@ const AddLead = () => {
     setLoading(false);
   };
   const renderForm = () => {
-    switch (selectedTabNav) {
+    switch (selectedTabNav?.title) {
       case AddLeadTabBar.BASICINFO:
         return (
           <FormTemplate
@@ -225,7 +225,7 @@ const AddLead = () => {
               handleSaveCompanyInformation(values);
             }}
             onBackClick={() => {
-              setSelectedTabNav(AddLeadTabBarData?.[0].title);
+              setSelectedTabNav(AddLeadTabBarData?.[0]);
             }}
             isSave
           />
@@ -240,7 +240,7 @@ const AddLead = () => {
               handleSaveLeadDetailsInformation(values)
             }
             onBackClick={() => {
-              setSelectedTabNav(AddLeadTabBarData?.[1].title);
+              setSelectedTabNav(AddLeadTabBarData?.[1]);
             }}
             isSave
           />
@@ -261,10 +261,11 @@ const AddLead = () => {
     }
   };
   return (
-    <ScreenTemplate>
+    <ScreenTemplate title={t('addLead')}>
       <AddLeadContainer>
-        <Stepper stepData={stepData} currentId={2} />
-        <Spacer size={32} />
+        <Spacer size={16} />
+        <Stepper stepData={stepData} currentId={selectedTabNav.id} />
+        <Spacer size={24} />
         {leadsDetailLoading ? <Loader /> : renderForm()}
       </AddLeadContainer>
     </ScreenTemplate>

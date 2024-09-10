@@ -21,6 +21,7 @@ import { useAppTheme } from '@constants/theme';
 import BottomSheetCloseIcon from '@atoms/Illustrations/BottomSheetClose';
 import LeadsFilter from '@organisms/bottom-sheet-Navigator-Screen/leadsFilter';
 import LeadsSortFilter from '@organisms/bottom-sheet-Navigator-Screen/leadsSortFilter';
+import DropdownListing from '@organisms/bottom-sheet-Navigator-Screen/dropdownListing';
 
 const Stack = createNativeStackNavigator();
 
@@ -133,6 +134,24 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
             })}>
             {(props) => (
               <LeadsSortFilter
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+                changeRoute={handleClosePress}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="DropdownListing"
+            options={() => ({
+              header: () => (
+                <CustomHeader
+                  title={t('sortBy')}
+                  onClose={() => handleClosePress()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <DropdownListing
                 {...props}
                 changeSnapPoints={changeSnapPoints}
                 changeRoute={handleClosePress}

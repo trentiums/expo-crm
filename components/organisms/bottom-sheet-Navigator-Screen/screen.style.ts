@@ -1,6 +1,7 @@
 import { styled } from '@utils/styled';
 import { FlatList, View, Pressable } from 'react-native';
 import Text from '@atoms/Text/Text';
+import { Image } from 'expo-image';
 
 export const CreateOptionContainer = styled(View)`
   flex-direction: row;
@@ -40,4 +41,22 @@ export const LeadsFilterButton = styled(View)`
   width: 100%;
   gap: 8px;
   padding: 16px;
+`;
+export const DropdownListingView = styled(View)`
+  padding: 0px 16px;
+`;
+export const DropdownListingText = styled(Text)`
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.black};
+`;
+export const DropdownListView = styled(Pressable)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const DropDownImage = styled(Image)`
+  height: 23px;
+  width: 28px;
+  border-radius: 4px;
 `;

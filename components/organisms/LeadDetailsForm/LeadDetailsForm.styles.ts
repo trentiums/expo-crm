@@ -1,9 +1,8 @@
-import Button from "@atoms/Button/Button";
-import Text from "@atoms/Text/Text";
-import View from "@atoms/View/View";
-import { Pressable } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import styled from "styled-components";
+import Button from '@atoms/Button/Button';
+import Text from '@atoms/Text/Text';
+import View from '@atoms/View/View';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import styled from 'styled-components';
 
 export const FormsView = styled(View)`
   display: flex;
@@ -11,6 +10,7 @@ export const FormsView = styled(View)`
   justify-content: space-between;
   flex: 1;
   flex-basis: auto;
+  border: 2px solid red;
 `;
 
 export const FieldDropDownContainer = styled(View)<{ isError?: boolean }>`
@@ -57,4 +57,3 @@ export const FormButtonText = styled(Text)<{ valid: boolean }>`
   color: ${({ valid, theme }) =>
     valid ? theme.colors.black : theme.colors.lightGray};
 `;
-
