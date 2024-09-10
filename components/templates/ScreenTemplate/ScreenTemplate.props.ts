@@ -8,4 +8,5 @@ export type ScreenTemplateProps = {
   moreVisible?: boolean;
   onAddButtonPress?: () => void;
   title?: string;
+  onBackPress?: () => void;
 };

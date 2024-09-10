@@ -5,17 +5,26 @@ import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
-import { ProductsFlatList } from './tabs.style';
+import {
+  CountsText,
+  ProductsFlatList,
+  HeadingText,
+  HeadingView,
+} from './tabs.style';
 import { RefreshControl } from 'react-native';
 import { UserDetailCardProps } from '@organisms/UserDetailCard/UserDetailCard.props';
-import UserDetailCard from '@organisms/UserDetailCard/UserDetailCard';
 import {
   deleteProductServiceAction,
   getProductServiceListAction,
 } from '@redux/actions/productService';
+import { useTranslation } from 'react-i18next';
+import SearchFilter from '@molecules/Search/Search';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import ProductCard from '@molecules/ProductCard/ProductCard';
 
 const products = () => {
+  const { t: ts } = useTranslation('drawer');
+  const { t } = useTranslation('modalText');
   const { colors } = useAppTheme();
   const toast = useToast();
   const dispatch = useAppDispatch();
@@ -28,10 +37,12 @@ const products = () => {
   const [deleteProductId, setDeleteProductId] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [productSearch, setProductUserSearch] = useState('');
 
   const handleEdit = (slug: string | number) => {
     router.navigate(`/add-product/${slug}`);
   };
+
   const renderProducts = ({
     item,
     index,
@@ -39,12 +50,11 @@ const products = () => {
     item: UserDetailCardProps;
     index: number;
   }) => (
-    <UserDetailCard
+    <ProductCard
       key={`${item.id}-${index}`}
       onDelete={handleDeleteProduct}
       onEdit={() => handleEdit(item?.id)}
       data={item}
-      isServices
       showModal={showModal}
       onChangeModalState={(value) => setShowModal(value)}
       loading={deleteLoading}
@@ -70,7 +80,15 @@ const products = () => {
       setMoreLoading(false);
     }
   };
-
+  const renderHeader = () => {
+    return (
+      <SearchFilter
+        search={productSearch}
+        setSearch={setProductUserSearch}
+        handleSearch={() => console.log('search')}
+      />
+    );
+  };
   const handleDeleteProduct = async () => {
     try {
       setDeleteLoading(true);
@@ -105,11 +123,18 @@ const products = () => {
   };
   return (
     <ScreenTemplate moreVisible>
+      <HeadingView>
+        <HeadingText>{ts('services')}</HeadingText>
+        <CountsText>
+          {t('itemWithCount', { count: products?.total })}
+        </CountsText>
+      </HeadingView>
+      {renderHeader()}
       {loading ? (
         <Loader />
       ) : (
         <ProductsFlatList
-          data={products?.serviceList}
+          data={products?.serviceList?.slice(0, 1)}
           keyExtractor={(item, index) => `${item.id}-${index}`}
           renderItem={renderProducts}
           showsVerticalScrollIndicator={false}
