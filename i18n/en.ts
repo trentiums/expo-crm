@@ -130,6 +130,8 @@ const English = {
     emailOpenFailed: 'Failed to open email client',
     emailNotAvailable: 'Email address is not available',
     phoneNumberIsNotAvailable: 'Phone Number address is not available',
+    itemWithCount: '{{count}} item',
+    itemWithCount_plural: '{{count}} items',
   },
   BasicInformation: {
     firstNameLabel: 'Full Name',
@@ -247,8 +249,28 @@ const English = {
     users: 'Users',
     services: 'Services',
   },
-  bottomSheetNavigator: { ChooseOptionToAdd: 'Choose option to add' },
-  bottomSheetCreatePotion: { user: 'User', lead: 'Lead', service: 'Service' },
+  bottomSheetNavigator: {
+    ChooseOptionToAdd: 'Choose option to add',
+    chooseOption: 'Choose option',
+    updateAssignedUsers: 'Update assigned users',
+    updateStatus: 'Update status',
+    changeLeadStatus: 'Change lead status',
+  },
+  bottomSheetCreatePotion: {
+    user: 'User',
+    lead: 'Lead',
+    service: 'Service',
+    edit: 'Edit',
+    delete: 'Delete',
+    updateStatus: 'Update status',
+    updateStage: 'Update stage',
+  },
+  bottomSheetModifyLead: {
+    edit: 'Edit',
+    delete: 'Delete',
+    updateStatus: 'Update status',
+    updateStage: 'Update stage',
+  },
 };
 
 export default English;

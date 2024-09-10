@@ -8,7 +8,7 @@ export const ModalContainer = styled(View)`
   padding: 24px;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.white};
-  border-radius: 8px;
+  border-radius: 20px;
   min-width: 200px;
   justify-content: center;
   align-items: center;

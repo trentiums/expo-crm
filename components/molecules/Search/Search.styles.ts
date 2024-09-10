@@ -1,3 +1,4 @@
+import TextInput from '@atoms/TextInput/TextInput';
 import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
 import { Pressable } from 'react-native';
@@ -22,4 +23,12 @@ export const FilterIconView = styled(Pressable)`
 `;
 export const SearchInputContainer = styled(RNView)`
   flex: 1;
+`;
+export const SearchTextInput = styled(TextInput)`
+  background-color: ${({ theme }) => theme.colors.snowflake};
+  border-radius: 25px;
+  overflow: hidden;
+  border-color: ${({ theme }) => theme.colors.primaryColor};
+  padding-left: -20px;
+  padding-right: 40px;
 `;

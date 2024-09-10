@@ -5,15 +5,15 @@ import {
   ProductDetailContainer,
   ProductInfoView,
 } from './ProductCard.styles';
-import ActionMenu from '@molecules/ActionMenu/ActionMenu';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
 import { useTranslation } from 'react-i18next';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import Service from '@atoms/Illustrations/Services';
+import Service from '@atoms/Illustrations/Service';
+import { ProductCardProps } from './ProductCard.props';
 
-const ProductCard = ({
+const ProductCard: React.FC<ProductCardProps> = ({
   onEdit,
   onDelete,
   data,
@@ -40,11 +40,6 @@ const ProductCard = ({
         <Service />
         <ProductDetailContainer>
           <NameText numberOfLines={1}>{data?.name}</NameText>
-          <ActionMenu
-            onEdit={onEdit}
-            onDelete={(id) => onDeleteLead(id)}
-            id={data?.id}
-          />
         </ProductDetailContainer>
       </ProductInfoView>
       {showModal && (

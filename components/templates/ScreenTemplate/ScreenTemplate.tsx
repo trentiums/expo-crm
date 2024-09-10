@@ -9,7 +9,6 @@ import { ScreenTemplateProps } from './ScreenTemplate.props';
 import PlusIcon from '@atoms/Illustrations/PlusIcon';
 import { useAppTheme } from '@constants/theme';
 import TitleWithButton from '@molecules/TitleWithButton/TitleWithButton';
-import { router } from 'expo-router';
 import MoreMenuButton from '@molecules/MoreMenuButton/MoreMenuButton';
 
 const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
@@ -20,13 +19,12 @@ const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
   onAddButtonPress,
   moreVisible,
   title,
+  onBackPress,
 }) => {
   const { colors } = useAppTheme();
   return (
     <Container {...safeAreaProps} backgroundColor={backgroundColor}>
-      {title && (
-        <TitleWithButton text={title} btnBackPress={() => router?.back()} />
-      )}
+      {!!title && <TitleWithButton text={title} onBackPress={onBackPress} />}
       {moreVisible && <MoreMenuButton />}
       <ScreenTemplateView>
         {children}
