@@ -7,7 +7,6 @@ export interface LeadDetailsProps {
   isDeleteLoading?: boolean;
   onChangeModalState?: (value: boolean) => void;
   showModal?: boolean;
-  isServices?: boolean;
   onChangeDeleteId?: (value: number) => void;
   isSocialMediaVisible?: boolean;
   isShowLeadInfo?: boolean;

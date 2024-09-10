@@ -41,7 +41,6 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   isDeleteLoading,
   showModal,
   onChangeModalState,
-  isServices,
   onChangeDeleteId,
   isSocialMediaVisible,
   isShowLeadInfo,

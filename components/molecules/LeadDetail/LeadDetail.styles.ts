@@ -9,7 +9,6 @@ export const DetailContainer = styled(View)`
   align-content: flex-start;
   gap: 8px;
 `;
-
 export const LeadInfoView = styled(View)`
   display: flex;
   flex-direction: row;

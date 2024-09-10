@@ -24,7 +24,7 @@ const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
   const { colors } = useAppTheme();
   return (
     <Container {...safeAreaProps} backgroundColor={backgroundColor}>
-      {title && <TitleWithButton text={title} onBackPress={onBackPress} />}
+      {!!title && <TitleWithButton text={title} onBackPress={onBackPress} />}
       {moreVisible && <MoreMenuButton />}
       <ScreenTemplateView>
         {children}

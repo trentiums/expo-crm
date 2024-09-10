@@ -14,8 +14,6 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
   onDelete,
   showModal,
   loading,
-  setDeleteId,
-  isServices,
   isSocialMediaVisible,
   onChangeDeleteId,
 }) => {
@@ -30,10 +28,8 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
           showModal={showModal}
           onChangeModalState={(value) => onChangeModalState(value)}
           loading={loading}
-          setDeleteId={setDeleteId}
-          isServices={isServices}
-          setDeleteId={(id) => onChangeDeleteId(id)}
-          onChangeDeleteId={isSocialMediaVisible}
+          onChangeDeleteId={(id) => onChangeDeleteId(id)}
+          isSocialMediaVisible={isSocialMediaVisible}
         />
         <Spacer size={8} />
         {data?.email && (
