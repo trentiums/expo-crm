@@ -23,6 +23,7 @@ import BottomSheetCloseIcon from '@atoms/Illustrations/BottomSheetClose';
 import AssignedUserList from '@organisms/bottom-sheet-Navigator-Screen/assignedUserList';
 import LeadStatusList from '@organisms/bottom-sheet-Navigator-Screen/LeadStatusList';
 import LeadStatusChange from '@organisms/bottom-sheet-Navigator-Screen/LeadStatusChange';
+import LeadStageList from '@organisms/bottom-sheet-Navigator-Screen/LeadStageList';
 
 const Stack = createNativeStackNavigator();
 
@@ -160,6 +161,27 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
             {(props) => (
               <LeadStatusList
                 {...props}
+                changeRoute={handleClosePress}
+                leadId={extraInfo.leadId}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="LeadStageList"
+            options={({ navigation }) => ({
+              header: () => (
+                <CustomHeader
+                  title={t('updateStage')}
+                  onClose={() => handleClosePress()}
+                  backVisible={true}
+                  onBackPress={() => navigation.goBack()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <LeadStageList
+                {...props}
+                changeSnapPoints={changeSnapPoints}
                 changeRoute={handleClosePress}
                 leadId={extraInfo.leadId}
               />

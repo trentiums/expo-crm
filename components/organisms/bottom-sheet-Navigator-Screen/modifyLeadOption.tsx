@@ -55,8 +55,8 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
     {
       label: 'updateStage',
       icon: <StageIcon />,
-      route: '../../(protected)/add-product/add',
-      bottomSheetRoute: '',
+      route: '',
+      bottomSheetRoute: 'LeadStageList',
     },
     {
       label: 'delete',

@@ -58,3 +58,15 @@ export type LeadStatusChangeProps = {
 export enum FunctionType {
   DELETE = 'delete',
 }
+
+export type LeadStageListProps = {
+  changeSnapPoints: (points: string[]) => void;
+  changeRoute?: () => void;
+  leadId?: number;
+  navigation: any;
+};
+
+export type LeadStageListItemProps = {
+  name: string;
+  id: number;
+};
