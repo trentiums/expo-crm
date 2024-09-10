@@ -16,6 +16,9 @@ import { FlatList } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
 import {
+  CountsText,
+  HeadingText,
+  HeadingView,
   LoaderView,
   NoDataFoundText,
   NoLeadsFoundContainer,
@@ -23,10 +26,13 @@ import {
 import { ActivityIndicator } from 'react-native-paper';
 import Loader from '@atoms/Loader/Loader';
 import { Spacer } from '@atoms/common/common.styles';
+import SearchFilter from '@molecules/Search/Search';
+import { LoadingStatus } from '../../(public)/login/LoginScreen.props';
 
 const ButtonSize = 40;
 
 const Users = () => {
+  const { t: ts } = useTranslation('drawer');
   const { t } = useTranslation('modalText');
   const { t: td } = useTranslation('dashBoard');
   const [showModal, setShowModal] = useState(false);
@@ -34,10 +40,9 @@ const Users = () => {
   const dispatch = useAppDispatch();
   const toast = useToast();
   const userList = useSelector((state: RootState) => state.user?.userList);
-  const [loadingStatus, setLoadingStatus] = useState<
-    'NONE' | 'DELETE' | 'MORE' | 'REFRESH'
-  >('NONE');
+  const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>('NONE');
   const [deleteUserId, setDeleteUserId] = useState(0);
+  const [userSearch, setUserSearch] = useState('');
 
   const handleDeleteUser = async () => {
     try {
@@ -128,9 +133,25 @@ const Users = () => {
       </ScreenTemplate>
     );
   }
+  const renderHeader = () => {
+    return (
+      <SearchFilter
+        search={userSearch}
+        setSearch={setUserSearch}
+        handleSearch={() => console.log('search')}
+      />
+    );
+  };
 
   return (
     <ScreenTemplate moreVisible>
+      <HeadingView>
+        <HeadingText>{ts('users')}</HeadingText>
+        <CountsText>
+          {t('itemWithCount', { count: userList?.total })}
+        </CountsText>
+      </HeadingView>
+      {renderHeader()}
       {userList?.users?.length > 0 ? (
         <FlatList
           data={userList?.users}

@@ -88,3 +88,20 @@ export const TabLabel = styled(Text)<{ focused?: boolean }>`
   color: ${({ focused, theme }) =>
     focused ? theme.colors.englishHolly : theme.colors.laurelGarland};
 `;
+
+export const HeadingView = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const HeadingText = styled(Text)`
+  font-size: 36px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.englishHolly};
+`;
+export const CountsText = styled(Text)`
+  font-size: 16px;
+  font-weight: 400;
+  color: ${({ theme }) => theme.colors.textGray};
+`;

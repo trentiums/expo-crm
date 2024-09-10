@@ -10,21 +10,23 @@ export const DetailContainer = styled(View)`
   align-content: flex-start;
   gap: 8px;
 `;
-
-export const LeadInfoView = styled(View)<{ isServices?: boolean }>`
+export const LeadDetailView = styled(View)`
+  flex: 1;
+`;
+export const LeadInfoView = styled(View)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: ${({ isServices }) => (isServices ? 'center' : 'flex-start')};
+  align-items: 'flex-start';
   flex: 1;
   flex-basis: auto;
   gap: 14px;
 `;
 
-export const NameText = styled(Text)<{ isServices?: boolean }>`
+export const NameText = styled(Text)`
   color: ${({ theme }) => theme.colors.textDark};
-  font-size: ${({ isServices }) => (isServices ? 20 : 18)}px;
-  font-weight: ${({ isServices }) => (isServices ? 400 : 700)};
+  font-size: 18px;
+  font-weight: 700;
 `;
 
 export const DateTimeText = styled(Text)`
@@ -37,7 +39,7 @@ export const WhatsAppContainer = styled(Pressable)`
   justify-content: center;
   border-width: 1px;
   border-color: ${({ theme }) => theme.colors.lightGray};
-  padding: 8px 16px;
+  padding: 8px 0px;
   border-radius: 16px;
   flex: 1;
 `;
