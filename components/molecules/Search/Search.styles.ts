@@ -11,6 +11,7 @@ export const FilterContainer = styled(View)`
   margin-top: 16px;
   gap: 16px;
   flex: 1;
+  flex-basis: auto;
 `;
 export const FilterIconView = styled(Pressable)`
   width: 50px;

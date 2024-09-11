@@ -132,6 +132,7 @@ const English = {
     phoneNumberIsNotAvailable: 'Phone Number address is not available',
     itemWithCount: '{{count}} item',
     itemWithCount_plural: '{{count}} items',
+    noServices: 'no Services Available',
   },
   BasicInformation: {
     firstNameLabel: 'Full Name',

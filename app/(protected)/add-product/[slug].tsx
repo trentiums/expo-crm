@@ -37,19 +37,14 @@ const addProducts = () => {
       }
       formData.append('name', values?.name || '');
       formData.append('description', values?.description || '');
-      //here temporary extracting first index will change as api updated
-      //TODO: as api change send the array
-      if (documentArray?.[0]?.id) {
-        formData.append('documents', {
-          uri: documentArray?.[0]?.uri,
-          name: documentArray?.[0]?.name,
-          type: documentArray?.[0]?.mimeType || documentArray?.[0]?.type,
-        });
-      } else if (documentArray?.[0]?.uri) {
-        formData.append('documents', {
-          uri: documentArray?.[0]?.uri,
-          name: documentArray?.[0]?.name,
-          type: documentArray?.[0]?.mimeType || documentArray?.[0]?.type,
+      const newDocumentsArray = documentArray?.filter((item) => !item.id);
+      if (newDocumentsArray?.length > 0) {
+        newDocumentsArray.forEach((document, index) => {
+          formData.append(`documents[${index}]`, {
+            uri: document.uri,
+            name: document.name,
+            type: document.mimeType,
+          });
         });
       }
 

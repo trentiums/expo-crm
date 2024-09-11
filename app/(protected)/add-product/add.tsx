@@ -15,7 +15,6 @@ import { useToast } from 'react-native-toast-notifications';
 import { AddProductContainer } from '../(tabs)/drawer.style';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@constants/theme';
-import { Spacer } from '@atoms/common/common.styles';
 
 const addProducts = () => {
   const dispatch = useAppDispatch();
@@ -31,16 +30,15 @@ const addProducts = () => {
       let formData = new FormData();
       formData.append('name', values?.name || '');
       formData.append('description', values?.description || '');
-      if (documentArray?.[0]?.uri) {
-        //here temporary extracting first index will change as api updated
-        //TODO: as api change send the array
-        formData.append('documents', {
-          uri: documentArray?.[0]?.uri,
-          name: documentArray?.[0]?.name,
-          type: documentArray?.[0]?.mimeType || documentArray?.[0]?.type,
+      if (documentArray.length > 0) {
+        documentArray.forEach((document, index) => {
+          formData.append(`documents[${index}]`, {
+            uri: document.uri,
+            name: document.name,
+            type: document.mimeType || document.type,
+          });
         });
       }
-
       const response = await dispatch(
         addProductServiceAction(formData),
       ).unwrap();
@@ -77,7 +75,6 @@ const addProducts = () => {
   return (
     <ScreenTemplate title={t('addProduct')}>
       <AddProductContainer>
-        <Spacer size={32} />
         <FormTemplate
           Component={AddProductForm}
           onSubmit={(values: AddProductFormValues) => {

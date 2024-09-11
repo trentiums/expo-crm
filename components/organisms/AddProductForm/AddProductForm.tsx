@@ -4,10 +4,6 @@ import {
   ButtonSubmit,
   FormButtonText,
   Label,
-  PickerContainer,
-  PressAbleContainer,
-  SvgShowContainer,
-  UploadText,
 } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
 import { KeyboardAwareScrollViewContainer } from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
 import { composeValidators, requiredValidator } from '@utils/formValidators';
@@ -64,12 +60,13 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
     if (params?.slug) {
       form.change('name', productServiceDetail?.name);
       form.change('description', productServiceDetail?.description);
-      productServiceDetail?.documents?.id &&
-        setDocumentArray([productServiceDetail?.documents]);
+      productServiceDetail?.documents &&
+        setDocumentArray(productServiceDetail?.documents);
     } else {
       setDocumentArray([]);
     }
   }, [params?.slug, productServiceDetail]);
+
   useEffect(() => {
     setIsDisable(true);
   }, [values]);

@@ -37,7 +37,7 @@ export const NoDataFoundText = styled(Text)`
 `;
 export const ProductsFlatList = styled(FlatList).attrs({
   contentContainerStyle: {
-    paddingTop: 16,
+    paddingTop: 0,
     paddingBottom: 48,
   },
 })``;
@@ -59,7 +59,6 @@ export const LoaderView = styled(View)`
 export const NoLeadsFoundContainer = styled(View)`
   justify-content: center;
   align-items: center;
-  height: 100%;
 `;
 export const AddLeadContainer = styled(View)`
   padding: 16px;
@@ -94,7 +93,6 @@ export const HeadingView = styled(View)`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
-  border: 2px solid green;
 `;
 export const HeadingText = styled(Text)`
   font-size: 36px;

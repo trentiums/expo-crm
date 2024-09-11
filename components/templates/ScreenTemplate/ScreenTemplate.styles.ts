@@ -9,7 +9,6 @@ export const Container = styled(SafeAreaView)<{
   flex: 1;
   background-color: ${({ backgroundColor, theme }) =>
     backgroundColor || theme.colors.screenTemplateColor};
-  border: 2px solid red;
 `;
 
 export const ScreenTemplateView = styled(View)`

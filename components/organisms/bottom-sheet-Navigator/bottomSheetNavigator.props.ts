@@ -6,6 +6,8 @@ export type BottomSheetNavigatorProps = {
   meta?: {
     leadId?: number;
     optionType?: ScreenOptionType;
+    editRoute?: string;
+    onDelete?: () => void;
   };
 };
 

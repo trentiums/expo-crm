@@ -5,7 +5,7 @@ import { NoDataProps } from './NoData.props';
 const NoData: React.FC<NoDataProps> = ({ image, text }) => {
   return (
     <NoDataContainer>
-      <NoDataImage source={image}></NoDataImage>
+      {image && <NoDataImage source={image} />}
       <NoDataText>{text}</NoDataText>
     </NoDataContainer>
   );
