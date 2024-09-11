@@ -10,7 +10,7 @@ import TrashIcon from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
 import { useTranslation } from 'react-i18next';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import Service from '@atoms/Illustrations/Service';
+import ServiceIcon from '@atoms/Illustrations/Service';
 import { ProductCardProps } from './ProductCard.props';
 import { ActionMenuIcon } from '@molecules/LeadDetail/LeadDetail.styles';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
@@ -44,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <DetailContainer>
       <ProductInfoView>
-        <Service />
+        <ServiceIcon />
         <ProductDetailContainer>
           <NameText numberOfLines={1}>{data?.name}</NameText>
         </ProductDetailContainer>
@@ -74,7 +74,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           initialRouteName="ModifyLeadOption"
           onClosePress={closeBottomSheet}
           meta={{
-            leadId: data?.id,
             optionType: ScreenOptionType.DEFAULT,
           }}
         />

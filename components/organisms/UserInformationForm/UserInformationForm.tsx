@@ -41,7 +41,6 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
   const { t: tb } = useTranslation('formButtonName');
   const { valid } = useFormState({ subscription: { valid: true } });
   const userList = useSelector((state: RootState) => state.user.userList.users);
-  const [isActivePassword, setIsActivePassword] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [secureConfirmTextEntry, setSecureConfirmTextEntry] = useState(true);
 
@@ -97,11 +96,7 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
                   complexPasswordValidator,
                 )
           }
-          left={() => (
-            <LockIcon
-              color={isActivePassword ? colors.primaryColor : colors.gray}
-            />
-          )}
+          left={() => <LockIcon color={colors.gray} />}
           password={() => (
             <Pressable onPress={() => setSecureTextEntry(!secureTextEntry)}>
               {secureTextEntry ? <EyeCloseIcon /> : <EyeOpenIcon />}
@@ -126,11 +121,7 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
                   confirmPasswordValidator,
                 )
           }
-          left={() => (
-            <LockIcon
-              color={isActivePassword ? colors.primaryColor : colors.gray}
-            />
-          )}
+          left={() => <LockIcon color={colors.gray} />}
           password={() => (
             <Pressable
               onPress={() =>

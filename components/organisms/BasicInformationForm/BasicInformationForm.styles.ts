@@ -169,9 +169,9 @@ export const StyledImage = styled(Image)`
   height: 90%;
 `;
 
-export const PressAbleContainer = styled(Pressable)<{ isWidthShort?: boolean }>`
+export const PressAbleContainer = styled(Pressable)`
   position: relative;
-  width: ${({ isWidthShort }) => (isWidthShort ? 30 : 100)}%;
+  width: 100%;
   height: 120px;
   background-color: ${({ theme }) => theme.colors.backgroundCardColor};
   border-radius: 8px;

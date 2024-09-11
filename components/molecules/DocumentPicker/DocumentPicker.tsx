@@ -24,8 +24,8 @@ import { deleteLeadDocumentsAction } from '@redux/actions/lead';
 import { useAppDispatch } from '@redux/store';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import { Pressable } from 'react-native';
-import Delete from '@atoms/Illustrations/Delete';
-import Plus from '@atoms/Illustrations/Plus';
+import DeleteIcon from '@atoms/Illustrations/Delete';
+import PlusIcon from '@atoms/Illustrations/Plus';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import TaskIcon from '@atoms/Illustrations/Task';
 import { useAppTheme } from '@constants/theme';
@@ -42,8 +42,8 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
   const toast = useToast();
   const { colors } = useAppTheme();
   const [deleteDocumentUrl, setDeleteDocumentUrl] = useState(null);
-  const [deleteShowModal, setDeleteShowModal] = useState<Boolean>(false);
-  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [visibleDeleteModal, setVisibleDeleteModal] = useState<Boolean>(false);
+  const [deleteLoader, setDeleteLoader] = useState(false);
   const pickFile = async () => {
     try {
       const { status } = await MediaLibrary.requestPermissionsAsync();
@@ -69,7 +69,12 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
           }
         });
       } else {
-        console.log('cancelled');
+        toast.show(t('canceled'), {
+          type: ToastType.Custom,
+          data: {
+            type: ToastTypeProps.Error,
+          },
+        });
       }
     } catch (err) {
       console.log('error', err);
@@ -86,47 +91,49 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
         </DocumentInfoContainer>
         <Pressable
           onPress={() => {
-            setDeleteShowModal(true);
+            setVisibleDeleteModal(true);
             setDeleteDocumentUrl(file?.uri);
           }}>
-          <Delete color={colors.roseMadder} />
+          <DeleteIcon color={colors.roseMadder} />
         </Pressable>
       </DocumentDetailContainer>
     );
   };
   const onDeleteActionPress = async () => {
-    const deletedDocument = documentArray?.filter(
-      (item) => item?.uri === deleteDocumentUrl,
-    );
+    if (documentArray?.length > 0) {
+      const deletedDocument = documentArray.filter(
+        (item) => item?.uri === deleteDocumentUrl,
+      );
 
-    const updatedDocuments = documentArray?.filter(
-      (item) => item?.uri !== deleteDocumentUrl,
-    );
+      const updatedDocuments = documentArray.filter(
+        (item) => item?.uri !== deleteDocumentUrl,
+      );
 
-    if (deletedDocument?.[0]?.id) {
-      try {
-        setDeleteLoading(true);
-        const response = await dispatch(
-          deleteLeadDocumentsAction({ media_id: deletedDocument[0].id }),
-        ).unwrap();
-        toast.show(response?.message, {
-          type: ToastType.Custom,
-          data: {
-            type: ToastTypeProps.Success,
-          },
-        });
-      } catch (error) {
-        toast.show(error, {
-          type: ToastType.Custom,
-          data: {
-            type: ToastTypeProps.Error,
-          },
-        });
+      if (deletedDocument[0].id) {
+        try {
+          setDeleteLoader(true);
+          const response = await dispatch(
+            deleteLeadDocumentsAction({ media_id: deletedDocument[0].id }),
+          ).unwrap();
+          toast.show(response?.message, {
+            type: ToastType.Custom,
+            data: {
+              type: ToastTypeProps.Success,
+            },
+          });
+        } catch (error) {
+          toast.show(error, {
+            type: ToastType.Custom,
+            data: {
+              type: ToastTypeProps.Error,
+            },
+          });
+        }
+        setDeleteLoader(false);
       }
-      setDeleteLoading(false);
+      setVisibleDeleteModal(false);
+      setDocumentArray(updatedDocuments);
     }
-    setDeleteShowModal(false);
-    setDocumentArray(updatedDocuments);
   };
   return (
     <>
@@ -154,7 +161,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
           <Spacer size={8} />
           <Pressable onPress={pickFile}>
             <DocumentInfoContainer>
-              <Plus />
+              <PlusIcon />
               <UploadAnotherDocumentText>
                 {t('uploadAnotherDocument')}
               </UploadAnotherDocumentText>
@@ -163,11 +170,11 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
         </>
       )}
 
-      {deleteShowModal && (
+      {visibleDeleteModal && (
         <ActionModal
           isModal
           onBackdropPress={() => {
-            setDeleteShowModal(false);
+            setVisibleDeleteModal(false);
           }}
           heading={tm('discardMedia')}
           description={tm('disCardDescription')}
@@ -175,10 +182,10 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
           actionType={Actions.delete}
           actiontext={tm('cancel')}
           onCancelPress={() => {
-            setDeleteShowModal(false);
+            setVisibleDeleteModal(false);
           }}
           onActionPress={() => onDeleteActionPress()}
-          loading={deleteLoading}
+          loading={deleteLoader}
           icon={<TrashIcon />}
         />
       )}

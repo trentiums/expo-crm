@@ -223,6 +223,7 @@ const English = {
     nameEg: 'Product or Services name',
     uploadDocuments: 'Upload Document',
     uploadAnotherDocument: 'Upload another document',
+    canceled: 'Canceled',
   },
   leadsFilter: {
     startDate: 'Start Date',

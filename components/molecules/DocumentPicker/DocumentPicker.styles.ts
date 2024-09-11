@@ -33,9 +33,9 @@ export const DocumentView = styled(View)`
   flex-direction: column;
   gap: 100px;
 `;
-export const PressAbleContainer = styled(Pressable)<{ isWidthShort?: boolean }>`
+export const PressAbleContainer = styled(Pressable)`
   position: relative;
-  width: ${({ isWidthShort }) => (isWidthShort ? 30 : 100)}%;
+  width: 100%;
   height: 60px;
   background-color: ${({ theme }) => theme.colors.backgroundCardColor};
   border-radius: 8px;
