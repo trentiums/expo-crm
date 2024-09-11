@@ -46,7 +46,10 @@ const products = () => {
       try {
         setLoadingStatus('MORE');
         await dispatch(
-          getProductServiceListAction({ page: products?.currentPage + 1 }),
+          getProductServiceListAction({
+            page: products?.currentPage + 1,
+            search: productSearch,
+          }),
         ).unwrap();
       } catch (error: any) {
         toast.show(error, {
@@ -59,10 +62,12 @@ const products = () => {
       setLoadingStatus('NONE');
     }
   };
-  const handleSearchProducts = async (search) => {
+  const handleSearchProducts = async () => {
     try {
       setLoadingStatus('SCREEN');
-      await dispatch(getProductServiceListAction(search)).unwrap();
+      await dispatch(
+        getProductServiceListAction({ search: productSearch }),
+      ).unwrap();
     } catch (error: any) {
       toast.show(error, {
         type: ToastType.Custom,
@@ -78,7 +83,7 @@ const products = () => {
       <SearchFilter
         search={productSearch}
         setSearch={setProductUserSearch}
-        handleSearch={(search) => handleSearchProducts(search)}
+        handleSearch={handleSearchProducts}
       />
     );
   };

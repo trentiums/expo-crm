@@ -10,6 +10,7 @@ import {
 import { api } from './api';
 import { AxiosPromise } from 'axios';
 import { ApiResponse } from '@type/api/api';
+import { DeleteLeadDocumentsParams } from '@type/api/lead';
 
 export const productServiceList = (
   body: ProductServiceListParams,
@@ -41,3 +42,7 @@ export const getProductServiceDetails = (
   body: ProductServiceDetailsParams,
 ): AxiosPromise<ProductServiceDetailsResponse> =>
   api.get(`/details-product-services`, { params: body });
+export const deleteProductServiceDocuments = (
+  body: DeleteLeadDocumentsParams,
+): AxiosPromise<ApiResponse> =>
+  api.post('/delete-product-service-document', body);
