@@ -72,7 +72,10 @@ const Users = () => {
       try {
         setLoadingStatus('MORE');
         await dispatch(
-          getUserListAction({ page: userList?.currentPage + 1 }),
+          getUserListAction({
+            page: userList?.currentPage + 1,
+            search: userSearch,
+          }),
         ).unwrap();
       } catch (error: any) {
         toast.show(error, {
@@ -118,10 +121,10 @@ const Users = () => {
       </ScreenTemplate>
     );
   }
-  const handleSearch = async (search) => {
+  const handleSearch = async () => {
     try {
       setLoadingStatus('SCREEN');
-      await dispatch(getUserListAction(search));
+      await dispatch(getUserListAction({ search: userSearch }));
     } catch (error) {
       console.log(error);
     }
@@ -132,7 +135,7 @@ const Users = () => {
       <SearchFilter
         search={userSearch}
         setSearch={setUserSearch}
-        handleSearch={(search) => handleSearch(search)}
+        handleSearch={handleSearch}
       />
     );
   };
