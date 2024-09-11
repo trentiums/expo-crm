@@ -15,19 +15,13 @@ import { useTranslation } from 'react-i18next';
 import { FlatList } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
-import {
-  CountsText,
-  HeadingText,
-  HeadingView,
-  LoaderView,
-  NoDataFoundText,
-  NoLeadsFoundContainer,
-} from './tabs.style';
+import { CountsText, HeadingText, HeadingView, LoaderView } from './tabs.style';
 import { ActivityIndicator } from 'react-native-paper';
 import Loader from '@atoms/Loader/Loader';
 import { Spacer } from '@atoms/common/common.styles';
 import SearchFilter from '@molecules/Search/Search';
 import { LoadingStatus } from '../../(public)/login/LoginScreen.props';
+import NoData from '@molecules/NoData/NoData';
 
 const ButtonSize = 40;
 
@@ -110,16 +104,7 @@ const Users = () => {
     index: number;
   }) => (
     <>
-      <UserDetailCard
-        key={`${item.id}-${index}`}
-        onDelete={handleDeleteUser}
-        onEdit={() => handleEdit(item?.id)}
-        data={item}
-        onChangeModalState={(value) => setShowModal(value)}
-        showModal={showModal}
-        loading={loadingStatus === 'DELETE'}
-        onChangeDeleteId={(id) => setDeleteUserId(id)}
-      />
+      <UserDetailCard key={`${item.id}-${index}`} data={item} />
       <Spacer size={12} />
     </>
   );
@@ -133,6 +118,15 @@ const Users = () => {
       </ScreenTemplate>
     );
   }
+  const handleSearch = async (search) => {
+    try {
+      setLoadingStatus('SCREEN');
+      await dispatch(getUserListAction(search));
+    } catch (error) {
+      console.log(error);
+    }
+    setLoadingStatus('NONE');
+  };
   const renderHeader = () => {
     return (
       <SearchFilter
@@ -142,14 +136,7 @@ const Users = () => {
       />
     );
   };
-  const handleSearch = async (search) => {
-    try {
-      await dispatch(getUserListAction(search));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  console.log(userList, 'uses');
+
   return (
     <ScreenTemplate moreVisible>
       <HeadingView>
@@ -159,30 +146,38 @@ const Users = () => {
         </CountsText>
       </HeadingView>
       {renderHeader()}
-      {userList?.users?.length > 0 ? (
-        <FlatList
-          data={userList?.users}
-          contentContainerStyle={{ paddingBottom: ButtonSize + 20 }}
-          keyExtractor={(item, index) => `${item.id}-${index}`}
-          renderItem={renderUser}
-          showsVerticalScrollIndicator={false}
-          onEndReached={handleGetMoreUserData}
-          ListFooterComponent={
-            loadingStatus === 'MORE' ? <Loader size={24} /> : null
-          }
-          refreshControl={
-            <RefreshControl
-              refreshing={loadingStatus === 'REFRESH'}
-              onRefresh={onRefreshUserList}
-              colors={[colors.primaryColor]}
-            />
-          }
-        />
-      ) : (
-        <NoLeadsFoundContainer>
-          <NoDataFoundText>{td('noUsersFound')}</NoDataFoundText>
-        </NoLeadsFoundContainer>
-      )}
+      <>
+        {loadingStatus === 'SCREEN' ? (
+          <LoaderView>
+            <ActivityIndicator color={colors.blueChaos} />
+          </LoaderView>
+        ) : (
+          <>
+            {userList?.users?.length > 0 ? (
+              <FlatList
+                data={userList?.users}
+                contentContainerStyle={{ paddingBottom: ButtonSize + 20 }}
+                keyExtractor={(item, index) => `${item.id}-${index}`}
+                renderItem={renderUser}
+                showsVerticalScrollIndicator={false}
+                onEndReached={handleGetMoreUserData}
+                ListFooterComponent={
+                  loadingStatus === 'MORE' ? <Loader size={24} /> : null
+                }
+                refreshControl={
+                  <RefreshControl
+                    refreshing={loadingStatus === 'REFRESH'}
+                    onRefresh={onRefreshUserList}
+                    colors={[colors.primaryColor]}
+                  />
+                }
+              />
+            ) : (
+              <NoData text={td('noUsersFound')} />
+            )}
+          </>
+        )}
+      </>
     </ScreenTemplate>
   );
 };
