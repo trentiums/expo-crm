@@ -25,9 +25,7 @@ export const UploadText = styled(Text)<{ textColor?: string }>`
   color: ${({ theme, textColor }) => textColor || theme.colors.black};
   text-align: center;
 `;
-export const FlatListCon = styled(FlatList).attrs({
-  contentContainerStyle: {},
-})``;
+
 export const DocumentView = styled(View)`
   display: flex;
   flex-direction: column;
