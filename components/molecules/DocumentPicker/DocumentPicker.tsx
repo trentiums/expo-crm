@@ -24,8 +24,8 @@ import { deleteLeadDocumentsAction } from '@redux/actions/lead';
 import { useAppDispatch } from '@redux/store';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import { Pressable } from 'react-native';
-import Delete from '@atoms/Illustrations/Delete';
-import Plus from '@atoms/Illustrations/Plus';
+import DeleteIcon from '@atoms/Illustrations/Delete';
+import PlusIcon from '@atoms/Illustrations/Plus';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import TaskIcon from '@atoms/Illustrations/Task';
 import { useAppTheme } from '@constants/theme';
@@ -89,7 +89,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
             setDeleteShowModal(true);
             setDeleteDocumentUrl(file?.uri);
           }}>
-          <Delete color={colors.roseMadder} />
+          <DeleteIcon color={colors.roseMadder} />
         </Pressable>
       </DocumentDetailContainer>
     );
@@ -154,7 +154,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
           <Spacer size={8} />
           <Pressable onPress={pickFile}>
             <DocumentInfoContainer>
-              <Plus />
+              <PlusIcon />
               <UploadAnotherDocumentText>
                 {t('uploadAnotherDocument')}
               </UploadAnotherDocumentText>

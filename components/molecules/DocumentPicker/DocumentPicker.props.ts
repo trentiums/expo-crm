@@ -2,7 +2,7 @@ import { fileSystemProps } from '@organisms/BasicInformationForm/BasicInformatio
 
 export interface DocumentPickerProps {
   documentArray: fileSystemProps[];
-  setDocumentArray: React.Dispatch<React.SetStateAction<fileSystemProps[]>>;
+  setDocumentArray: (file: fileSystemProps) => void;
 }
 export enum PermissionType {
   Granted = 'granted',
