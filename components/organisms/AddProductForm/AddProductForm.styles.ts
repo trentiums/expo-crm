@@ -26,4 +26,6 @@ export const FormsView = styled(View)`
   flex-direction: column;
   justify-content: space-between;
   padding-top: 24px;
+  flex: 1;
+  flex-basis: auto;
 `;
