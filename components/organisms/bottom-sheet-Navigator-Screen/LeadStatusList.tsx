@@ -36,25 +36,26 @@ const LeadStatusList: React.FC<LeadStatusListProps> = ({
     await dispatch(leadStatusListAction());
   };
 
-  const handleItemPress = async (ItemId: number) => {
+  const handleItemPress = async (statusId: number) => {
     const leadStatusId = leadsDetail.leadStatusId;
     if (
-      (ItemId === LeadStatusTypes.CONTACTED ||
-        ItemId === LeadStatusTypes.QUALIFIED ||
-        ItemId === LeadStatusTypes.UNQUALIFIED) &&
-      ItemId !== leadStatusId
+      (statusId === LeadStatusTypes.CONTACTED ||
+        statusId === LeadStatusTypes.QUALIFIED ||
+        statusId === LeadStatusTypes.UNQUALIFIED) &&
+      statusId !== leadStatusId
     ) {
       const slug = {
         leadId: leadId,
-        leadStatusId: ItemId,
+        leadStatusId: statusId,
       };
-      ItemId !== leadStatusId && navigation.navigate('LeadStatusChange', slug);
+      statusId !== leadStatusId &&
+        navigation.navigate('LeadStatusChange', slug);
     } else {
-      if (leadStatusId !== ItemId) {
+      if (leadStatusId !== statusId) {
         const updatedLeadStatusRequestParams: UpdateLeadStatusParams = {
           type: updateLeadStatusTypes.STATUS,
           lead_id: leadId,
-          lead_status_id: ItemId,
+          lead_status_id: statusId,
         };
         await dispatch(
           updateLeadStatusAction(updatedLeadStatusRequestParams),
@@ -78,7 +79,7 @@ const LeadStatusList: React.FC<LeadStatusListProps> = ({
     item: LeadStatusListItemProps;
     index: number;
   }) => {
-    const isStatusSelected = !!(leadsDetail.leadStatusId === item.id);
+    const isStatusSelected = leadsDetail.leadStatusId === item.id;
     return (
       <BottomSheetItemListing
         handlePress={() => handleItemPress(item.id)}

@@ -96,3 +96,7 @@ export const BottomSheetFlatListContainer = styled(BottomSheetFlatList).attrs({
 })`
   padding: 0px 20px;
 `;
+
+export const LoaderContainer = styled(View)`
+  height: 100px;
+`;

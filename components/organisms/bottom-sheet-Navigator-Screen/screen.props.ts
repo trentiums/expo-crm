@@ -95,3 +95,9 @@ export type LeadStageChangeProps = {
   leadId?: number;
   route?: any;
 };
+
+export type LeadChannelListProps = {
+  changeSnapPoints: (points: string[]) => void;
+  handleBottomSheetClose?: () => void;
+  leadId?: number;
+};
