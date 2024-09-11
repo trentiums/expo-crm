@@ -157,7 +157,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           onClosePress={closeBottomSheet}
           meta={{
             leadId: leadData?.id,
-            optionType: ScreenOptionType.LEAD,
+            optionType: ScreenOptionType.DASHBOARD,
           }}
         />
       )}
