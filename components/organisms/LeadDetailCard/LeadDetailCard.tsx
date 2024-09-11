@@ -29,7 +29,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
   LeadDetails,
   title,
   email,
-  dateTime,
+  createdAt,
   setModal,
   modalType,
   setModalType,
@@ -313,7 +313,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
           phone: phoneNumber,
           email: email,
           name: title,
-          createdAt: dateTime,
+          createdAt,
           leadId: leadId,
         }}
       />

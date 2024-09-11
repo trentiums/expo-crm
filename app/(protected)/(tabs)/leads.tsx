@@ -149,7 +149,7 @@ const Leads = () => {
         LeadDetails={item.productService.map((item) => item.name)}
         title={item.name}
         email={item.email}
-        dateTime={item?.createdAt}
+        createdAt={item?.createdAt}
         selectedCard={selectedCard}
         setSelectedCard={setSelectedCard}
         cardIndex={index}
