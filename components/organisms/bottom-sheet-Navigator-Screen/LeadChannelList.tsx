@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   BottomSheetListContainer,
   BottomSheetFlatListContainer,
+  LoaderContainer,
 } from './screen.style';
 import { LeadChannelListProps, LeadStageListItemProps } from './screen.props';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +18,7 @@ import {
   dashboardLeadListAction,
   dashboardLeadStageCountAction,
 } from '@redux/actions/dashboard';
+import Loader from '@atoms/Loader/Loader';
 
 const LeadChannelList: React.FC<LeadChannelListProps> = ({
   handleBottomSheetClose,
@@ -24,6 +26,7 @@ const LeadChannelList: React.FC<LeadChannelListProps> = ({
   changeSnapPoints,
 }) => {
   const { t } = useTranslation('bottomSheetModifyLead');
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
   const leadChannelList = useSelector(
     (state: RootState) => state.general.leadChannelList,
@@ -39,6 +42,7 @@ const LeadChannelList: React.FC<LeadChannelListProps> = ({
   }, []);
 
   const handleItemPress = async (ItemId: number) => {
+    setIsLoading(true);
     const leadChannelId = leadsDetail.leadChannelId;
     if (leadChannelId !== ItemId) {
       const updatedLeadStatusRequestParams: UpdateLeadStatusParams = {
@@ -54,6 +58,7 @@ const LeadChannelList: React.FC<LeadChannelListProps> = ({
       dispatch(dashboardLeadStageCountAction());
     }
     handleBottomSheetClose?.();
+    setIsLoading(false);
   };
 
   const handleRefresh = useCallback(() => {
@@ -79,17 +84,23 @@ const LeadChannelList: React.FC<LeadChannelListProps> = ({
   };
   return (
     <BottomSheetListContainer onLayout={onLayout}>
-      <BottomSheetFlatListContainer
-        data={leadChannelList}
-        keyExtractor={(item: LeadStageListItemProps, index: number) =>
-          `${item.id}-${index}`
-        }
-        renderItem={renderModifyLeadOption}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        refreshing={false}
-        onRefresh={handleRefresh}
-      />
+      {isLoading ? (
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
+      ) : (
+        <BottomSheetFlatListContainer
+          data={leadChannelList}
+          keyExtractor={(item: LeadStageListItemProps, index: number) =>
+            `${item.id}-${index}`
+          }
+          renderItem={renderModifyLeadOption}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          refreshing={false}
+          onRefresh={handleRefresh}
+        />
+      )}
     </BottomSheetListContainer>
   );
 };
