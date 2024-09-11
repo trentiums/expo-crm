@@ -1,36 +1,37 @@
+import React, { useCallback, useState } from 'react';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
-import LeadStatusChangeForm from '@organisms/LeadStatusChangeForm/LeadStatusChangeForm';
-import { LeadStatusChangeFormValues } from '@organisms/LeadStatusChangeForm/LeadStatusChangeForm.props';
+import DealCloseWinForm from '@organisms/DealCloseWinForm/DealCloseWinForm';
+import { DealWinCloseFormValues } from '@organisms/DealCloseWinForm/DealCloseWinForm.props';
+import { LeadStageType } from '@organisms/LeadDetailCard/LeadDetailCard.props';
 import { getLeadDetailsAction, updateLeadAction } from '@redux/actions/lead';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import FormTemplate from '@templates/FormTemplate/FormTemplate';
-import React, { useCallback, useEffect, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
-import { LeadStatusChangeProps } from './screen.props';
+import { LeadStageChangeProps } from './screen.props';
 import { BottomSheetListContainer } from './screen.style';
-import { getLeadStatusPreparedData } from '@utils/functions';
+import { getLeadStagePreparedDataForCLoseWonType } from '@utils/functions';
 import {
   dashboardLeadListAction,
   dashboardLeadStageCountAction,
 } from '@redux/actions/dashboard';
 
-const LeadStatusChange: React.FC<LeadStatusChangeProps> = ({
+const LeadStageCloseWon: React.FC<LeadStageChangeProps> = ({
   changeSnapPoints,
   handleBottomSheetClose,
   route,
 }) => {
   const toast = useToast();
   const dispatch = useAppDispatch();
+  const slug = route.params;
+
   const countryList = useSelector(
     (state: RootState) => state.general.countryList,
   );
   const leadsDetail = useSelector(
     (state: RootState) => state.leads.leadsDetail,
   );
-  const slug = route.params;
   const [loading, setLoading] = useState(false);
-  const [documents, setDocuments] = useState([]);
-  const leadStatusId = slug?.leadStatusId;
+  const leadConversionId = slug?.leadConversionId;
   const leadId = +slug?.leadId;
 
   const onLayout = useCallback(() => {
@@ -39,20 +40,20 @@ const LeadStatusChange: React.FC<LeadStatusChangeProps> = ({
 
   const handleSaveLeadsStatusChange = async (values: any) => {
     try {
+      leadConversionId;
       setLoading(true);
-      let formData = await getLeadStatusPreparedData(
+      let formData = await getLeadStagePreparedDataForCLoseWonType(
         values,
         leadsDetail,
         leadId,
-        leadStatusId,
+        leadConversionId,
         countryList,
-        documents,
       );
+
       const response = await dispatch(updateLeadAction(formData)).unwrap();
       await dispatch(getLeadDetailsAction({ lead_id: leadId }));
       dispatch(dashboardLeadListAction({}));
       dispatch(dashboardLeadStageCountAction());
-      setDocuments([]);
       toast.show(response?.message, {
         type: ToastType.Custom,
         data: {
@@ -74,18 +75,17 @@ const LeadStatusChange: React.FC<LeadStatusChangeProps> = ({
   return (
     <BottomSheetListContainer onLayout={onLayout}>
       <FormTemplate
-        Component={LeadStatusChangeForm}
+        Component={DealCloseWinForm}
         loading={loading}
-        onSubmit={(values: LeadStatusChangeFormValues) => {
+        onSubmit={(values: DealWinCloseFormValues) => {
           handleSaveLeadsStatusChange(values);
         }}
-        leadCardId={slug?.leadId}
-        setDocuments={setDocuments}
-        documents={documents}
         onCancelPress={() => handleBottomSheetClose?.()}
+        isDealClose={leadConversionId === LeadStageType.CLOSELOST}
+        leadCardId={leadId}
       />
     </BottomSheetListContainer>
   );
 };
 
-export default LeadStatusChange;
+export default LeadStageCloseWon;

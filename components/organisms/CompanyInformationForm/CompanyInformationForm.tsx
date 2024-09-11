@@ -1,6 +1,6 @@
 import { Spacer } from '@atoms/common/common.styles';
 import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
-import { Label } from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
+import { Label } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
 import {
   composeValidators,
   numberValidator,
