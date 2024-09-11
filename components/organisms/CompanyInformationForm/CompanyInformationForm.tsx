@@ -1,12 +1,6 @@
 import { Spacer } from '@atoms/common/common.styles';
 import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
 import { Label } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
-import {
-  composeValidators,
-  numberValidator,
-  requiredValidator,
-  websiteLinkValidator,
-} from '@utils/formValidators';
 import React, { useEffect, useState } from 'react';
 import { Field, useFormState } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
@@ -22,11 +16,12 @@ import { FormsView } from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import { useRoute } from '@react-navigation/native';
 import { addLeadInformation } from '@redux/slices/leads';
+import { companySizes } from '@utils/constant';
+import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
 
 const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
   form,
   loading,
-  isSave,
   onBackClick,
 }) => {
   const { t } = useTranslation('companyInformation');
@@ -83,11 +78,9 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
 
         <Label>{t('companySizeLabel')}</Label>
         <Field
-          name="companySize"
-          placeholder={t('companySizeLabel')}
-          component={FieldTextInput}
-          keyboardType="numeric"
-          validate={composeValidators(numberValidator)}
+          name={'companySize'}
+          component={FieldDropDown}
+          listData={companySizes}
         />
         <Spacer size={16} />
         <Label>{t('websiteLabel')}</Label>

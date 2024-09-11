@@ -87,10 +87,10 @@ export const stepData = [
   { id: 3, title: 'Lead' },
 ];
 export const companySizes = [
-  { id: 1, label: '0—5 employees' },
-  { id: 2, label: '5—20 employees' },
-  { id: 3, label: '20—50 employees' },
-  { id: 4, label: '50—200 employees' },
-  { id: 5, label: '200—1000 employees' },
-  { id: 6, label: '1000+ employees' },
+  { id: 1, title: '0—5 employees' },
+  { id: 2, title: '5—20 employees' },
+  { id: 3, title: '20—50 employees' },
+  { id: 4, title: '50—200 employees' },
+  { id: 5, title: '200—1000 employees' },
+  { id: 6, title: '1000+ employees' },
 ];
