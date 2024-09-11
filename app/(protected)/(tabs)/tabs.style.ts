@@ -94,6 +94,7 @@ export const HeadingView = styled(View)`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
+  border: 2px solid green;
 `;
 export const HeadingText = styled(Text)`
   font-size: 36px;

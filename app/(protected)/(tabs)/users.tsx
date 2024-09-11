@@ -138,11 +138,18 @@ const Users = () => {
       <SearchFilter
         search={userSearch}
         setSearch={setUserSearch}
-        handleSearch={() => console.log('search')}
+        handleSearch={(search) => handleSearch(search)}
       />
     );
   };
-
+  const handleSearch = async (search) => {
+    try {
+      await dispatch(getUserListAction(search));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(userList, 'uses');
   return (
     <ScreenTemplate moreVisible>
       <HeadingView>

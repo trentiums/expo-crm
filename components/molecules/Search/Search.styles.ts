@@ -5,10 +5,12 @@ import { Pressable } from 'react-native';
 import { View as RNView } from 'react-native';
 
 export const FilterContainer = styled(View)`
+  display: flex;
   flex-direction: row;
   padding-bottom: 16px;
   margin-top: 16px;
   gap: 16px;
+  flex: 1;
 `;
 export const FilterIconView = styled(Pressable)`
   width: 50px;
