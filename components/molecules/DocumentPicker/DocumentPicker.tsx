@@ -5,7 +5,6 @@ import {
   DocumentInfoContainer,
   DocumentName,
   DocumentView,
-  FlatListCon,
   PickerContainer,
   UploadAnotherDocumentText,
   UploadText,
@@ -23,7 +22,7 @@ import ActionModal from '@molecules/ActionModal/ActionModal';
 import { deleteLeadDocumentsAction } from '@redux/actions/lead';
 import { useAppDispatch } from '@redux/store';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import { Pressable } from 'react-native';
+import { FlatList, Pressable } from 'react-native';
 import DeleteIcon from '@atoms/Illustrations/Delete';
 import PlusIcon from '@atoms/Illustrations/Plus';
 import TrashIcon from '@atoms/Illustrations/Trash';
@@ -151,7 +150,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
           <Spacer size={8} />
           <HeaderText>{tb('attachments')}</HeaderText>
           <Spacer size={16} />
-          <FlatListCon
+          <FlatList
             data={documentArray}
             renderItem={({ item }) => (
               <DocumentView>{renderFilePreview(item)}</DocumentView>
