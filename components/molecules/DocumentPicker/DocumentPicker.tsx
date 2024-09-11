@@ -151,9 +151,10 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
           });
         }
         setDeleteLoader(false);
+      } else {
+        setDocumentArray(updatedDocuments);
       }
       setVisibleDeleteModal(false);
-      setDocumentArray(updatedDocuments);
     }
   };
   return (
