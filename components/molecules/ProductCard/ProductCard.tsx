@@ -74,7 +74,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           initialRouteName="ModifyLeadOption"
           onClosePress={closeBottomSheet}
           meta={{
-            leadId: data?.id,
             optionType: ScreenOptionType.DEFAULT,
           }}
         />

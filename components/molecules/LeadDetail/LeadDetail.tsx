@@ -23,7 +23,6 @@ import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import EmailSendBox from '@atoms/Illustrations/EmailBox';
 import PhoneIcon from '@atoms/Illustrations/PhoneIcon';
-import ProductServices from '@atoms/Illustrations/ProductService';
 import { RootState, useSelector } from '@redux/store';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
@@ -43,6 +42,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   onChangeModalState,
   onChangeDeleteId,
   isSocialMediaVisible,
+  optionType,
 }) => {
   const { t } = useTranslation('leadDetailCardDetails');
   const { t: tm } = useTranslation('modalText');
@@ -127,13 +127,13 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           )}
           {leadData?.phone && (
             <CommunicationOptionContainer
-              onPress={() => handlePhoneCall(leadData?.phone)}>
+              onPress={() => handlePhoneCall(leadData.phone)}>
               <PhoneIcon />
             </CommunicationOptionContainer>
           )}
           {leadData?.phone && (
             <CommunicationOptionContainer
-              onPress={() => handleWhatsApp(leadData?.phone)}>
+              onPress={() => handleWhatsApp(leadData.phone)}>
               <WhatsApp />
             </CommunicationOptionContainer>
           )}
@@ -160,7 +160,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           onClosePress={closeBottomSheet}
           meta={{
             leadId: leadData?.id,
-            optionType: ScreenOptionType.DEFAULT,
+            optionType: optionType || ScreenOptionType.DASHBOARD,
           }}
         />
       )}
