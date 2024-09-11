@@ -41,14 +41,14 @@ const LeadChannelList: React.FC<LeadChannelListProps> = ({
     changeSnapPoints(['50%', '90%']);
   }, []);
 
-  const handleItemPress = async (ItemId: number) => {
+  const handleItemPress = async (channelId: number) => {
     setIsLoading(true);
     const leadChannelId = leadsDetail.leadChannelId;
-    if (leadChannelId !== ItemId) {
+    if (leadChannelId !== channelId) {
       const updatedLeadStatusRequestParams: UpdateLeadStatusParams = {
         type: updateLeadStatusTypes.CHANNEL,
         lead_id: leadId,
-        lead_channel_id: ItemId,
+        lead_channel_id: channelId,
       };
       await dispatch(
         updateLeadStatusAction(updatedLeadStatusRequestParams),
@@ -72,7 +72,7 @@ const LeadChannelList: React.FC<LeadChannelListProps> = ({
     item: LeadStageListItemProps;
     index: number;
   }) => {
-    const isStatusSelected = !!(leadsDetail.leadChannelId === item.id);
+    const isStatusSelected = leadsDetail.leadChannelId === item.id;
     return (
       <BottomSheetItemListing
         handlePress={() => handleItemPress(item.id)}

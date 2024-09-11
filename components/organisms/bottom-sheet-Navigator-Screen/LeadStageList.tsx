@@ -40,26 +40,26 @@ const LeadStageList: React.FC<LeadStageListProps> = ({
     changeSnapPoints(['35%', '90%']);
   }, []);
 
-  const handleItemPress = async (ItemId: number) => {
+  const handleItemPress = async (conversionId: number) => {
     const leadConversionId = leadsDetail.leadConversionId;
-    const slug = { leadId: leadId, leadConversionId: ItemId };
+    const slug = { leadId: leadId, leadConversionId: conversionId };
     if (
-      (ItemId === LeadStageType.CLOSELOST ||
-        ItemId === LeadStageType.CLOSEWON) &&
-      ItemId !== leadConversionId
+      (conversionId === LeadStageType.CLOSELOST ||
+        conversionId === LeadStageType.CLOSEWON) &&
+      conversionId !== leadConversionId
     ) {
       navigation.navigate('LeadStageCloseWon', slug);
     } else if (
-      ItemId === LeadStageType?.NEGOTIATION &&
-      leadConversionId !== ItemId
+      conversionId === LeadStageType?.NEGOTIATION &&
+      leadConversionId !== conversionId
     ) {
       navigation.navigate('LeadStageNegotiation', slug);
     } else {
-      if (leadConversionId !== ItemId) {
+      if (leadConversionId !== conversionId) {
         const updatedLeadStatusRequestParams: UpdateLeadStatusParams = {
           type: updateLeadStatusTypes.CONVERSION,
           lead_id: leadId,
-          lead_conversion_id: ItemId,
+          lead_conversion_id: conversionId,
         };
         await dispatch(
           updateLeadStatusAction(updatedLeadStatusRequestParams),
@@ -83,7 +83,7 @@ const LeadStageList: React.FC<LeadStageListProps> = ({
     item: LeadStageListItemProps;
     index: number;
   }) => {
-    const isStatusSelected = !!(leadsDetail.leadConversionId === item.id);
+    const isStatusSelected = leadsDetail.leadConversionId === item.id;
     return (
       <BottomSheetItemListing
         handlePress={() => handleItemPress(item.id)}
