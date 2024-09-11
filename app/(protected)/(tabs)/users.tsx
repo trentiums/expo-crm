@@ -112,15 +112,6 @@ const Users = () => {
     </>
   );
 
-  if (loadingStatus === 'NONE' && !userList?.users?.length) {
-    return (
-      <ScreenTemplate>
-        <LoaderView>
-          <ActivityIndicator color={colors.primaryColor} />
-        </LoaderView>
-      </ScreenTemplate>
-    );
-  }
   const handleSearch = async () => {
     try {
       setLoadingStatus('SCREEN');
