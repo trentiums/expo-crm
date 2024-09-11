@@ -7,7 +7,7 @@ import {
   LeadInfoView,
   NameAndStatusContainer,
   NameText,
-  CommunicationOptionCon,
+  CommunicationOptionContainer,
 } from './LeadDetail.styles';
 import { useTranslation } from 'react-i18next';
 import {
@@ -121,21 +121,21 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
       {isSocialMediaVisible && (
         <ContactBox>
           {leadData?.email && (
-            <CommunicationOptionCon onPress={handleEmail}>
+            <CommunicationOptionContainer onPress={handleEmail}>
               <EmailSendBox />
-            </CommunicationOptionCon>
+            </CommunicationOptionContainer>
           )}
           {leadData?.phone && (
-            <CommunicationOptionCon
+            <CommunicationOptionContainer
               onPress={() => handlePhoneCall(leadData?.phone)}>
               <PhoneIcon />
-            </CommunicationOptionCon>
+            </CommunicationOptionContainer>
           )}
           {leadData?.phone && (
-            <CommunicationOptionCon
+            <CommunicationOptionContainer
               onPress={() => handleWhatsApp(leadData?.phone)}>
               <WhatsApp />
-            </CommunicationOptionCon>
+            </CommunicationOptionContainer>
           )}
         </ContactBox>
       )}
