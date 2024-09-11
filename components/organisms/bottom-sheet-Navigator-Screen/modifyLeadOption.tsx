@@ -24,6 +24,8 @@ import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import CircleDeleteIcon from '@atoms/Illustrations/CircleDelete';
 import { dashboardLeadListAction } from '@redux/actions/dashboard';
+import ChannelIcon from '@atoms/Illustrations/Channel';
+import AssignmentCardIcon from '@atoms/Illustrations/AssignmentCard';
 
 const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
   changeSnapPoints,
@@ -42,7 +44,7 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
     if (optionType === ScreenOptionType.DASHBOARD) {
       changeSnapPoints(['31%', '90%']);
     } else if (optionType === ScreenOptionType.LEAD) {
-      changeSnapPoints(['31%', '90%']);
+      changeSnapPoints(['41%', '90%']);
     } else {
       changeSnapPoints(['21%', '90%']);
     }
@@ -64,7 +66,10 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
     },
   ];
 
-  if (optionType === ScreenOptionType.DASHBOARD) {
+  if (
+    optionType === ScreenOptionType.DASHBOARD ||
+    optionType === ScreenOptionType.LEAD
+  ) {
     modifyLeadOption.splice(1, 0, {
       label: 'updateStage',
       icon: <StageIcon />,
@@ -76,6 +81,21 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
       icon: <SyncIcon />,
       route: '',
       bottomSheetRoute: 'LeadStatusList',
+    });
+  }
+
+  if (optionType === ScreenOptionType.LEAD) {
+    modifyLeadOption.splice(1, 0, {
+      label: 'updateChannel',
+      icon: <ChannelIcon />,
+      route: '',
+      bottomSheetRoute: 'LeadChannelList',
+    });
+    modifyLeadOption.splice(1, 0, {
+      label: 'updateAssignedUsers',
+      icon: <AssignmentCardIcon />,
+      route: '',
+      bottomSheetRoute: 'AssignedUserList',
     });
   }
 

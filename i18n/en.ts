@@ -252,6 +252,7 @@ const English = {
     changeLeadStatus: 'Change lead status',
     updateStage: 'Update stage',
     changeLeadStage: 'Change lead stage',
+    UpdateChannel: 'Update channel',
   },
   bottomSheetCreatePotion: {
     user: 'User',
@@ -267,6 +268,8 @@ const English = {
     delete: 'Delete',
     updateStatus: 'Update status',
     updateStage: 'Update stage',
+    updateAssignedUsers: 'Update assigned users',
+    updateChannel: 'Update channel',
   },
 };
 
