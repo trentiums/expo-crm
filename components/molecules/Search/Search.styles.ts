@@ -35,9 +35,9 @@ export const FilterRightIconView = styled(Pressable)`
   bottom: 0;
   z-index: 1;
 `;
-export const SearchTextInput = styled(TextInput)`
+export const SearchTextInput = styled(TextInput)<{ searchRadius?: number }>`
   background-color: ${({ theme }) => theme.colors.snowflake};
-  border-radius: 25px;
+  border-radius: ${({ searchRadius }) => searchRadius || 25}px;
   overflow: hidden;
   border-color: ${({ theme }) => theme.colors.primaryColor};
   padding-left: -20px;

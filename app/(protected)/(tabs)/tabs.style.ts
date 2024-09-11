@@ -62,7 +62,12 @@ export const NoLeadsFoundContainer = styled(View)`
   height: 100%;
 `;
 export const AddLeadContainer = styled(View)`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   padding: 16px;
+  flex: 1;
+  flex-basis: auto;
 `;
 export const GreetingText = styled(Text)`
   font-size: 36px;

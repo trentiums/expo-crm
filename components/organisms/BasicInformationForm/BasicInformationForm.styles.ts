@@ -190,15 +190,19 @@ export const PhoneNumberFieldView = styled(View)`
   align-items: center;
   width: 100%;
   gap: 8px;
-  background-color: ${({ theme }) => theme.colors.iceWindDale};
 `;
 
 export const CountryCodeInput = styled(View)`
   flex: 0.3;
+  padding: 18px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.iceWindDale};
 `;
 
 export const NumberInput = styled(View)`
   flex: 0.7;
+  border-radius: 20px;
+  background-color: ${({ theme }) => theme.colors.iceWindDale};
 `;
 
 export const DialCodeDropDownView = styled(View)`

@@ -6,7 +6,6 @@ export type BottomSheetNavigatorProps = {
   meta?: {
     leadId?: number;
     optionType?: ScreenOptionType;
-    handleSearch?: (search: string) => void;
     dropdownData?: Dropdown[];
     handelSelectData?: (id: number) => void;
   };

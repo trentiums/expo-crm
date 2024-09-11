@@ -58,6 +58,7 @@ import DropDown from '@molecules/DropDown/DropDown';
 import * as Print from 'expo-print';
 import { Linking } from 'react-native';
 import DocumentPick from '@molecules/DocumentPicker/DocumentPicker';
+import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
 
 const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   loading,
@@ -268,22 +269,16 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
         <Label>{t('phoneNumberLabel')}</Label>
         <PhoneNumberFieldView>
           <CountryCodeInput>
-            <DropDown
-              data={countryListData?.map((item) => ({
+            <Field
+              name={'countryCode'}
+              component={FieldDropDown}
+              listData={countryListData?.map((item) => ({
                 title: `+${item?.dialCode} ${item.name}`,
                 id: item?.id,
                 image: item?.flag,
               }))}
-              placeholder={t('selectCountry')}
-              value={selectedCountryCodeValue}
-              onChange={(value: { label: string | number }) => {
-                if (selectedCountryCodeValue !== value) {
-                  setSelectedCountryCodeValue(value);
-                } else {
-                  setSelectedCountryCodeValue('');
-                }
-              }}
               isShowSelected
+              placeholder={t('selectCountry')}
             />
           </CountryCodeInput>
           <NumberInput>
@@ -300,7 +295,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
           </NumberInput>
         </PhoneNumberFieldView>
         <Spacer size={24} />
-        <Label>{t('documents')}</Label>
+        {documentArray?.length === 0 && <Label>{t('documents')}</Label>}
         <DocumentPick
           setDocumentArray={setDocumentArray}
           documentArray={documentArray}

@@ -15,13 +15,7 @@ import {
   ShowMultipleDataList,
 } from './DropDown.styles';
 import ArrowDownIcon from '@atoms/Illustrations/ArrowDown';
-import { DropdownBottomSheetSnapPoints } from '@constants/common';
 import { DropDownProps } from './DropDown.props';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
-import { useAppTheme } from '@constants/theme';
-import CheckMarkIcon from '@atoms/Illustrations/Check';
-import { View } from 'react-native';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
 
 const DropDown: React.FC<DropDownProps> = ({
@@ -30,16 +24,9 @@ const DropDown: React.FC<DropDownProps> = ({
   isMultiple,
   onChange,
   placeholder,
-  dropDownTitle,
-  dataToShow,
-  isDataToShow,
-  isLeadChange,
-  isFullWidth,
   isShowSelected,
-  isStaff,
 }) => {
   const [showDropList, setShowDropList] = useState(false);
-  const [dropListData, setDropListData] = useState(data);
   const renderMultipleData = ({ selectedData }) => {
     const isSelectedData = Array.isArray(value)
       ? value.includes(selectedData.id)
@@ -58,15 +45,10 @@ const DropDown: React.FC<DropDownProps> = ({
 
   const handelSelectData = (id) => {
     onChange(id);
+    handleCloseDropList();
   };
   const handleCloseDropList = () => {
     setShowDropList(false);
-  };
-  const handleSearch = (search: string) => {
-    const filtered = dropListData.filter((item) =>
-      item.title.toLowerCase().includes(search.toLowerCase()),
-    );
-    setDropListData(filtered);
   };
 
   return (
@@ -74,8 +56,7 @@ const DropDown: React.FC<DropDownProps> = ({
       {isShowSelected ? (
         <DropDownContainer onPress={() => setShowDropList(true)}>
           <DropdownLeftView
-            isImage={data?.filter((item) => item.id === value)[0]?.image}
-            isFullWidth={isFullWidth}>
+            isImage={data?.filter((item) => item.id === value)[0]?.image}>
             {
               <ImageView
                 source={data?.filter((item) => item.id === value)[0]?.image}
@@ -101,7 +82,11 @@ const DropDown: React.FC<DropDownProps> = ({
                 <>
                   {data?.filter((item) => item.id === value)?.[0]?.title ? (
                     <SelectedText numberOfLines={1}>
-                      {data?.filter((item) => item.id === value)?.[0]?.title}
+                      {
+                        data
+                          ?.filter((item) => item.id === value)?.[0]
+                          ?.title?.split(' ')?.[0]
+                      }
                     </SelectedText>
                   ) : (
                     <PlaceHolderText>{placeholder}</PlaceHolderText>
@@ -124,9 +109,8 @@ const DropDown: React.FC<DropDownProps> = ({
           initialRouteName="DropdownListing"
           onClosePress={handleCloseDropList}
           meta={{
-            dropdownData: dropListData,
+            dropdownData: data,
             handelSelectData: (id) => handelSelectData(id),
-            handleSearch: (search) => handleSearch(search),
           }}
         />
       )}

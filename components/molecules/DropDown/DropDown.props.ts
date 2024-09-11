@@ -1,16 +1,9 @@
 export interface DropDownProps {
   data: DropDownData[];
-  value: string | number[] | number;
+  value?: string | number[] | number;
   isMultiple?: boolean;
   onChange?: (value: string) => void;
-  placeholder: string;
-  dropDownTitle: string;
-  dataToShow?: DropDownData[];
-  isDataToShow?: boolean;
-  isLeadChange?: boolean;
-  isFullWidth?: boolean;
-  isStaff?: boolean;
-  handleBottomSheetClose?: () => void;
+  placeholder?: string;
   isShowSelected?: boolean;
 }
 

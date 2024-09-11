@@ -10,6 +10,7 @@ export const DropDownTitleText = styled(Text)`
   font-size: 18px;
   color: ${({ theme }) => theme.colors.white};
   text-align: center;
+
   font-weight: bold;
 `;
 
@@ -26,7 +27,7 @@ export const DropdownLeftView = styled(View)<{
 }>`
   display: flex;
   flex-direction: row;
-  margin-left: ${({ isImage }) => (isImage ? 4 : -20)}px;
+  margin-left: ${({ isImage }) => (isImage ? -10 : -20)}px;
   align-items: center;
   gap: 8px;
 
@@ -48,6 +49,8 @@ export const PressableView = styled(Pressable)<{ isSelected: boolean }>`
 
 export const SelectedText = styled(Text)`
   font-size: 16px;
+  color: ${({ theme }) => theme.colors.black};
+  text-align: 'center';
 `;
 
 export const DropDownSelectedView = styled(View)`

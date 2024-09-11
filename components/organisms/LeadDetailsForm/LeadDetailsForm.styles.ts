@@ -10,7 +10,6 @@ export const FormsView = styled(View)`
   justify-content: space-between;
   flex: 1;
   flex-basis: auto;
-  border: 2px solid red;
 `;
 
 export const FieldDropDownContainer = styled(View)<{ isError?: boolean }>`

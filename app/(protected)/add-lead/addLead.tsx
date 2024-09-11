@@ -27,6 +27,7 @@ import { AddLeadContainer } from '../(tabs)/tabs.style';
 import { useTranslation } from 'react-i18next';
 import Stepper from '@molecules/Stepper/Stepper';
 import { stepData } from '@utils/constant';
+import View from '@atoms/View/View';
 
 const AddLead = () => {
   const dispatch = useAppDispatch();
@@ -264,8 +265,9 @@ const AddLead = () => {
     <ScreenTemplate title={t('addLead')}>
       <AddLeadContainer>
         <Spacer size={16} />
-        <Stepper stepData={stepData} currentId={selectedTabNav.id} />
-        <Spacer size={24} />
+        <View>
+          <Stepper stepData={stepData} currentId={selectedTabNav.id} />
+        </View>
         {leadsDetailLoading ? <Loader /> : renderForm()}
       </AddLeadContainer>
     </ScreenTemplate>
