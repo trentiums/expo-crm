@@ -74,6 +74,10 @@ export const DefaultTheme = {
     blueChaos: '#5892FF',
     black15: '#00000026',
     boysenberryShadow: '#f3f4f8',
+    doctor: '#f9f9f8',
+    distantCloud: '#e5e9e6',
+    tarnishedSilver16: '#78788029',
+    roseMadder: '#e33a3a',
   },
 };
 
@@ -147,6 +151,10 @@ export const DarkTheme: AppTheme = {
     blueChaos: '#5892FF',
     black15: '#00000026',
     boysenberryShadow: '#f3f4f8',
+    doctor: '#f9f9f8',
+    distantCloud: '#e5e9e6',
+    tarnishedSilver16: '#78788029',
+    roseMadder: '#e33a3a',
   },
 };
 

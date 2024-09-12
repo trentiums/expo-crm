@@ -87,6 +87,7 @@ const English = {
     editProducts: 'Edit Product / Services',
     leadStatusChange: 'Lead Status Change',
     leadStageChange: 'Lead Stage Change',
+    moreMenu: 'More menu',
   },
   leadDetailList: {
     name: 'User Name',
@@ -270,6 +271,16 @@ const English = {
     updateStage: 'Update stage',
     updateAssignedUsers: 'Update assigned users',
     updateChannel: 'Update channel',
+  },
+  moreMenu: {
+    setting: 'SETTING',
+    darkTheme: 'Dark theme',
+    changeLanguage: 'Change language',
+    changePassword: 'Change password',
+    helpAndSupport: 'Help and support',
+    feedback: 'Feedback',
+    english: 'English',
+    deleteAccount: 'Delete account',
   },
 };
 
