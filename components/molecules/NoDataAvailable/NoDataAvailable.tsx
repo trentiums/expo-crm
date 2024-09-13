@@ -2,14 +2,13 @@ import React from 'react';
 import {
   NoDataContainer,
   NoDataDesc,
-  NoDataImage,
   NoDataText,
 } from './NoDataAvailable.styles';
 import { NoDataProps } from './NoDataAvailable.props';
 import NoDataIcon from '@atoms/Illustrations/NoData';
 import { Spacer } from '@atoms/common/common.styles';
 
-const NoData: React.FC<NoDataProps> = ({ text, description }) => {
+const NoDataAvailable: React.FC<NoDataProps> = ({ text, description }) => {
   return (
     <NoDataContainer>
       <NoDataIcon />
@@ -21,4 +20,4 @@ const NoData: React.FC<NoDataProps> = ({ text, description }) => {
   );
 };
 
-export default NoData;
+export default NoDataAvailable;
