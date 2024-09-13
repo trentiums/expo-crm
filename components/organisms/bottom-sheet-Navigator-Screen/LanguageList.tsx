@@ -23,7 +23,6 @@ const LanguageList: React.FC<LanguageListProps> = ({
   const currentLanguage = useSelector(
     (state: RootState) => state.language.currentLanguage,
   );
-  console.log('currentLanguage', currentLanguage);
   const onLayout = useCallback(() => {
     changeSnapPoints(['25%', '90%']);
   }, []);
