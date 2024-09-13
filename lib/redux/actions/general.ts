@@ -10,6 +10,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   CountryListResponse,
   ProductServicesListResponse,
+  SettingsResponse,
   leadGeneralListResponse,
 } from '@type/api/general';
 import { withToastForError } from '@utils/thunk';
@@ -66,7 +67,7 @@ export const countryListAction = createAsyncThunk<CountryListResponse, void>(
   }),
 );
 
-export const settingsListAction = createAsyncThunk<CountryListResponse, any>(
+export const settingsListAction = createAsyncThunk<SettingsResponse, void>(
   'general/settingList',
   withToastForError(async () => {
     const response = await settings();
