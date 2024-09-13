@@ -6,6 +6,8 @@ import { Field, useFormState } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { CompanyInfoFormProps } from './CompanyInformation.props';
 import {
+  BackButton,
+  BackButtonText,
   ButtonSubmit,
   ContainerView,
   FormButtonText,
@@ -93,12 +95,9 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
       </KeyboardAwareScrollViewContainer>
       <ContainerView>
         <SubContainerView>
-          <ButtonSubmit
-            onPress={() => onBackClick?.()}
-            loading={false}
-            valid={true}>
-            <FormButtonText valid={true}>{tb('previous')}</FormButtonText>
-          </ButtonSubmit>
+          <BackButton onPress={() => onBackClick?.()} loading={false}>
+            <BackButtonText valid={true}>{tb('previous')}</BackButtonText>
+          </BackButton>
         </SubContainerView>
         <SubContainerView>
           <ButtonSubmit

@@ -158,7 +158,7 @@ const English = {
     pdfContent: 'PDF Content',
   },
   formButtonName: {
-    previous: 'Previous',
+    previous: 'Back',
     next: 'Next',
     save: 'Save',
     cancel: 'Cancel',

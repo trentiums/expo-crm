@@ -56,7 +56,7 @@ const LoginScreen = () => {
           dispatch(getAssignUserListAction()),
         ]);
       }
-      router.replace('/(protected)/(tabs)/dashboard');
+      router.replace('/(protected)/(tabs)/leads');
     } catch (error: any) {
       toast.show(error, {
         type: ToastType.Custom,

@@ -1,7 +1,7 @@
 import { LeadListData } from '@type/api/lead';
 
 export const formatLeadList = (data: LeadListData[]) => {
-  return data.map((item) => ({
+  return data?.map((item) => ({
     id: item?.id,
     companyUserId: item?.company_user_id,
     name: item?.name,
