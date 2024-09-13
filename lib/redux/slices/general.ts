@@ -4,6 +4,7 @@ import {
   leadChannelListAction,
   leadConversionListAction,
   leadStatusListAction,
+  settingsListAction,
 } from '@redux/actions/general';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import {
@@ -11,13 +12,18 @@ import {
   leadGeneralListResponse,
 } from '@type/api/general';
 import { CountryListType, GeneralList } from '@type/redux/slices/general';
-import { formatCountryList, formatGeneralList } from '@utils/general';
+import {
+  convertKeysToCamelCase,
+  formatCountryList,
+  formatGeneralList,
+} from '@utils/general';
 
 export interface GeneralState {
   leadChannelList: GeneralList[];
   leadConversionList: GeneralList[];
   leadStatusList: GeneralList[];
   countryList: CountryListType[];
+  settings: {};
 }
 
 const initialState: GeneralState = {
@@ -25,6 +31,7 @@ const initialState: GeneralState = {
   leadConversionList: [],
   leadStatusList: [],
   countryList: [],
+  settings: {},
 };
 
 const generalSlice = createSlice({
@@ -56,6 +63,13 @@ const generalSlice = createSlice({
         state.countryList = formatCountryList(action.payload.data);
       },
     );
+    builder.addCase(
+      settingsListAction.fulfilled,
+      (state, action: PayloadAction<CountryListResponse>) => {
+        state.settings = convertKeysToCamelCase(action.payload.data);
+      },
+    );
+
     builder.addCase(logoutUserAction.fulfilled, () => {
       return initialState;
     });

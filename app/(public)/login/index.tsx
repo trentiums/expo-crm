@@ -21,6 +21,7 @@ import {
   leadChannelListAction,
   leadConversionListAction,
   leadStatusListAction,
+  settingsListAction,
 } from '@redux/actions/general';
 import { getProductServiceListAction } from '@redux/actions/productService';
 import { router } from 'expo-router';
@@ -46,14 +47,15 @@ const LoginScreen = () => {
       ).unwrap();
       if (await loginResponse.status) {
         await Promise.all([
-          dispatch(leadChannelListAction()),
-          dispatch(leadConversionListAction()),
-          dispatch(leadStatusListAction()),
-          dispatch(countryListAction()),
-          dispatch(getProductServiceListAction({})),
-          dispatch(getLeadListAction({})),
-          dispatch(getUserListAction({})),
-          dispatch(getAssignUserListAction()),
+          dispatch(settingsListAction()),
+          // dispatch(leadChannelListAction()),
+          // dispatch(leadConversionListAction()),
+          // dispatch(leadStatusListAction()),
+          // dispatch(countryListAction()),
+          // dispatch(getProductServiceListAction({})),
+          // dispatch(getLeadListAction({})),
+          // dispatch(getUserListAction({})),
+          // dispatch(getAssignUserListAction()),
         ]);
       }
       router.replace('/(protected)/(tabs)/leads');

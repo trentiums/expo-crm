@@ -21,3 +21,18 @@ export const formatCountryList = (data: CountryType[]) => {
     flag: item.flag,
   }));
 };
+const toCamelCase = (str: string): string => {
+  return str.replace(/_([a-z])/g, (_, char) => char.toUpperCase());
+};
+export const convertKeysToCamelCase = (obj: unknown): unknown => {
+  if (Array.isArray(obj)) {
+    return obj.map(convertKeysToCamelCase);
+  } else if (typeof obj === 'object' && obj !== null) {
+    return Object.keys(obj).reduce((acc: string, key: string) => {
+      const camelCaseKey = toCamelCase(key);
+      acc[camelCaseKey] = convertKeysToCamelCase(obj[key]);
+      return acc;
+    }, {});
+  }
+  return obj;
+};
