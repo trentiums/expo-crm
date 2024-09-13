@@ -15,7 +15,6 @@ import { useToast } from 'react-native-toast-notifications';
 import { AddProductContainer } from '../(tabs)/drawer.style';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@constants/theme';
-import { Spacer } from '@atoms/common/common.styles';
 
 const addProducts = () => {
   const dispatch = useAppDispatch();
@@ -41,7 +40,6 @@ const addProducts = () => {
           });
         });
       }
-
       const response = await dispatch(
         addProductServiceAction(formData),
       ).unwrap();
@@ -78,7 +76,6 @@ const addProducts = () => {
   return (
     <ScreenTemplate title={t('addProduct')}>
       <AddProductContainer>
-        <Spacer size={32} />
         <FormTemplate
           Component={AddProductForm}
           onSubmit={(values: AddProductFormValues) => {

@@ -60,12 +60,13 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
     if (params?.slug) {
       form.change('name', productServiceDetail?.name);
       form.change('description', productServiceDetail?.description);
-      productServiceDetail?.documents?.id &&
+      productServiceDetail?.documents &&
         setDocumentArray(productServiceDetail?.documents);
     } else {
       setDocumentArray([]);
     }
   }, [params?.slug, productServiceDetail]);
+
   useEffect(() => {
     setIsDisable(true);
   }, [values]);
@@ -116,6 +117,8 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
             <DocumentsPicker
               setDocumentArray={setDocumentArray}
               documentArray={documentArray}
+              isProductServices
+              id={+params?.slug}
             />
           </KeyboardAwareScrollViewContainer>
           <ButtonSubmit

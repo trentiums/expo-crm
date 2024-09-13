@@ -14,6 +14,7 @@ export const LabelText = styled(Text)`
 export const RNPTextInput = styled(TextInput)`
   background-color: ${({ theme }) => theme.colors.transparent};
 `;
+
 export const InputErrorContainer = styled(View)<{ invalidValue?: boolean }>`
   border-width: ${({ invalidValue }) => (invalidValue ? 1 : 0)}px;
   border-color: ${({ invalidValue, theme }) =>

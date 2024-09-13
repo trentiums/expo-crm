@@ -128,6 +128,8 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 handleBottomSheetClose={handleClosePress}
                 leadId={meta.leadId}
                 optionType={meta.optionType}
+                editRoute={meta.editRoute}
+                onDelete={meta.onDelete}
               />
             )}
           </Stack.Screen>

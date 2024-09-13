@@ -206,7 +206,7 @@ export interface LeadListTypeState {
   createdAt?: string;
   updatedAt?: string;
 }
-export interface DeleteLeadDocumentsParams {
+export interface DeleteLeadDocumentParams {
   media_id: number;
 }
 export interface LeadDetailsParams {

@@ -17,6 +17,8 @@ export type ModifyLeadOptionProps = {
   navigation: any;
   leadId?: number;
   optionType: ScreenOptionType;
+  editRoute?: string;
+  onDelete?: () => void;
 };
 
 export enum ScreenOptionType {

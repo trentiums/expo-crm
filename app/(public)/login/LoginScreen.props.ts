@@ -2,4 +2,10 @@ export interface LoginFormData {
   password: string;
   username: string;
 }
-export type LoadingStatus = 'NONE' | 'DELETE' | 'MORE' | 'REFRESH';
+export enum LoadingStatus {
+  NONE = 'NONE',
+  DELETE = 'DELETE',
+  MORE = 'MORE',
+  REFRESH = 'REFRESH',
+  SCREEN = 'SCREEN',
+}
