@@ -23,7 +23,6 @@ import { deleteLeadDocumentsAction } from '@redux/actions/lead';
 import { useAppDispatch } from '@redux/store';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import { FlatList, Pressable } from 'react-native';
-import DeleteIcon from '@atoms/Illustrations/Delete';
 import PlusIcon from '@atoms/Illustrations/Plus';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import TaskIcon from '@atoms/Illustrations/Task';
@@ -94,7 +93,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
             setVisibleDeleteModal(true);
             setDeleteDocumentUrl(file?.uri);
           }}>
-          <DeleteIcon color={colors.roseMadder} />
+          <TrashIcon color={colors.roseMadder} />
         </Pressable>
       </DocumentDetailContainer>
     );
