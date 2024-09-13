@@ -3,13 +3,13 @@ import {
   LeadStageCountLeadListItem,
 } from '@type/api/dashboard';
 import {
-  DashboardLeadList,
+  DashboardLeadsProps,
   LeadStageCountLeadList,
 } from '@type/redux/slices/dashboard';
 
 export const formatDashboardLeadList = (
   data: DashboardLeadListItem[],
-): DashboardLeadList[] => {
+): DashboardLeadsProps[] => {
   return data?.map((item) => ({
     id: item?.id,
     name: item?.name,
