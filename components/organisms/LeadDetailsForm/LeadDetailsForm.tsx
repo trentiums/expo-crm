@@ -10,7 +10,11 @@ import { Field, useFormState } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LeadDetailsFormProps } from './LeadDetailsForm.props';
-import { FormsView } from './LeadDetailsForm.styles';
+import {
+  FormsView,
+  LabelDescriptionText,
+  ServiceLabel,
+} from './LeadDetailsForm.styles';
 import View from '@atoms/View/View';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import FieldDatePicker from '@molecules/FieldDatePicker/FieldDatePicker';
@@ -174,7 +178,11 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always">
         <View>
-          <Label>{`${t('sourceLabel')} *`}</Label>
+          <ServiceLabel>{`${t('sourceLabel')} *`}</ServiceLabel>
+          <LabelDescriptionText>
+            {t('servicedDescription')}
+          </LabelDescriptionText>
+          <Spacer size={8} />
           <Field
             component={FieldDropDown}
             name={'selectedServices'}

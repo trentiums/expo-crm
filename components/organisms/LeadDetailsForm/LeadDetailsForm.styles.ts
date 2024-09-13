@@ -56,3 +56,12 @@ export const FormButtonText = styled(Text)<{ valid: boolean }>`
   color: ${({ valid, theme }) =>
     valid ? theme.colors.black : theme.colors.lightGray};
 `;
+export const LabelDescriptionText = styled(Text)`
+  font-size: 16px;
+  font-weight: 400;
+  color: ${({ theme }) => theme.colors.textGray};
+`;
+export const ServiceLabel = styled(Text)`
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.textDark};
+`;
