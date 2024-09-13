@@ -11,12 +11,21 @@ import {
   MultipleSelectedText,
   PlaceHolderText,
   PressableView,
+  SearchFilterContainer,
   SelectedText,
   ShowMultipleDataList,
 } from './DropDown.styles';
 import ArrowDownIcon from '@atoms/Illustrations/ArrowDown';
 import { DropDownProps } from './DropDown.props';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
+import {
+  FilterIconView,
+  SearchTextInput,
+} from '@molecules/Search/Search.styles';
+import { useTranslation } from 'react-i18next';
+import Search from '@atoms/Illustrations/Search';
+import { useAppTheme } from '@constants/theme';
+import { Keyboard } from 'react-native';
 
 const DropDown: React.FC<DropDownProps> = ({
   data,
@@ -25,7 +34,11 @@ const DropDown: React.FC<DropDownProps> = ({
   onChange,
   placeholder,
   isShowSelected,
+  isSearch,
 }) => {
+  const searchInputRef = useRef(null);
+  const { t: ts } = useTranslation('drawer');
+  const colors = useAppTheme();
   const [showDropList, setShowDropList] = useState(false);
   const renderMultipleData = ({ selectedData }) => {
     const isSelectedData = Array.isArray(value)
@@ -45,11 +58,19 @@ const DropDown: React.FC<DropDownProps> = ({
 
   const handelSelectData = (id) => {
     onChange(id);
-    handleCloseDropList();
+    if (!isMultiple) {
+      handleCloseDropList();
+    }
   };
   const handleCloseDropList = () => {
     setShowDropList(false);
   };
+  useEffect(() => {
+    if (showDropList && searchInputRef.current) {
+      searchInputRef.current.blur();
+      Keyboard.dismiss();
+    }
+  }, [showDropList]);
 
   return (
     <>
@@ -97,6 +118,23 @@ const DropDown: React.FC<DropDownProps> = ({
             <ArrowDownIcon />
           </DropdownLeftView>
         </DropDownContainer>
+      ) : isSearch ? (
+        <SearchFilterContainer onPress={() => setShowDropList(true)}>
+          <SearchTextInput
+            mode="outlined"
+            placeholder={ts('searchUsers')}
+            textColor={colors.textDark}
+            outlineColor="transparent"
+            outlineStyle={{ borderWidth: 0 }}
+            left={<Search />}
+            onFocus={() => setShowDropList(true)}
+            ref={searchInputRef}
+            onBlur={() => Keyboard.dismiss()}
+          />
+          <FilterIconView>
+            <Search />
+          </FilterIconView>
+        </SearchFilterContainer>
       ) : (
         <ShowMultipleDataList
           data={data}

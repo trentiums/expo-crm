@@ -5,6 +5,7 @@ export interface DropDownProps {
   onChange?: (value: string) => void;
   placeholder?: string;
   isShowSelected?: boolean;
+  isSearch?: boolean;
 }
 
 export interface DropDownData {

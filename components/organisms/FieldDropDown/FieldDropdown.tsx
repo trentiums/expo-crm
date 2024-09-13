@@ -12,6 +12,7 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
   isMultiple,
   isAllowDeselect,
   isShowSelected,
+  isSearch,
   placeholder,
 }) => {
   const handleSelect = (value: any) => {
@@ -41,6 +42,7 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
         value={input.value}
         isShowSelected={isShowSelected}
         placeholder={placeholder}
+        isSearch={isSearch}
       />
       {!!(meta.touched && meta.error) && (
         <FormError

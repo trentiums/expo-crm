@@ -196,6 +196,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             isMultiple
             isFullWidth
             dropDownTitle={`${t('sourceLabel')} ${t('list')}`}
+            isSearch
           />
           <Spacer size={16} />
           <Label>{`${tl('leadChannel')} *`}</Label>

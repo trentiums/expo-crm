@@ -9,7 +9,11 @@ import {
 import SearchFilter from '@molecules/Search/Search';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 
-const DropdownListing = ({ dropdownData, handelSelectData }) => {
+const DropdownListing = ({
+  dropdownData,
+  handelSelectData,
+  isMultipleSelection,
+}) => {
   const [dropListData, setDropListData] = useState(dropdownData);
   const [search, setSearch] = useState('');
 

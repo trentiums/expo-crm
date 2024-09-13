@@ -92,3 +92,4 @@ export const ShowMultipleDataList = styled(FlatList).attrs({
     flexWrap: 'wrap',
   },
 })``;
+export const SearchFilterContainer = styled(Pressable)``;
