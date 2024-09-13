@@ -21,7 +21,7 @@ import Loader from '@atoms/Loader/Loader';
 import { Spacer } from '@atoms/common/common.styles';
 import SearchFilter from '@molecules/Search/Search';
 import { LoadingStatus } from '../../(public)/login/LoginScreen.props';
-import NoData from '@molecules/NoData/NoData';
+import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
 
 const ButtonSize = 40;
 
@@ -34,13 +34,15 @@ const Users = () => {
   const dispatch = useAppDispatch();
   const toast = useToast();
   const userList = useSelector((state: RootState) => state.user?.userList);
-  const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>('NONE');
+  const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>(
+    LoadingStatus.NONE,
+  );
   const [deleteUserId, setDeleteUserId] = useState(0);
   const [userSearch, setUserSearch] = useState('');
 
   const handleDeleteUser = async () => {
     try {
-      setLoadingStatus('DELETE');
+      setLoadingStatus(LoadingStatus.DELETE);
       const response = await dispatch(
         deleteUserAction({ user_id: deleteUserId }),
       ).unwrap();
@@ -60,17 +62,13 @@ const Users = () => {
       });
     }
     setShowModal(false);
-    setLoadingStatus('NONE');
-  };
-
-  const handleEdit = (slug: string | number) => {
-    router.navigate(`/(protected)/add-user/${slug}`);
+    setLoadingStatus(LoadingStatus.NONE);
   };
 
   const handleGetMoreUserData = async () => {
     if (userList?.currentPage !== userList?.lastPage) {
       try {
-        setLoadingStatus('MORE');
+        setLoadingStatus(LoadingStatus.MORE);
         await dispatch(
           getUserListAction({
             page: userList?.currentPage + 1,
@@ -85,18 +83,18 @@ const Users = () => {
           },
         });
       }
-      setLoadingStatus('NONE');
+      setLoadingStatus(LoadingStatus.NONE);
     }
   };
 
   const onRefreshUserList = async () => {
     try {
-      setLoadingStatus('REFRESH');
+      setLoadingStatus(LoadingStatus.REFRESH);
       await dispatch(getUserListAction({}));
     } catch (error) {
       console.log(error);
     }
-    setLoadingStatus('NONE');
+    setLoadingStatus(LoadingStatus.NONE);
   };
 
   const renderUser = ({
@@ -114,12 +112,12 @@ const Users = () => {
 
   const handleSearch = async () => {
     try {
-      setLoadingStatus('SCREEN');
+      setLoadingStatus(LoadingStatus.SCREEN);
       await dispatch(getUserListAction({ search: userSearch }));
     } catch (error) {
       console.log(error);
     }
-    setLoadingStatus('NONE');
+    setLoadingStatus(LoadingStatus.NONE);
   };
   const renderHeader = () => {
     return (
@@ -141,7 +139,7 @@ const Users = () => {
       </HeadingView>
       {renderHeader()}
       <>
-        {loadingStatus === 'SCREEN' ? (
+        {loadingStatus === LoadingStatus.SCREEN ? (
           <LoaderView>
             <ActivityIndicator color={colors.blueChaos} />
           </LoaderView>
@@ -156,18 +154,20 @@ const Users = () => {
                 showsVerticalScrollIndicator={false}
                 onEndReached={handleGetMoreUserData}
                 ListFooterComponent={
-                  loadingStatus === 'MORE' ? <Loader size={24} /> : null
+                  loadingStatus === LoadingStatus.MORE ? (
+                    <Loader size={24} />
+                  ) : null
                 }
                 refreshControl={
                   <RefreshControl
-                    refreshing={loadingStatus === 'REFRESH'}
+                    refreshing={loadingStatus === LoadingStatus.REFRESH}
                     onRefresh={onRefreshUserList}
                     colors={[colors.primaryColor]}
                   />
                 }
               />
             ) : (
-              <NoData text={td('noUsersFound')} />
+              <NoDataAvailable text={td('noUsersFound')} />
             )}
           </>
         )}

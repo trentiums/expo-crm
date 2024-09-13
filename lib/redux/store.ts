@@ -1,21 +1,21 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import authReducer, { AuthState } from "./slices/auth";
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import authReducer, { AuthState } from './slices/auth';
 import {
   TypedUseSelectorHook,
   useSelector as useReduxSelector,
   useDispatch,
-} from "react-redux";
-import { persistReducer, PersistConfig, persistStore } from "redux-persist";
-import * as rp from "redux-persist";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import themeReducer, { ThemeState } from "./slices/theme";
-import generalReducer, { GeneralState } from "./slices/general";
-import leadsReducer, { LeadsState } from "./slices/leads";
+} from 'react-redux';
+import { persistReducer, PersistConfig, persistStore } from 'redux-persist';
+import * as rp from 'redux-persist';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import themeReducer, { ThemeState } from './slices/theme';
+import generalReducer, { GeneralState } from './slices/general';
+import leadsReducer, { LeadsState } from './slices/leads';
 import productServiceReducer, {
   ProductServiceState,
-} from "./slices/productservice";
-import dashboardReducer, { DashboardState } from "./slices/dashboard";
-import userReducer, { UserState } from "./slices/user";
+} from './slices/productservice';
+import dashboardReducer, { DashboardState } from './slices/dashboard';
+import userReducer, { UserState } from './slices/user';
 
 export interface RootState {
   auth: AuthState;
@@ -28,17 +28,17 @@ export interface RootState {
 }
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   version: 1,
   storage: AsyncStorage,
   whitelist: [
-    "auth",
-    "theme",
-    "general",
-    "leads",
-    "productService",
-    "dashboard",
-    "user",
+    'auth',
+    'theme',
+    'general',
+    'leads',
+    'productService',
+    'dashboard',
+    'user',
   ],
 } as PersistConfig<RootState>;
 

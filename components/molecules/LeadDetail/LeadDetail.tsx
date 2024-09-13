@@ -112,16 +112,16 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
             </CommunicationOptionContainer>
           )}
           {leadData?.phone && (
-            <CommunicationOptionContainer
-              onPress={() => handlePhoneCall(leadData.phone)}>
-              <PhoneIcon />
-            </CommunicationOptionContainer>
-          )}
-          {leadData?.phone && (
-            <CommunicationOptionContainer
-              onPress={() => handleWhatsApp(leadData.phone)}>
-              <WhatsApp />
-            </CommunicationOptionContainer>
+            <>
+              <CommunicationOptionContainer
+                onPress={() => handlePhoneCall(leadData.phone)}>
+                <PhoneIcon />
+              </CommunicationOptionContainer>
+              <CommunicationOptionContainer
+                onPress={() => handleWhatsApp(leadData.phone)}>
+                <WhatsApp />
+              </CommunicationOptionContainer>
+            </>
           )}
         </ContactBox>
       )}

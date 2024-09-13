@@ -11,14 +11,14 @@ import {
   HeadingView,
   LoaderView,
 } from './tabs.style';
-import { ActivityIndicator, RefreshControl } from 'react-native';
+import { RefreshControl } from 'react-native';
 import { UserDetailCardProps } from '@organisms/UserDetailCard/UserDetailCard.props';
 import { getProductServiceListAction } from '@redux/actions/productService';
 import { useTranslation } from 'react-i18next';
 import SearchFilter from '@molecules/Search/Search';
 import ProductCard from '@molecules/ProductCard/ProductCard';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
-import NoData from '@molecules/NoData/NoData';
+import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
 import { LoadingStatus } from '../../(public)/login/LoginScreen.props';
 
 const products = () => {
@@ -30,7 +30,9 @@ const products = () => {
   const products = useSelector(
     (state: RootState) => state.productService?.productServiceList,
   );
-  const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>('NONE');
+  const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>(
+    LoadingStatus.NONE,
+  );
   const [productSearch, setProductUserSearch] = useState('');
 
   const renderProducts = ({
@@ -44,9 +46,12 @@ const products = () => {
   const handleGetMoreProductsData = async () => {
     if (products?.currentPage !== products?.lastPage) {
       try {
-        setLoadingStatus('MORE');
+        setLoadingStatus(LoadingStatus.MORE);
         await dispatch(
-          getProductServiceListAction({ page: products?.currentPage + 1 }),
+          getProductServiceListAction({
+            page: products?.currentPage + 1,
+            search: productSearch,
+          }),
         ).unwrap();
       } catch (error: any) {
         toast.show(error, {
@@ -56,13 +61,15 @@ const products = () => {
           },
         });
       }
-      setLoadingStatus('NONE');
+      setLoadingStatus(LoadingStatus.NONE);
     }
   };
-  const handleSearchProducts = async (search) => {
+  const handleSearchProducts = async () => {
     try {
-      setLoadingStatus('SCREEN');
-      await dispatch(getProductServiceListAction(search)).unwrap();
+      setLoadingStatus(LoadingStatus.SCREEN);
+      await dispatch(
+        getProductServiceListAction({ search: productSearch }),
+      ).unwrap();
     } catch (error: any) {
       toast.show(error, {
         type: ToastType.Custom,
@@ -71,26 +78,26 @@ const products = () => {
         },
       });
     }
-    setLoadingStatus('NONE');
+    setLoadingStatus(LoadingStatus.NONE);
   };
   const renderHeader = () => {
     return (
       <SearchFilter
         search={productSearch}
         setSearch={setProductUserSearch}
-        handleSearch={(search) => handleSearchProducts(search)}
+        handleSearch={handleSearchProducts}
       />
     );
   };
 
   const onRefreshProductServiceList = async () => {
     try {
-      setLoadingStatus('REFRESH');
+      setLoadingStatus(LoadingStatus.REFRESH);
       await dispatch(getProductServiceListAction({}));
     } catch (error) {
       console.log(error);
     }
-    setLoadingStatus('NONE');
+    setLoadingStatus(LoadingStatus.NONE);
   };
   return (
     <ScreenTemplate moreVisible>
@@ -101,26 +108,26 @@ const products = () => {
         </CountsText>
       </HeadingView>
       {renderHeader()}
-      {loadingStatus === 'SCREEN' ? (
+      {loadingStatus === LoadingStatus.SCREEN ? (
         <LoaderView>
-          <ActivityIndicator color={colors.blueChaos} />
+          <Loader />
         </LoaderView>
       ) : (
         <>
           {Array.isArray(products?.serviceList) &&
           products?.serviceList.length > 0 ? (
             <ProductsFlatList
-              data={products?.serviceList}
+              data={products.serviceList}
               keyExtractor={(item, index) => `${item.id}-${index}`}
               renderItem={renderProducts}
               showsVerticalScrollIndicator={false}
               onEndReached={handleGetMoreProductsData}
               ListFooterComponent={
-                loadingStatus === 'MORE' ? <Loader size={24} /> : null
+                loadingStatus === LoadingStatus.MORE && <Loader size={24} />
               }
               refreshControl={
                 <RefreshControl
-                  refreshing={loadingStatus === 'REFRESH'}
+                  refreshing={loadingStatus === LoadingStatus.REFRESH}
                   onRefresh={onRefreshProductServiceList}
                   colors={[colors.primaryColor]}
                 />
@@ -128,7 +135,7 @@ const products = () => {
             />
           ) : (
             <LoaderView>
-              <NoData text={t('noServices')} />
+              <NoDataAvailable text={t('noServices')} />
             </LoaderView>
           )}
         </>

@@ -50,7 +50,7 @@ const FieldTextInput = forwardRef<CustomTextInputProps, FieldTextInputProps>(
     }
     return (
       <>
-        <InputErrorContainer isError={!!(meta.touched && meta.error)}>
+        <InputErrorContainer invalidValue={!!(meta.touched && meta.error)}>
           <TextInput
             ref={ref}
             value={input.value}
@@ -62,7 +62,7 @@ const FieldTextInput = forwardRef<CustomTextInputProps, FieldTextInputProps>(
                 backgroundColor: colors?.iceWindDale,
               }
             }
-            textColor={rest?.textDark || colors.textDark}
+            textColor={colors.textDark}
             enterKeyHint="done"
             autoCorrect={false}
             left={left}
