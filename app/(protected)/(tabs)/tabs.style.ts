@@ -1,7 +1,7 @@
 import Text from '@atoms/Text/Text';
 import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
-import { StyleSheet, Platform, FlatList, Pressable } from 'react-native';
+import { StyleSheet, FlatList, Pressable } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export const styles = StyleSheet.create({
@@ -12,6 +12,12 @@ export const styles = StyleSheet.create({
   },
   barStyle: {
     paddingTop: 16,
+    minHeight: 60,
+    paddingBottom: 8,
+  },
+  barLabelStyle: {
+    fontSize: 12,
+    marginTop: 4,
   },
 });
 export const DashboardScreenContainer = styled(ScrollView)`
@@ -29,9 +35,9 @@ export const NoDataFoundText = styled(Text)`
   max-width: 300px;
   margin: auto;
 `;
-export const FlatListCon = styled(FlatList).attrs({
+export const ProductsFlatList = styled(FlatList).attrs({
   contentContainerStyle: {
-    paddingTop: 16,
+    paddingTop: 0,
     paddingBottom: 48,
   },
 })``;
@@ -53,7 +59,6 @@ export const LoaderView = styled(View)`
 export const NoLeadsFoundContainer = styled(View)`
   justify-content: center;
   align-items: center;
-  height: 100%;
 `;
 export const AddLeadContainer = styled(View)`
   padding: 16px;
@@ -69,13 +74,13 @@ export const NameText = styled(Text)`
   font-weight: 600;
 `;
 
-export const AddLeadTabContainer = styled(View)`
+export const CreateOptionTabContainer = styled(Pressable)`
   align-items: center;
   justify-content: center;
   top: -4px;
 `;
 
-export const TabLabelText = styled(Text)<{ focused?: boolean }>`
+export const TabLabel = styled(Text)<{ focused?: boolean }>`
   margin-top: 5px;
   font-size: 12px;
   font-weight: ${({ focused }) => (focused ? 'bold' : 'lighter')};
@@ -88,11 +93,13 @@ export const HeadingView = styled(View)`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
+  flex: 1;
+  flex-basis: auto;
 `;
 export const HeadingText = styled(Text)`
   font-size: 36px;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.EnglishHolly};
+  color: ${({ theme }) => theme.colors.englishHolly};
 `;
 export const CountsText = styled(Text)`
   font-size: 16px;

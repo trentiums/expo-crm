@@ -7,10 +7,7 @@ export const LeadDetailCardContainer = styled(View)<{
   isActive?: boolean;
 }>`
   border-radius: 16px;
-  padding-left: 16px;
-  padding-right: 16px;
-  padding-top: 14px;
-  padding-bottom: 16px;
+  padding: 14px 16px 16px 16px;
   background-color: ${({ theme }) => theme.colors.white};
 `;
 export const RequirementClubContainer = styled(View)`

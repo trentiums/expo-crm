@@ -2,7 +2,6 @@ import { styled } from '@utils/styled';
 import Text from '@atoms/Text/Text';
 import { Pressable, View } from 'react-native';
 
-export const BackBtnCon = styled(Pressable)``;
 export const HeaderWithTextContainer = styled(View)<{ top?: number }>`
   display: flex;
   flex-direction: row;

@@ -7,7 +7,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { LeadListProps, LeadSelectProps } from './LeadSelect.props';
 import { RootState, useSelector } from '@redux/store';
-import { userRole } from '@type/api/auth';
+import { UserRole } from '@type/api/auth';
 import DropDown from '@molecules/DropDown/DropDown';
 
 const LeadSelect: React.FC<LeadSelectProps> = ({
@@ -39,7 +39,7 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
     (state: RootState) => state.user.assignUserList,
   );
   const { user } = useSelector((state: RootState) => state.auth);
-  const isAdmin = user?.userRole !== userRole.CompanyStaff;
+  const isAdmin = user?.userRole !== UserRole.CompanyStaff;
   return (
     <>
       <LeadSelectContainer>

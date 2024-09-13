@@ -42,7 +42,6 @@ export const formatLeadList = (data: LeadListData[]) => {
   }));
 };
 export const formatLeadDetails = (item: LeadListData) => {
-  console.log(item.assign_from_user_id, 'assignTo UserId');
   return {
     id: item?.id,
     companyUserId: item?.company_user_id,

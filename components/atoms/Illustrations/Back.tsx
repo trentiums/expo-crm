@@ -1,22 +1,16 @@
 import * as React from 'react';
-import Svg, { Path } from 'react-native-svg';
-const Back = (props) => (
-  <Svg
-    width={22}
-    height={15}
-    viewBox="0 0 22 15"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}>
+import Svg, { Path, SvgProps } from 'react-native-svg';
+const Back = (props: SvgProps) => (
+  <Svg width={31} height={31} viewBox="0 0 31 31" fill="none" {...props}>
     <Path
-      d="M7 1L1 7.5L7 14"
+      d="M11 9L5 15.5L11 22"
       stroke="black"
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <Path
-      d="M2 7.5L21 7.5"
+      d="M6 15.5L25 15.5"
       stroke="black"
       strokeWidth={2}
       strokeLinecap="round"
