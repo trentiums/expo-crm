@@ -11,9 +11,12 @@ import {
   HeadingView,
   LoaderView,
 } from './tabs.style';
-import { ActivityIndicator, RefreshControl } from 'react-native';
+import { RefreshControl, ActivityIndicator } from 'react-native';
 import { UserDetailCardProps } from '@organisms/UserDetailCard/UserDetailCard.props';
-import { getProductServiceListAction } from '@redux/actions/productService';
+import {
+  deleteProductServiceAction,
+  getProductServiceListAction,
+} from '@redux/actions/productService';
 import { useTranslation } from 'react-i18next';
 import SearchFilter from '@molecules/Search/Search';
 import ProductCard from '@molecules/ProductCard/ProductCard';

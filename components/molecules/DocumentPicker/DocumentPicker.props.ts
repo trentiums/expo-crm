@@ -1,9 +1,8 @@
-import { fileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
+import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 
 export interface DocumentPickerProps {
-  documentArray: fileSystemProps[];
-  setDocumentArray: (file: fileSystemProps) => void;
-  isProductServices?: boolean;
+  documentArray: FileSystemProps[];
+  setDocumentArray: (file: FileSystemProps) => void;
 }
 export enum PermissionType {
   Granted = 'granted',

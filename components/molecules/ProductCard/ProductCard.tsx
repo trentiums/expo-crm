@@ -46,6 +46,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
       });
     }
   };
+
   return (
     <DetailContainer>
       <ProductInfoView>
@@ -58,6 +59,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
             iconColor={colors.textDark}
           />
         </ProductDetailContainer>
+        <ActionMenuIcon
+          icon="dots-vertical"
+          onPress={openBottomSheet}
+          iconColor={colors.textDark}
+        />
       </ProductInfoView>
 
       {visibleBottomSheet && (
@@ -67,6 +73,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
           meta={{
             editRoute: `/add-product/${data.id}`,
             onDelete: () => handleDeleteProduct(),
+            optionType: ScreenOptionType.DEFAULT,
+          }}
+        />
+      )}
+      {visibleBottomSheet && (
+        <BottomSheetNavigator
+          initialRouteName="ModifyLeadOption"
+          onClosePress={closeBottomSheet}
+          meta={{
             optionType: ScreenOptionType.DEFAULT,
           }}
         />

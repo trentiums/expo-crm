@@ -10,7 +10,7 @@ import {
   UploadText,
 } from './DocumentPicker.styles';
 import * as DocumentPicker from 'expo-document-picker';
-import UploadCon from '@atoms/Illustrations/UploadCon';
+import UploadIcon from '@atoms/Illustrations/UploadCon';
 import * as MediaLibrary from 'expo-media-library';
 import { MAX_FILE_SIZE } from '@utils/constant';
 import { useToast } from 'react-native-toast-notifications';
@@ -19,14 +19,10 @@ import { useTranslation } from 'react-i18next';
 import { DocumentPickerProps, PermissionType } from './DocumentPicker.props';
 import { Spacer } from '@atoms/common/common.styles';
 import ActionModal from '@molecules/ActionModal/ActionModal';
-import {
-  deleteLeadDocumentsAction,
-  getLeadDetailsAction,
-} from '@redux/actions/lead';
+import { deleteLeadDocumentsAction ,getLeadDetailsAction} from '@redux/actions/lead';
 import { useAppDispatch } from '@redux/store';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import { FlatList, Pressable } from 'react-native';
-import DeleteIcon from '@atoms/Illustrations/Delete';
 import PlusIcon from '@atoms/Illustrations/Plus';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import TaskIcon from '@atoms/Illustrations/Task';
@@ -37,6 +33,7 @@ import {
   getProductServiceDetailAction,
 } from '@redux/actions/productService';
 import { getUserDetailAction } from '@redux/actions/user';
+import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 
 const DocumentPick: React.FC<DocumentPickerProps> = ({
   setDocumentArray,
@@ -91,7 +88,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
     }
   };
 
-  const renderFilePreview = (file: any) => {
+  const renderFilePreview = (file: FileSystemProps) => {
     return (
       <DocumentDetailContainer>
         <DocumentInfoContainer>
@@ -103,7 +100,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
             setVisibleDeleteModal(true);
             setDeleteDocumentUrl(file?.uri);
           }}>
-          <DeleteIcon color={colors.roseMadder} />
+          <TrashIcon color={colors.roseMadder} />
         </Pressable>
       </DocumentDetailContainer>
     );
@@ -159,16 +156,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
   };
   return (
     <>
-      {documentArray?.length === 0 && (
-        <PickerContainer onPress={pickFile}>
-          <AddIconButton>
-            <UploadCon />
-            <UploadText>{t('uploadDocuments')}</UploadText>
-          </AddIconButton>
-        </PickerContainer>
-      )}
-
-      {documentArray?.length > 0 && (
+      {documentArray?.length > 0 ? (
         <>
           <Spacer size={8} />
           <HeaderText>{tb('attachments')}</HeaderText>
@@ -190,6 +178,13 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
             </DocumentInfoContainer>
           </Pressable>
         </>
+      ) : (
+        <PickerContainer onPress={pickFile}>
+          <AddIconButton>
+            <UploadIcon />
+            <UploadText>{t('uploadDocuments')}</UploadText>
+          </AddIconButton>
+        </PickerContainer>
       )}
 
       {visibleDeleteModal && (
