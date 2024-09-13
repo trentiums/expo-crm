@@ -156,7 +156,6 @@ export const DarkTheme: AppTheme = {
     doctor: '#f9f9f8',
     distantCloud: '#e5e9e6',
     tarnishedSilver16: '#78788029',
-    roseMadder: '#e33a3a',
   },
 };
 

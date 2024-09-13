@@ -19,8 +19,8 @@ import {
 } from '@redux/actions/productService';
 import { useTranslation } from 'react-i18next';
 import SearchFilter from '@molecules/Search/Search';
-import ProductCard from '@molecules/ProductCard/ProductCard';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import ProductCard from '@molecules/ProductCard/ProductCard';
 
 const products = () => {
   const { t: ts } = useTranslation('drawer');

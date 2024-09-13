@@ -31,10 +31,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const hideActionModal = () => {
     onChangeModalState(false);
   };
-  const onDeleteLead = (id: number) => {
-    onChangeModalState(true);
-    setDeleteId?.(id);
-  };
   const handleDeleteLead = async () => {
     onDelete();
   };
