@@ -5,6 +5,7 @@ export type BasicInfoFormValues = {
   lastName: string;
   email: string;
   phoneNumber: number;
+  countryCode: number;
 };
 
 export interface fileSystemProps {

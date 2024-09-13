@@ -64,8 +64,6 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   loading,
   form,
   isSave,
-  setSelectedCountryCodeValue,
-  selectedCountryCodeValue,
   documentArray,
   setDocumentArray,
 }) => {
@@ -108,24 +106,22 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   }, [id]);
   const [deleteDocumentUrl, setDeleteDocumentUrl] = useState(null);
   useEffect(() => {
-    if (values.phoneNumber && !selectedCountryCodeValue) {
+    if (values.phoneNumber && !values?.countryCode) {
       setCountryCodeError(t('countryCodeError'));
-    } else if (!values.phoneNumber && selectedCountryCodeValue) {
+    } else if (!values.phoneNumber && values?.countryCode) {
       setCountryCodeError(t('phoneNumberError'));
     } else if (
-      (values.phoneNumber && selectedCountryCodeValue) ||
-      (!values.phoneNumber && !selectedCountryCodeValue)
+      (values.phoneNumber && values?.countryCode) ||
+      (!values.phoneNumber && !values?.countryCode)
     ) {
       setCountryCodeError('');
     }
-  }, [values, selectedCountryCodeValue]);
+  }, [values]);
 
   useEffect(() => {
     const initializePermissionsAndForm = async () => {
       const data = leadsData.filter((item) => item?.id === id)?.[0];
-      if (id) {
-        setSelectedCountryCodeValue(leadsDetail?.countryId || data?.countryId);
-      }
+      form.change('countryCode', +addLeadFormData?.countryCode);
       if (id) {
         setDocumentArray(leadsDetail?.documents);
       }
@@ -185,34 +181,6 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
     setDocumentArray(updatedDocuments);
   };
 
-  const renderFilePreview = (file: any) => {
-    const type = file?.type || file.mimeType;
-    return (
-      <PressAbleContainer
-        onPress={() => {
-          setImageURI(file);
-          if (file && file?.uri?.endsWith('pdf')) {
-            Linking.openURL(file.uri);
-          }
-        }}>
-        <CrossIconContainer
-          onPress={() => {
-            setDeleteShowModal(true);
-            setDeleteDocumentUrl(file?.uri);
-          }}>
-          <CrossIcon color={colors.white} />
-        </CrossIconContainer>
-        {type?.includes('image') ? (
-          <ImagePreviewShow source={{ uri: file?.uri }} />
-        ) : (
-          <SvgShowContainer>
-            <DocumentIcon />
-          </SvgShowContainer>
-        )}
-      </PressAbleContainer>
-    );
-  };
-
   useEffect(() => {
     dispatch(
       addLeadInformation({
@@ -220,10 +188,10 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
         fullName: values.firstName,
         email: values.email,
         phoneNumber: values.phoneNumber,
-        countryCode: selectedCountryCodeValue,
+        countryCode: values?.countryCode,
       }),
     );
-  }, [values, selectedCountryCodeValue]);
+  }, [values]);
   const generatePdf = async () => {
     try {
       const { uri } = await Print.printToFileAsync({
