@@ -1,4 +1,4 @@
-import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
+import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 import { FormRenderProps } from 'react-final-form';
 
 export type AddProductFormValues = {
@@ -8,6 +8,6 @@ export type AddProductFormValues = {
 
 export type AddProductFormProps = FormRenderProps<AddProductFormValues> & {
   loading?: boolean;
-  documentArray: fileSystemProps;
-  setDocumentArray: React.Dispatch<React.SetStateAction<fileSystemProps[]>>;
+  documentArray: FileSystemProps;
+  setDocumentArray: React.Dispatch<React.SetStateAction<FileSystemProps[]>>;
 };

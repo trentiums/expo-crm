@@ -10,10 +10,9 @@ import {
   NoDataFoundText,
   TitleText,
 } from './tabs.style';
-import { FlatList, Swipeable } from 'react-native-gesture-handler';
+import { FlatList } from 'react-native-gesture-handler';
 import { Spacer } from '@atoms/common/common.styles';
-import ActionModal from '@molecules/ActionModal/ActionModal';
-import { RefObject, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useToast } from 'react-native-toast-notifications';
 import { useAppTheme } from '@constants/theme';
@@ -27,16 +26,14 @@ import DashBoardLeadCard from '@organisms/DashBoardLeadCard/DashBoardLeadCard';
 import { Pressable } from 'react-native';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { deleteLeadAction } from '@redux/actions/lead';
-import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import TrashIcon from '@atoms/Illustrations/Trash';
 import React from 'react';
 import { router } from 'expo-router';
 import { useFocusEffect } from 'expo-router';
 import Button from '@atoms/Button/Button';
 import LeadsProgressChart from '@organisms/LeadsProgressChart/LeadsProgressChart';
 import CompanyDashboardCard from '@molecules/CompanyDashboardCard/CompanyDashboardCard';
-import NoData from '@molecules/NoData/NoData';
 import QuickFilter from '@molecules/QuickFilter/QuickFilter';
+import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
 
 const Dashboard = () => {
   const { colors } = useAppTheme();
@@ -49,8 +46,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deletedId, setDeletedId] = useState<number | undefined>();
-  const [openSwipeAbleRef, setOpenSwipeAbleRef] =
-    useState<RefObject<Swipeable> | null>(null);
   const dashboardLeadList = useSelector((state: RootState) => state.dashboard);
   const [leads, setLeads] = useState<DashboardLeadsProps[]>(
     dashboardLeadList.leadList,
@@ -107,12 +102,6 @@ const Dashboard = () => {
     setDeletedId(id);
   };
 
-  const closeSwipeAble = () => {
-    if (openSwipeAbleRef && openSwipeAbleRef.current) {
-      openSwipeAbleRef.current.close();
-    }
-  };
-
   const onDeleteActionPress = async () => {
     setDeleteLoading(true);
     try {
@@ -134,7 +123,6 @@ const Dashboard = () => {
         },
       });
     }
-    closeSwipeAble();
     setDeleteLoading(false);
     setShowModal(false);
   };
@@ -156,13 +144,13 @@ const Dashboard = () => {
         key={`${lead?.id}-${index}`}
         onDelete={() => handleDelete(lead?.id)}
         leadData={lead}
-        showSocialMedia
+        isSocialMediaVisible
       />
     </Pressable>
   );
 
   return (
-    <ScreenTemplate isDrawerBtn>
+    <ScreenTemplate moreVisible>
       {loading && dashboardLeadList.leadStageCount.length === 0 ? (
         <Loader />
       ) : (
@@ -173,7 +161,10 @@ const Dashboard = () => {
           {dashboardLeadList.leadStageCount?.every(
             (item) => item.leadCount === 0,
           ) ? (
-            <NoData text={t('noLeadsTitle')} description={t('noLeadsDesc')} />
+            <NoDataAvailable
+              text={t('noLeadsTitle')}
+              description={t('noLeadsDesc')}
+            />
           ) : (
             <DashboardScreenContainer
               showsHorizontalScrollIndicator={false}
@@ -234,29 +225,7 @@ const Dashboard = () => {
                   </Button>
                 </>
               )}
-              <Spacer size={16} />
 
-              {showModal && (
-                <ActionModal
-                  isModal
-                  onBackdropPress={() => {
-                    setShowModal(false);
-                    closeSwipeAble();
-                  }}
-                  heading={tm('discardMedia')}
-                  description={tm('disCardDescription')}
-                  label={tm('yesDiscard')}
-                  actionType={Actions.delete}
-                  actiontext={tm('cancel')}
-                  onCancelPress={() => {
-                    setShowModal(false);
-                    closeSwipeAble();
-                  }}
-                  onActionPress={() => onDeleteActionPress()}
-                  icon={<TrashIcon color={colors?.deleteColor} />}
-                  loading={deleteLoading}
-                />
-              )}
               <Spacer size={100} />
             </DashboardScreenContainer>
           )}

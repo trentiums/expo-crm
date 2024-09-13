@@ -44,6 +44,9 @@ export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.blueChaos};
   border-radius: 50px;
+  border-width: 1px;
+  margin-bottom: -16px;
+  z-index: 10;
 `;
 
 export const ViewMainContainer = styled(View)`
@@ -51,7 +54,7 @@ export const ViewMainContainer = styled(View)`
   flex-direction: column;
   justify-content: space-between;
   align-content: space-between;
-  margin-bottom: 100px;
+  margin-bottom: 80px;
 `;
 
 export const PressAbleView = styled(Pressable)`

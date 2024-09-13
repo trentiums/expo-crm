@@ -2,26 +2,24 @@ import Loader from '@atoms/Loader/Loader';
 import { useAppTheme } from '@constants/theme';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
-import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
 import {
   CountsText,
-  FlatListCon,
+  ProductsFlatList,
   HeadingText,
   HeadingView,
+  LoaderView,
 } from './tabs.style';
 import { RefreshControl } from 'react-native';
 import { UserDetailCardProps } from '@organisms/UserDetailCard/UserDetailCard.props';
-import {
-  deleteProductServiceAction,
-  getProductServiceListAction,
-} from '@redux/actions/productService';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { getProductServiceListAction } from '@redux/actions/productService';
 import { useTranslation } from 'react-i18next';
 import SearchFilter from '@molecules/Search/Search';
-import { ToastType } from '@molecules/Toast/Toast.props';
 import ProductCard from '@molecules/ProductCard/ProductCard';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
+import { LoadingStatus } from '../../(public)/login/LoginScreen.props';
 
 const products = () => {
   const { t: ts } = useTranslation('drawer');
@@ -32,17 +30,10 @@ const products = () => {
   const products = useSelector(
     (state: RootState) => state.productService?.productServiceList,
   );
-  const [showModal, setShowModal] = useState(false);
-  const [moreLoading, setMoreLoading] = useState(false);
-  const [deleteLoading, setDeleteLoading] = useState(false);
-  const [deleteId, setDeleteId] = useState(0);
-  const [refreshing, setRefreshing] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>(
+    LoadingStatus.NONE,
+  );
   const [productSearch, setProductUserSearch] = useState('');
-
-  const handleEdit = (slug: string | number) => {
-    router.navigate(`/add-product/${slug}`);
-  };
 
   const renderProducts = ({
     item,
@@ -50,25 +41,17 @@ const products = () => {
   }: {
     item: UserDetailCardProps;
     index: number;
-  }) => (
-    <ProductCard
-      key={`${item.id}-${index}`}
-      onDelete={handleDeleteProduct}
-      onEdit={() => handleEdit(item?.id)}
-      data={item}
-      showModal={showModal}
-      setShowModal={setShowModal}
-      loading={deleteLoading}
-      setDeleteId={setDeleteId}
-    />
-  );
+  }) => <ProductCard key={`${item.id}-${index}`} data={item} />;
 
   const handleGetMoreProductsData = async () => {
     if (products?.currentPage !== products?.lastPage) {
       try {
-        setMoreLoading(true);
+        setLoadingStatus(LoadingStatus.MORE);
         await dispatch(
-          getProductServiceListAction({ page: products?.currentPage + 1 }),
+          getProductServiceListAction({
+            page: products?.currentPage + 1,
+            search: productSearch,
+          }),
         ).unwrap();
       } catch (error: any) {
         toast.show(error, {
@@ -78,30 +61,15 @@ const products = () => {
           },
         });
       }
-      setMoreLoading(false);
+      setLoadingStatus(LoadingStatus.NONE);
     }
   };
-  const renderHeader = () => {
-    return (
-      <SearchFilter
-        search={productSearch}
-        setSearch={setProductUserSearch}
-        handleSearch={() => console.log('search')}
-      />
-    );
-  };
-  const handleDeleteProduct = async () => {
+  const handleSearchProducts = async () => {
     try {
-      setDeleteLoading(true);
-      const response = await dispatch(
-        deleteProductServiceAction({ product_service_id: deleteId }),
+      setLoadingStatus(LoadingStatus.SCREEN);
+      await dispatch(
+        getProductServiceListAction({ search: productSearch }),
       ).unwrap();
-      toast.show(response?.message, {
-        type: ToastType.Custom,
-        data: {
-          type: ToastTypeProps.Success,
-        },
-      });
     } catch (error: any) {
       toast.show(error, {
         type: ToastType.Custom,
@@ -110,45 +78,67 @@ const products = () => {
         },
       });
     }
-    setShowModal(false);
-    setDeleteLoading(false);
+    setLoadingStatus(LoadingStatus.NONE);
   };
+  const renderHeader = () => {
+    return (
+      <SearchFilter
+        search={productSearch}
+        setSearch={setProductUserSearch}
+        handleSearch={handleSearchProducts}
+      />
+    );
+  };
+
   const onRefreshProductServiceList = async () => {
     try {
-      setRefreshing(true);
+      setLoadingStatus(LoadingStatus.REFRESH);
       await dispatch(getProductServiceListAction({}));
     } catch (error) {
       console.log(error);
     }
-    setRefreshing(false);
+    setLoadingStatus(LoadingStatus.NONE);
   };
   return (
-    <ScreenTemplate isDrawerBtn>
+    <ScreenTemplate moreVisible>
       <HeadingView>
         <HeadingText>{ts('services')}</HeadingText>
-        <CountsText>{`${products?.total} ${
-          products?.total > 1 ? t('items') : t('item')
-        }`}</CountsText>
+        <CountsText>
+          {t('itemWithCount', { count: products?.total })}
+        </CountsText>
       </HeadingView>
       {renderHeader()}
-      {loading ? (
-        <Loader />
+      {loadingStatus === LoadingStatus.SCREEN ? (
+        <LoaderView>
+          <Loader />
+        </LoaderView>
       ) : (
-        <FlatListCon
-          data={products?.serviceList}
-          keyExtractor={(item, index) => `${item.id}-${index}`}
-          renderItem={renderProducts}
-          showsVerticalScrollIndicator={false}
-          onEndReached={handleGetMoreProductsData}
-          ListFooterComponent={moreLoading ? <Loader size={24} /> : null}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefreshProductServiceList}
-              colors={[colors.primaryColor]}
+        <>
+          {Array.isArray(products?.serviceList) &&
+          products?.serviceList.length > 0 ? (
+            <ProductsFlatList
+              data={products.serviceList}
+              keyExtractor={(item, index) => `${item.id}-${index}`}
+              renderItem={renderProducts}
+              showsVerticalScrollIndicator={false}
+              onEndReached={handleGetMoreProductsData}
+              ListFooterComponent={
+                loadingStatus === LoadingStatus.MORE && <Loader size={24} />
+              }
+              refreshControl={
+                <RefreshControl
+                  refreshing={loadingStatus === LoadingStatus.REFRESH}
+                  onRefresh={onRefreshProductServiceList}
+                  colors={[colors.primaryColor]}
+                />
+              }
             />
-          }
-        />
+          ) : (
+            <LoaderView>
+              <NoDataAvailable text={t('noServices')} />
+            </LoaderView>
+          )}
+        </>
       )}
     </ScreenTemplate>
   );

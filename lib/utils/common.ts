@@ -123,21 +123,13 @@ export const generateWhatsAppUrl = (phoneNumber: number | string) => {
       console.error('An error occurred', err);
     });
 };
-export const handlePhoneCall = (phoneNumber: number) => {
-  if (phoneNumber) {
-    const phoneUrl = `tel:${phoneNumber}`;
-    Linking.openURL(phoneUrl).catch((err) => {
-      console.error('Failed to open dialer', err);
-    });
-  }
-};
 
-export const handleEmail = (email: string) => {
-  if (email) {
-    const emailUrl = `mailto:${email}?subject=Your%20Subject%20Here&body=Your%20Message%20Here`;
-    Linking.openURL(emailUrl).catch((err) => {
-      console.log(err);
-    });
-  } else {
-  }
+export const handleOpenEmail = (email: string) => {
+  const emailUrl = `mailto:${email}?subject=Your%20Subject%20Here&body=Your%20Message%20Here`;
+
+  Linking.openURL(emailUrl);
+};
+export const handleOpenDialCall = (phoneNumber: number) => {
+  const phoneUrl = `tel:${phoneNumber}`;
+  Linking.openURL(phoneUrl);
 };

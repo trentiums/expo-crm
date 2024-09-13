@@ -20,6 +20,7 @@ import {
 import { Spacer } from '@atoms/common/common.styles';
 import { useAppTheme } from '@constants/theme';
 import { UserInformationFormProps } from './UserInformationForm.props';
+import { useRoute } from '@react-navigation/native';
 import LockIcon from '@atoms/Illustrations/Lock';
 import { Pressable } from 'react-native';
 import EyeCloseIcon from '@atoms/Illustrations/EyeClose';
@@ -30,15 +31,16 @@ import { useLocalSearchParams } from 'expo-router';
 const UserInformationForm: React.FC<UserInformationFormProps> = ({
   loading,
   form,
+  isSave,
 }) => {
   const params = useLocalSearchParams();
   const [slug] = useState(params?.slug);
+
   const { colors } = useAppTheme();
   const { t } = useTranslation('UserInformation');
   const { t: tb } = useTranslation('formButtonName');
   const { valid } = useFormState({ subscription: { valid: true } });
   const userList = useSelector((state: RootState) => state.user.userList.users);
-  const [isActivePassword, setIsActivePassword] = useState(false);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [secureConfirmTextEntry, setSecureConfirmTextEntry] = useState(true);
 
@@ -94,11 +96,7 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
                   complexPasswordValidator,
                 )
           }
-          left={() => (
-            <LockIcon
-              color={isActivePassword ? colors.primaryColor : colors.gray}
-            />
-          )}
+          left={() => <LockIcon color={colors.gray} />}
           password={() => (
             <Pressable onPress={() => setSecureTextEntry(!secureTextEntry)}>
               {secureTextEntry ? <EyeCloseIcon /> : <EyeOpenIcon />}
@@ -123,11 +121,7 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
                   confirmPasswordValidator,
                 )
           }
-          left={() => (
-            <LockIcon
-              color={isActivePassword ? colors.primaryColor : colors.gray}
-            />
-          )}
+          left={() => <LockIcon color={colors.gray} />}
           password={() => (
             <Pressable
               onPress={() =>
