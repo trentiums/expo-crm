@@ -21,7 +21,7 @@ import { Flexed, Spacer } from '@atoms/common/common.styles';
 import View from '@atoms/View/View';
 import Switch from '@atoms/Switch/Switch';
 import { Pressable } from 'react-native';
-import { changeTheme, ThemeEnum } from '@redux/slices/theme';
+import { changeTheme, ThemeTypes } from '@redux/slices/theme';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import MoreMenuBottom from '@organisms/MoreMenuBottom/MoreMenuBottom';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
@@ -35,14 +35,14 @@ const MoreMenu = () => {
     useState(false);
   const { currentTheme } = useSelector((state: RootState) => state.theme);
   const currentLanguage = useSelector(
-    (state: RootState) => state.language.currentLanguage,
+    (state: RootState) => state.auth.currentLanguage,
   );
 
   const handleChangeTheme = () => {
-    if (currentTheme === ThemeEnum.light) {
-      dispatch(changeTheme(ThemeEnum.dark));
-    } else if (currentTheme === ThemeEnum.dark) {
-      dispatch(changeTheme(ThemeEnum.light));
+    if (currentTheme === ThemeTypes.light) {
+      dispatch(changeTheme(ThemeTypes.dark));
+    } else if (currentTheme === ThemeTypes.dark) {
+      dispatch(changeTheme(ThemeTypes.light));
     }
   };
 
@@ -53,7 +53,7 @@ const MoreMenu = () => {
   const switchTheme = () => {
     return (
       <Switch
-        toggle={currentTheme !== ThemeEnum.light}
+        toggle={currentTheme !== ThemeTypes.light}
         onToggle={handleChangeTheme}
       />
     );

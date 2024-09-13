@@ -1,16 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export interface ThemeState {
-  currentTheme: ThemeEnum;
+  currentTheme: ThemeTypes;
 }
 
-export enum ThemeEnum {
+export enum ThemeTypes {
   dark = 'dark',
   light = 'light',
 }
 
 const initialState: ThemeState = {
-  currentTheme: ThemeEnum.light,
+  currentTheme: ThemeTypes.light,
 };
 
 const themeSlice = createSlice({
@@ -19,7 +19,7 @@ const themeSlice = createSlice({
   reducers: {
     changeTheme: (
       state,
-      action: PayloadAction<ThemeEnum.dark | ThemeEnum.light>,
+      action: PayloadAction<ThemeTypes.dark | ThemeTypes.light>,
     ) => {
       state.currentTheme = action.payload;
     },

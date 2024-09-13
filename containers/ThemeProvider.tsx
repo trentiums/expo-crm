@@ -14,7 +14,7 @@ import {
 import merge from 'deepmerge';
 import { RootState, useSelector } from '@redux/store';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components/native';
-import { ThemeEnum } from '@redux/slices/theme';
+import { ThemeTypes } from '@redux/slices/theme';
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
   reactNavigationLight: NavigationDefaultTheme,
@@ -30,7 +30,7 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = memo(
 
     const currentThemes = useMemo(() => {
       const theme =
-        currentTheme === ThemeEnum.light
+        currentTheme === ThemeTypes.light
           ? CombinedDefaultTheme
           : CombinedDarkTheme;
       return theme;

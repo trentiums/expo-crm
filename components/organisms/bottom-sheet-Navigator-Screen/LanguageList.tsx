@@ -11,7 +11,7 @@ import BottomSheetItemListing from '@molecules/BottomSheetItemListing/BottomShee
 
 import Loader from '@atoms/Loader/Loader';
 import { languageList } from '@utils/constant';
-import { changeLanguage, LanguageProps } from '@redux/slices/language';
+import { changeLanguage, LanguageProps } from '@redux/slices/auth';
 
 const LanguageList: React.FC<LanguageListProps> = ({
   handleBottomSheetClose,
@@ -21,7 +21,7 @@ const LanguageList: React.FC<LanguageListProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
   const currentLanguage = useSelector(
-    (state: RootState) => state.language.currentLanguage,
+    (state: RootState) => state.auth.currentLanguage,
   );
   const onLayout = useCallback(() => {
     changeSnapPoints(['25%', '90%']);

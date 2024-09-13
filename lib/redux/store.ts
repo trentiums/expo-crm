@@ -16,12 +16,10 @@ import productServiceReducer, {
 } from './slices/productservice';
 import dashboardReducer, { DashboardState } from './slices/dashboard';
 import userReducer, { UserState } from './slices/user';
-import languageReducer, { LanguageState } from './slices/language';
 
 export interface RootState {
   auth: AuthState;
   theme: ThemeState;
-  language: LanguageState;
   general: GeneralState;
   leads: LeadsState;
   productService: ProductServiceState;
@@ -41,7 +39,6 @@ const persistConfig = {
     'productService',
     'dashboard',
     'user',
-    'language',
   ],
 } as PersistConfig<RootState>;
 
@@ -53,7 +50,6 @@ const rootReducer = combineReducers({
   productService: productServiceReducer,
   dashboard: dashboardReducer,
   user: userReducer,
-  language: languageReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

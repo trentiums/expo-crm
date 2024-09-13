@@ -1,4 +1,4 @@
-import { LanguageEnum } from '@redux/slices/language';
+import { LanguageEnum } from '@redux/slices/auth';
 
 export const dashboardLeads = [
   {
