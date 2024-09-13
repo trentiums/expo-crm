@@ -1,5 +1,5 @@
 import { useAppTheme } from '@constants/theme';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import LeadDetailCard from '@organisms/LeadDetailCard/LeadDetailCard';
 import { ModalType } from '@organisms/LeadDetailCard/LeadDetailCard.props';
 import { deleteLeadAction, getLeadListAction } from '@redux/actions/lead';
@@ -12,7 +12,7 @@ import { router } from 'expo-router';
 import moment from 'moment';
 import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, Keyboard, Pressable, View } from 'react-native';
+import { FlatList, Keyboard, Pressable } from 'react-native';
 import { RefreshControl, Swipeable } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
 import {
@@ -62,7 +62,7 @@ const Leads = () => {
   const toast = useToast();
   const general = useSelector((state: RootState) => state.general);
   const [showModal, setShowModal] = useState(false);
-  const [deleteCardId, setDeleteCardId] = useState<number | null>();
+  const [deleteLeadId, setDeleteLeadId] = useState<number | null>();
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [modalType, setModalType] = useState<ModalType>(initialModalType);
   const [leadId, setLeadId] = useState(0);
@@ -73,15 +73,14 @@ const Leads = () => {
   const [filterSheet, setFilterSheet] = useState(false);
   const dispatch = useAppDispatch();
   const [refreshing, setRefreshing] = useState(false);
-  const [openSwipeAbleRef, setOpenSwipeAbleRef] =
-    useState<RefObject<Swipeable> | null>(null);
   const [modal, setModal] = useState(false);
   const [currentId, setCurrentId] = useState<number>(0);
   const [filterLoading, setFilterLoading] = useState(false);
-  const [filterCount, setFilterCount] = useState(0);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const handleDelete = async (slug: number) => {
     setShowModal(true);
-    setDeleteCardId(slug);
+    setDeleteLeadId(slug);
   };
   const debouncedLeadSearch = useDebounce(leadSearch || undefined, 300);
   const onDeleteActionPress = async (slug: number) => {
@@ -91,16 +90,16 @@ const Leads = () => {
         deleteLeadAction({ lead_id: slug }),
       ).unwrap();
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
       });
       setShowModal(false);
-      setDeleteCardId(null);
+      setDeleteLeadId(null);
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -109,7 +108,6 @@ const Leads = () => {
     setShowModal(false);
     setLoading(false);
     setModal(false);
-    openSwipeAbleRef?.current?.close();
   };
 
   const handleEdit = (slug: string | number) => {
@@ -117,15 +115,6 @@ const Leads = () => {
     router.navigate(`/(protected)/add-lead/${slug}`);
   };
 
-  const closeSwipeAble = () => {
-    if (openSwipeAbleRef && openSwipeAbleRef.current) {
-      openSwipeAbleRef.current.close();
-    }
-  };
-
-  const setSwipeAbleRef = (ref: RefObject<Swipeable>) => {
-    setOpenSwipeAbleRef(ref);
-  };
   const getLeadListData = async () => {
     try {
       setLeadsLoading(true);
@@ -135,10 +124,8 @@ const Leads = () => {
     }
     setLeadsLoading(false);
   };
-  useEffect(() => {
-    openSwipeAbleRef?.current?.close();
-  }, []);
-  const RenderComponent = ({
+
+  const renderLeads = ({
     item,
     index,
   }: {
@@ -161,10 +148,8 @@ const Leads = () => {
         StageList={general.leadConversionList}
         LeadDetails={item.productService.map((item) => item.name)}
         title={item.name}
-        mailID={item.email}
-        dateTime={item?.createdAt}
-        closeSwipeAble={closeSwipeAble}
-        setSwipeAbleRef={setSwipeAbleRef}
+        email={item.email}
+        createdAt={item?.createdAt}
         selectedCard={selectedCard}
         setSelectedCard={setSelectedCard}
         cardIndex={index}
@@ -181,7 +166,7 @@ const Leads = () => {
         handleGetLeadsData={getLeadListData}
         setLeadId={setLeadId}
         leadId={leadId}
-        assignTo={item.assignTo}
+        assignedTo={item.assignTo}
       />
     </Pressable>
   );
@@ -234,8 +219,7 @@ const Leads = () => {
     }
     setLeadsLoading(false);
   };
-
-  useEffect(() => {
+  const filterCount = useMemo(() => {
     const states = [
       leadsFilter?.startDate,
       leadsFilter?.endDate,
@@ -245,10 +229,9 @@ const Leads = () => {
       leadsFilter?.orderBy,
       leadsFilter?.sortBy,
     ];
-    const count = states.filter(
+    return states.filter(
       (state) => state !== null && state !== undefined && state !== '',
     ).length;
-    setFilterCount(count);
   }, [leadsFilter]);
 
   const handleApplyFilter = async (values: any) => {
@@ -265,7 +248,6 @@ const Leads = () => {
     const count = states.filter(
       (state) => state !== null && state !== undefined && state !== '',
     ).length;
-    setFilterCount(count);
     dispatch(setLeadsFilters(values));
     try {
       setFilterLoading(true);
@@ -288,7 +270,7 @@ const Leads = () => {
       ).unwrap();
     } catch (error) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -355,14 +337,14 @@ const Leads = () => {
     );
   }
   return (
-    <ScreenTemplate isDrawerBtn>
+    <ScreenTemplate>
       {renderHeader()}
       {leadsData?.length > 0 ? (
         <FlatList
           contentContainerStyle={{ paddingBottom: ButtonSize + 20 }}
           data={leadsData}
           keyExtractor={(item: any, index: number) => `${item.id}-${index}`}
-          renderItem={RenderComponent}
+          renderItem={renderLeads}
           showsVerticalScrollIndicator={false}
           onEndReached={handleGetMoreData}
           ListFooterComponent={moreLoading ? <Loader size={24} /> : null}
@@ -410,7 +392,6 @@ const Leads = () => {
           onSubmit={(values) => handleApplyFilter(values)}
           handleDropDownClose={handleOpenBottomSheetOpen}
           loading={filterLoading}
-          setFilterCount={setFilterCount}
           bottomSheetClose={handleBottomSheetClose}
         />
       </BottomSheetModal>
@@ -420,8 +401,7 @@ const Leads = () => {
           isModal
           onBackdropPress={() => {
             setShowModal(false);
-            setDeleteCardId(null);
-            closeSwipeAble();
+            setDeleteLeadId(null);
           }}
           heading={t('discardMedia')}
           description={t('disCardDescription')}
@@ -430,10 +410,9 @@ const Leads = () => {
           actiontext={t('cancel')}
           onCancelPress={() => {
             setShowModal(false);
-            setDeleteCardId(null);
-            closeSwipeAble();
+            setDeleteLeadId(null);
           }}
-          onActionPress={() => onDeleteActionPress(deleteCardId || 0)}
+          onActionPress={() => onDeleteActionPress(deleteLeadId || 0)}
           icon={<TrashIcon color={colors?.deleteColor} />}
           loading={loading}
         />

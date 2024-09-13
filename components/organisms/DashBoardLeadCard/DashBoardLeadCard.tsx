@@ -7,12 +7,12 @@ import { router } from 'expo-router';
 import { useAppDispatch } from '@redux/store';
 import { deleteLeadAction } from '@redux/actions/lead';
 import { useToast } from 'react-native-toast-notifications';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { dashboardLeadListAction } from '@redux/actions/dashboard';
 
 const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
   leadData,
-  showSocialMedia,
+  isSocialMediaVisible,
 }) => {
   const dispatch = useAppDispatch();
   const toast = useToast();
@@ -25,15 +25,15 @@ const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
         deleteLeadAction({ lead_id: leadData?.id }),
       ).unwrap();
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
       });
-      await dispatch(dashboardLeadListAction({ page: 1 }));
+      await dispatch(dashboardLeadListAction({}));
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -51,9 +51,9 @@ const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
           }
           onDelete={handleDeleteLead}
           loading={deleteLoading}
-          setShowModal={setShowModal}
+          onChangeModalState={(value) => setShowModal(value)}
           showModal={showModal}
-          showSocialMedia={showSocialMedia}
+          isSocialMediaVisible={isSocialMediaVisible}
         />
       </LeadDetailCardContainer>
       <Spacer size={16} />

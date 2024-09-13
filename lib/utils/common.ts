@@ -2,6 +2,7 @@
 import { Alert, Linking, Platform } from 'react-native';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
+import { whatsAppLink } from './config';
 
 export const getuuid = () => {
   return uuidv4();
@@ -103,4 +104,32 @@ export const callToAction = (link: string) => {
   Linking.openURL(link).catch((err) => {
     console.error('Failed to open URL:', err);
   });
+};
+export const generateWhatsAppUrl = (phoneNumber: number | string) => {
+  const whatsAppUrl = `${whatsAppLink}${phoneNumber}`;
+  const fallbackUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+    'Join WhatsApp using this link: https://whatsapp.com/dl/',
+  )}`;
+
+  Linking.canOpenURL(whatsAppUrl)
+    .then((supported) => {
+      if (supported) {
+        callToAction(whatsAppUrl);
+      } else {
+        callToAction(fallbackUrl);
+      }
+    })
+    .catch((err) => {
+      console.error('An error occurred', err);
+    });
+};
+
+export const handleOpenEmail = (email: string) => {
+  const emailUrl = `mailto:${email}?subject=Your%20Subject%20Here&body=Your%20Message%20Here`;
+
+  Linking.openURL(emailUrl);
+};
+export const handleOpenDialCall = (phoneNumber: number) => {
+  const phoneUrl = `tel:${phoneNumber}`;
+  Linking.openURL(phoneUrl);
 };

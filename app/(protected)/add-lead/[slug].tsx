@@ -3,9 +3,9 @@ import Loader from '@atoms/Loader/Loader';
 import { AddLeadTabBarData } from '@constants/dummyData';
 import { useAppTheme } from '@constants/theme';
 import TabBar from '@molecules/TabBar/TabBar';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
-import BasicInformationForm from '@organisms/BasicInformatioForm/BasicInformationForm';
-import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import BasicInformationForm from '@organisms/BasicInformationForm/BasicInformationForm';
+import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 import CompanyInformationForm from '@organisms/CompanyInformationForm/CompanyInformationForm';
 import LeadDetailsForm from '@organisms/LeadDetailsForm/LeadDetailsForm';
 import { getLeadDetailsAction, updateLeadAction } from '@redux/actions/lead';
@@ -48,7 +48,7 @@ const AddLead = () => {
     (state: RootState) => state.leads.leadList?.leads,
   );
   const toast = useToast();
-  const [documentArray, setDocumentArray] = useState<fileSystemProps[]>([]);
+  const [documentArray, setDocumentArray] = useState<FileSystemProps[]>([]);
   const [loading, setLoading] = useState(false);
   const [leadsDetailLoading, setDetailLoading] = useState(false);
   const [selectedData, setSelectedData] = useState<LeadListState>(
@@ -63,7 +63,7 @@ const AddLead = () => {
       } catch (error) {
         console.log(error, 'error');
         toast.show(error, {
-          type: 'customToast',
+          type: ToastType.Custom,
           data: {
             type: ToastTypeProps.Error,
           },
@@ -233,7 +233,7 @@ const AddLead = () => {
       const response = await dispatch(updateLeadAction(formData)).unwrap();
       await dispatch(getLeadDetailsAction({ lead_id: id })).unwrap();
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -251,7 +251,7 @@ const AddLead = () => {
       }
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },

@@ -1,4 +1,4 @@
-import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
+import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 import { FormRenderProps } from 'react-final-form';
 
 export type LeadStatusChangeFormValues = {
@@ -14,5 +14,5 @@ export type LeadStatusChangeFormProps =
     onCancelPress?: () => void;
     leadCardId: number;
     setDocuments: (file: any) => void;
-    documents: fileSystemProps[];
+    documents: FileSystemProps[];
   };

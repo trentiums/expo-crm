@@ -1,7 +1,7 @@
 import { useAppTheme } from '@constants/theme';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { DealWinCloseFormValues } from '@organisms/DealCloseWinForm/DealCloseWinForm.props';
-import LeadProposalNegotiationForm from '@organisms/LeadProposolNagotioationForm/LeadProposolNagotioationForm';
+import LeadProposalNegotiationForm from '@organisms/LeadProposalNegotiationForm/LeadProposalNegotiationForm';
 import { getLeadDetailsAction, updateLeadAction } from '@redux/actions/lead';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import FormTemplate from '@templates/FormTemplate/FormTemplate';
@@ -82,7 +82,7 @@ const LeadStageNegotiationScreen = () => {
       const response = await dispatch(updateLeadAction(formData)).unwrap();
       router.navigate('(protected)/(tabs)/leads');
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -90,7 +90,7 @@ const LeadStageNegotiationScreen = () => {
       await dispatch(getLeadDetailsAction({ lead_id: leadId }));
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },

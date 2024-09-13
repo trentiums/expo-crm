@@ -1,5 +1,5 @@
 import { useAppTheme } from '@constants/theme';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import LeadStatusChangeForm from '@organisms/LeadStatusChangeForm/LeadStatusChangeForm';
 import { LeadStatusChangeFormValues } from '@organisms/LeadStatusChangeForm/LeadStatusChangeForm.props';
 import { getLeadDetailsAction, updateLeadAction } from '@redux/actions/lead';
@@ -95,14 +95,14 @@ const LeadStatusChangeScreen = () => {
       router.navigate('(protected)/(tabs)/leads');
       setDocuments([]);
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
       });
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },

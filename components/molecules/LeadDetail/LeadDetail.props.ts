@@ -1,13 +1,14 @@
-import { LeadData } from '@organisms/DashBoardLeadCard/DashBoardLeadCard.props';
+import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
+import { Lead } from '@organisms/DashBoardLeadCard/DashBoardLeadCard.props';
 
 export interface LeadDetailsProps {
-  leadData: LeadData;
+  leadData: Lead;
   onDelete?: (id: number) => void;
   onEdit?: () => void;
-  loading?: boolean;
-  setShowModal?: (value: boolean) => void;
+  isDeleteLoading?: boolean;
+  onChangeModalState?: (value: boolean) => void;
   showModal?: boolean;
-  isServices?: boolean;
-  setDeleteId?: (value: number) => void;
-  showSocialMedia?: boolean;
+  onChangeDeleteId?: (value: number) => void;
+  isSocialMediaVisible?: boolean;
+  optionType?: ScreenOptionType;
 }

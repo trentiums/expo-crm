@@ -1,6 +1,6 @@
 import { Spacer } from '@atoms/common/common.styles';
 import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
-import { Label } from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
+import { Label } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
 import {
   composeValidators,
   numberAndFractionalNumberValidator,
@@ -24,7 +24,7 @@ import {
   SubContainerView,
 } from '@organisms/CompanyInformationForm/CompanyInformationForm.styles';
 import { addLeadInformation } from '@redux/slices/leads';
-import { userRole } from '@type/api/auth';
+import { UserRole } from '@type/api/auth';
 import { useAppTheme } from '@constants/theme';
 import { LeadStageType } from '@organisms/LeadDetailCard/LeadDetailCard.props';
 import { getProductServiceListAction } from '@redux/actions/productService';
@@ -90,7 +90,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
     setSelectedData(data?.[0]);
   }, [id]);
   const { user } = useSelector((state: RootState) => state.auth);
-  const isAdmin = user?.userRole !== userRole.CompanyStaff;
+  const isAdmin = user?.userRole !== UserRole.CompanyStaff;
   useEffect(() => {
     dispatch(
       addLeadInformation({

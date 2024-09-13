@@ -7,7 +7,7 @@ import styled from 'styled-components';
 export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   height: 48px;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.BlueChaos};
+  background-color: ${({ theme }) => theme.colors.blueChaos};
   border-radius: 50px;
 `;
 
@@ -31,8 +31,8 @@ export const SubContainerView = styled(View)`
   z-index: 2;
 `;
 
-export const FormButtonText = styled(Text)`
+export const FormButtonText = styled(Text)<{ valid?: boolean }>`
   font-weight: 700;
   color: ${({ valid, theme }) =>
-    valid ? theme.colors.white : theme.colors.white};
+    valid ? theme.colors.white : theme.colors.gray};
 `;
