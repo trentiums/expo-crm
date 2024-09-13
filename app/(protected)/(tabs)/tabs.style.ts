@@ -93,7 +93,7 @@ export const HeadingView = styled(View)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
 `;
 export const HeadingText = styled(Text)`
   font-size: 36px;
@@ -104,4 +104,15 @@ export const CountsText = styled(Text)`
   font-size: 16px;
   font-weight: 400;
   color: ${({ theme }) => theme.colors.textGray};
+`;
+export const FilterIconView = styled(Pressable)`
+  width: 40px;
+  border-radius: 12px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 10;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
 `;

@@ -30,8 +30,8 @@ export const ActionsText = styled(Text)`
 
 export const Label = styled(Text)`
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.gray};
-  padding-bottom: 4px;
+  color: ${({ theme }) => theme.colors.textDark};
+  padding-bottom: 10px;
 `;
 
 export const PickerContainer = styled(Pressable)`
@@ -39,9 +39,11 @@ export const PickerContainer = styled(Pressable)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.darkBackground};
-  border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.lightGreen};
+  background-color: ${({ theme }) => theme.colors.white};
+  border-width: 2px;
+  border-color: ${({ theme }) => theme.colors.christmasSilver};
+  border-style: dashed;
+  margin-top: 4px;
 `;
 
 export const AddIconButton = styled(View)`
@@ -53,8 +55,9 @@ export const AddIconButton = styled(View)`
 `;
 
 export const UploadText = styled(Text)`
-  font-size: 16px;
-  color: ${({ theme }) => theme.colors.white};
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.black};
+  padding-top: 8px;
 `;
 
 export const DeleteDocumentView = styled(Pressable)`
@@ -88,16 +91,18 @@ export const DocumentView = styled(View)`
 
 export const HeaderText = styled(Text)`
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.textDark};
+  font-weight: 500;
 `;
 
 export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   height: 48px;
   justify-content: center;
+  background-color: ${({ theme }) => theme.colors.blueChaos};
+  border-radius: 50px;
   border-width: 1px;
-  border-color: ${({ valid, theme }) =>
-    valid ? theme.colors.primaryColor : theme.colors.lightGray};
-  background-color: ${({ theme }) => theme.colors.bgColor};
+  margin-bottom: -16px;
+  z-index: 10;
 `;
 
 export const KeyboardAwareScrollViewContainer = styled(KeyboardAwareScrollView)`
@@ -122,7 +127,7 @@ export const ContainerView = styled(View)`
 export const FormButtonText = styled(Text)<{ valid?: boolean }>`
   font-weight: 700;
   color: ${({ valid, theme }) =>
-    valid ? theme.colors.primaryColor : theme.colors.lightGray};
+    valid ? theme.colors.white : theme.colors.lightGray};
 `;
 
 export const FlatListCon = styled(FlatList).attrs({
@@ -164,9 +169,9 @@ export const StyledImage = styled(Image)`
   height: 90%;
 `;
 
-export const PressAbleContainer = styled(Pressable)<{ isWidthShort?: boolean }>`
+export const PressAbleContainer = styled(Pressable)`
   position: relative;
-  width: ${({ isWidthShort }) => (isWidthShort ? 30 : 100)}%;
+  width: 100%;
   height: 120px;
   background-color: ${({ theme }) => theme.colors.backgroundCardColor};
   border-radius: 8px;

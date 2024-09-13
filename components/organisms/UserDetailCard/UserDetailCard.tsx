@@ -6,6 +6,7 @@ import { EmailText, PhoneInfoView } from './UserDetailCard.styles';
 import EmailIcon from '@atoms/Illustrations/Email';
 import { useAppTheme } from '@constants/theme';
 import { Spacer } from '@atoms/common/common.styles';
+import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
 
 const UserDetailCard: React.FC<UserDetailCardProps> = ({
   data,
@@ -30,12 +31,13 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
           loading={loading}
           onChangeDeleteId={(id) => onChangeDeleteId(id)}
           isSocialMediaVisible={isSocialMediaVisible}
+          optionType={ScreenOptionType.DEFAULT}
         />
         <Spacer size={8} />
         {data?.email && (
           <PhoneInfoView>
-            <EmailIcon color={colors?.gray} />
-            <EmailText>{data?.email}</EmailText>
+            <EmailIcon color={colors.gray} />
+            <EmailText>{data.email}</EmailText>
           </PhoneInfoView>
         )}
       </LeadDetailCardContainer>

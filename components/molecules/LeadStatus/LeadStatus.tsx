@@ -40,7 +40,7 @@ const LeadStatus: React.FC<LeadStatusProps> = ({ leadStatus }) => {
       );
 
     default:
-      return <></>;
+      return null;
   }
 };
 

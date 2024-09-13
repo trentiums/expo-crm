@@ -8,8 +8,8 @@ import {
 import { ScreenTemplateProps } from './ScreenTemplate.props';
 import PlusIcon from '@atoms/Illustrations/PlusIcon';
 import { useAppTheme } from '@constants/theme';
-import MoreMenuButton from '@molecules/MoreMenuButton/MoreMenuButton';
 import TitleWithButton from '@molecules/TitleWithButton/TitleWithButton';
+import MoreMenuButton from '@molecules/MoreMenuButton/MoreMenuButton';
 
 const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
   children,
@@ -30,7 +30,7 @@ const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
         {children}
         {!!addButtonText && (
           <AddButton onPress={() => onAddButtonPress?.()}>
-            <PlusIcon color={colors?.bgColor} />
+            <PlusIcon color={colors.bgColor} />
             <AddText>{addButtonText}</AddText>
           </AddButton>
         )}
