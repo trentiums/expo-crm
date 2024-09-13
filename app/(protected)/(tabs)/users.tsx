@@ -40,38 +40,13 @@ const Users = () => {
   const [deleteUserId, setDeleteUserId] = useState(0);
   const [userSearch, setUserSearch] = useState('');
 
-  const handleDeleteUser = async () => {
-    try {
-      setLoadingStatus(LoadingStatus.DELETE);
-      const response = await dispatch(
-        deleteUserAction({ user_id: deleteUserId }),
-      ).unwrap();
-      toast.show(response?.message, {
-        type: ToastType.Custom,
-        data: {
-          type: ToastTypeProps.Success,
-        },
-      });
-      await dispatch(getAssignUserListAction());
-    } catch (error: any) {
-      toast.show(error, {
-        type: ToastType.Custom,
-        data: {
-          type: ToastTypeProps.Error,
-        },
-      });
-    }
-    setShowModal(false);
-    setLoadingStatus(LoadingStatus.NONE);
-  };
-
   const handleGetMoreUserData = async () => {
     if (userList?.currentPage !== userList?.lastPage) {
       try {
         setLoadingStatus(LoadingStatus.MORE);
         await dispatch(
           getUserListAction({
-            page: userList?.currentPage + 1,
+            page: userList.currentPage + 1,
             search: userSearch,
           }),
         ).unwrap();
@@ -147,7 +122,7 @@ const Users = () => {
           <>
             {userList?.users?.length > 0 ? (
               <FlatList
-                data={userList?.users}
+                data={userList.users}
                 contentContainerStyle={{ paddingBottom: ButtonSize + 20 }}
                 keyExtractor={(item, index) => `${item.id}-${index}`}
                 renderItem={renderUser}

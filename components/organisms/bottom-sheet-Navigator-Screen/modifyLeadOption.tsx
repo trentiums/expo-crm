@@ -102,7 +102,11 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
   }
 
   const getLeadDetails = async () => {
-    if (leadId && optionType === ScreenOptionType.DASHBOARD) {
+    if (
+      leadId &&
+      (optionType === ScreenOptionType.DASHBOARD ||
+        optionType === ScreenOptionType.LEAD)
+    ) {
       try {
         await dispatch(getLeadDetailsAction({ lead_id: leadId })).unwrap();
       } catch (error) {
