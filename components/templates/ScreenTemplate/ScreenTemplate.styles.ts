@@ -13,6 +13,7 @@ export const Container = styled(SafeAreaView)<{
 
 export const ScreenTemplateView = styled(View)`
   padding: 0px 16px;
+  flex: 1;
 `;
 
 export const AddButton = styled(TouchableOpacity)`
