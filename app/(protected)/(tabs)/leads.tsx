@@ -12,7 +12,7 @@ import { router } from 'expo-router';
 import moment from 'moment';
 import React, { RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, Keyboard, Pressable, View } from 'react-native';
+import { FlatList, Keyboard, Pressable } from 'react-native';
 import { RefreshControl, Swipeable } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
 import {
@@ -149,9 +149,7 @@ const Leads = () => {
         LeadDetails={item.productService.map((item) => item.name)}
         title={item.name}
         email={item.email}
-        dateTime={moment(item?.updatedAt || item?.createdAt).format(
-          'DD MMM YYYY, hh:mm A',
-        )}
+        createdAt={item?.createdAt}
         selectedCard={selectedCard}
         setSelectedCard={setSelectedCard}
         cardIndex={index}

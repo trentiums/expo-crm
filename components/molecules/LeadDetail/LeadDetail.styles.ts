@@ -33,7 +33,7 @@ export const DateTimeText = styled(Text)`
   color: ${({ theme }) => theme.colors.textGray};
   font-size: 14px;
 `;
-export const WhatsAppContainer = styled(Pressable)`
+export const CommunicationOptionContainer = styled(Pressable)`
   display: flex;
   flex-direction: row;
   justify-content: center;

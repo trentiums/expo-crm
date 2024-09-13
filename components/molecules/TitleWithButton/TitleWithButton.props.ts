@@ -1,4 +1,4 @@
 export interface TitleWithButtonProps {
-    text?: string;
-    onBackPress?: () => void;
-  }
+  text?: string;
+  onBackPress?: () => void;
+}

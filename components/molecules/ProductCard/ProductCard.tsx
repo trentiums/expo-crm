@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   DetailContainer,
   NameText,
   ProductDetailContainer,
   ProductInfoView,
 } from './ProductCard.styles';
-import ActionMenu from '@molecules/ActionMenu/ActionMenu';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
 import { useTranslation } from 'react-i18next';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import Service from '@atoms/Illustrations/Service';
+import ServiceIcon from '@atoms/Illustrations/Service';
 import { ProductCardProps } from './ProductCard.props';
+import { ActionMenuIcon } from '@molecules/LeadDetail/LeadDetail.styles';
+import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
+import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
 
 const ProductCard: React.FC<ProductCardProps> = ({
   onEdit,
@@ -25,28 +27,28 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const { t: tm } = useTranslation('modalText');
   const { colors } = useAppTheme();
+  const [visibleBottomSheet, setVisibleBottomSheet] = useState(false);
   const hideActionModal = () => {
     onChangeModalState(false);
-  };
-  const onDeleteLead = (id: number) => {
-    onChangeModalState(true);
-    setDeleteId(id);
   };
   const handleDeleteLead = async () => {
     onDelete();
   };
+  const openBottomSheet = () => setVisibleBottomSheet(true);
+
+  const closeBottomSheet = () => setVisibleBottomSheet(false);
   return (
     <DetailContainer>
       <ProductInfoView>
-        <Service />
+        <ServiceIcon />
         <ProductDetailContainer>
           <NameText numberOfLines={1}>{data?.name}</NameText>
-          <ActionMenu
-            onEdit={onEdit}
-            onDelete={(id) => onDeleteLead(id)}
-            id={data?.id}
-          />
         </ProductDetailContainer>
+        <ActionMenuIcon
+          icon="dots-vertical"
+          onPress={openBottomSheet}
+          iconColor={colors.textDark}
+        />
       </ProductInfoView>
       {showModal && (
         <ActionModal
@@ -61,6 +63,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
           onActionPress={() => handleDeleteLead()}
           icon={<TrashIcon color={colors?.deleteColor} />}
           loading={isDeleteLoading}
+        />
+      )}
+      {visibleBottomSheet && (
+        <BottomSheetNavigator
+          initialRouteName="ModifyLeadOption"
+          onClosePress={closeBottomSheet}
+          meta={{
+            optionType: ScreenOptionType.DEFAULT,
+          }}
         />
       )}
     </DetailContainer>

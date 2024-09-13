@@ -1,7 +1,7 @@
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import AddProductForm from '@organisms/AddProductForm/AddProductForm';
 import { AddProductFormValues } from '@organisms/AddProductForm/AddProductForm.props';
-import { fileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
+import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 import {
   addProductServiceAction,
   getProductServiceListAction,
@@ -23,7 +23,7 @@ const addProducts = () => {
   const navigation = useNavigation();
   const { t } = useTranslation('screenTitle');
   const [loading, setLoading] = useState(false);
-  const [documentArray, setDocumentArray] = useState<fileSystemProps>();
+  const [documentArray, setDocumentArray] = useState<FileSystemProps[]>([]);
   const { colors } = useAppTheme();
   const handleAddServices = async (values: AddProductFormValues) => {
     try {
@@ -31,12 +31,14 @@ const addProducts = () => {
       let formData = new FormData();
       formData.append('name', values?.name || '');
       formData.append('description', values?.description || '');
-      console.log(documentArray, 'cosument');
-      if (documentArray?.uri) {
-        formData.append('documents', {
-          uri: documentArray.uri,
-          name: documentArray.name,
-          type: documentArray.mimeType || documentArray.type,
+      const newDocumentsArray = documentArray?.filter((item) => !item.id);
+      if (newDocumentsArray?.length > 0) {
+        newDocumentsArray.forEach((document, index) => {
+          formData.append(`documents[${index}]`, {
+            uri: document.uri,
+            name: document.name,
+            type: document.mimeType,
+          });
         });
       }
 
@@ -44,7 +46,7 @@ const addProducts = () => {
         addProductServiceAction(formData),
       ).unwrap();
       await dispatch(getProductServiceListAction({}));
-      setDocumentArray({});
+      setDocumentArray([]);
 
       toast.show(response?.message, {
         type: ToastType.Custom,

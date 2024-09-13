@@ -7,7 +7,7 @@ import {
   LeadInfoView,
   NameAndStatusContainer,
   NameText,
-  WhatsAppContainer,
+  CommunicationOptionContainer,
 } from './LeadDetail.styles';
 import { useTranslation } from 'react-i18next';
 import {
@@ -42,6 +42,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   onChangeModalState,
   onChangeDeleteId,
   isSocialMediaVisible,
+  optionType,
 }) => {
   const { t } = useTranslation('leadDetailCardDetails');
   const { t: tm } = useTranslation('modalText');
@@ -120,19 +121,21 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
       {isSocialMediaVisible && (
         <ContactBox>
           {leadData?.email && (
-            <WhatsAppContainer onPress={handleEmail}>
+            <CommunicationOptionContainer onPress={handleEmail}>
               <EmailSendBox />
-            </WhatsAppContainer>
+            </CommunicationOptionContainer>
           )}
           {leadData?.phone && (
-            <WhatsAppContainer onPress={() => handlePhoneCall(leadData?.phone)}>
-              <PhoneIcon />
-            </WhatsAppContainer>
-          )}
-          {leadData?.phone && (
-            <WhatsAppContainer onPress={() => handleWhatsApp(leadData?.phone)}>
-              <WhatsApp />
-            </WhatsAppContainer>
+            <>
+              <CommunicationOptionContainer
+                onPress={() => handlePhoneCall(leadData.phone)}>
+                <PhoneIcon />
+              </CommunicationOptionContainer>
+              <CommunicationOptionContainer
+                onPress={() => handleWhatsApp(leadData.phone)}>
+                <WhatsApp />
+              </CommunicationOptionContainer>
+            </>
           )}
         </ContactBox>
       )}
@@ -157,7 +160,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           onClosePress={closeBottomSheet}
           meta={{
             leadId: leadData?.id,
-            optionType: ScreenOptionType.DASHBOARD,
+            optionType: optionType || ScreenOptionType.DASHBOARD,
           }}
         />
       )}

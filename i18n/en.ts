@@ -19,6 +19,7 @@ const English = {
       websiteLink: 'Link is invalid',
       passwordError:
         'Password Must Contain 1 upper Case , 1Lower Case and 1 Number',
+      passwordMissMatch: 'Passwords do not match',
     },
   },
   login: {
@@ -72,7 +73,8 @@ const English = {
     products: 'Product / Services',
     trentiums: 'Trentiums Solutions',
     welcome: 'Welcome,',
-    searchUsers: 'Search user',
+    searchUsers: 'Search User',
+    services: 'Services',
   },
   screenTitle: {
     notification: 'Notification',
@@ -137,9 +139,9 @@ const English = {
     lastNameLabel: 'Last Name',
     emailLabel: 'Email',
     phoneNumberLabel: 'Phone Number',
-    uploadDocuments: 'Upload Documents',
+    uploadDocuments: 'Upload Document',
     documents: 'Documents',
-    attachments: 'Attachments',
+    attachments: 'Documents',
     storagePermission: 'Permission to access storage',
     storagePermissionDesc:
       'We need your permission to access your storage to pick files',
@@ -190,14 +192,15 @@ const English = {
   },
   UserInformation: {
     firstNameLabel: 'User Name',
-    emailLabel: 'Email',
+    emailLabel: 'Email address',
     phoneNumberLabel: 'Phone Number',
     uploadProfileImage: 'Upload Profile Image',
     documents: 'Documents',
     profileImage: 'Profile Image',
     addProfile: 'Add Profile',
     editProfile: 'Edit Profile',
-    password: 'Password',
+    password: 'Create password',
+    confirmPassword: 'Confirm password',
   },
   dealWinClose: {
     dealAmount: 'Deal Amount',
@@ -216,9 +219,12 @@ const English = {
   addProduct: {
     name: 'Name',
     description: 'Description',
+    descriptionEg: 'Enter description here...',
     document: 'Documents',
-    nameEg: 'Product / Services name',
-    uploadDocuments: 'Upload Documents',
+    nameEg: 'Product or Services name',
+    uploadDocuments: 'Upload Document',
+    uploadAnotherDocument: 'Upload another document',
+    canceled: 'Canceled',
   },
   leadsFilter: {
     startDate: 'Start Date',

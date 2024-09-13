@@ -7,8 +7,6 @@ import {
   LeadStageType,
   LeadStatusTypes,
 } from './LeadDetailCard.props';
-import { useTranslation } from 'react-i18next';
-import { useAppTheme } from '@constants/theme';
 import { View } from 'react-native';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import { initialModalType } from '@utils/constant';
@@ -29,7 +27,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
   LeadDetails,
   title,
   email,
-  dateTime,
+  createdAt,
   setModal,
   modalType,
   setModalType,
@@ -313,7 +311,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
           phone: phoneNumber,
           email: email,
           name: title,
-          createdAt: dateTime,
+          createdAt,
           leadId: leadId,
         }}
       />
