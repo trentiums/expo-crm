@@ -21,16 +21,30 @@ import { Spacer } from '@atoms/common/common.styles';
 import View from '@atoms/View/View';
 import Switch from '@atoms/Switch/Switch';
 import { Pressable } from 'react-native';
+import { changeTheme, ThemeEnum } from '@redux/slices/theme';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
 
 const MoreMenu = () => {
   const { t } = useTranslation('screenTitle');
   const { t: tm } = useTranslation('moreMenu');
   const { top } = useSafeAreaInsets();
-  const [darkTheme, setDarkTheme] = useState(true);
+  const dispatch = useAppDispatch();
+  const { currentTheme } = useSelector((state: RootState) => state.theme);
+
+  const handleChangeTheme = () => {
+    if (currentTheme === ThemeEnum.light) {
+      dispatch(changeTheme(ThemeEnum.dark));
+    } else if (currentTheme === ThemeEnum.dark) {
+      dispatch(changeTheme(ThemeEnum.light));
+    }
+  };
 
   const switchTheme = () => {
     return (
-      <Switch toggle={darkTheme} onToggle={() => setDarkTheme(!darkTheme)} />
+      <Switch
+        toggle={currentTheme !== ThemeEnum.light}
+        onToggle={handleChangeTheme}
+      />
     );
   };
 

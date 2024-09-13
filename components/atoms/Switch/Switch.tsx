@@ -14,7 +14,6 @@ const Switch: React.FC<CustomSwitchProps> = ({
   return (
     <SwitchContainer toggle={toggle}>
       <CustomSwitch
-        {...props}
         value={toggle}
         onValueChange={onToggle}
         disabled={false}
@@ -33,6 +32,7 @@ const Switch: React.FC<CustomSwitchProps> = ({
         renderInActiveText={false}
         switchWidthMultiplier={2}
         switchBorderRadius={18}
+        {...props}
       />
     </SwitchContainer>
   );
