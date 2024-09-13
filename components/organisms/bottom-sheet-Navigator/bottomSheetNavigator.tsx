@@ -27,6 +27,7 @@ import LeadStageList from '@organisms/bottom-sheet-Navigator-Screen/LeadStageLis
 import LeadStageCloseWon from '@organisms/bottom-sheet-Navigator-Screen/LeadStageCloseWon';
 import LeadStageNegotiation from '@organisms/bottom-sheet-Navigator-Screen/LeadStageNegotiation';
 import LeadChannelList from '@organisms/bottom-sheet-Navigator-Screen/LeadChannelList';
+import LanguageList from '@organisms/bottom-sheet-Navigator-Screen/LanguageList';
 
 const Stack = createNativeStackNavigator();
 
@@ -272,6 +273,24 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 changeSnapPoints={changeSnapPoints}
                 handleBottomSheetClose={handleClosePress}
                 leadId={meta.leadId}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="LanguageList"
+            options={() => ({
+              header: () => (
+                <CustomHeader
+                  title={t('changeLanguage')}
+                  onClose={() => handleClosePress()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <LanguageList
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+                handleBottomSheetClose={handleClosePress}
               />
             )}
           </Stack.Screen>

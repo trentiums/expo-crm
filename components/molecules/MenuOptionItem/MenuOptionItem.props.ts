@@ -5,4 +5,5 @@ export type MenuOptionsItemProps = {
   icon: ReactNode;
   handlePress: () => void;
   rightContainer?: () => JSX.Element;
+  onPress?: () => void;
 };

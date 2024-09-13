@@ -3,9 +3,10 @@ import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
 import { FlatList } from 'react-native';
 
-export const MainMenuContainer = styled(View)`
+export const MainMenuContainer = styled(View)<{ spacing: number }>`
   background-color: ${({ theme }) => theme.colors.doctor};
   flex: 1;
+  margin-top: ${({ spacing }) => spacing}px;
 `;
 
 export const SettingText = styled(Text)`
