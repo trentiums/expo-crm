@@ -3,6 +3,8 @@ import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformatio
 export interface DocumentPickerProps {
   documentArray: FileSystemProps[];
   setDocumentArray: (file: FileSystemProps) => void;
+  isProductServices?: boolean;
+  id: number;
 }
 export enum PermissionType {
   Granted = 'granted',

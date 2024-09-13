@@ -1,6 +1,6 @@
 import {
   deleteProductService,
-  deleteProductServiceDocuments,
+  deleteProductServiceDocument,
   editProductService,
   getProductServiceDetails,
   productServiceList,
@@ -8,7 +8,7 @@ import {
 } from '@api/productService';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ApiResponse } from '@type/api/api';
-import { DeleteLeadDocumentsParams } from '@type/api/lead';
+import { DeleteLeadDocumentParams } from '@type/api/lead';
 import {
   DeleteProductServicesParams,
   EditProductServiceParams,
@@ -71,13 +71,13 @@ export const getProductServiceDetailAction = createAsyncThunk<
     return response.data;
   }),
 );
-export const deleteProductServiceDocumentsAction = createAsyncThunk<
+export const deleteProductServiceDocumentAction = createAsyncThunk<
   ApiResponse,
-  DeleteLeadDocumentsParams
+  DeleteLeadDocumentParams
 >(
   'productService/productServiceDetail',
   withToastForError(async (body) => {
-    const response = await deleteProductServiceDocuments(body);
+    const response = await deleteProductServiceDocument(body);
     return response.data;
   }),
 );

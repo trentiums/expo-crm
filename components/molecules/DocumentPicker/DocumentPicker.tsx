@@ -19,7 +19,10 @@ import { useTranslation } from 'react-i18next';
 import { DocumentPickerProps, PermissionType } from './DocumentPicker.props';
 import { Spacer } from '@atoms/common/common.styles';
 import ActionModal from '@molecules/ActionModal/ActionModal';
-import { deleteLeadDocumentsAction ,getLeadDetailsAction} from '@redux/actions/lead';
+import {
+  deleteLeadDocumentsAction,
+  getLeadDetailsAction,
+} from '@redux/actions/lead';
 import { useAppDispatch } from '@redux/store';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import { FlatList, Pressable } from 'react-native';
@@ -29,10 +32,9 @@ import TaskIcon from '@atoms/Illustrations/Task';
 import { useAppTheme } from '@constants/theme';
 import { HeaderText } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
 import {
-  deleteProductServiceDocumentsAction,
+  deleteProductServiceDocumentAction,
   getProductServiceDetailAction,
 } from '@redux/actions/productService';
-import { getUserDetailAction } from '@redux/actions/user';
 import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 
 const DocumentPick: React.FC<DocumentPickerProps> = ({
@@ -118,21 +120,32 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
       if (deletedDocument[0].id) {
         try {
           setDeleteLoader(true);
+          let response;
+          if (isProductServices) {
+            response = await dispatch(
+              deleteProductServiceDocumentAction({
+                media_id: deletedDocument[0].id,
+              }),
+            ).unwrap();
 
-          const response = isProductServices
-            ? await dispatch(
-                deleteProductServiceDocumentsAction({
-                  media_id: deletedDocument[0].id,
-                }),
-              ).unwrap()
-            : await dispatch(
-                deleteLeadDocumentsAction({ media_id: deletedDocument[0].id }),
-              ).unwrap();
-          isProductServices
-            ? await dispatch(
-                getProductServiceDetailAction({ product_service_id: id }),
-              )
-            : dispatch(getLeadDetailsAction({ lead_id: id }));
+            await dispatch(
+              getProductServiceDetailAction({
+                product_service_id: id,
+              }),
+            );
+          } else {
+            response = await dispatch(
+              deleteLeadDocumentsAction({
+                media_id: deletedDocument[0].id,
+              }),
+            ).unwrap();
+
+            dispatch(
+              getLeadDetailsAction({
+                lead_id: id,
+              }),
+            );
+          }
           toast.show(response?.message, {
             type: ToastType.Custom,
             data: {

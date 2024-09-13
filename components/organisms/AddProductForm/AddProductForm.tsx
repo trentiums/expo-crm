@@ -53,16 +53,10 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
     if (params?.slug) {
       handleGetProductServiceData();
     } else {
-      console.log('reset');
       form.reset();
     }
   }, [params?.slug]);
   useEffect(() => {
-    console.log(
-      productServiceDetail,
-      'productServiceDetail at 60',
-      params?.slug,
-    );
     if (params?.slug) {
       form.change('name', productServiceDetail?.name);
       form.change('description', productServiceDetail?.description);
@@ -120,7 +114,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
               contentStyle={{ marginTop: -10 }}
             />
             <Spacer size={16} />
-            <DocumentPick
+            <DocumentsPicker
               setDocumentArray={setDocumentArray}
               documentArray={documentArray}
               isProductServices
