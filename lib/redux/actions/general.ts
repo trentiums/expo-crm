@@ -4,6 +4,7 @@ import {
   leadConversionList,
   leadStatusList,
   productServicesList,
+  settings,
 } from '@api/general';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
@@ -61,6 +62,14 @@ export const countryListAction = createAsyncThunk<CountryListResponse, void>(
   'general/countryList',
   withToastForError(async () => {
     const response = await countryList();
+    return response.data;
+  }),
+);
+
+export const settingsListAction = createAsyncThunk<CountryListResponse, any>(
+  'general/settingList',
+  withToastForError(async () => {
+    const response = await settings();
     return response.data;
   }),
 );

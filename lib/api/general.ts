@@ -18,3 +18,6 @@ export const productServicesList =
 
 export const countryList = (): AxiosPromise<CountryListResponse> =>
   api.get(`/country-list`);
+export const settings = () => {
+  api.get('/setting-list');
+};
