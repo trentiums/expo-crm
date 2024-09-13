@@ -27,6 +27,7 @@ export interface BasicInfoFormValuesType {
   lastName: string;
   email: string;
   phoneNumber: number;
+  countryCode: number;
 }
 export interface CompanyInformationFromValueTypes {
   companyName: string;

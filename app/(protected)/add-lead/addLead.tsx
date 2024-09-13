@@ -79,7 +79,7 @@ const AddLead = () => {
         fullName: values.firstName,
         email: values.email,
         phoneNumber: values.phoneNumber,
-        countryCode: selectedCountryCodeValue,
+        countryCode: values?.countryCode,
       }),
     );
     setSelectedTabNav(AddLeadTabBarData?.[1]);
