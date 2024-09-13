@@ -93,3 +93,8 @@ export type LeadChannelListProps = {
   handleBottomSheetClose?: () => void;
   leadId?: number;
 };
+
+export type LanguageListProps = {
+  changeSnapPoints: (points: string[]) => void;
+  handleBottomSheetClose?: () => void;
+};
