@@ -1,5 +1,6 @@
 import {
   countryList,
+  currencyList,
   leadChannelList,
   leadConversionList,
   leadStatusList,
@@ -9,6 +10,7 @@ import {
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   CountryListResponse,
+  CurrencyListResponse,
   ProductServicesListResponse,
   SettingsResponse,
   leadGeneralListResponse,
@@ -71,6 +73,13 @@ export const settingsListAction = createAsyncThunk<SettingsResponse, void>(
   'general/settingList',
   withToastForError(async () => {
     const response = await settings();
+    return response.data;
+  }),
+);
+export const currencyListAction = createAsyncThunk<CurrencyListResponse, void>(
+  'general/currencyList',
+  withToastForError(async () => {
+    const response = await currencyList();
     return response.data;
   }),
 );

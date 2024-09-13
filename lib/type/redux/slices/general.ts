@@ -12,3 +12,8 @@ export interface CountryListType {
   countryCodeAlpha: string;
   flag: string;
 }
+export interface CurrencyListType {
+  id: number;
+  currencyCodeAlpha: string;
+  currencySymbol: string;
+}

@@ -183,6 +183,8 @@ const English = {
     dealCloseDate: 'Deal Close Date',
     list: 'List',
     servicedDescription: 'Select all the services for the lead.',
+    searchUser: 'Search user to add',
+    searchService: 'Search service',
   },
   addData: {
     lead: 'Lead',

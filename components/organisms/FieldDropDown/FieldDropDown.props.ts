@@ -37,6 +37,7 @@ export type CustomDropDownProps = {
   onClearIconPress?: () => void;
   isAllowDeselect?: boolean;
   isSearch?: boolean;
+  onEndReached?: () => void;
 };
 
 export interface ItemList {

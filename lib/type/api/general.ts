@@ -36,10 +36,22 @@ export interface CountryType {
   country_code_alpha: string;
   flag: string;
 }
+
+export interface CurrencyType {
+  id: number;
+  currency_code_alpha: string;
+  currency_symbol: string;
+}
 export interface CountryListResponse {
   status: boolean;
   message: string;
   data: CountryType[];
+}
+
+export interface CurrencyListResponse {
+  status: boolean;
+  message: string;
+  data: CurrencyType[];
 }
 export interface SettingsResponse {
   status: boolean;

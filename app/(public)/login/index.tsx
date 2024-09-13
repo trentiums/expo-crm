@@ -18,6 +18,7 @@ import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
 import {
   countryListAction,
+  currencyListAction,
   leadChannelListAction,
   leadConversionListAction,
   leadStatusListAction,
@@ -48,10 +49,11 @@ const LoginScreen = () => {
       if (await loginResponse.status) {
         await Promise.all([
           dispatch(settingsListAction()),
-          // dispatch(leadChannelListAction()),
-          // dispatch(leadConversionListAction()),
-          // dispatch(leadStatusListAction()),
-          // dispatch(countryListAction()),
+          dispatch(currencyListAction()),
+          dispatch(leadChannelListAction()),
+          dispatch(leadConversionListAction()),
+          dispatch(leadStatusListAction()),
+          dispatch(countryListAction()),
           // dispatch(getProductServiceListAction({})),
           // dispatch(getLeadListAction({})),
           // dispatch(getUserListAction({})),

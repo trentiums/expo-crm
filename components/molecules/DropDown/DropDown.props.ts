@@ -6,6 +6,7 @@ export interface DropDownProps {
   placeholder?: string;
   isShowSelected?: boolean;
   isSearch?: boolean;
+  onEndReached?: () => void;
 }
 
 export interface DropDownData {

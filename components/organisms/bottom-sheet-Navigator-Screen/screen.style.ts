@@ -51,14 +51,16 @@ export const DropdownListingText = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.black};
 `;
-export const DropdownListView = styled(Pressable)`
+export const DropdownListView = styled(Pressable)<{ isBorder?: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding: 16px 0px;
-  border-bottom-width: 1px;
-  border-bottom-color: ${({ theme }) => theme.colors.lightHouse};
+  width: 100%;
+  border-bottom-width: ${({ isBorder }) => (isBorder ? 1 : 0)}px;
+  border-bottom-color: ${({ theme, isBorder }) =>
+    isBorder ? theme.colors.lightHouse : undefined};
 `;
 export const DropDownImage = styled(Image)`
   height: 23px;

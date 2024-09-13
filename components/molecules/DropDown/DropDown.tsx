@@ -35,6 +35,7 @@ const DropDown: React.FC<DropDownProps> = ({
   placeholder,
   isShowSelected,
   isSearch,
+  onEndReached,
 }) => {
   const searchInputRef = useRef(null);
   const { t: ts } = useTranslation('drawer');
@@ -122,7 +123,7 @@ const DropDown: React.FC<DropDownProps> = ({
         <SearchFilterContainer onPress={() => setShowDropList(true)}>
           <SearchTextInput
             mode="outlined"
-            placeholder={ts('searchUsers')}
+            placeholder={placeholder}
             textColor={colors.textDark}
             outlineColor="transparent"
             outlineStyle={{ borderWidth: 0 }}
@@ -147,8 +148,10 @@ const DropDown: React.FC<DropDownProps> = ({
           initialRouteName="DropdownListing"
           onClosePress={handleCloseDropList}
           meta={{
+            selectedValue: value,
             dropdownData: data,
             handelSelectData: (id) => handelSelectData(id),
+            onEndReached: onEndReached,
           }}
         />
       )}

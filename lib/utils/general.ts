@@ -1,4 +1,8 @@
-import { CountryType, GeneralListResponse } from '@type/api/general';
+import {
+  CountryType,
+  CurrencyType,
+  GeneralListResponse,
+} from '@type/api/general';
 import { GeneralList } from '@type/redux/slices/general';
 
 export const formatGeneralList = (
@@ -35,4 +39,11 @@ export const convertKeysToCamelCase = (obj: unknown): unknown => {
     }, {});
   }
   return obj;
+};
+export const formatCurrencyList = (data: CurrencyType[]) => {
+  return data?.map((item) => ({
+    id: item.id,
+    currencyCodeAlpha: item.currency_code_alpha,
+    currencySymbol: item.currency_symbol,
+  }));
 };

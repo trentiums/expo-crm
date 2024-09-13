@@ -11,9 +11,14 @@ import { useTranslation } from 'react-i18next';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LeadDetailsFormProps } from './LeadDetailsForm.props';
 import {
+  DropdownView,
   FormsView,
+  InputView,
   LabelDescriptionText,
+  RowView,
+  SelectedServiceData,
   ServiceLabel,
+  ServiceText,
 } from './LeadDetailsForm.styles';
 import View from '@atoms/View/View';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
@@ -33,6 +38,9 @@ import { useAppTheme } from '@constants/theme';
 import { LeadStageType } from '@organisms/LeadDetailCard/LeadDetailCard.props';
 import { getProductServiceListAction } from '@redux/actions/productService';
 import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
+import { Pressable } from 'react-native';
+import { ShowMultipleDataList } from '@molecules/DropDown/DropDown.styles';
+import CrossSmallIcon from '@atoms/Illustrations/CrossSmall';
 
 const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   form,
@@ -51,9 +59,13 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   const addLeadFormData = useSelector(
     (state: RootState) => state.leads.addLead,
   );
+  const settings = useSelector((state: RootState) => state.general.settings);
   const general = useSelector((state: RootState) => state.general);
   const servicesData = useSelector(
     (state: RootState) => state.productService.productServiceList?.serviceList,
+  );
+  const currencyList = useSelector(
+    (state: RootState) => state.general.currencyList,
   );
   const productServiceListData = useSelector(
     (state: RootState) => state.productService.productServiceList,
@@ -86,9 +98,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       }
     }
   };
-  useEffect(() => {
-    handleGetMoreServices();
-  }, [productServiceListData]);
+
   useEffect(() => {
     const data = leadsData?.filter((item) => item.id === id);
     setSelectedData(data?.[0]);
@@ -111,6 +121,8 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
           ? moment(values.dealCloseDate).format('YYYY-MM-DD')
           : '',
         comments: values.comments,
+        budgetCurrencyCode: values?.budgetCurrencyCode,
+        timeFrame: values?.timeFrame,
       }),
     );
   }, [values]);
@@ -121,6 +133,10 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       id ? leadsDetail?.leadChannelId : addLeadFormData?.selectedChannel,
     );
 
+    form.change(
+      'budgetCurrencyCode',
+      id ? leadsDetail?.leadChannelId : addLeadFormData?.budgetCurrencyCode,
+    );
     form.change(
       'selectedLead',
       id ? leadsDetail?.leadStatusId : addLeadFormData?.selectedLead,
@@ -171,6 +187,22 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
     );
   }, [id]);
 
+  const handleDeleteService = (deleteId: number) => {
+    const updatedServices = values?.selectedServices?.filter(
+      (service) => service !== deleteId,
+    );
+    form.change('selectedServices', updatedServices);
+  };
+  const renderSelectedServices = ({ item }) => {
+    return (
+      <SelectedServiceData>
+        <ServiceText>{item.name}</ServiceText>
+        <Pressable onPress={() => handleDeleteService(item.id)}>
+          <CrossSmallIcon />
+        </Pressable>
+      </SelectedServiceData>
+    );
+  };
   return (
     <FormsView>
       <KeyboardAwareScrollView
@@ -192,12 +224,23 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 title: item?.name,
               };
             })}
-            placeholder={`${t('sourceLabel')}`}
+            placeholder={`${t('searchService')}`}
             isMultiple
             isFullWidth
-            dropDownTitle={`${t('sourceLabel')} ${t('list')}`}
             isSearch
+            onEndReached={handleGetMoreServices}
           />
+          <Spacer size={8} />
+          {values?.selectedServices?.length > 0 && (
+            <ShowMultipleDataList
+              data={servicesData?.filter((item) =>
+                values?.selectedServices?.includes(item.id),
+              )}
+              renderItem={renderSelectedServices}
+              keyExtractor={(item, index) => `${item}-${index}`}
+              ItemSeparatorComponent={<Spacer size={8} />}
+            />
+          )}
           <Spacer size={16} />
           <Label>{`${tl('leadChannel')} *`}</Label>
           <Field
@@ -247,30 +290,65 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             component={FieldDropDown}
             name="assignTo"
             listData={leadAssignToData}
-            placeholder={tl('assignTo')}
-            dropDownTitle={`${tl('assignTo')} ${t('list')}`}
+            placeholder={tl('searchUser')}
             dataToShow={leadAssignToData?.filter(
               (item) => item.id !== assignTo,
             )}
-            isDataToShow
+            isSearch
           />
           <Spacer size={16} />
           <Label>{t('budgetLabel')}</Label>
-          <Field
-            name="budget"
-            placeholder={t('budgetLabelPlaceholder')}
-            component={FieldTextInput}
-            keyboardType="numeric"
-            isFloatValue
-            validate={composeValidators(numberAndFractionalNumberValidator)}
-          />
+          <RowView>
+            <DropdownView>
+              <Field
+                name={'budgetCurrencyCode'}
+                component={FieldDropDown}
+                listData={currencyList?.map((item) => {
+                  return {
+                    id: item.id,
+                    title: item.currencyCodeAlpha,
+                  };
+                })}
+                isShowSelected
+                placeholder={t('budget')}
+              />
+            </DropdownView>
+            <InputView>
+              <Field
+                name="budget"
+                placeholder={t('budgetLabelPlaceholder')}
+                component={FieldTextInput}
+                keyboardType="numeric"
+                isFloatValue
+                validate={composeValidators(numberAndFractionalNumberValidator)}
+              />
+            </InputView>
+          </RowView>
           <Spacer size={16} />
           <Label>{t('timeFrameToPurchaseLabel')}</Label>
-          <Field
-            name="timeFrame"
-            placeholder={t('timeFrameToPurchaseEg')}
-            component={FieldTextInput}
-          />
+          <RowView>
+            <DropdownView>
+              <Field
+                name={'timeFrame'}
+                component={FieldDropDown}
+                listData={Object.entries(settings?.timeframe).map(
+                  ([key, value]) => ({
+                    id: key,
+                    title: value,
+                  }),
+                )}
+                isShowSelected
+                placeholder={t('timeFrameToPurchaseLabel')}
+              />
+            </DropdownView>
+            <InputView>
+              <Field
+                name="timeFrame"
+                placeholder={t('timeFrame')}
+                component={FieldTextInput}
+              />
+            </InputView>
+          </RowView>
           <Spacer size={16} />
           <Label>{t('commentsLabel')}</Label>
           <Field

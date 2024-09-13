@@ -2,6 +2,7 @@ import { api } from './api';
 import { AxiosPromise } from 'axios';
 import {
   CountryListResponse,
+  CurrencyListResponse,
   ProductServicesListResponse,
   SettingsResponse,
   leadGeneralListResponse,
@@ -19,5 +20,8 @@ export const productServicesList =
 
 export const countryList = (): AxiosPromise<CountryListResponse> =>
   api.get(`/country-list`);
+
+export const currencyList = (): AxiosPromise<CurrencyListResponse> =>
+  api.get(`/currency-list`);
 export const settings = (): AxiosPromise<SettingsResponse> =>
   api.get('/setting-list');
