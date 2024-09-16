@@ -1,10 +1,10 @@
 import React from 'react';
 import { FlatListCon } from './LeadsProgressChart.styles';
-import { LeadsData, LeadsProgressDataProps } from './LeadsProgressChart.props';
+import { Leads, LeadsProgressDataProps } from './LeadsProgressChart.props';
 import LeadsProgressChartItem from '@molecules/LeadsProgressChartItem/LeadsProgressChartItem';
 
 const LeadsProgressChart: React.FC<LeadsProgressDataProps> = ({ leads }) => {
-  const findMaxValue = (data: LeadsData[]) => {
+  const findMaxValue = (data: Leads[]) => {
     if (!data || data.length === 0) return 0;
     return Math.max(...data.map((item) => item.progress));
   };

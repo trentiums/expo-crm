@@ -58,7 +58,7 @@ export const NoLeadsProgressView = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 43px;
   height: 7px;
-  width: 100%;
+  width: 30px;
   align-items: center;
   justify-content: center;
 `;
