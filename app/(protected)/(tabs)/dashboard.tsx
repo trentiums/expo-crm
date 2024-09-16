@@ -5,7 +5,7 @@ import {
   DashboardFilterView,
   DashboardScreenContainer,
   GreetingText,
-  LineContainer,
+  DividerContainer,
   NameText,
   NoDataFoundText,
   TitleText,
@@ -182,8 +182,11 @@ const Dashboard = () => {
               <TitleText>{t('newLeads')}</TitleText>
               <Spacer size={16} />
               <DashboardFilterView>
-                <LineContainer />
-                <QuickFilter filterTitle="Leads count" filterType="SortBy" />
+                <DividerContainer />
+                <QuickFilter
+                  filterTitle={t('leadsCount')}
+                  filterType={t('sortBy')}
+                />
               </DashboardFilterView>
               <Spacer size={16} />
               <CompanyDashboardCard

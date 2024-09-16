@@ -77,6 +77,8 @@ export const English = {
     welcome: 'Welcome,',
     searchUsers: 'Search User',
     services: 'Services',
+    leadsCount: 'Leads count',
+    sortBy: 'Sort by',
   },
   screenTitle: {
     notification: 'Notification',

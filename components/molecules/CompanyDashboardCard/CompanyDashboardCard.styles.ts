@@ -15,7 +15,7 @@ export const UserInformationContainer = styled(View)`
   gap: 8px;
   align-items: center;
 `;
-export const UserName = styled(Text)`
+export const UserNameText = styled(Text)`
   font-size: 18px;
   color: ${({ theme }) => theme.colors.textDark};
   font-weight: 600;

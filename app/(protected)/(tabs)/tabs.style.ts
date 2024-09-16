@@ -125,7 +125,7 @@ export const DashboardFilterView = styled(View)`
   flex: 1;
 `;
 
-export const LineContainer = styled(View)`
+export const DividerContainer  = styled(View)`
   flex: 0.8;
   height: 2px;
   background-color: ${({ theme }) => theme.colors.aria};
