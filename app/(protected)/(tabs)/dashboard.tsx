@@ -219,7 +219,7 @@ const Dashboard = () => {
                 leads={dashboardLeadList.leadStageCount?.map((item, index) => {
                   return {
                     label: item?.name,
-                    progress: 0,
+                    progress: item?.leadCount,
                     color: chartColors[index],
                   };
                 })}

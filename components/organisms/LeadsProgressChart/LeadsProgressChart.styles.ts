@@ -51,7 +51,6 @@ export const NoLeadsProgressContainer = styled(View)<{ bgColor: string }>`
   border-radius: 43px;
   height: 3px;
   width: 100%;
-  max-width: 70%;
 `;
 
 export const NoLeadsProgressView = styled(View)`
