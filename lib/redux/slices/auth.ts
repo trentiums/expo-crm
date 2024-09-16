@@ -49,13 +49,11 @@ const authSlice = createSlice({
       loginUserAction.fulfilled,
       (state, action: PayloadAction<LoginResponse>) => {
         state.user = formatAuthUser(action.payload?.data);
-        setAuthenticationToken(state.user.token);
         AsyncStorage.setItem('token', state.user.token);
       },
     );
     builder.addCase(logoutUserAction.fulfilled, (state) => {
       state.user = initialState.user;
-      setAuthenticationToken('');
       AsyncStorage.removeItem('token');
     });
   },
