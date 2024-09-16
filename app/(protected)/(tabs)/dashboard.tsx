@@ -21,14 +21,13 @@ import {
   DashboardLeadsProps,
 } from '@type/redux/slices/dashboard';
 import {
+  dashboardAdminLeadListAction,
   dashboardLeadListAction,
   dashboardLeadStageCountAction,
 } from '@redux/actions/dashboard';
 import { setLeadsInformation } from '@redux/slices/leads';
 import DashBoardLeadCard from '@organisms/DashBoardLeadCard/DashBoardLeadCard';
 import { Pressable } from 'react-native';
-import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
-import { deleteLeadAction } from '@redux/actions/lead';
 import React from 'react';
 import { router } from 'expo-router';
 import { useFocusEffect } from 'expo-router';
@@ -55,13 +54,17 @@ const Dashboard = () => {
   const [leads, setLeads] = useState<
     DashboardLeadsProps[] | DashboardAdminLeadsProps[]
   >(dashboardLeadList.leadList);
-
   const dispatch = useAppDispatch();
   const handelFetchLead = async () => {
     setLoading(true);
     //TODO: here we are passing order_by and sort_by static until leads UI comes in master
-    if (user.userRole === UserRole.Admin) {
-      await dispatch(dashboardLeadListAction({ order_by: 1, sort_order: 1 }));
+    if (
+      user.userRole === UserRole.Admin ||
+      user.userRole === UserRole.CompanyAdmin
+    ) {
+      await dispatch(
+        dashboardAdminLeadListAction({ order_by: 1, sort_order: 1 }),
+      );
     } else {
       await dispatch(dashboardLeadListAction({}));
     }
@@ -83,9 +86,12 @@ const Dashboard = () => {
       dashboardLeadList?.currentPage !== dashboardLeadList?.lastPage
     ) {
       //TODO: here we are passing order_by and sort_by static until leads UI comes in master
-      if (user.userRole === UserRole.Admin) {
+      if (
+        user.userRole === UserRole.Admin ||
+        user.userRole === UserRole.CompanyAdmin
+      ) {
         await dispatch(
-          dashboardLeadListAction({
+          dashboardAdminLeadListAction({
             order_by: 1,
             sort_order: 1,
             page: dashboardLeadList?.currentPage + 1,
@@ -118,30 +124,6 @@ const Dashboard = () => {
     setDeletedId(id);
   };
 
-  const onDeleteActionPress = async () => {
-    setDeleteLoading(true);
-    try {
-      const response = await dispatch(
-        deleteLeadAction({ lead_id: deletedId }),
-      ).unwrap();
-      toast.show(response?.message, {
-        type: ToastType.Custom,
-        data: {
-          type: ToastTypeProps.Success,
-        },
-      });
-      await handelFetchLead();
-    } catch (error: any) {
-      toast.show(error, {
-        type: ToastType.Custom,
-        data: {
-          type: ToastTypeProps.Error,
-        },
-      });
-    }
-    setDeleteLoading(false);
-    setShowModal(false);
-  };
   const createLeadsArray = (lead, index) => {
     return [
       {
@@ -185,7 +167,8 @@ const Dashboard = () => {
     index: number;
   }) => (
     <>
-      {user.userRole === UserRole.Admin ? (
+      {user.userRole === UserRole.Admin ||
+      user.userRole === UserRole.CompanyAdmin ? (
         <>
           <CompanyDashboardCard
             leads={createLeadsArray(lead, index)}
@@ -280,7 +263,7 @@ const Dashboard = () => {
                 </>
               )}
 
-              <Spacer size={100} />
+              <Spacer size={50} />
             </DashboardScreenContainer>
           )}
         </>

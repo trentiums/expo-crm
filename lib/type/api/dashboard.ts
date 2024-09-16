@@ -37,7 +37,7 @@ export interface DashboardLeadListResponse extends ApiResponse {
     current_page: number;
     last_page: number;
     per_page: number;
-    data: DashboardLeadListItem[];
+    data: DashboardLeadListItem[] & DashboardAdminLeadListItem[];
   };
 }
 

@@ -1,11 +1,10 @@
 import { logoutUserAction } from '@redux/actions/auth';
 import {
+  dashboardAdminLeadListAction,
   dashboardLeadListAction,
   dashboardLeadStageCountAction,
 } from '@redux/actions/dashboard';
-import { userRole } from '@redux/store';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { UserRole } from '@type/api/auth';
 import {
   DashboardLeadListResponse,
   DashboardLeadStageCountResponse,
@@ -25,7 +24,7 @@ export interface DashboardState {
   currentPage: number;
   dataPerPage: number;
   lastPage: number;
-  leadList: DashboardLeadsProps[] | DashboardAdminLeadsProps[];
+  leadList: DashboardLeadsProps[] & DashboardAdminLeadsProps[];
   leadStageCount: LeadStageCountLeadList[];
 }
 
@@ -45,28 +44,31 @@ const dashboardSlice = createSlice({
     builder.addCase(
       dashboardLeadListAction.fulfilled,
       (state, action: PayloadAction<DashboardLeadListResponse>) => {
-        if (userRole === UserRole.Admin) {
-          const data = formatDashboardAdminLeadList(action.payload.data.data);
-          if (action.payload.data.current_page !== 1) {
-            let mergedArray = state.leadList.concat(data);
-            state.leadList = mergedArray;
-          } else {
-            state.leadList = data;
-          }
-        } else {
-          const data = formatDashboardLeadList(action.payload.data.data);
-          if (action.payload.data.current_page !== 1) {
-            let mergedArray = state.leadList.concat(data);
-            state.leadList = mergedArray;
-          } else {
-            state.leadList = data;
-          }
-        }
+        const data = formatDashboardLeadList(action.payload.data.data);
+        state.leadList =
+          action.payload.data.current_page !== 1
+            ? state.leadList.concat(data)
+            : data;
+
         state.currentPage = action.payload.data.current_page;
         state.dataPerPage = action.payload.data.per_page;
         state.lastPage = action.payload.data.last_page;
       },
     );
+    builder.addCase(
+      dashboardAdminLeadListAction.fulfilled,
+      (state, action: PayloadAction<DashboardLeadListResponse>) => {
+        const data = formatDashboardAdminLeadList(action.payload.data.data);
+        state.leadList =
+          action.payload.data.current_page !== 1
+            ? state.leadList.concat(data)
+            : data;
+        state.currentPage = action.payload.data.current_page;
+        state.dataPerPage = action.payload.data.per_page;
+        state.lastPage = action.payload.data.last_page;
+      },
+    );
+
     builder.addCase(
       dashboardLeadStageCountAction.fulfilled,
       (state, action: PayloadAction<DashboardLeadStageCountResponse>) => {
@@ -82,5 +84,4 @@ const dashboardSlice = createSlice({
 });
 
 export const {} = dashboardSlice.actions;
-
 export default dashboardSlice.reducer;
