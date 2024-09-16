@@ -25,6 +25,7 @@ const DropdownListing = ({
   const dispatch = useAppDispatch();
   const [dropListData, setDropListData] = useState(dropdownData);
   const [search, setSearch] = useState('');
+  console.log(dropListData, 'dropdownData');
   const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>('NONE');
   const productServiceListData = useSelector(
     (state: RootState) => state.productService.productServiceList,
@@ -40,8 +41,10 @@ const DropdownListing = ({
         await dispatch(
           getProductServiceListAction({
             page: productServiceListData?.currentPage + 1,
+            search: search || undefined,
           }),
         ).unwrap();
+        setDropListData(productServiceListData?.serviceList);
       } catch (error: any) {
         console.log(error);
       }
@@ -52,9 +55,10 @@ const DropdownListing = ({
     try {
       await dispatch(
         getProductServiceListAction({
-          search: search,
+          search: search || undefined,
         }),
       ).unwrap();
+      setDropListData(productServiceListData?.serviceList);
     } catch (error: any) {
       console.log(error);
     }
@@ -65,8 +69,10 @@ const DropdownListing = ({
         await dispatch(
           getAssignUserListAction({
             page: assignUserList?.currentPage + 1,
+            search: search || undefined,
           }),
         ).unwrap();
+        setDropListData(assignUserList?.assignUsers);
       } catch (error: any) {
         console.log(error);
       }
@@ -76,9 +82,10 @@ const DropdownListing = ({
     try {
       await dispatch(
         getAssignUserListAction({
-          search: search,
+          search: search || undefined,
         }),
       ).unwrap();
+      setDropListData(assignUserList?.assignUsers);
     } catch (error: any) {
       console.log(error);
     }
@@ -96,7 +103,7 @@ const DropdownListing = ({
       setDropListData(filtered);
     }
     setLoadingStatus('NONE');
-  }, [search, dropdownData]);
+  }, [search]);
 
   const handleGetMoreData = () => {
     setLoadingStatus('MORE');
@@ -130,7 +137,12 @@ const DropdownListing = ({
           <Loader />
         ) : (
           <BottomSheetFlatList
-            data={dropListData}
+            data={dropListData?.map((item) => {
+              return {
+                title: item?.name || item?.title || item?.currencyCodeAlpha,
+                id: item?.id,
+              };
+            })}
             renderItem={renderDownListData}
             keyExtractor={(item) => item.id.toString()}
             onEndReached={handleGetMoreData}

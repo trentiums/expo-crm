@@ -13,6 +13,7 @@ export type LeadDetailsFormValues = {
   selectedStage?: number;
   assignTo?: number;
   selectedServices?: number[];
+  budgetCurrencyCode: number;
 };
 
 export type LeadDetailsFormProps = FormRenderProps<LeadDetailsFormValues> & {

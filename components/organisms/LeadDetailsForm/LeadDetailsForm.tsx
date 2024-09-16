@@ -53,6 +53,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   const { t } = useTranslation('leadDetails');
   const { t: tb } = useTranslation('formButtonName');
   const { t: tl } = useTranslation('leadDetailList');
+  const { t: td } = useTranslation('drawer');
   const route = useRoute();
   const { values, valid } = useFormState();
   const { colors } = useAppTheme();
@@ -123,7 +124,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
           : '',
         comments: values.comments,
         budgetCurrencyCode: values?.budgetCurrencyCode,
-        timeFrame: values?.timeFrame,
+        dealAmountCurrencyCode: values?.dealAmountCurrencyCode,
       }),
     );
   }, [values]);
@@ -137,6 +138,10 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
     form.change(
       'budgetCurrencyCode',
       id ? leadsDetail?.leadChannelId : addLeadFormData?.budgetCurrencyCode,
+    );
+    form.change(
+      'dealAmountCurrencyCode',
+      id ? leadsDetail?.leadChannelId : addLeadFormData?.dealAmountCurrencyCode,
     );
     form.change(
       'selectedLead',
@@ -291,10 +296,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             component={FieldDropDown}
             name="assignTo"
             listData={leadAssignToData}
-            placeholder={tl('searchUser')}
-            dataToShow={leadAssignToData?.filter(
-              (item) => item.id !== assignTo,
-            )}
+            placeholder={td('searchUsers')}
             isSearch
             dropdownDataType={DropdownDataType.USERS}
           />
@@ -384,14 +386,34 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
               />
               <Spacer size={16} />
               <Label>{t('dealAmount')}</Label>
-              <Field
-                name="dealAmount"
-                placeholder={t('dealAmount')}
-                component={FieldTextInput}
-                keyboardType="numeric"
-                isFloatValue
-                validate={composeValidators(numberAndFractionalNumberValidator)}
-              />
+              <RowView>
+                <DropdownView>
+                  <Field
+                    name={'dealAmountCurrencyCode'}
+                    component={FieldDropDown}
+                    listData={currencyList?.map((item) => {
+                      return {
+                        id: item.id,
+                        title: item.currencyCodeAlpha,
+                      };
+                    })}
+                    isShowSelected
+                    placeholder={t('Amount')}
+                  />
+                </DropdownView>
+                <InputView>
+                  <Field
+                    name="dealAmount"
+                    placeholder={t('dealAmount')}
+                    component={FieldTextInput}
+                    keyboardType="numeric"
+                    isFloatValue
+                    validate={composeValidators(
+                      numberAndFractionalNumberValidator,
+                    )}
+                  />
+                </InputView>
+              </RowView>
               <Spacer size={16} />
             </>
           )}

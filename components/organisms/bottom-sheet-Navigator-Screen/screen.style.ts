@@ -46,6 +46,7 @@ export const LeadsFilterButton = styled(View)`
 `;
 export const DropdownListingView = styled(View)`
   padding: 0px 16px;
+  width: 100%;
 `;
 export const DropdownListingText = styled(Text)`
   font-size: 16px;

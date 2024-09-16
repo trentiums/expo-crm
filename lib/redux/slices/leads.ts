@@ -47,6 +47,7 @@ const initialState: LeadsState = {
     dealCloseDate: '',
     documents: [],
     assignTo: 0,
+    dealAmountCurrencyCode: undefined,
   },
   leadList: {
     currentPage: 0,
