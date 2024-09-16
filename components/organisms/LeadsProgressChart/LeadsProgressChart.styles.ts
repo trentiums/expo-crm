@@ -50,13 +50,15 @@ export const NoLeadsProgressContainer = styled(View)<{ bgColor: string }>`
   background-color: ${({ bgColor }) => bgColor};
   border-radius: 43px;
   height: 3px;
-  width: 70%;
+  width: 100%;
+  max-width: 70%;
 `;
+
 export const NoLeadsProgressView = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 43px;
-  width: 80%;
   height: 7px;
+  width: 100%;
   align-items: center;
   justify-content: center;
 `;
