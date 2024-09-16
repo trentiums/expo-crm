@@ -3,16 +3,20 @@ import {
   dashboardLeadListAction,
   dashboardLeadStageCountAction,
 } from '@redux/actions/dashboard';
+import { userRole } from '@redux/store';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { UserRole } from '@type/api/auth';
 import {
   DashboardLeadListResponse,
   DashboardLeadStageCountResponse,
 } from '@type/api/dashboard';
 import {
-  DashboardLeadList,
+  DashboardAdminLeadsProps,
+  DashboardLeadsProps,
   LeadStageCountLeadList,
 } from '@type/redux/slices/dashboard';
 import {
+  formatDashboardAdminLeadList,
   formatDashboardLeadList,
   formatDashboardLeadStageCountList,
 } from '@utils/dashboard';
@@ -21,7 +25,7 @@ export interface DashboardState {
   currentPage: number;
   dataPerPage: number;
   lastPage: number;
-  leadList: DashboardLeadList[];
+  leadList: DashboardLeadsProps[] | DashboardAdminLeadsProps[];
   leadStageCount: LeadStageCountLeadList[];
 }
 
@@ -41,12 +45,22 @@ const dashboardSlice = createSlice({
     builder.addCase(
       dashboardLeadListAction.fulfilled,
       (state, action: PayloadAction<DashboardLeadListResponse>) => {
-        const data = formatDashboardLeadList(action.payload.data.data);
-        if (action.payload.data.current_page !== 1) {
-          let mergedArray = state.leadList.concat(data);
-          state.leadList = mergedArray;
+        if (userRole === UserRole.Admin) {
+          const data = formatDashboardAdminLeadList(action.payload.data.data);
+          if (action.payload.data.current_page !== 1) {
+            let mergedArray = state.leadList.concat(data);
+            state.leadList = mergedArray;
+          } else {
+            state.leadList = data;
+          }
         } else {
-          state.leadList = data;
+          const data = formatDashboardLeadList(action.payload.data.data);
+          if (action.payload.data.current_page !== 1) {
+            let mergedArray = state.leadList.concat(data);
+            state.leadList = mergedArray;
+          } else {
+            state.leadList = data;
+          }
         }
         state.currentPage = action.payload.data.current_page;
         state.dataPerPage = action.payload.data.per_page;

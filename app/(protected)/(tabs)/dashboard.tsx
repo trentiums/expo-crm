@@ -16,7 +16,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useToast } from 'react-native-toast-notifications';
 import { useAppTheme } from '@constants/theme';
-import { DashboardLeadsProps } from '@type/redux/slices/dashboard';
+import {
+  DashboardAdminLeadsProps,
+  DashboardLeadsProps,
+} from '@type/redux/slices/dashboard';
 import {
   dashboardLeadListAction,
   dashboardLeadStageCountAction,
@@ -34,12 +37,14 @@ import LeadsProgressChart from '@organisms/LeadsProgressChart/LeadsProgressChart
 import CompanyDashboardCard from '@molecules/CompanyDashboardCard/CompanyDashboardCard';
 import QuickFilter from '@molecules/QuickFilter/QuickFilter';
 import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
+import { UserRole } from '@type/api/auth';
 
 const Dashboard = () => {
   const { colors } = useAppTheme();
   const { t } = useTranslation('dashBoard');
   const { t: tm } = useTranslation('modalText');
   const { t: tr } = useTranslation('drawer');
+  const { t: tl } = useTranslation('leadStage');
   const toast = useToast();
   const user = useSelector((state: RootState) => state.auth.user);
   const [showModal, setShowModal] = useState(false);
@@ -47,13 +52,19 @@ const Dashboard = () => {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deletedId, setDeletedId] = useState<number | undefined>();
   const dashboardLeadList = useSelector((state: RootState) => state.dashboard);
-  const [leads, setLeads] = useState<DashboardLeadsProps[]>(
-    dashboardLeadList.leadList,
-  );
+  const [leads, setLeads] = useState<
+    DashboardLeadsProps[] | DashboardAdminLeadsProps[]
+  >(dashboardLeadList.leadList);
+
   const dispatch = useAppDispatch();
   const handelFetchLead = async () => {
     setLoading(true);
-    await dispatch(dashboardLeadListAction({}));
+    //TODO: here we are passing order_by and sort_by static until leads UI comes in master
+    if (user.userRole === UserRole.Admin) {
+      await dispatch(dashboardLeadListAction({ order_by: 1, sort_order: 1 }));
+    } else {
+      await dispatch(dashboardLeadListAction({}));
+    }
     await dispatch(dashboardLeadStageCountAction());
     setLoading(false);
   };
@@ -64,13 +75,7 @@ const Dashboard = () => {
     colors.blueLight,
     colors.grayLight,
   ];
-  const companyLeadTextColor = [
-    colors.green,
-    colors.yellow,
-    colors.red,
-    colors.blue,
-    colors.englishHolly,
-  ];
+
   const handleMoreData = async () => {
     if (
       dashboardLeadList &&
@@ -126,27 +131,74 @@ const Dashboard = () => {
     setDeleteLoading(false);
     setShowModal(false);
   };
+  const createLeadsArray = (lead, index) => {
+    return [
+      {
+        title: tl('initial'),
+        value: lead.initial,
+        bgColor: colors.greenLight,
+        color: colors.green,
+      },
+      {
+        title: tl('proposed'),
+        value: lead.proposal,
+        bgColor: colors.yellowLight,
+        color: colors.yellow,
+      },
+      {
+        title: tl('negotiation'),
+        value: lead.negotiation,
+        bgColor: colors.redLight,
+        color: colors.red,
+      },
 
+      {
+        title: tl('closedWon'),
+        value: lead.closedWon,
+        bgColor: colors.blueLight,
+        color: colors.blue,
+      },
+      {
+        title: tl('closedLost'),
+        value: lead.closedLost,
+        bgColor: colors.grayLight,
+        color: colors.englishHolly,
+      },
+    ];
+  };
   const renderLeads = ({
     lead,
     index,
   }: {
-    lead: DashboardLeadsProps;
+    lead: DashboardLeadsProps & DashboardAdminLeadsProps;
     index: number;
   }) => (
-    <Pressable
-      key={`${lead?.id}-${index}`}
-      onPress={() => {
-        dispatch(setLeadsInformation());
-        router.navigate(`/(protected)/add-lead/${lead?.id}`);
-      }}>
-      <DashBoardLeadCard
-        key={`${lead?.id}-${index}`}
-        onDelete={() => handleDelete(lead?.id)}
-        leadData={lead}
-        isSocialMediaVisible
-      />
-    </Pressable>
+    <>
+      {user.userRole === UserRole.Admin ? (
+        <>
+          <CompanyDashboardCard
+            leads={createLeadsArray(lead, index)}
+            name={lead.name}
+            leadsCount={lead?.total}
+          />
+          <Spacer size={16} />
+        </>
+      ) : (
+        <Pressable
+          key={`${lead?.id}-${index}`}
+          onPress={() => {
+            dispatch(setLeadsInformation());
+            router.navigate(`/(protected)/add-lead/${lead?.id}`);
+          }}>
+          <DashBoardLeadCard
+            key={`${lead?.id}-${index}`}
+            onDelete={() => handleDelete(lead?.id)}
+            leadData={lead}
+            isSocialMediaVisible
+          />
+        </Pressable>
+      )}
+    </>
   );
 
   return (
@@ -184,23 +236,11 @@ const Dashboard = () => {
               <DashboardFilterView>
                 <DividerContainer />
                 <QuickFilter
-                  filterTitle={t('leadsCount')}
-                  filterType={t('sortBy')}
+                  filterTitle={tr('leadsCount')}
+                  filterType={tr('sortBy')}
                 />
               </DashboardFilterView>
               <Spacer size={16} />
-              <CompanyDashboardCard
-                leads={dashboardLeadList.leadStageCount?.map((item, index) => {
-                  return {
-                    title: item?.name,
-                    value: item?.leadCount,
-                    bgColor: chartColors[index],
-                    color: companyLeadTextColor[index],
-                  };
-                })}
-                name="Romes Smith"
-                leadsCount={12}
-              />
               {leads?.length > 0 ? (
                 <FlatList
                   data={leads}
@@ -208,7 +248,7 @@ const Dashboard = () => {
                     renderLeads({ lead, index })
                   }
                   keyExtractor={(lead, index) =>
-                    `${lead.name.toString()} - ${index}`
+                    `${lead.name?.toString()} - ${index}`
                   }
                   showsHorizontalScrollIndicator={false}
                   showsVerticalScrollIndicator={false}
