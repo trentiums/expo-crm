@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import FormTemplate from '@templates/FormTemplate/FormTemplate';
-import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
-import { Container, ImageView, IntroText } from './LoginScreen.styles';
-import { Spacer } from '@atoms/common/common.styles';
+import {
+  Container,
+  ImageView,
+  IntroText,
+  LoginFormContainer,
+  LoginScreenContainer,
+  LoginScrollView,
+} from './LoginScreen.styles';
 import { useTranslation } from 'react-i18next';
 import LoginForm from '@organisms/LoginForm/LoginForm';
 import images from '../../../assets/images/index';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LoginFormData } from './LoginScreen.props';
 import { loginUserAction } from '@redux/actions/auth';
 import { useAppDispatch } from '@redux/store';
@@ -65,24 +69,21 @@ const LoginScreen = () => {
   };
 
   return (
-    <ScreenTemplate>
-      <KeyboardAwareScrollView
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="always">
+    <LoginScrollView>
+      <LoginScreenContainer>
         <Container>
-          <Spacer size={50} />
-          <ImageView source={images.appIconImage} />
-          <Spacer size={70} />
-          <IntroText>{t('signIn')}</IntroText>
+          <ImageView source={images.loginImage} resizeMode="cover" />
+        </Container>
+        <LoginFormContainer>
+          <IntroText>{t('welcomeBack')} 👋</IntroText>
           <FormTemplate
             Component={LoginForm}
             onSubmit={(values) => onLoginPress(values)}
             loading={loading}
           />
-        </Container>
-      </KeyboardAwareScrollView>
-    </ScreenTemplate>
+        </LoginFormContainer>
+      </LoginScreenContainer>
+    </LoginScrollView>
   );
 };
 
