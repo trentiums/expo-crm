@@ -82,11 +82,22 @@ const Dashboard = () => {
       dashboardLeadList?.lastPage > 1 &&
       dashboardLeadList?.currentPage !== dashboardLeadList?.lastPage
     ) {
-      await dispatch(
-        dashboardLeadListAction({
-          page: dashboardLeadList?.currentPage + 1,
-        }),
-      );
+      //TODO: here we are passing order_by and sort_by static until leads UI comes in master
+      if (user.userRole === UserRole.Admin) {
+        await dispatch(
+          dashboardLeadListAction({
+            order_by: 1,
+            sort_order: 1,
+            page: dashboardLeadList?.currentPage + 1,
+          }),
+        );
+      } else {
+        await dispatch(
+          dashboardLeadListAction({
+            page: dashboardLeadList?.currentPage + 1,
+          }),
+        );
+      }
     }
   };
   useFocusEffect(
