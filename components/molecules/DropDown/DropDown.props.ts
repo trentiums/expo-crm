@@ -1,3 +1,5 @@
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
+
 export interface DropDownProps {
   data: DropDownData[];
   value?: string | number[] | number;
@@ -6,7 +8,7 @@ export interface DropDownProps {
   placeholder?: string;
   isShowSelected?: boolean;
   isSearch?: boolean;
-  onEndReached?: () => void;
+  dropdownDataType?: DropdownDataType;
 }
 
 export interface DropDownData {

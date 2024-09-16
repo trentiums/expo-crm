@@ -14,7 +14,7 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
   isShowSelected,
   isSearch,
   placeholder,
-  onEndReached,
+  dropdownDataType,
 }) => {
   const handleSelect = (value: any) => {
     if (isMultiple) {
@@ -44,7 +44,7 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
         isShowSelected={isShowSelected}
         placeholder={placeholder}
         isSearch={isSearch}
-        onEndReached={onEndReached}
+        dropdownDataType={dropdownDataType}
       />
       {!!(meta.touched && meta.error) && (
         <FormError

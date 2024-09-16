@@ -332,7 +332,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 changeRoute={handleClosePress}
                 dropdownData={meta.dropdownData}
                 handelSelectData={(id) => meta.handelSelectData(id)}
-                onEndReached={meta.onEndReached}
+                dropdownDataType={meta.dropdownDataType}
               />
             )}
           </Stack.Screen>

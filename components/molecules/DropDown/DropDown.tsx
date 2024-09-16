@@ -35,7 +35,7 @@ const DropDown: React.FC<DropDownProps> = ({
   placeholder,
   isShowSelected,
   isSearch,
-  onEndReached,
+  dropdownDataType,
 }) => {
   const searchInputRef = useRef(null);
   const { t: ts } = useTranslation('drawer');
@@ -151,7 +151,7 @@ const DropDown: React.FC<DropDownProps> = ({
             selectedValue: value,
             dropdownData: data,
             handelSelectData: (id) => handelSelectData(id),
-            onEndReached: onEndReached,
+            dropdownDataType: dropdownDataType,
           }}
         />
       )}

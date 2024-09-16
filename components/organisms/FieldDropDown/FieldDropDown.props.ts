@@ -38,6 +38,7 @@ export type CustomDropDownProps = {
   isAllowDeselect?: boolean;
   isSearch?: boolean;
   onEndReached?: () => void;
+  dropdownDataType: DropdownDataType;
 };
 
 export interface ItemList {
@@ -45,4 +46,9 @@ export interface ItemList {
   id: number;
   title: string;
   icon?: string;
+}
+export enum DropdownDataType {
+  COUNTRY = 'country',
+  USERS = 'users',
+  SERVICES = 'services',
 }

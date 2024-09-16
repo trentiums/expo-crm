@@ -41,6 +41,7 @@ import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
 import { Pressable } from 'react-native';
 import { ShowMultipleDataList } from '@molecules/DropDown/DropDown.styles';
 import CrossSmallIcon from '@atoms/Illustrations/CrossSmall';
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 
 const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   form,
@@ -228,7 +229,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             isMultiple
             isFullWidth
             isSearch
-            onEndReached={handleGetMoreServices}
+            dropdownDataType={DropdownDataType.SERVICES}
           />
           <Spacer size={8} />
           {values?.selectedServices?.length > 0 && (
@@ -295,6 +296,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
               (item) => item.id !== assignTo,
             )}
             isSearch
+            dropdownDataType={DropdownDataType.USERS}
           />
           <Spacer size={16} />
           <Label>{t('budgetLabel')}</Label>

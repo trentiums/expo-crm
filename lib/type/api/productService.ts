@@ -1,7 +1,8 @@
-import { DocumentTye } from "./lead";
+import { DocumentTye } from './lead';
 
 export interface ProductServiceListParams {
   page?: number;
+  search?: string;
 }
 export interface ProductService {
   id: number;
