@@ -59,11 +59,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
             iconColor={colors.textDark}
           />
         </ProductDetailContainer>
-        <ActionMenuIcon
-          icon="dots-vertical"
-          onPress={openBottomSheet}
-          iconColor={colors.textDark}
-        />
       </ProductInfoView>
 
       {visibleBottomSheet && (

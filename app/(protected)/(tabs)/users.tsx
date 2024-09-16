@@ -2,14 +2,9 @@ import { useAppTheme } from '@constants/theme';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import UserDetailCard from '@organisms/UserDetailCard/UserDetailCard';
 import { UserDetailCardProps } from '@organisms/UserDetailCard/UserDetailCard.props';
-import {
-  deleteUserAction,
-  getAssignUserListAction,
-  getUserListAction,
-} from '@redux/actions/user';
+import { getUserListAction } from '@redux/actions/user';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
-import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FlatList } from 'react-native';
@@ -29,7 +24,6 @@ const Users = () => {
   const { t: ts } = useTranslation('drawer');
   const { t } = useTranslation('modalText');
   const { t: td } = useTranslation('dashBoard');
-  const [showModal, setShowModal] = useState(false);
   const { colors } = useAppTheme();
   const dispatch = useAppDispatch();
   const toast = useToast();
@@ -37,7 +31,6 @@ const Users = () => {
   const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>(
     LoadingStatus.NONE,
   );
-  const [deleteUserId, setDeleteUserId] = useState(0);
   const [userSearch, setUserSearch] = useState('');
 
   const handleGetMoreUserData = async () => {
