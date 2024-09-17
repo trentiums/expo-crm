@@ -1,26 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Field, useFormState } from 'react-final-form';
 import {
-  AddIconButton,
   ButtonSubmit,
-  CloseButton,
   CountryCodeInput,
-  CrossIconContainer,
-  DocumentView,
-  FlatListCon,
   FormButtonText,
-  HeaderText,
-  ImagePreviewShow,
   KeyboardAwareScrollViewContainer,
   Label,
-  ModalView,
   NumberInput,
   PhoneNumberFieldView,
-  PickerContainer,
-  PressAbleContainer,
-  StyledModal,
-  SvgShowContainer,
-  UploadText,
 } from './BasicInformationForm.styles';
 import { useTranslation } from 'react-i18next';
 import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
@@ -34,13 +21,10 @@ import {
 } from '@utils/formValidators';
 import { BasicInfoFormProps } from './BasicInformationForm.props';
 import { Spacer } from '@atoms/common/common.styles';
-import AddIcon from '@atoms/Illustrations/AddIcon';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import DocumentIcon from '@atoms/Illustrations/Document';
-import CrossIcon from '@atoms/Illustrations/Cross';
 import { FormsView } from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import { LeadListState } from '@type/api/lead';
@@ -50,13 +34,9 @@ import {
 } from '@redux/actions/lead';
 import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
-import { MAX_FILE_SIZE } from '@utils/constant';
 import { addLeadInformation } from '@redux/slices/leads';
 import { useLocalSearchParams } from 'expo-router';
-import * as MediaLibrary from 'expo-media-library';
-import DropDown from '@molecules/DropDown/DropDown';
 import * as Print from 'expo-print';
-import { Linking } from 'react-native';
 import DocumentPick from '@molecules/DocumentPicker/DocumentPicker';
 import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
 
@@ -247,6 +227,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
               }))}
               isShowSelected
               placeholder={t('selectCountry')}
+              heading={t('countryCode')}
             />
           </CountryCodeInput>
           <NumberInput>

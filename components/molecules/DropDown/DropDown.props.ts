@@ -8,6 +8,7 @@ export interface DropDownProps {
   placeholder?: string;
   isShowSelected?: boolean;
   isSearch?: boolean;
+  heading: string;
   dropdownDataType?: DropdownDataType;
 }
 

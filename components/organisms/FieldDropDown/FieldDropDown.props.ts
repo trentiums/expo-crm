@@ -39,6 +39,7 @@ export type CustomDropDownProps = {
   isSearch?: boolean;
   onEndReached?: () => void;
   dropdownDataType: DropdownDataType;
+  heading?: string;
 };
 
 export interface ItemList {

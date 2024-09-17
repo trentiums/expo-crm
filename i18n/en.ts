@@ -156,6 +156,7 @@ const English = {
     fileSizeExceeded: 'File size limit exceeded',
     samplePdf: 'This is a sample PDF generated using expo-print.',
     pdfContent: 'PDF Content',
+    countryCode: 'Country code',
   },
   formButtonName: {
     previous: 'Back',

@@ -36,6 +36,7 @@ const DropDown: React.FC<DropDownProps> = ({
   isShowSelected,
   isSearch,
   dropdownDataType,
+  heading,
 }) => {
   const searchInputRef = useRef(null);
   const { t: ts } = useTranslation('drawer');
@@ -149,6 +150,7 @@ const DropDown: React.FC<DropDownProps> = ({
           onClosePress={handleCloseDropList}
           meta={{
             selectedValue: value,
+            heading: heading,
             dropdownData: data,
             handelSelectData: (id) => handelSelectData(id),
             dropdownDataType: dropdownDataType,

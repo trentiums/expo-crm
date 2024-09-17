@@ -11,6 +11,7 @@ export type BottomSheetNavigatorProps = {
     handelSelectData?: (id: number) => void;
     selectedValue?: number[] | number | string;
     dropdownDataType?: DropdownDataType;
+    heading?: string;
   };
 };
 

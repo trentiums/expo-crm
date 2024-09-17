@@ -15,6 +15,7 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
   isSearch,
   placeholder,
   dropdownDataType,
+  heading,
 }) => {
   const handleSelect = (value: any) => {
     if (isMultiple) {
@@ -45,6 +46,7 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
         placeholder={placeholder}
         isSearch={isSearch}
         dropdownDataType={dropdownDataType}
+        heading={heading}
       />
       {!!(meta.touched && meta.error) && (
         <FormError
