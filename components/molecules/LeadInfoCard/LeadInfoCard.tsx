@@ -35,7 +35,7 @@ const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
   const channelName = generalLists?.leadChannelList?.filter(
     (item) => item.id === leadDetail.leadChannelId,
   )?.[0]?.name;
-  const assignedName = leadAssignToData.filter(
+  const assignedName = leadAssignToData?.assignUsers?.filter(
     (item) => item.id === leadDetail.assignTo,
   )?.[0]?.title;
   const leadInfo = [

@@ -20,7 +20,7 @@ export const IntroText = styled(Text)`
 `;
 export const LoginScreenContainer = styled(View)`
   flex: 1;
-  background-color: ${({ theme }) => theme.colors.white};
+  /* background-color: ${({ theme }) => theme.colors.white}; */
 `;
 export const LoginFormContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};

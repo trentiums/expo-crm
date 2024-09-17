@@ -4,6 +4,7 @@ import {
   ButtonSubmit,
   CountryCodeInput,
   FormButtonText,
+  FormsView,
   KeyboardAwareScrollViewContainer,
   Label,
   NumberInput,
@@ -25,7 +26,6 @@ import TrashIcon from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import { FormsView } from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import { LeadListState } from '@type/api/lead';
 import {

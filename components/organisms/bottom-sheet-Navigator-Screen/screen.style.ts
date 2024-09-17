@@ -40,7 +40,6 @@ export const LeadsFilterContainer = styled(Pressable)`
 export const LeasFilterScreenContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
   flex: 1;
-  flex-direction: row;
 `;
 export const LeadsFilterButton = styled(View)`
   display: flex;

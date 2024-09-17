@@ -20,6 +20,7 @@ export const English = {
       passwordError:
         'Password Must Contain 1 upper Case , 1Lower Case and 1 Number',
       passwordMissMatch: 'Passwords do not match',
+      minLength: 'min length is 3',
     },
   },
   login: {
@@ -292,6 +293,7 @@ export const English = {
     filter: 'Filter',
     sortBy: 'Sort by',
     select: 'Select',
+    chooseOption: 'Choose option',
   },
   bottomSheetCreatePotion: {
     user: 'User',

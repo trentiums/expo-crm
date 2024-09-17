@@ -54,7 +54,6 @@ export const ViewMainContainer = styled(View)`
   flex-direction: column;
   justify-content: space-between;
   align-content: space-between;
-  margin-bottom: 80px;
 `;
 
 export const PressAbleView = styled(Pressable)`

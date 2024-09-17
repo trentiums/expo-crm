@@ -232,3 +232,11 @@ export const ErrorText = styled(Text)`
   color: ${({ theme }) => theme.colors.error};
   padding-left: 4px;
 `;
+export const FormsView = styled(View)`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  flex-basis: auto;
+  margin-bottom: 32px;
+`;

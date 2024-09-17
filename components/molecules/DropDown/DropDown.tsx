@@ -138,7 +138,7 @@ const DropDown: React.FC<DropDownProps> = ({
           <FilterIconView>
             <Search />
           </FilterIconView>
-          <DropdownPlaceHolderText>{placeholder}</DropdownPlaceHolderText>
+          {/* <DropdownPlaceHolderText>{placeholder}</DropdownPlaceHolderText> */}
         </SearchFilterContainer>
       ) : (
         <ShowMultipleDataList
