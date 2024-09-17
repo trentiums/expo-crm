@@ -41,7 +41,6 @@ const Leads = () => {
   const [leadSearch, setLeadSearch] = useState('');
   const dispatch = useAppDispatch();
   const [refreshing, setRefreshing] = useState(false);
-
   const debouncedLeadSearch = useDebounce(leadSearch || undefined, 300);
   const onDeleteActionPress = async (slug: number) => {
     setLoading(true);

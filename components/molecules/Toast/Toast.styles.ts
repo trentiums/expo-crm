@@ -5,7 +5,9 @@ import { Card } from 'react-native-paper';
 
 export const Container = styled(Card)<{ isError?: boolean }>`
   display: flex;
-  border-radius: 30px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 6px;
   background-color: ${({ isError, theme }) =>
     isError ? theme.colors.notificationError : theme.colors.notificationScrBg};
 `;
@@ -39,4 +41,8 @@ export const NotificationCopyContent = styled(View)`
   flex-direction: column;
   align-items: center;
   width: 100%;
+`;
+
+export const CloseText = styled(Text)`
+  color: ${({ theme }) => theme.colors.white};
 `;

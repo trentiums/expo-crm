@@ -317,6 +317,9 @@ export const English = {
     version: 'Version',
     notAvailable: 'not available',
   },
+  toast: {
+    ok: 'OK',
+  },
 };
 
 export const Gujarati = {
