@@ -11,7 +11,6 @@ import {
 } from './LoginForm.styles';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@constants/theme';
-import { RootState, useSelector } from '@redux/store';
 import EmailIcon from '@atoms/Illustrations/Email';
 import LockIcon from '@atoms/Illustrations/Lock';
 import { Pressable } from 'react-native';
@@ -26,7 +25,7 @@ import {
   requiredValidator,
 } from '@utils/formValidators';
 import { Spacer } from '@atoms/common/common.styles';
-import { FormButtonText } from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
+import { FormButtonText } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
 
 const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
   const { t } = useTranslation('login');

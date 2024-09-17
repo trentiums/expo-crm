@@ -1,67 +1,84 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   DetailContainer,
   NameText,
   ProductDetailContainer,
   ProductInfoView,
 } from './ProductCard.styles';
-import ProductServices from '@atoms/Illustrations/ProductService';
-import { Flexed } from '@atoms/common/common.styles';
-import ActionMenu from '@molecules/ActionMenu/ActionMenu';
-import ActionModal from '@molecules/ActionModal/ActionModal';
-import TrashIcon from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
-import { useTranslation } from 'react-i18next';
-import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import View from '@atoms/View/View';
+import ServiceIcon from '@atoms/Illustrations/Service';
+import { ProductCardProps } from './ProductCard.props';
+import { ActionMenuIcon } from '@molecules/LeadDetail/LeadDetail.styles';
+import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
+import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
+import { deleteProductServiceAction } from '@redux/actions/productService';
+import { useToast } from 'react-native-toast-notifications';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { useAppDispatch } from '@redux/store';
 
-const ProductCard = ({
-  onEdit,
-  onDelete,
-  data,
-  setDeleteId,
-  showModal,
-  setShowModal,
-  isDeleteLoading,
-}) => {
-  const { t: tm } = useTranslation('modalText');
+const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   const { colors } = useAppTheme();
-  const hideActionModal = () => {
-    setShowModal(false);
+  const toast = useToast();
+  const dispatch = useAppDispatch();
+  const [visibleBottomSheet, setVisibleBottomSheet] = useState(false);
+
+  const openBottomSheet = () => setVisibleBottomSheet(true);
+
+  const closeBottomSheet = () => setVisibleBottomSheet(false);
+
+  const handleDeleteProduct = async () => {
+    try {
+      const response = await dispatch(
+        deleteProductServiceAction({ product_service_id: data.id }),
+      ).unwrap();
+      toast.show(response?.message, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Success,
+        },
+      });
+    } catch (error: any) {
+      toast.show(error, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
   };
-  const onDeleteLead = (id: number) => {
-    setShowModal(true);
-    setDeleteId?.(id);
-  };
-  const handleDeleteLead = async () => {
-    onDelete();
-  };
+
   return (
     <DetailContainer>
       <ProductInfoView>
-        <ProductServices />
+        <ServiceIcon />
         <ProductDetailContainer>
           <NameText numberOfLines={1}>{data?.name}</NameText>
-          <ActionMenu
-            onEdit={onEdit}
-            onDelete={(id) => onDeleteLead(id)}
-            id={data?.id}
+          <ActionMenuIcon
+            icon="dots-vertical"
+            onPress={openBottomSheet}
+            iconColor={colors.textDark}
           />
         </ProductDetailContainer>
       </ProductInfoView>
-      {showModal && (
-        <ActionModal
-          isModal={showModal}
-          onBackdropPress={hideActionModal}
-          heading={tm('discardMedia')}
-          description={tm('disCardDescription')}
-          label={tm('yesDiscard')}
-          actionType={Actions.delete}
-          actiontext={tm('cancel')}
-          onCancelPress={hideActionModal}
-          onActionPress={() => handleDeleteLead()}
-          icon={<TrashIcon color={colors?.deleteColor} />}
-          loading={isDeleteLoading}
+
+      {visibleBottomSheet && (
+        <BottomSheetNavigator
+          initialRouteName="ModifyLeadOption"
+          onClosePress={closeBottomSheet}
+          meta={{
+            editRoute: `/add-product/${data.id}`,
+            onDelete: () => handleDeleteProduct(),
+            optionType: ScreenOptionType.DEFAULT,
+          }}
+        />
+      )}
+      {visibleBottomSheet && (
+        <BottomSheetNavigator
+          initialRouteName="ModifyLeadOption"
+          onClosePress={closeBottomSheet}
+          meta={{
+            optionType: ScreenOptionType.DEFAULT,
+          }}
         />
       )}
     </DetailContainer>

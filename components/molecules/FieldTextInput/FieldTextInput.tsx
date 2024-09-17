@@ -6,7 +6,6 @@ import { useAppTheme } from '@constants/theme';
 import { CustomTextInputProps } from '@atoms/TextInput/TextInput.props';
 import CheckMarkIcon from '@atoms/Illustrations/Check';
 import CrossIcon from '@atoms/Illustrations/Cross';
-import View from '@atoms/View/View';
 import { InputErrorContainer } from '@atoms/TextInput/TextInput.styles';
 
 const FieldTextInput = forwardRef<CustomTextInputProps, FieldTextInputProps>(
@@ -26,6 +25,7 @@ const FieldTextInput = forwardRef<CustomTextInputProps, FieldTextInputProps>(
     ref,
   ) => {
     const { colors } = useAppTheme();
+    const resetValue = () => input.onChange('');
     const handleOnChange = (value: string) => {
       if (keyboardType === 'numeric') {
         const pattern = isFloatValue ? /^\s*\d*\.?\d*\s*$/ : /^\s*\d*\d*\s*$/;
@@ -50,7 +50,7 @@ const FieldTextInput = forwardRef<CustomTextInputProps, FieldTextInputProps>(
     }
     return (
       <>
-        <InputErrorContainer isError={!!(meta.touched && meta.error)}>
+        <InputErrorContainer invalidValue={!!(meta.touched && meta.error)}>
           <TextInput
             ref={ref}
             value={input.value}
@@ -62,7 +62,7 @@ const FieldTextInput = forwardRef<CustomTextInputProps, FieldTextInputProps>(
                 backgroundColor: colors?.iceWindDale,
               }
             }
-            textColor={rest?.textDark || colors.textDark}
+            textColor={colors.textDark}
             enterKeyHint="done"
             autoCorrect={false}
             left={left}

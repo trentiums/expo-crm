@@ -1,4 +1,4 @@
-import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
+import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 
 export interface SaveLeadParams {
   name: string;
@@ -143,7 +143,7 @@ export interface LeadListState {
   createdAt: string;
   updatedAt: string;
   webSite: string;
-  documents: fileSystemProps[];
+  documents: FileSystemProps[];
   assignTo?: number;
 }
 
@@ -206,7 +206,7 @@ export interface LeadListTypeState {
   createdAt?: string;
   updatedAt?: string;
 }
-export interface DeleteLeadDocumentsParams {
+export interface DeleteLeadDocumentParams {
   media_id: number;
 }
 export interface LeadDetailsParams {
@@ -217,4 +217,18 @@ export interface LeadDetailsResponse {
   status: boolean;
   message: string;
   data: LeadListData;
+}
+
+export interface UpdateLeadStatusParams {
+  lead_id: number;
+  lead_status_id?: number;
+  lead_channel_id?: number;
+  lead_conversion_id?: number;
+  type: updateLeadStatusTypes;
+}
+
+export enum updateLeadStatusTypes {
+  STATUS = 1,
+  CHANNEL = 2,
+  CONVERSION = 3,
 }

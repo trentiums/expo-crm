@@ -53,7 +53,8 @@ const LoginScreen = () => {
           dispatch(getProductServiceListAction({})),
           dispatch(getLeadListAction({})),
           dispatch(getUserListAction({})),
-          dispatch(getAssignUserListAction()),
+          //TODO:assign users api integration is in further branch will update as branch merged
+          // dispatch(getAssignUserListAction()),
         ]);
       }
       router.replace('/(protected)/(tabs)/dashboard');

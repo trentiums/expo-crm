@@ -14,9 +14,10 @@ export const LabelText = styled(Text)`
 export const RNPTextInput = styled(TextInput)`
   background-color: ${({ theme }) => theme.colors.transparent};
 `;
-export const InputErrorContainer = styled(View)<{ isError?: boolean }>`
-  border-width: ${({ isError }) => (isError ? 1 : 0)}px;
-  border-color: ${({ isError, theme }) =>
-    isError ? theme.colors.errorText : undefined};
+
+export const InputErrorContainer = styled(View)<{ invalidValue?: boolean }>`
+  border-width: ${({ invalidValue }) => (invalidValue ? 1 : 0)}px;
+  border-color: ${({ invalidValue, theme }) =>
+    invalidValue ? theme.colors.errorText : undefined};
   border-radius: 8px;
 `;

@@ -1,13 +1,14 @@
-import { userRole } from './auth';
+import { UserRole } from './auth';
 
 export interface UserListParams {
   page?: number;
+  search?: string;
 }
 export interface User {
   id: number;
   name: string;
   email: string;
-  user_role: userRole;
+  user_role: UserRole;
   created_at: string;
 }
 export interface UserListResponse {
