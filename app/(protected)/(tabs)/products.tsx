@@ -9,7 +9,7 @@ import {
   ProductsFlatList,
   HeadingText,
   HeadingView,
-  LoaderView,
+  LoaderContainer,
 } from './tabs.style';
 import { RefreshControl } from 'react-native';
 import { UserDetailCardProps } from '@organisms/UserDetailCard/UserDetailCard.props';
@@ -109,9 +109,9 @@ const products = () => {
       </HeadingView>
       {renderHeader()}
       {loadingStatus === LoadingStatus.SCREEN ? (
-        <LoaderView>
+        <LoaderContainer>
           <Loader />
-        </LoaderView>
+        </LoaderContainer>
       ) : (
         <>
           {Array.isArray(products?.serviceList) &&
@@ -134,9 +134,9 @@ const products = () => {
               }
             />
           ) : (
-            <LoaderView>
+            <LoaderContainer>
               <NoDataAvailable text={t('noServices')} />
-            </LoaderView>
+            </LoaderContainer>
           )}
         </>
       )}

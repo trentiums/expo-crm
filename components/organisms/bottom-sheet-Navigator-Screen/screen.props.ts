@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 export type CreateOptionProps = {
   changeSnapPoints: (points: string[]) => void;
   handleBottomSheetClose?: () => void;
+  changeRoute?: () => void;
 };
 
 export type CreateOptionItemProps = {

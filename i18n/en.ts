@@ -246,7 +246,7 @@ export const English = {
     search: 'Search',
     list: 'List',
     applyFilter: 'Apply Filters',
-    removeFilter: 'Clear All',
+    removeFilter: 'Clear all',
   },
   leadStatus: {
     new: 'New',
@@ -277,6 +277,12 @@ export const English = {
   },
   bottomSheetNavigator: {
     ChooseOptionToAdd: 'Choose option to add',
+    filter: 'Filter',
+  },
+  bottomSheetCreatePotion: {
+    user: 'User',
+    lead: 'Lead',
+    service: 'Service',
     chooseOption: 'Choose option',
     updateAssignedUsers: 'Update assigned users',
     updateStatus: 'Update status',
@@ -285,16 +291,10 @@ export const English = {
     changeLeadStage: 'Change lead stage',
     UpdateChannel: 'Update channel',
     changeLanguage: 'Change language',
-  },
-  bottomSheetCreatePotion: {
-    user: 'User',
-    lead: 'Lead',
-    service: 'Service',
     edit: 'Edit',
     delete: 'Delete',
-    updateStatus: 'Update status',
-    updateStage: 'Update stage',
   },
+
   bottomSheetModifyLead: {
     edit: 'Edit',
     delete: 'Delete',

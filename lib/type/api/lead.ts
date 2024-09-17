@@ -28,7 +28,7 @@ export interface LeadListParams {
   page?: number;
   search?: string;
   lead_status_id?: number;
-  lead_channel_id?: number;
+  lead_channel_id?: number | number[];
   lead_conversion_id?: number;
 }
 export enum ORDERBY {

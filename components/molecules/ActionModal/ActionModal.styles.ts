@@ -1,7 +1,6 @@
 import { styled } from '@utils/styled';
 import { View, Pressable } from 'react-native';
 import Text from '@atoms/Text/Text';
-import { Actions } from './ActionModal.props';
 
 export const ModalContainer = styled(View)`
   margin: 24px;

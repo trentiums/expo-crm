@@ -7,6 +7,7 @@ import styled from 'styled-components';
 export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   height: 48px;
   justify-content: center;
+  border-width: 1px;
   background-color: ${({ theme }) => theme.colors.blueChaos};
   border-radius: 50px;
 `;
