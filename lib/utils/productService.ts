@@ -8,7 +8,7 @@ export const formatServiceListData = (data: ProductService[]) => {
     documents: item?.documents?.map((item) => ({
       id: item?.id,
       uri: item?.original_url,
-      name: item?.name,
+      name: item?.file_name,
       size: item?.size,
       type: item?.mime_type,
     })),
@@ -22,7 +22,7 @@ export const formatProductServiceDetail = (data: ProductService) => {
     documents: data?.documents?.map((item) => ({
       id: item?.id,
       uri: item?.original_url,
-      name: item?.name,
+      name: item?.file_name,
       size: item?.size,
       type: item?.mime_type,
     })),

@@ -96,7 +96,7 @@ export interface DocumentTye {
   original_url: string;
   mime_type: string;
   id: number;
-  name: string;
+  file_name: string;
   size: number;
 }
 export interface LeadListResponse {
