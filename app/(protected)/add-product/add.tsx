@@ -1,7 +1,7 @@
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import AddProductForm from '@organisms/AddProductForm/AddProductForm';
 import { AddProductFormValues } from '@organisms/AddProductForm/AddProductForm.props';
-import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
+import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 import {
   addProductServiceAction,
   getProductServiceListAction,
@@ -12,7 +12,7 @@ import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
 import { router, useNavigation } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
-import { AddProductContainer } from '../(drawer)/drawer.style';
+import { AddProductContainer } from '../(tabs)/drawer.style';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@constants/theme';
 
@@ -22,7 +22,7 @@ const addProducts = () => {
   const navigation = useNavigation();
   const { t } = useTranslation('screenTitle');
   const [loading, setLoading] = useState(false);
-  const [documentArray, setDocumentArray] = useState<fileSystemProps | any>();
+  const [documentArray, setDocumentArray] = useState<FileSystemProps[]>([]);
   const { colors } = useAppTheme();
   const handleAddServices = async (values: AddProductFormValues) => {
     try {
@@ -30,23 +30,24 @@ const addProducts = () => {
       let formData = new FormData();
       formData.append('name', values?.name || '');
       formData.append('description', values?.description || '');
-      console.log(documentArray, 'cosument');
-      if (documentArray?.uri) {
-        formData.append('documents', {
-          uri: documentArray.uri,
-          name: documentArray.name,
-          type: documentArray.mimeType || documentArray.type,
+      const newDocumentsArray = documentArray?.filter((item) => !item.id);
+      if (newDocumentsArray?.length > 0) {
+        newDocumentsArray.forEach((document, index) => {
+          formData.append(`documents[${index}]`, {
+            uri: document.uri,
+            name: document.name,
+            type: document.mimeType,
+          });
         });
       }
-
       const response = await dispatch(
         addProductServiceAction(formData),
       ).unwrap();
       await dispatch(getProductServiceListAction({}));
-      setDocumentArray({});
+      setDocumentArray([]);
 
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -55,7 +56,7 @@ const addProducts = () => {
       router.navigate('/products');
     } catch (error) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -73,7 +74,7 @@ const addProducts = () => {
     });
   }, [navigation]);
   return (
-    <ScreenTemplate>
+    <ScreenTemplate title={t('addProduct')}>
       <AddProductContainer>
         <FormTemplate
           Component={AddProductForm}

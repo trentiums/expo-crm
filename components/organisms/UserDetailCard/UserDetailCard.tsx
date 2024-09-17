@@ -1,88 +1,62 @@
-import React, { useRef, useState } from 'react';
-import {
-  LeadDetailCardContainer,
-  RenderRightView,
-  SwipeText,
-  TouchableOpacityContainer,
-  ViewContainer,
-} from './UserDetailCard.styles';
-import { Spacer } from '@atoms/common/common.styles';
-import { Swipeable } from 'react-native-gesture-handler';
-import Trash from '@atoms/Illustrations/Trash';
-import EditIcon from '@atoms/Illustrations/EditIcon';
+import React from 'react';
 import { UserDetailCardProps } from './UserDetailCard.props';
-import { useTranslation } from 'react-i18next';
-import { useAppTheme } from '@constants/theme';
 import LeadDetail from '@molecules/LeadDetail/LeadDetail';
-import { RootState, useSelector } from '@redux/store';
-import { View } from 'react-native';
-import { IconButton, Menu } from 'react-native-paper';
+import { LeadDetailCardContainer } from '@organisms/DashBoardLeadCard/DashBoardLeadCard.styles';
+import { EmailText, PhoneInfoView } from './UserDetailCard.styles';
+import EmailIcon from '@atoms/Illustrations/Email';
+import { useAppTheme } from '@constants/theme';
+import { Spacer } from '@atoms/common/common.styles';
+import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
+import { useAppDispatch } from '@redux/store';
+import { deleteUserAction, getAssignUserListAction } from '@redux/actions/user';
+import { useToast } from 'react-native-toast-notifications';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 
 const UserDetailCard: React.FC<UserDetailCardProps> = ({
-  whatsAppNumber,
-  phoneNumber,
-  mailID,
-  title,
-  cardImage,
-  onDelete,
-  onEdit,
-  dateTime,
-  closeSwipeAble,
-  setSwipeAbleRef,
-  cardIndex,
-  selectedCard,
-  setSelectedCard,
+  data,
+  isSocialMediaVisible,
 }) => {
-  const { t } = useTranslation('leadDetailCardDetails');
   const { colors } = useAppTheme();
-
-  const user = useSelector((state: RootState) => state.auth.user);
-
-  const [visible, setVisible] = useState(false);
-
-  const openMenu = () => setVisible(true);
-
-  const closeMenu = () => setVisible(false);
-
+  const dispatch = useAppDispatch();
+  const toast = useToast();
+  const handleDeleteUser = async () => {
+    try {
+      const response = await dispatch(
+        deleteUserAction({ user_id: data.id }),
+      ).unwrap();
+      toast.show(response?.message, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Success,
+        },
+      });
+      await dispatch(getAssignUserListAction());
+    } catch (error: string) {
+      toast.show(`${error}`, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
+  };
   return (
     <>
       <LeadDetailCardContainer isActive={false}>
         <LeadDetail
-          phoneNumber={phoneNumber}
-          whatsAppNumber={whatsAppNumber}
-          mailID={mailID}
-          cardImage={cardImage}
-          title={title}
-          dateTime={dateTime}
+          leadData={data}
+          isSocialMediaVisible={isSocialMediaVisible}
+          optionType={ScreenOptionType.DEFAULT}
+          editRoute={`/(protected)/add-user/${data.id}`}
+          onDelete={handleDeleteUser}
         />
-        <View style={{ position: 'absolute', top: 0, right: 0, width: 50 }}>
-          <Menu
-            visible={visible}
-            onDismiss={closeMenu}
-            anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
-            style={{ borderRadius: 16, overflow: 'hidden' }}>
-            <Menu.Item
-              leadingIcon="pencil"
-              onPress={() => {
-                closeMenu();
-                onEdit();
-              }}
-              style={{
-                borderBottomColor: colors.lightBorder,
-                borderBottomWidth: 1,
-              }}
-              title={t('edit')}
-            />
-            <Menu.Item
-              leadingIcon="delete"
-              onPress={() => {
-                closeMenu();
-                onDelete();
-              }}
-              title={t('delete')}
-            />
-          </Menu>
-        </View>
+        <Spacer size={8} />
+        {data?.email && (
+          <PhoneInfoView>
+            <EmailIcon color={colors.gray} />
+            <EmailText>{data.email}</EmailText>
+          </PhoneInfoView>
+        )}
       </LeadDetailCardContainer>
     </>
   );

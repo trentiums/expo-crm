@@ -3,9 +3,9 @@ import Loader from '@atoms/Loader/Loader';
 import { AddLeadTabBarData } from '@constants/dummyData';
 import { useAppTheme } from '@constants/theme';
 import TabBar from '@molecules/TabBar/TabBar';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
-import BasicInformationForm from '@organisms/BasicInformatioForm/BasicInformationForm';
-import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import BasicInformationForm from '@organisms/BasicInformationForm/BasicInformationForm';
+import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 import CompanyInformationForm from '@organisms/CompanyInformationForm/CompanyInformationForm';
 import LeadDetailsForm from '@organisms/LeadDetailsForm/LeadDetailsForm';
 import { getLeadDetailsAction, updateLeadAction } from '@redux/actions/lead';
@@ -23,7 +23,7 @@ import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
-import { AddLeadContainer } from '../(drawer)/tabs.style';
+import { AddLeadContainer } from '../(tabs)/tabs.style';
 import { useTranslation } from 'react-i18next';
 
 const AddLead = () => {
@@ -38,7 +38,6 @@ const AddLead = () => {
   const [selectedCountryCodeValue, setSelectedCountryCodeValue] =
     useState<string>('');
   const { colors } = useAppTheme();
-  const addLeadData = useSelector((state: RootState) => state.leads.addLead);
   const leadsDetail = useSelector(
     (state: RootState) => state.leads.leadsDetail,
   );
@@ -49,7 +48,7 @@ const AddLead = () => {
     (state: RootState) => state.leads.leadList?.leads,
   );
   const toast = useToast();
-  const [documentArray, setDocumentArray] = useState<fileSystemProps[]>([]);
+  const [documentArray, setDocumentArray] = useState<FileSystemProps[]>([]);
   const [loading, setLoading] = useState(false);
   const [leadsDetailLoading, setDetailLoading] = useState(false);
   const [selectedData, setSelectedData] = useState<LeadListState>(
@@ -64,12 +63,12 @@ const AddLead = () => {
       } catch (error) {
         console.log(error, 'error');
         toast.show(error, {
-          type: 'customToast',
+          type: ToastType.Custom,
           data: {
             type: ToastTypeProps.Error,
           },
         });
-        router.navigate('/(protected)/(drawer)/(tabs)/leads');
+        router.navigate('/(protected)/(tabs)/leads');
       }
       setDetailLoading(false);
     }
@@ -77,15 +76,6 @@ const AddLead = () => {
   useEffect(() => {
     getLeadDetails();
   }, [id]);
-  useEffect(() => {
-    navigation.setOptions({
-      title: t('editLead'),
-      headerStyle: {
-        backgroundColor: colors.tabBar,
-      },
-      headerTintColor: colors.white,
-    });
-  }, [navigation]);
 
   useEffect(() => {
     setSelectedData(leadsDetail);
@@ -243,7 +233,7 @@ const AddLead = () => {
       const response = await dispatch(updateLeadAction(formData)).unwrap();
       await dispatch(getLeadDetailsAction({ lead_id: id })).unwrap();
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
@@ -256,12 +246,12 @@ const AddLead = () => {
         } else if (navigationType === AddLeadTabBarData?.[1].title) {
           setSelectedTabNav(AddLeadTabBarData?.[2].title);
         } else {
-          router.navigate('/(drawer)/(tabs)/leads');
+          router.navigate('/(tabs)/leads');
         }
       }
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -354,8 +344,9 @@ const AddLead = () => {
     }
   };
   return (
-    <ScreenTemplate>
+    <ScreenTemplate title={id ? t('editLead') : t('addLead')}>
       <AddLeadContainer>
+        <Spacer size={16} />
         <TabBar
           selectedActiveTab={selectedTabNav}
           setSelectedTabNav={setSelectedTabNav}

@@ -1,18 +1,19 @@
-import { logout } from "@redux/slices/auth";
-import store from "@redux/store";
-import { StatusCode } from "@type/api/api";
-import axios from "axios";
+import { logout } from '@redux/slices/auth';
+import store from '@redux/store';
+import { StatusCode } from '@type/api/api';
+import axios from 'axios';
 
-export const baseURL = "https://crm.trentiums.com/api/v1/";
+export const baseURL = 'https://crm.trentiums.com/api/v1/';
 export const api = axios.create({
   baseURL,
 });
 
-export const setAuthenticationToken = (token?: string) => {
-  api.defaults.headers.common.Authorization = token
-    ? `Bearer ${token}`
-    : undefined;
-};
+api.interceptors.request.use((config) => {
+  const token = store.getState().auth.user.token;
+  config.headers.Authorization = `Bearer ${token}`;
+
+  return config;
+});
 
 api.interceptors.response.use(undefined, (error) => {
   if (error?.response?.status === StatusCode.Unauthorized) {

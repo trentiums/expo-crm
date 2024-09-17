@@ -1,123 +1,143 @@
-import React from "react";
+import React, { useState } from 'react';
 import {
+  ActionMenuIcon,
+  ContactBox,
   DateTimeText,
   DetailContainer,
-  EmailView,
   LeadInfoView,
-  NameContainer,
+  NameAndStatusContainer,
   NameText,
-  NumberEmailView,
-  NumberView,
-  PressAbleContainer,
-  SubNameText,
-  SubNumberText,
-  TextView,
-  TitleView,
-  WhatsAppIcon,
-  WhatsAppIconView,
-} from "./LeadDetail.styles";
-import { Linking, Pressable } from "react-native";
-import { Spacer } from "@atoms/common/common.styles";
-import { useTranslation } from "react-i18next";
-import PhoneIcon from "@atoms/Illustrations/PhoneIcon";
-import MailIcon from "@atoms/Illustrations/MailIcon";
-import View from "@atoms/View/View";
-import { callToAction } from "@utils/common";
-import WhatsApp from "@atoms/Illustrations/WhatsApp";
-import { ToastTypeProps } from "@molecules/Toast/Toast.props";
-import { useToast } from "react-native-toast-notifications";
-import { telLink, whatsAppLink } from "@utils/config";
-import { LeadDetailsProps } from "./LeadDetail.props";
-import * as Clipboard from "expo-clipboard";
+  CommunicationOptionContainer,
+} from './LeadDetail.styles';
+import { useTranslation } from 'react-i18next';
+import {
+  generateWhatsAppUrl,
+  handleOpenDialCall,
+  handleOpenEmail,
+} from '@utils/common';
+import WhatsApp from '@atoms/Illustrations/WhatsApp';
+import { LeadDetailsProps } from './LeadDetail.props';
+import { useAppTheme } from '@constants/theme';
+import EmailSendBox from '@atoms/Illustrations/EmailBox';
+import PhoneIcon from '@atoms/Illustrations/PhoneIcon';
+import { RootState, useSelector } from '@redux/store';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { useToast } from 'react-native-toast-notifications';
+import moment from 'moment';
+import { dateTimeFormate } from '@constants/common';
+import { Flexed } from '@atoms/common/common.styles';
+import LeadStatus from '@molecules/LeadStatus/LeadStatus';
+import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
+import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
-  phoneNumber,
-  whatsAppNumber,
-  mailID,
-  title,
-  dateTime,
+  leadData,
+  isSocialMediaVisible,
+  optionType,
+  onDelete,
+  editRoute,
 }) => {
-  const { t } = useTranslation("errorMessage");
+  const { t } = useTranslation('leadDetailCardDetails');
+  const { t: tm } = useTranslation('modalText');
   const toast = useToast();
-  const handleWhatsApp = (phoneNumber: number | string) => {
-    Linking.canOpenURL(whatsAppLink + phoneNumber)
-      .then((supported) => {
-        if (supported) {
-          callToAction(whatsAppLink + phoneNumber);
-        } else {
-          callToAction(
-            `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-              "Join WhatsApp using this link: https://whatsapp.com/dl/"
-            )}`
-          );
-        }
-      })
-      .catch((err) => {
-        console.error("An error occurred", err);
+  const { colors } = useAppTheme();
+  const leads = useSelector((state: RootState) => state.leads.leadList.leads);
+  const [visibleBottomSheet, setVisibleBottomSheet] = useState(false);
+
+  const handleEmail = () => {
+    const email = leadData?.email;
+    if (email) {
+      handleOpenEmail(email);
+    } else {
+      toast.show(tm('emailNotAvailable'), {
+        type: 'customToast',
+        data: {
+          type: ToastTypeProps.Error,
+        },
       });
+    }
   };
+
+  const handleWhatsApp = (phoneNumber: number | string) => {
+    generateWhatsAppUrl(phoneNumber);
+  };
+
+  const handlePhoneCall = (phoneNumber) => {
+    try {
+      handleOpenDialCall(phoneNumber);
+    } catch (error) {
+      toast.show(t('phoneNumberIsNotAvailable'), {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
+  };
+
+  const openBottomSheet = () => setVisibleBottomSheet(true);
+
+  const closeBottomSheet = () => setVisibleBottomSheet(false);
 
   return (
     <DetailContainer>
       <LeadInfoView>
-        <View style={{ flex: 1 }}>
-          <NameText numberOfLines={1}>{title}</NameText>
-          <DateTimeText>{dateTime}</DateTimeText>
-        </View>
-        <WhatsAppIconView isShow={whatsAppNumber}>
-          {whatsAppNumber && (
-            <WhatsAppIcon
-              onPress={() => {
-                handleWhatsApp(`${whatsAppNumber}`);
-              }}>
-              <WhatsApp />
-            </WhatsAppIcon>
+        <Flexed>
+          <NameAndStatusContainer>
+            <NameText numberOfLines={1}>{leadData?.name}</NameText>
+            <LeadStatus
+              leadStatus={
+                leads?.filter((item) => item?.id === leadData?.id)[0]
+                  ?.leadStatusId
+              }
+            />
+          </NameAndStatusContainer>
+          {leadData?.createdAt && (
+            <DateTimeText>
+              {moment(leadData.createdAt).format(dateTimeFormate)}
+            </DateTimeText>
           )}
-        </WhatsAppIconView>
+        </Flexed>
+        <ActionMenuIcon
+          icon="dots-vertical"
+          onPress={openBottomSheet}
+          iconColor={colors.textDark}
+        />
       </LeadInfoView>
-      <NameContainer>
-        <NumberEmailView isFull={!whatsAppNumber}>
-          {phoneNumber && (
-            <NumberView>
-              <PressAbleContainer
-                onPress={() => {
-                  callToAction(`${telLink}${phoneNumber}`);
-                }}>
-                <View>
-                  <Spacer size={3} />
-                  <PhoneIcon />
-                </View>
-                <TextView isFull={!mailID}>
-                  <SubNumberText numberOfLines={1}>{phoneNumber}</SubNumberText>
-                </TextView>
-              </PressAbleContainer>
-              <Spacer size={8} />
-            </NumberView>
+      {isSocialMediaVisible && (
+        <ContactBox>
+          {leadData?.email && (
+            <CommunicationOptionContainer onPress={handleEmail}>
+              <EmailSendBox />
+            </CommunicationOptionContainer>
           )}
-          {mailID && (
-            <EmailView>
-              <PressAbleContainer
-                onPress={() => {
-                  Clipboard.setStringAsync(mailID);
-                  toast.show(t("copyText"), {
-                    type: "customToast",
-                    data: {
-                      type: ToastTypeProps.Copy,
-                    },
-                  });
-                }}>
-                <View>
-                  <Spacer size={2} />
-                  <MailIcon />
-                </View>
-                <TextView isFull={!phoneNumber}>
-                  <SubNameText numberOfLines={1}>{mailID}</SubNameText>
-                </TextView>
-              </PressAbleContainer>
-            </EmailView>
+          {leadData?.phone && (
+            <>
+              <CommunicationOptionContainer
+                onPress={() => handlePhoneCall(leadData.phone)}>
+                <PhoneIcon />
+              </CommunicationOptionContainer>
+              <CommunicationOptionContainer
+                onPress={() => handleWhatsApp(leadData.phone)}>
+                <WhatsApp />
+              </CommunicationOptionContainer>
+            </>
           )}
-        </NumberEmailView>
-      </NameContainer>
+        </ContactBox>
+      )}
+
+      {visibleBottomSheet && (
+        <BottomSheetNavigator
+          initialRouteName="ModifyLeadOption"
+          onClosePress={closeBottomSheet}
+          meta={{
+            leadId: leadData?.id,
+            optionType: optionType || ScreenOptionType.DASHBOARD,
+            onDelete: onDelete,
+            editRoute: editRoute,
+          }}
+        />
+      )}
     </DetailContainer>
   );
 };

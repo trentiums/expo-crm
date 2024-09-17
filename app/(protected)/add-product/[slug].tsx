@@ -1,22 +1,22 @@
-import { ToastTypeProps } from "@molecules/Toast/Toast.props";
-import AddProductForm from "@organisms/AddProductForm/AddProductForm";
-import { AddProductFormValues } from "@organisms/AddProductForm/AddProductForm.props";
-import { fileSystemProps } from "@organisms/BasicInformatioForm/BasicInformationForm.props";
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import AddProductForm from '@organisms/AddProductForm/AddProductForm';
+import { AddProductFormValues } from '@organisms/AddProductForm/AddProductForm.props';
+import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 import {
   addProductServiceAction,
   editProductServiceAction,
   getProductServiceDetailAction,
   getProductServiceListAction,
-} from "@redux/actions/productService";
-import { useAppDispatch } from "@redux/store";
-import FormTemplate from "@templates/FormTemplate/FormTemplate";
-import ScreenTemplate from "@templates/ScreenTemplate/ScreenTemplate";
-import { router, useLocalSearchParams, useNavigation } from "expo-router";
-import React, { useEffect, useState } from "react";
-import { useToast } from "react-native-toast-notifications";
-import { AddProductContainer } from "../(drawer)/drawer.style";
-import { useTranslation } from "react-i18next";
-import { useAppTheme } from "@constants/theme";
+} from '@redux/actions/productService';
+import { useAppDispatch } from '@redux/store';
+import FormTemplate from '@templates/FormTemplate/FormTemplate';
+import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
+import { router, useLocalSearchParams, useNavigation } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { useToast } from 'react-native-toast-notifications';
+import { AddProductContainer } from '../(tabs)/drawer.style';
+import { useTranslation } from 'react-i18next';
+import { useAppTheme } from '@constants/theme';
 
 const addProducts = () => {
   const params = useLocalSearchParams();
@@ -24,9 +24,9 @@ const addProducts = () => {
   const { colors } = useAppTheme();
   const toast = useToast();
   const navigation = useNavigation();
-  const { t } = useTranslation("screenTitle");
+  const { t } = useTranslation('screenTitle');
   const [loading, setLoading] = useState(false);
-  const [documentArray, setDocumentArray] = useState<fileSystemProps>();
+  const [documentArray, setDocumentArray] = useState<FileSystemProps[]>([]);
 
   const handleAddServices = async (values: AddProductFormValues) => {
     try {
@@ -35,19 +35,16 @@ const addProducts = () => {
       if (params?.slug) {
         formData.append(`product_service_id`, `${params?.slug}`);
       }
-      formData.append("name", values?.name || "");
-      formData.append("description", values?.description || "");
-      if (documentArray.id) {
-        formData.append("documents", {
-          uri: documentArray.uri,
-          name: documentArray.name,
-          type: documentArray.mimeType || documentArray.type,
-        });
-      } else if (documentArray?.uri) {
-        formData.append("documents", {
-          uri: documentArray.uri,
-          name: documentArray.name,
-          type: documentArray.mimeType || documentArray.type,
+      formData.append('name', values?.name || '');
+      formData.append('description', values?.description || '');
+      const newDocumentsArray = documentArray?.filter((item) => !item.id);
+      if (newDocumentsArray?.length > 0) {
+        newDocumentsArray.forEach((document, index) => {
+          formData.append(`documents[${index}]`, {
+            uri: document.uri,
+            name: document.name,
+            type: document.mimeType,
+          });
         });
       }
 
@@ -56,25 +53,25 @@ const addProducts = () => {
         response = await dispatch(editProductServiceAction(formData)).unwrap();
         await dispatch(
           getProductServiceDetailAction({
-            product_service_id: params?.slug,
-          })
+            product_service_id: +params?.slug,
+          }),
         );
       } else {
         response = await dispatch(addProductServiceAction(formData)).unwrap();
         await dispatch(getProductServiceListAction({}));
-        setDocumentArray({});
+        setDocumentArray([]);
       }
       toast.show(response?.message, {
-        type: "customToast",
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
       });
 
-      router.navigate("/products");
+      router.navigate('/products');
     } catch (error) {
       toast.show(error, {
-        type: "customToast",
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -82,17 +79,9 @@ const addProducts = () => {
     }
     setLoading(false);
   };
-  useEffect(() => {
-    navigation.setOptions({
-      title: t("editProducts"),
-      headerStyle: {
-        backgroundColor: colors.tabBar,
-      },
-      headerTintColor: colors.white,
-    });
-  }, [navigation]);
+
   return (
-    <ScreenTemplate>
+    <ScreenTemplate title={t('editProducts')}>
       <AddProductContainer>
         <FormTemplate
           Component={AddProductForm}

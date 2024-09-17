@@ -1,8 +1,15 @@
-import React from "react";
-import { AddButton, AddText, Container } from "./ScreenTemplate.styles";
-import { ScreenTemplateProps } from "./ScreenTemplate.props";
-import PlusIcon from "@atoms/Illustrations/PlusIcon";
-import { useAppTheme } from "@constants/theme";
+import React from 'react';
+import {
+  AddButton,
+  AddText,
+  Container,
+  ScreenTemplateView,
+} from './ScreenTemplate.styles';
+import { ScreenTemplateProps } from './ScreenTemplate.props';
+import PlusIcon from '@atoms/Illustrations/PlusIcon';
+import { useAppTheme } from '@constants/theme';
+import TitleWithButton from '@molecules/TitleWithButton/TitleWithButton';
+import MoreMenuButton from '@molecules/MoreMenuButton/MoreMenuButton';
 
 const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
   children,
@@ -10,17 +17,24 @@ const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
   backgroundColor,
   addButtonText,
   onAddButtonPress,
+  moreVisible,
+  title,
+  onBackPress,
 }) => {
   const { colors } = useAppTheme();
   return (
     <Container {...safeAreaProps} backgroundColor={backgroundColor}>
-      {children}
-      {!!addButtonText && (
-        <AddButton onPress={() => onAddButtonPress?.()}>
-          <PlusIcon color={colors?.bgColor} />
-          <AddText>{addButtonText}</AddText>
-        </AddButton>
-      )}
+      {!!title && <TitleWithButton text={title} onBackPress={onBackPress} />}
+      {moreVisible && <MoreMenuButton />}
+      <ScreenTemplateView>
+        {children}
+        {!!addButtonText && (
+          <AddButton onPress={() => onAddButtonPress?.()}>
+            <PlusIcon color={colors.bgColor} />
+            <AddText>{addButtonText}</AddText>
+          </AddButton>
+        )}
+      </ScreenTemplateView>
     </Container>
   );
 };

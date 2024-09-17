@@ -1,13 +1,14 @@
-import { userRole } from "./auth";
+import { UserRole } from './auth';
 
 export interface UserListParams {
   page?: number;
+  search?: string;
 }
 export interface User {
   id: number;
   name: string;
   email: string;
-  user_role: userRole;
+  user_role: UserRole;
   created_at: string;
 }
 export interface UserListResponse {
@@ -17,6 +18,7 @@ export interface UserListResponse {
     current_page: number;
     last_page: number;
     per_page: number;
+    total: number;
     data: User[];
   };
 }
@@ -63,4 +65,10 @@ export interface AssignUser {
 export interface AssignUserState {
   id: number;
   title: string;
+}
+
+export interface ChangePasswordParams {
+  old_password: string;
+  password: string;
+  password_confirmation: string;
 }

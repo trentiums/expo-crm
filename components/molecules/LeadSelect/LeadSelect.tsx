@@ -7,9 +7,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import { LeadListProps, LeadSelectProps } from './LeadSelect.props';
 import { RootState, useSelector } from '@redux/store';
-import { userRole } from '@type/api/auth';
+import { UserRole } from '@type/api/auth';
 import DropDown from '@molecules/DropDown/DropDown';
-import { Spacer } from '@atoms/common/common.styles';
 
 const LeadSelect: React.FC<LeadSelectProps> = ({
   channelList,
@@ -22,7 +21,7 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
   setSelectedStage,
   selectedStage,
   leadCardId,
-  assignTo,
+  assignedTo,
   setAssignTo,
 }) => {
   const { t } = useTranslation('leadDetailList');
@@ -40,7 +39,7 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
     (state: RootState) => state.user.assignUserList,
   );
   const { user } = useSelector((state: RootState) => state.auth);
-  const isAdmin = user?.userRole !== userRole.CompanyStaff;
+  const isAdmin = user?.userRole !== UserRole.CompanyStaff;
   return (
     <>
       <LeadSelectContainer>
@@ -92,9 +91,9 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
           <DropDown
             data={leadAssignToData}
             placeholder={tl('assignTo')}
-            value={assignTo}
+            value={assignedTo}
             onChange={(value: any) => {
-              if (assignTo === value) {
+              if (assignedTo === value) {
                 setAssignTo();
               } else {
                 setAssignTo(leadCardId, value);
@@ -102,7 +101,7 @@ const LeadSelect: React.FC<LeadSelectProps> = ({
             }}
             dropDownTitle={`${t('assignTo')} ${t('list')}`}
             dataToShow={leadAssignToData?.filter(
-              (item) => item.id !== assignTo,
+              (item) => item.id !== assignedTo,
             )}
             isDataToShow
             isLeadChange

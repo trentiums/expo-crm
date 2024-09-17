@@ -98,6 +98,9 @@ const leadSlice = createSlice({
     setLeadsFilters: (state, action) => {
       state.leadsFilter = action.payload;
     },
+    resetLeadsFilters: (state, action) => {
+      state.leadsDetail = initialState.leadsDetail;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(

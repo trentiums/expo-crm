@@ -1,74 +1,61 @@
-import React, { useRef } from "react";
-import {
-  LeadDetailCardContainer,
-  RenderRightView,
-  SwipeText,
-  TouchableOpacityContainer,
-  ViewContainer,
-} from "./DashBoardLeadCard.styles";
-import { Spacer } from "@atoms/common/common.styles";
-import { Swipeable } from "react-native-gesture-handler";
-import Trash from "@atoms/Illustrations/Trash";
-import { DashBoardLeadCardProps } from "./DashBoardLeadCard.props";
-import { useTranslation } from "react-i18next";
-import { useAppTheme } from "@constants/theme";
-import LeadDetail from "@molecules/LeadDetail/LeadDetail";
-import Text from "@atoms/Text/Text";
+import React, { useState } from 'react';
+import { LeadDetailCardContainer } from './DashBoardLeadCard.styles';
+import { Spacer } from '@atoms/common/common.styles';
+import { DashBoardLeadCardProps } from './DashBoardLeadCard.props';
+import LeadDetail from '@molecules/LeadDetail/LeadDetail';
+import { router } from 'expo-router';
+import { useAppDispatch } from '@redux/store';
+import { deleteLeadAction } from '@redux/actions/lead';
+import { useToast } from 'react-native-toast-notifications';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { dashboardLeadListAction } from '@redux/actions/dashboard';
 
 const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
-  whatsAppNumber,
-  phoneNumber,
-  onDelete,
-  title,
-  mailID,
-  dateTime,
-  closeSwipeAble,
-  setSwipeAbleRef,
-  cardIndex,
-  selectedCard,
-  setSelectedCard,
+  leadData,
+  isSocialMediaVisible,
 }) => {
-  const { t } = useTranslation("leadDetailCardDetails");
-  const { colors } = useAppTheme();
-  const swipeAbleRef = useRef(null);
-  const renderRightActions = () => (
-    <RenderRightView>
-      <TouchableOpacityContainer
-        backgroundColor={colors?.deleteColor}
-        onPress={onDelete}>
-        <ViewContainer>
-          <Trash />
-        </ViewContainer>
-        <Spacer size={10} />
-        <SwipeText>{t("delete")}</SwipeText>
-      </TouchableOpacityContainer>
-    </RenderRightView>
-  );
+  const dispatch = useAppDispatch();
+  const toast = useToast();
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const handleDeleteLead = async () => {
+    try {
+      setDeleteLoading(true);
+      const response = await dispatch(
+        deleteLeadAction({ lead_id: leadData?.id }),
+      ).unwrap();
+      toast.show(response?.message, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Success,
+        },
+      });
+      await dispatch(dashboardLeadListAction({}));
+    } catch (error: any) {
+      toast.show(error, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
+    setDeleteLoading(false);
+  };
   return (
     <>
-      <Swipeable
-        ref={swipeAbleRef}
-        renderRightActions={renderRightActions}
-        onSwipeableWillOpen={() => {
-          if (cardIndex !== selectedCard) {
-            closeSwipeAble();
+      <LeadDetailCardContainer isActive={false}>
+        <LeadDetail
+          leadData={leadData}
+          onEdit={() =>
+            router.navigate(`/(protected)/add-lead/${leadData?.id}`)
           }
-          setSwipeAbleRef(swipeAbleRef);
-          setSelectedCard(cardIndex);
-        }}
-        onSwipeableWillClose={() => {
-          setSelectedCard(cardIndex);
-        }}>
-        <LeadDetailCardContainer isActive={false}>
-          <LeadDetail
-            phoneNumber={phoneNumber}
-            whatsAppNumber={whatsAppNumber}
-            mailID={mailID}
-            title={title}
-            dateTime={dateTime}
-          />
-        </LeadDetailCardContainer>
-      </Swipeable>
+          onDelete={handleDeleteLead}
+          loading={deleteLoading}
+          onChangeModalState={(value) => setShowModal(value)}
+          showModal={showModal}
+          isSocialMediaVisible={isSocialMediaVisible}
+        />
+      </LeadDetailCardContainer>
       <Spacer size={16} />
     </>
   );

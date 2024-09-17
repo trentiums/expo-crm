@@ -18,6 +18,7 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
   isFullWidth,
   isStaff,
   handleBottomSheetClose,
+  isAllowDeselect,
 }) => {
   const handleSelect = (value: any) => {
     if (isMultiple) {
@@ -30,7 +31,7 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
         input.onChange(multiValue.concat(value));
       }
     } else {
-      if (input.value === value) {
+      if (input.value === value && isAllowDeselect) {
         input.onChange(null);
       } else {
         input.onChange(value);

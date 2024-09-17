@@ -7,8 +7,8 @@ export const ModalContainer = styled(View)`
   margin: 24px;
   padding: 24px;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.modalContainer};
-  border-radius: 8px;
+  background-color: ${({ theme }) => theme.colors.white};
+  border-radius: 20px;
   min-width: 200px;
   justify-content: center;
   align-items: center;
@@ -16,17 +16,17 @@ export const ModalContainer = styled(View)`
 `;
 
 export const Header = styled(Text)<{ isIcon: boolean }>`
-  font-size: 24px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.modalHeading};
+  font-size: 20px;
+  font-weight: 800;
+  color: ${({ theme }) => theme.colors.twilightZone};
   text-align: center;
   margin-top: ${({ isIcon }) => (isIcon ? 16 : 0)}px;
 `;
 
 export const Description = styled(Text)`
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
-  color: ${({ theme }) => theme.colors.modalDescription};
+  color: ${({ theme }) => theme.colors.gray};
   text-align: center;
   align-self: center;
 `;
@@ -42,25 +42,18 @@ export const AllButtonView = styled(View)`
   align-self: flex-end;
 `;
 
-export const PrimaryLabel = styled(Text)<{ actionType: Actions }>`
-  color: ${({ actionType, theme }) =>
-    actionType === Actions.success
-      ? theme.colors.primaryColor
-      : actionType === Actions.delete
-        ? theme.colors.deleteColor
-        : actionType === Actions.default
-          ? theme.colors.white
-          : 'none'};
-  font-size: 14px;
+export const PrimaryLabel = styled(Text)`
+  color: ${({ theme }) => theme.colors.blueChaos};
+  font-size: 17px;
   font-weight: 600;
   justify-content: center;
   align-content: center;
 `;
 
 export const SecondaryLabel = styled(Text)`
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.gray};
+  color: ${({ theme }) => theme.colors.textGray};
 `;
 
 export const CrossIconContainer = styled(Pressable)`
@@ -75,8 +68,6 @@ export const ActionPressable = styled(Pressable)`
   flex-direction: row;
   gap: 8px;
   padding: 8px 16px;
-  border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.error};
   border-radius: 8px;
 `;
 export const CancelPressable = styled(Pressable)`

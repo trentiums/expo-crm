@@ -1,5 +1,5 @@
 import { useAppTheme } from '@constants/theme';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import LeadStatusChangeForm from '@organisms/LeadStatusChangeForm/LeadStatusChangeForm';
 import { LeadStatusChangeFormValues } from '@organisms/LeadStatusChangeForm/LeadStatusChangeForm.props';
 import { getLeadDetailsAction, updateLeadAction } from '@redux/actions/lead';
@@ -92,17 +92,17 @@ const LeadStatusChangeScreen = () => {
       }
       const response = await dispatch(updateLeadAction(formData)).unwrap();
       await dispatch(getLeadDetailsAction({ lead_id: leadId }));
-      router.navigate('(protected)/(drawer)/(tabs)/leads');
+      router.navigate('(protected)/(tabs)/leads');
       setDocuments([]);
       toast.show(response?.message, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Success,
         },
       });
     } catch (error: any) {
       toast.show(error, {
-        type: 'customToast',
+        type: ToastType.Custom,
         data: {
           type: ToastTypeProps.Error,
         },
@@ -120,7 +120,7 @@ const LeadStatusChangeScreen = () => {
     });
   }, [navigation]);
   return (
-    <ScreenTemplate>
+    <ScreenTemplate title={t('leadStatusChange')}>
       <FormTemplate
         Component={LeadStatusChangeForm}
         loading={loading}
@@ -130,9 +130,7 @@ const LeadStatusChangeScreen = () => {
         leadCardId={slug?.leadId}
         setDocuments={setDocuments}
         documents={documents}
-        onCancelPress={() =>
-          router.navigate('(protected)/(drawer)/(tabs)/leads')
-        }
+        onCancelPress={() => router.navigate('(protected)/(tabs)/leads')}
       />
     </ScreenTemplate>
   );

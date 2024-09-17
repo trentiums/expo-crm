@@ -9,9 +9,10 @@ const ProtectedLayout = () => {
       screenOptions={{
         headerBackTitleVisible: false,
         headerTintColor: colors.white,
+        headerShown: false,
       }}
-      initialRouteName="(drawer)">
-      <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+      initialRouteName="(tabs)">
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
     </Stack>
   );
 };

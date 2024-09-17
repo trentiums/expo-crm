@@ -1,6 +1,7 @@
 import React from 'react';
 import { ToastProvider } from 'react-native-toast-notifications';
 import {
+  CloseText,
   Container,
   IconContainer,
   MessageText,
@@ -12,20 +13,19 @@ import { ToastTypeProps } from './Toast.props';
 import { useAppTheme } from '@constants/theme';
 import { ToastProps } from 'react-native-toast-notifications/lib/typescript/toast';
 import ShadowBox from '@atoms/ShadowBox/ShadowBox';
-import NotificationSuccess from '@atoms/Illustrations/NotificationSuccess';
+import NotificationSuccessIcon from '@atoms/Illustrations/NotificationSuccess';
 import { Flexed, Spacer } from '@atoms/common/common.styles';
-import NotificationError from '@atoms/Illustrations/NotificationError';
-import NotificationWarning from '@atoms/Illustrations/NotificationWarning';
-
-import CloseIcon from '@atoms/Illustrations/Close';
+import NotificationWarningIcon from '@atoms/Illustrations/NotificationWarning';
 import { StatusCode } from '@type/api/api';
+import { useTranslation } from 'react-i18next';
 
 const ToastProviderContainer = ({
   children,
 }: {
   children: React.JSX.Element;
 }) => {
-  const { colors } = useAppTheme();
+  const { t } = useTranslation('toast');
+
   const NotificationRender = (
     renderType: ToastTypeProps,
     message: string | Element,
@@ -40,7 +40,6 @@ const ToastProviderContainer = ({
       case ToastTypeProps.Error:
         return (
           <NotificationContent>
-            <NotificationError />
             <Spacer size={8} />
             <MessageText>{message?.toString()}</MessageText>
           </NotificationContent>
@@ -48,7 +47,7 @@ const ToastProviderContainer = ({
       case ToastTypeProps.Success:
         return (
           <NotificationContent>
-            <NotificationSuccess />
+            <NotificationSuccessIcon />
             <Spacer size={8} />
             <MessageText>{message?.toString()}</MessageText>
           </NotificationContent>
@@ -56,7 +55,7 @@ const ToastProviderContainer = ({
       case ToastTypeProps.Warning:
         return (
           <NotificationContent>
-            <NotificationWarning />
+            <NotificationWarningIcon />
             <Spacer size={8} />
             <MessageText>{message?.toString()}</MessageText>
           </NotificationContent>
@@ -93,7 +92,7 @@ const ToastProviderContainer = ({
               </Flexed>
               {toastInfo.data.type !== ToastTypeProps.Copy && (
                 <IconContainer onPress={() => toastInfo.onHide()}>
-                  <CloseIcon color={colors.white} />
+                  <CloseText>{t('ok')}</CloseText>
                 </IconContainer>
               )}
             </NotificationBox>

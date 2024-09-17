@@ -24,7 +24,14 @@ export const emailOrPhoneValidator = (value: any, allValues: any) => {
   }
   return undefined;
 };
-
+export const confirmPasswordValidator = (
+  confirmPassword: string,
+  allValues: any,
+) => {
+  return confirmPassword === allValues.password
+    ? undefined
+    : 'errors:form.passwordMissMatch';
+};
 export const maxLengthValidator = (length: number) => (value: string) =>
   value && value.length > length ? 'errors:form.maxLengthError' : undefined;
 export const numberValidator: Validator = (value) => {
@@ -65,18 +72,21 @@ export const siretNumberValidation: Validator = (value) => {
   }
 };
 export const complexPasswordValidator = (value) => {
-  const hasUpperCase = /[A-Z]/.test(value);
-  const hasLowerCase = /[a-z]/.test(value);
-  const hasNumber = /\d/.test(value);
+  if (value) {
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasNumber = /\d/.test(value);
 
-  if (!hasUpperCase) {
-    return 'errors:form.passwordError';
+    if (!hasUpperCase) {
+      return 'errors:form.passwordError';
+    }
+    if (!hasLowerCase) {
+      return 'errors:form.passwordError';
+    }
+    if (!hasNumber) {
+      return 'errors:form.passwordError';
+    }
+  } else {
+    return null;
   }
-  if (!hasLowerCase) {
-    return 'errors:form.passwordError';
-  }
-  if (!hasNumber) {
-    return 'errors:form.passwordError';
-  }
-  return null;
 };

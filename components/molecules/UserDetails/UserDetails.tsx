@@ -18,9 +18,9 @@ import PhoneIcon from '@atoms/Illustrations/PhoneIcon';
 import MailIcon from '@atoms/Illustrations/MailIcon';
 import View from '@atoms/View/View';
 import { callToAction, compressString } from '@utils/common';
-import WhatsApp from '@atoms/Illustrations/WhatsApp';
+import WhatsAppIcon from '@atoms/Illustrations/WhatsApp';
 import Clipboard from '@react-native-clipboard/clipboard';
-import { ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
 import { telLink, whatsAppLink } from '@utils/config';
 
@@ -62,7 +62,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
               onPress={() => {
                 callToAction(`${whatsAppLink}${whatsAppNumber}`);
               }}>
-              <WhatsApp />
+              <WhatsAppIcon />
             </Pressable>
           </NumberView>
           <Spacer size={5} />
@@ -71,7 +71,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({
               onPress={() => {
                 Clipboard.setString(mailID);
                 toast.show(t('copyText'), {
-                  type: 'customToast',
+                  type: ToastType.Custom,
                   data: {
                     type: ToastTypeProps.Copy,
                   },

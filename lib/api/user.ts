@@ -1,5 +1,6 @@
 import {
   AssignUserListResponse,
+  ChangePasswordParams,
   DeleteUserParams,
   SaveUserParams,
   UpdateUserParams,
@@ -7,12 +8,12 @@ import {
   UserDetailsResponse,
   UserListParams,
   UserListResponse,
-} from "@type/api/user";
-import { api } from "./api";
-import { AxiosPromise } from "axios";
-import { ApiResponse } from "@type/api/api";
+} from '@type/api/user';
+import { api } from './api';
+import { AxiosPromise } from 'axios';
+import { ApiResponse } from '@type/api/api';
 export const userList = (
-  body: UserListParams
+  body: UserListParams,
 ): AxiosPromise<UserListResponse> =>
   api.get(`/company-user-list`, { params: body });
 
@@ -20,23 +21,27 @@ export const saveUser = (body: SaveUserParams): AxiosPromise<ApiResponse> =>
   api.post(`/save-company-user`, body);
 
 export const deleteUser = (
-  body: DeleteUserParams
+  body: DeleteUserParams,
 ): AxiosPromise<ApiResponse> => {
-  return api.post("/delete-company-user", body);
+  return api.post('/delete-company-user', body);
 };
 
 export const updateUser = (
-  body: UpdateUserParams
+  body: UpdateUserParams,
 ): AxiosPromise<ApiResponse> => {
-  return api.post("/update-company-user", body);
+  return api.post('/update-company-user', body);
 };
 
 export const userDetail = (
-  body: UserDetailsParams
+  body: UserDetailsParams,
 ): AxiosPromise<UserDetailsResponse> => {
-  return api.get("/company-user-details", { params: body });
+  return api.get('/company-user-details', { params: body });
 };
 
 export const assignUserList = (): AxiosPromise<AssignUserListResponse> => {
-  return api.get("/assign-company-user-list");
+  return api.get('/assign-company-user-list');
 };
+
+export const changePassword = (
+  body: ChangePasswordParams,
+): AxiosPromise<ApiResponse> => api.post(`/change-password`, body);

@@ -1,3 +1,5 @@
+import { LanguageEnum } from '@redux/slices/auth';
+
 export const dashboardLeads = [
   {
     title: 'lead completed',
@@ -27,3 +29,22 @@ export const initialModalType = {
   negotiation: false,
 };
 export const MAX_FILE_SIZE = 5 * 1024 * 1024;
+export const debounceTime = 300;
+
+export const languageList = [
+  {
+    id: 1,
+    name: LanguageEnum.english,
+    shortForm: 'en',
+  },
+  {
+    id: 2,
+    name: LanguageEnum.gujarati,
+    shortForm: 'gu',
+  },
+  {
+    id: 3,
+    name: LanguageEnum.hindi,
+    shortForm: 'hi',
+  },
+];
