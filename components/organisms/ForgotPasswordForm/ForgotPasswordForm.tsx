@@ -47,7 +47,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
         onPress={form.submit}
         loading={loading}
         textColor={valid ? colors.black : colors.disabledTextColor}
-        valid={valid}>
+        variant={valid}>
         <FormButtonText valid={valid}>{t('sendEmail')}</FormButtonText>
       </ButtonSubmit>
     </LoginFormView>
