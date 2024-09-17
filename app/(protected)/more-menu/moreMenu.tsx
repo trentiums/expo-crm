@@ -25,15 +25,28 @@ import { changeTheme, ThemeTypes } from '@redux/slices/theme';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import MoreMenuBottom from '@organisms/MoreMenuBottom/MoreMenuBottom';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
+import { UserRole } from '@type/api/auth';
+import { deleteAccountAction } from '@redux/actions/user';
+import ActionModal from '@molecules/ActionModal/ActionModal';
+import { Actions } from '@molecules/ActionModal/ActionModal.props';
+import TrashIcon from '@atoms/Illustrations/Trash';
+import { useAppTheme } from '@constants/theme';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { useToast } from 'react-native-toast-notifications';
 
 const MoreMenu = () => {
   const { t } = useTranslation('screenTitle');
   const { t: tm } = useTranslation('moreMenu');
   const { top } = useSafeAreaInsets();
+  const { colors } = useAppTheme();
+  const toast = useToast();
   const dispatch = useAppDispatch();
   const [visibleLanguageOptionSheet, setVisibleLanguageOptionSheet] =
     useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteShowModal, setDeleteShowModal] = useState(false);
   const { currentTheme } = useSelector((state: RootState) => state.theme);
+  const userRole = useSelector((state: RootState) => state.auth.user.userRole);
   const currentLanguage = useSelector(
     (state: RootState) => state.auth.currentLanguage,
   );
@@ -44,6 +57,27 @@ const MoreMenu = () => {
     } else if (currentTheme === ThemeTypes.dark) {
       dispatch(changeTheme(ThemeTypes.light));
     }
+  };
+
+  const onDeleteActionPress = async () => {
+    try {
+      setDeleteLoading(true);
+      const response = await dispatch(deleteAccountAction()).unwrap();
+      toast.show(response?.message, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Success,
+        },
+      });
+    } catch (error) {
+      toast.show(error, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    }
+    setDeleteLoading(false);
   };
 
   const handleLanguageBottomSheet = () => {
@@ -142,12 +176,17 @@ const MoreMenu = () => {
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
             />
-            <Spacer size={20} />
-            <DividerContainer />
-            <Spacer size={20} />
-            <Pressable>
-              <DeleteText>{tm('deleteAccount')}</DeleteText>
-            </Pressable>
+            {(userRole === UserRole.Admin ||
+              userRole === UserRole.CompanyAdmin) && (
+              <>
+                <Spacer size={20} />
+                <DividerContainer />
+                <Spacer size={20} />
+                <Pressable onPress={() => setDeleteShowModal(true)}>
+                  <DeleteText>{tm('deleteAccount')}</DeleteText>
+                </Pressable>
+              </>
+            )}
           </View>
         </Flexed>
         <MoreMenuBottom />
@@ -157,6 +196,25 @@ const MoreMenu = () => {
         <BottomSheetNavigator
           initialRouteName="LanguageList"
           onClosePress={handleLanguageBottomSheet}
+        />
+      )}
+      {deleteShowModal && (
+        <ActionModal
+          isModal
+          onBackdropPress={() => {
+            setDeleteShowModal(false);
+          }}
+          heading={tm('discardMedia')}
+          description={tm('disCardDescription')}
+          label={tm('yesDiscard')}
+          actionType={Actions.delete}
+          actiontext={tm('cancel')}
+          onCancelPress={() => {
+            setDeleteShowModal(false);
+          }}
+          onActionPress={() => onDeleteActionPress()}
+          icon={<TrashIcon color={colors?.deleteColor} />}
+          loading={deleteLoading}
         />
       )}
     </ScreenTemplate>
