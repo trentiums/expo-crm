@@ -18,9 +18,11 @@ import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
 import {
   countryListAction,
+  currencyListAction,
   leadChannelListAction,
   leadConversionListAction,
   leadStatusListAction,
+  settingsListAction,
 } from '@redux/actions/general';
 import { getProductServiceListAction } from '@redux/actions/productService';
 import { router } from 'expo-router';
@@ -46,6 +48,8 @@ const LoginScreen = () => {
       ).unwrap();
       if (await loginResponse.status) {
         await Promise.all([
+          dispatch(settingsListAction()),
+          dispatch(currencyListAction()),
           dispatch(leadChannelListAction()),
           dispatch(leadConversionListAction()),
           dispatch(leadStatusListAction()),
@@ -53,11 +57,10 @@ const LoginScreen = () => {
           dispatch(getProductServiceListAction({})),
           dispatch(getLeadListAction({})),
           dispatch(getUserListAction({})),
-          //TODO:assign users api integration is in further branch will update as branch merged
-          // dispatch(getAssignUserListAction()),
+          dispatch(getAssignUserListAction({})),
         ]);
       }
-      router.replace('/(protected)/(tabs)/dashboard');
+      router.replace('/(protected)/(tabs)/leads');
     } catch (error: any) {
       toast.show(error, {
         type: ToastType.Custom,

@@ -36,6 +36,9 @@ export type CustomDropDownProps = {
   handleOnEndReached?: () => void;
   onClearIconPress?: () => void;
   isAllowDeselect?: boolean;
+  isSearch?: boolean;
+  onEndReached?: () => void;
+  dropdownDataType: DropdownDataType;
   heading?: string;
 };
 
@@ -44,4 +47,9 @@ export interface ItemList {
   id: number;
   title: string;
   icon?: string;
+}
+export enum DropdownDataType {
+  COUNTRY = 'country',
+  USERS = 'users',
+  SERVICES = 'services',
 }

@@ -24,7 +24,13 @@ export interface UserState {
     total: number;
     users: UserStateType[];
   };
-  assignUserList: AssignUserState[];
+  assignUserList: {
+    currentPage: number;
+    lastPage: number;
+    perPage: number;
+    total: number;
+    assignUsers: AssignUserState[];
+  };
   userDetail: UserStateType;
 }
 const initialState: UserState = {
@@ -42,7 +48,13 @@ const initialState: UserState = {
     userRole: 0,
     createdAt: '',
   },
-  assignUserList: [],
+  assignUserList: {
+    currentPage: 0,
+    lastPage: 0,
+    perPage: 0,
+    total: 0,
+    assignUsers: [],
+  },
 };
 const userSlice = createSlice({
   name: 'user',
@@ -92,7 +104,22 @@ const userSlice = createSlice({
     builder.addCase(
       getAssignUserListAction.fulfilled,
       (state, action: PayloadAction<AssignUserListResponse>) => {
-        state.assignUserList = formatAssignUser(action.payload.data);
+        const assignUserList = formatAssignUser(action?.payload?.data?.data);
+        if (
+          action.payload.data.current_page !== 1 &&
+          state.assignUserList.currentPage !== action.payload.data.current_page
+        ) {
+          let mergedData =
+            state.assignUserList.assignUsers.concat(assignUserList);
+          state.assignUserList.assignUsers = mergedData;
+        } else {
+          state.assignUserList.assignUsers = assignUserList;
+        }
+        state.assignUserList.currentPage = action.payload.data.current_page;
+        state.assignUserList.currentPage = action.payload.data.current_page;
+        state.assignUserList.lastPage = action.payload.data.last_page;
+        state.assignUserList.perPage = action.payload.data.per_page;
+        state.assignUserList.total = action.payload.data.total;
       },
     );
     builder.addCase(logoutUserAction.fulfilled, () => {

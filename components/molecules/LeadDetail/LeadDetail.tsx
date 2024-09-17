@@ -133,7 +133,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           initialRouteName="ModifyLeadOption"
           onClosePress={closeBottomSheet}
           meta={{
-            leadId: leadData?.id,
+            leadId: leadData?.leadId,
             optionType: optionType || ScreenOptionType.DASHBOARD,
             onDelete: onDelete,
             editRoute: editRoute,

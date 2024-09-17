@@ -118,6 +118,9 @@ const AddLead = () => {
           : '',
         documents: documentArray,
         assignTo: values?.assignTo,
+        budgetCurrencyCode: values.budgetCurrencyCode,
+        dealAmountCurrencyCode: values?.dealAmountCurrencyCode,
+        timeFrameType: values?.timeFrameType,
       }),
     );
     try {
@@ -140,6 +143,23 @@ const AddLead = () => {
       if (addLeadData?.companySize) {
         formData.append('company_size', `${addLeadData?.companySize}`);
       }
+
+      formData.append(
+        'budget_currency_id	',
+        values?.budgetCurrencyCode ||
+          addLeadData?.budgetCurrencyCode ||
+          undefined,
+      );
+      formData.append(
+        'timeline_timeframe	',
+        values?.timeFrameType || addLeadData?.timeFrameType || undefined,
+      );
+      formData.append(
+        'deal_amount_currency_id',
+        values?.dealAmountCurrencyCode ||
+          addLeadData?.dealAmountCurrencyCode ||
+          undefined,
+      );
       formData.append('company_website', addLeadData?.webSite || '');
       formData.append('time_line', values?.timeFrame || '');
       formData.append('description', values?.comments || '');

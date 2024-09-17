@@ -47,6 +47,9 @@ const initialState: LeadsState = {
     dealCloseDate: '',
     documents: [],
     assignTo: 0,
+    dealAmountCurrencyCode: undefined,
+    budgetCurrencyCode: undefined,
+    timeFrameType: undefined,
   },
   leadList: {
     currentPage: 0,
@@ -80,6 +83,9 @@ const initialState: LeadsState = {
     webSite: '',
     documents: [],
     assignTo: 0,
+    budgetCurrencyCode: undefined,
+    dealAmountCurrencyCode: undefined,
+    timeFrameType: undefined,
   },
   leadsFilter: {
     endDate: '',

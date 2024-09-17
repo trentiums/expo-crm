@@ -55,7 +55,13 @@ export interface UserDetailsResponse {
 export interface AssignUserListResponse {
   status: boolean;
   message: string;
-  data: AssignUser[];
+  data: {
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+    data: AssignUser[];
+  };
 }
 
 export interface AssignUser {

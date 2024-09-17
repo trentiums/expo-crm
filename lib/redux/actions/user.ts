@@ -62,10 +62,13 @@ export const getUserDetailAction = createAsyncThunk<
   }),
 );
 
-export const getAssignUserListAction = createAsyncThunk<AssignUserListResponse>(
+export const getAssignUserListAction = createAsyncThunk<
+  AssignUserListResponse,
+  UserListParams
+>(
   'user/assignUserList',
-  withToastForError(async () => {
-    const response = await assignUserList();
+  withToastForError(async (body) => {
+    const response = await assignUserList(body);
     return response.data;
   }),
 );

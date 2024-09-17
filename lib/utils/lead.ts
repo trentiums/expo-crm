@@ -1,7 +1,7 @@
 import { LeadListData } from '@type/api/lead';
 
 export const formatLeadList = (data: LeadListData[]) => {
-  return data.map((item) => ({
+  return data?.map((item) => ({
     id: item?.id,
     companyUserId: item?.company_user_id,
     name: item?.name,
@@ -23,6 +23,9 @@ export const formatLeadList = (data: LeadListData[]) => {
     createdAt: item?.created_at,
     updatedAt: item?.created_at,
     assignTo: item.assign_to_user_id,
+    budgetCurrencyCode: item.budget_currency_id,
+    timeFrameType: item.timeline_timeframe,
+    dealAmountCurrencyCode: item.deal_amount_currency_id,
     productService: item.product_services.map((item) => ({
       id: item?.id,
       companyUserId: item?.company_user_id,
@@ -64,6 +67,9 @@ export const formatLeadDetails = (item: LeadListData) => {
     createdAt: item?.created_at,
     updatedAt: item?.created_at,
     assignTo: item?.assign_to_user_id,
+    budgetCurrencyCode: item.budget_currency_id,
+    dealAmountCurrencyCode: item.deal_amount_currency_id,
+    timeFrameType: item.timeline_timeframe,
     productService: item.product_services.map((item) => ({
       id: item?.id,
       companyUserId: item?.company_user_id,

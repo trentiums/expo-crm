@@ -64,7 +64,6 @@ export const AddLeadContainer = styled(View)`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 16px;
   flex: 1;
   flex-basis: auto;
 `;

@@ -1,7 +1,7 @@
-import React, { forwardRef } from "react";
-import { TextInput as RNTextInput } from "react-native-paper";
-import { CustomTextInputProps } from "./TextInput.props";
-import { LabelText, RNPTextInput } from "./TextInput.styles";
+import React, { forwardRef } from 'react';
+import { TextInput as RNTextInput } from 'react-native-paper';
+import { CustomTextInputProps } from './TextInput.props';
+import { LabelText, RNPTextInput } from './TextInput.styles';
 
 const TextInput = forwardRef<typeof RNTextInput, CustomTextInputProps>(
   ({ label, labelColor, right, left, ...props }) => {
@@ -17,7 +17,7 @@ const TextInput = forwardRef<typeof RNTextInput, CustomTextInputProps>(
         />
       </>
     );
-  }
+  },
 );
 
 export default TextInput;

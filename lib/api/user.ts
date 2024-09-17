@@ -37,8 +37,10 @@ export const userDetail = (
   return api.get('/company-user-details', { params: body });
 };
 
-export const assignUserList = (): AxiosPromise<AssignUserListResponse> => {
-  return api.get('/assign-company-user-list');
+export const assignUserList = (
+  body: UserListParams,
+): AxiosPromise<AssignUserListResponse> => {
+  return api.get('/assign-company-user-list', { params: body });
 };
 
 export const deleteAccount = (): AxiosPromise<ApiResponse> => {

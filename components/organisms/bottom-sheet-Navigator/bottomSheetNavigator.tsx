@@ -348,10 +348,12 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
             {(props) => (
               <DropdownListing
                 {...props}
+                selectedValue={meta.selectedValue}
                 changeSnapPoints={changeSnapPoints}
                 changeRoute={handleClosePress}
                 dropdownData={meta.dropdownData}
                 handelSelectData={(id) => meta.handelSelectData(id)}
+                dropdownDataType={meta.dropdownDataType}
               />
             )}
           </Stack.Screen>
