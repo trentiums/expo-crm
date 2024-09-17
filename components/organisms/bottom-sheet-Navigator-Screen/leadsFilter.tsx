@@ -14,23 +14,8 @@ import { CreateOptionProps } from './screen.props';
 const LeadsFilter: React.FC<CreateOptionProps> = ({ changeRoute }) => {
   const dispatch = useAppDispatch();
   const toast = useToast();
-  const leadsAppliedFilter = useSelector(
-    (state: RootState) => state.leads.leadsFilter,
-  );
   const [filterLoading, setFilterLoading] = useState(false);
   const handleApplyFilter = async (values: LeadsFilterProps) => {
-    const states = [
-      values?.startDate || leadsAppliedFilter?.startDate,
-      values?.endDate || leadsAppliedFilter?.endDate,
-      //TODO: as api change the channel will go in array
-      values?.selectedChannel?.[0] || leadsAppliedFilter?.selectedChannel,
-      values?.selectedStatus || leadsAppliedFilter?.selectedStatus,
-      values?.selectedStage || leadsAppliedFilter?.selectedStage,
-    ];
-
-    const count = states.filter(
-      (state) => state !== null && state !== undefined && state !== '',
-    ).length;
     dispatch(setLeadsFilters(values));
     try {
       setFilterLoading(true);
