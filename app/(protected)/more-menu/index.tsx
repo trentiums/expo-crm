@@ -83,8 +83,7 @@ const MoreMenu = () => {
     {
       label: 'changePassword',
       icon: <LockIcon />,
-      onPress: () =>
-        router.navigate('/(protected)/change-password/changePassword'),
+      onPress: () => router.navigate('/(protected)/change-password'),
     },
   ];
 

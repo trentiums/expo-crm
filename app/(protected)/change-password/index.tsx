@@ -35,7 +35,7 @@ const ChangePassword = () => {
           type: ToastTypeProps.Success,
         },
       });
-      router.navigate('/(protected)/more-menu/moreMenu');
+      router.navigate('/(protected)/more-menu');
     } catch (error: any) {
       toast.show(error, {
         type: ToastType.Custom,
