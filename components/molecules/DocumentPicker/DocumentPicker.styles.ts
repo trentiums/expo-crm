@@ -25,17 +25,15 @@ export const UploadText = styled(Text)<{ textColor?: string }>`
   color: ${({ theme, textColor }) => textColor || theme.colors.black};
   text-align: center;
 `;
-export const FlatListCon = styled(FlatList).attrs({
-  contentContainerStyle: {},
-})``;
+
 export const DocumentView = styled(View)`
   display: flex;
   flex-direction: column;
   gap: 100px;
 `;
-export const PressAbleContainer = styled(Pressable)<{ isWidthShort?: boolean }>`
+export const PressAbleContainer = styled(Pressable)`
   position: relative;
-  width: ${({ isWidthShort }) => (isWidthShort ? 30 : 100)}%;
+  width: 100%;
   height: 60px;
   background-color: ${({ theme }) => theme.colors.backgroundCardColor};
   border-radius: 8px;

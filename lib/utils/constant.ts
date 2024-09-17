@@ -1,3 +1,5 @@
+import { LanguageEnum } from '@redux/slices/auth';
+
 export const dashboardLeads = [
   {
     title: 'lead completed',
@@ -93,4 +95,21 @@ export const companySizes = [
   { id: 4, label: '50—200 employees' },
   { id: 5, label: '200—1000 employees' },
   { id: 6, label: '1000+ employees' },
+];
+export const languageList = [
+  {
+    id: 1,
+    name: LanguageEnum.english,
+    shortForm: 'en',
+  },
+  {
+    id: 2,
+    name: LanguageEnum.gujarati,
+    shortForm: 'gu',
+  },
+  {
+    id: 3,
+    name: LanguageEnum.hindi,
+    shortForm: 'hi',
+  },
 ];

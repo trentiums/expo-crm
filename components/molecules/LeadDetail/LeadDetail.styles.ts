@@ -10,6 +10,10 @@ export const DetailContainer = styled(View)`
   align-content: flex-start;
   gap: 8px;
 `;
+
+export const LeadDetailView = styled(View)`
+  flex: 1;
+`;
 export const LeadInfoView = styled(View)`
   display: flex;
   flex-direction: row;
@@ -30,7 +34,7 @@ export const DateTimeText = styled(Text)`
   color: ${({ theme }) => theme.colors.textGray};
   font-size: 14px;
 `;
-export const CommunicationOptionCon = styled(Pressable)`
+export const CommunicationOptionContainer = styled(Pressable)`
   display: flex;
   flex-direction: row;
   justify-content: center;

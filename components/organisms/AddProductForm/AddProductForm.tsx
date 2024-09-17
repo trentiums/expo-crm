@@ -4,10 +4,6 @@ import {
   ButtonSubmit,
   FormButtonText,
   Label,
-  PickerContainer,
-  PressAbleContainer,
-  SvgShowContainer,
-  UploadText,
 } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
 import { KeyboardAwareScrollViewContainer } from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
 import { composeValidators, requiredValidator } from '@utils/formValidators';
@@ -19,9 +15,9 @@ import { useAppTheme } from '@constants/theme';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import { getProductServiceDetailAction } from '@redux/actions/productService';
 import Loader from '@atoms/Loader/Loader';
-import { FormsView, LoaderView } from './AddProductForm.styles';
+import { FormView, LoaderView } from './AddProductForm.styles';
 import { useLocalSearchParams } from 'expo-router';
-import DocumentPick from '@molecules/DocumentPicker/DocumentPicker';
+import DocumentsPicker from '@molecules/DocumentPicker/DocumentPicker';
 
 const AddProductForm: React.FC<AddProductFormProps> = ({
   form,
@@ -64,12 +60,13 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
     if (params?.slug) {
       form.change('name', productServiceDetail?.name);
       form.change('description', productServiceDetail?.description);
-      productServiceDetail?.documents?.id &&
-        setDocumentArray([productServiceDetail?.documents]);
+      productServiceDetail?.documents &&
+        setDocumentArray(productServiceDetail?.documents);
     } else {
       setDocumentArray([]);
     }
   }, [params?.slug, productServiceDetail]);
+
   useEffect(() => {
     setIsDisable(true);
   }, [values]);
@@ -89,7 +86,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
           <Loader size={16} />
         </LoaderView>
       ) : (
-        <FormsView>
+        <FormView>
           <KeyboardAwareScrollViewContainer
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
@@ -117,9 +114,11 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
               contentStyle={{ marginTop: -10 }}
             />
             <Spacer size={16} />
-            <DocumentPick
+            <DocumentsPicker
               setDocumentArray={setDocumentArray}
               documentArray={documentArray}
+              isProductServices
+              id={+params?.slug}
             />
           </KeyboardAwareScrollViewContainer>
           <ButtonSubmit
@@ -128,7 +127,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
             valid={valid}>
             <FormButtonText valid={valid}>{t('save')}</FormButtonText>
           </ButtonSubmit>
-        </FormsView>
+        </FormView>
       )}
     </>
   );

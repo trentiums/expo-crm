@@ -32,5 +32,5 @@ export const DetailContainer = styled(View)`
   justify-content: space-between;
   align-content: flex-start;
   gap: 8px;
-  padding-top: 24px;
+  padding-top: 18px;
 `;

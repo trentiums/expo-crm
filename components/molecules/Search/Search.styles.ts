@@ -5,6 +5,7 @@ import { Pressable } from 'react-native';
 import { View as RNView } from 'react-native';
 
 export const FilterContainer = styled(View)`
+  display: flex;
   flex-direction: row;
   padding-bottom: 16px;
   margin-top: 16px;

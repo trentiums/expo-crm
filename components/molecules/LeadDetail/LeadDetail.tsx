@@ -7,21 +7,17 @@ import {
   LeadInfoView,
   NameAndStatusContainer,
   NameText,
-  CommunicationOptionCon,
+  CommunicationOptionContainer,
 } from './LeadDetail.styles';
 import { useTranslation } from 'react-i18next';
 import {
   generateWhatsAppUrl,
-  handleEmail,
   handleOpenDialCall,
-  handlePhoneCall,
+  handleOpenEmail,
 } from '@utils/common';
 import WhatsApp from '@atoms/Illustrations/WhatsApp';
 import { LeadDetailsProps } from './LeadDetail.props';
-import Trash from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
-import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import ActionModal from '@molecules/ActionModal/ActionModal';
 import EmailSendBox from '@atoms/Illustrations/EmailBox';
 import PhoneIcon from '@atoms/Illustrations/PhoneIcon';
 import { RootState, useSelector } from '@redux/store';
@@ -37,13 +33,10 @@ import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/scree
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
   leadData,
-  onEdit,
-  onDelete,
-  isDeleteLoading,
-  showModal,
-  onChangeModalState,
-  onChangeDeleteId,
   isSocialMediaVisible,
+  optionType,
+  onDelete,
+  editRoute,
   isShowLeadInfo,
 }) => {
   const { t } = useTranslation('leadDetailCardDetails');
@@ -70,9 +63,6 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   const handleWhatsApp = (phoneNumber: number | string) => {
     generateWhatsAppUrl(phoneNumber);
   };
-  const handleDeleteLead = async () => {
-    onDelete(leadData?.leadId || leadData?.id);
-  };
   const handlePhoneCall = (phoneNumber) => {
     try {
       handleOpenDialCall(phoneNumber);
@@ -84,10 +74,6 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
         },
       });
     }
-  };
-
-  const hideActionModal = () => {
-    onChangeModalState(false);
   };
 
   const openBottomSheet = () => setVisibleBottomSheet(true);
@@ -123,46 +109,34 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
       {isSocialMediaVisible && (
         <ContactBox>
           {leadData?.email && (
-            <CommunicationOptionCon onPress={handleEmail}>
+            <CommunicationOptionContainer onPress={handleEmail}>
               <EmailSendBox />
-            </CommunicationOptionCon>
+            </CommunicationOptionContainer>
           )}
           {leadData?.phone && (
-            <CommunicationOptionCon
-              onPress={() => handlePhoneCall(leadData.phone)}>
-              <PhoneIcon />
-            </CommunicationOptionCon>
-          )}
-          {leadData?.phone && (
-            <CommunicationOptionCon
-              onPress={() => handleWhatsApp(leadData.phone)}>
-              <WhatsApp />
-            </CommunicationOptionCon>
+            <>
+              <CommunicationOptionContainer
+                onPress={() => handlePhoneCall(leadData.phone)}>
+                <PhoneIcon />
+              </CommunicationOptionContainer>
+              <CommunicationOptionContainer
+                onPress={() => handleWhatsApp(leadData.phone)}>
+                <WhatsApp />
+              </CommunicationOptionContainer>
+            </>
           )}
         </ContactBox>
       )}
-      {showModal && (
-        <ActionModal
-          isModal={showModal}
-          onBackdropPress={hideActionModal}
-          heading={tm('discardMedia')}
-          description={tm('disCardDescription')}
-          label={tm('yesDiscard')}
-          actionType={Actions.delete}
-          actiontext={tm('cancel')}
-          onCancelPress={hideActionModal}
-          onActionPress={() => handleDeleteLead()}
-          icon={<Trash color={colors?.deleteColor} />}
-          loading={isDeleteLoading}
-        />
-      )}
+
       {visibleBottomSheet && (
         <BottomSheetNavigator
           initialRouteName="ModifyLeadOption"
           onClosePress={closeBottomSheet}
           meta={{
             leadId: leadData?.id,
-            optionType: ScreenOptionType.DASHBOARD,
+            optionType: optionType || ScreenOptionType.DASHBOARD,
+            onDelete: onDelete,
+            editRoute: editRoute,
           }}
         />
       )}

@@ -1,4 +1,4 @@
-import { ApiResponse } from "./api";
+import { ApiResponse } from './api';
 
 export interface DashboardLeadListItem {
   id: number;
@@ -16,7 +16,16 @@ export interface DashboardLeadListItem {
   updated_at?: string;
   created_at: string;
 }
-
+export interface DashboardAdminLeadListItem {
+  user_id: number;
+  user_name: string;
+  total_leads: number;
+  lead_initial_count: number;
+  lead_proposal_count?: number;
+  lead_negotiation_count: number;
+  lead_closed_won_count: number;
+  lead_closed_lost_count: number;
+}
 export interface LeadStageCountLeadListItem {
   lead_conversion_id: number;
   name: string;
@@ -28,7 +37,7 @@ export interface DashboardLeadListResponse extends ApiResponse {
     current_page: number;
     last_page: number;
     per_page: number;
-    data: DashboardLeadListItem[];
+    data: DashboardLeadListItem[] & DashboardAdminLeadListItem[];
   };
 }
 
@@ -38,4 +47,6 @@ export interface DashboardLeadStageCountResponse extends ApiResponse {
 
 export interface DashboardLeadListParams {
   page?: number;
+  order_by?: number;
+  sort_order?: number;
 }
