@@ -29,6 +29,7 @@ import { Flexed } from '@atoms/common/common.styles';
 import LeadStatus from '@molecules/LeadStatus/LeadStatus';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
 import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
+import LeadInfoCard from '@molecules/LeadInfoCard/LeadInfoCard';
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
   leadData,
@@ -36,6 +37,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   optionType,
   onDelete,
   editRoute,
+  isShowLeadInfo,
 }) => {
   const { t } = useTranslation('leadDetailCardDetails');
   const { t: tm } = useTranslation('modalText');
@@ -104,6 +106,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           iconColor={colors.textDark}
         />
       </LeadInfoView>
+      {isShowLeadInfo && <LeadInfoCard leadId={leadData.leadId} />}
       {isSocialMediaVisible && (
         <ContactBox>
           {leadData?.email && (

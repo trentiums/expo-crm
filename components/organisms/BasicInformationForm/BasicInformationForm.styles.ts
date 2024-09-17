@@ -3,8 +3,7 @@ import Modal from '@atoms/Modal/Modal';
 import Text from '@atoms/Text/Text';
 import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
-import { Image } from 'expo-image';
-import { FlatList, Pressable } from 'react-native';
+import { FlatList, Image, Pressable } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const BasicInformationButtons = styled(View)`

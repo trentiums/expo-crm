@@ -51,8 +51,8 @@ export const CrossIconView = styled(Pressable)`
   display: flex;
   align-items: flex-end;
 `;
-export const LoaderView = styled(View)`
-  flex: 1;
+export const LoaderContainer = styled(View)`
+  height: 100%;
   justify-content: center;
   align-items: center;
 `;
@@ -123,8 +123,13 @@ export const DashboardFilterView = styled(View)`
   flex: 1;
 `;
 
-export const DividerContainer  = styled(View)`
+export const DividerContainer = styled(View)`
   flex: 0.8;
   height: 2px;
   background-color: ${({ theme }) => theme.colors.aria};
 `;
+export const LeadsFlatList = styled(FlatList).attrs({
+  contentContainerStyle: {
+    paddingBottom: 60,
+  },
+})``;

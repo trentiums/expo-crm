@@ -7,4 +7,5 @@ export interface LeadDetailsProps {
   optionType?: ScreenOptionType;
   onDelete?: () => void;
   editRoute?: string;
+  isShowLeadInfo?: boolean;
 }

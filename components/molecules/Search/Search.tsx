@@ -9,6 +9,7 @@ import { SearchFilterProps } from './Search.props';
 import {
   FilterContainer,
   FilterIconView,
+  FilterRightIconView,
   SearchInputContainer,
   SearchTextInput,
 } from './Search.styles';
@@ -17,6 +18,8 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   setSearch,
   search,
   handleSearch,
+  rightIcon,
+  onRightIconPress,
 }) => {
   const { t: ts } = useTranslation('drawer');
   const { colors } = useAppTheme();
@@ -48,6 +51,11 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         <FilterIconView>
           <Search />
         </FilterIconView>
+        {rightIcon && onRightIconPress && (
+          <FilterRightIconView onPress={onRightIconPress}>
+            {rightIcon}
+          </FilterRightIconView>
+        )}
       </SearchInputContainer>
     </FilterContainer>
   );
