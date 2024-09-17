@@ -19,7 +19,7 @@ const ShadowBox: React.FC<shadowboxProps> = ({
     shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: elevation || 4,
-    borderRadius: radius || 30,
+    borderRadius: radius || 6,
   };
   const bottomShadowStyle: ViewStyle = {
     margin: 5,
