@@ -32,6 +32,12 @@ const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
     (state: RootState) => state.user.assignUserList,
   );
   const servicesTitle = leadDetail.productService.map((item) => item.name);
+  const channelName = generalLists?.leadChannelList?.filter(
+    (item) => item.id === leadDetail.leadChannelId,
+  )?.[0]?.name;
+  const assignedName = leadAssignToData.filter(
+    (item) => item.id === leadDetail.assignTo,
+  )?.[0]?.title;
   const leadInfo = [
     {
       key: t('phone'),
@@ -69,15 +75,7 @@ const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
       key: t('channel'),
       title: t('channel'),
       icon: <ChannelIcon />,
-      value: (
-        <LeadInfoValue>
-          {
-            generalLists?.leadChannelList?.filter(
-              (item) => item.id === leadDetail.leadChannelId,
-            )[0]?.name
-          }
-        </LeadInfoValue>
-      ),
+      value: <LeadInfoValue>{channelName}</LeadInfoValue>,
     },
     {
       key: t('assignedTo'),
@@ -86,13 +84,7 @@ const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
       value: leadDetail.assignTo && (
         <LeadAssignedToContainer>
           <ProfileIcon />
-          <LeadInfoValue>
-            {
-              leadAssignToData.filter(
-                (item) => item.id === leadDetail.assignTo,
-              )[0]?.title
-            }
-          </LeadInfoValue>
+          <LeadInfoValue>{assignedName}</LeadInfoValue>
         </LeadAssignedToContainer>
       ),
     },

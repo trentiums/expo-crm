@@ -10,8 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { Pressable } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
-import { LeadsFlatList, LoaderView } from './tabs.style';
-import { ActivityIndicator } from 'react-native-paper';
+import { LeadsFlatList, LoaderContainer } from './tabs.style';
 import Loader from '@atoms/Loader/Loader';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
@@ -23,6 +22,7 @@ import SearchFilter from '@molecules/Search/Search';
 import { Spacer } from '@atoms/common/common.styles';
 import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
 import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
+import { LoadingStatus } from '../../(public)/login/LoginScreen.props';
 
 const Leads = () => {
   const { t } = useTranslation('modalText');
@@ -35,15 +35,15 @@ const Leads = () => {
   const toast = useToast();
   const [showModal, setShowModal] = useState(false);
   const [deleteLeadId, setDeleteLeadId] = useState<number | null>();
-  const [loading, setLoading] = useState(false);
-  const [moreLoading, setMoreLoading] = useState(false);
-  const [leadsLoading, setLeadsLoading] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>(
+    LoadingStatus.NONE,
+  );
   const [leadSearch, setLeadSearch] = useState('');
   const dispatch = useAppDispatch();
   const [refreshing, setRefreshing] = useState(false);
   const debouncedLeadSearch = useDebounce(leadSearch || undefined, 300);
   const onDeleteActionPress = async (slug: number) => {
-    setLoading(true);
+    setLoadingStatus(LoadingStatus.SCREEN);
     try {
       const response = await dispatch(
         deleteLeadAction({ lead_id: slug }),
@@ -65,7 +65,7 @@ const Leads = () => {
       });
     }
     setShowModal(false);
-    setLoading(false);
+    setLoadingStatus(LoadingStatus.NONE);
   };
 
   const renderLeads = ({
@@ -99,7 +99,7 @@ const Leads = () => {
       leadListData?.currentPage !== leadListData?.lastPage
     ) {
       try {
-        setMoreLoading(true);
+        setLoadingStatus(LoadingStatus.MORE);
         await dispatch(
           getLeadListAction({
             page: leadListData?.currentPage + 1,
@@ -108,7 +108,7 @@ const Leads = () => {
       } catch (error) {
         console.log(error);
       }
-      setMoreLoading(false);
+      setLoadingStatus(LoadingStatus.NONE);
     }
   };
   const onRefreshLeadList = async () => {
@@ -134,12 +134,12 @@ const Leads = () => {
 
   const handleSearchLead = async () => {
     try {
-      setLeadsLoading(true);
+      setLoadingStatus(LoadingStatus.SCREEN);
       await dispatch(getLeadListAction(searchFilter)).unwrap();
     } catch (error) {
       console.log(error);
     }
-    setLeadsLoading(false);
+    setLoadingStatus(LoadingStatus.NONE);
   };
 
   const renderHeader = () => {
@@ -154,13 +154,13 @@ const Leads = () => {
       />
     );
   };
-  if (leadsLoading) {
+  if (loadingStatus === LoadingStatus.SCREEN) {
     return (
       <ScreenTemplate moreVisible>
         {renderHeader()}
-        <LoaderView>
-          <ActivityIndicator color={colors.blueChaos} />
-        </LoaderView>
+        <LoaderContainer>
+          <Loader color={colors.blueChaos} />
+        </LoaderContainer>
       </ScreenTemplate>
     );
   }
@@ -176,7 +176,9 @@ const Leads = () => {
           renderItem={renderLeads}
           showsVerticalScrollIndicator={false}
           onEndReached={handleGetMoreData}
-          ListFooterComponent={moreLoading ? <Loader size={24} /> : null}
+          ListFooterComponent={
+            loadingStatus === LoadingStatus.MORE ? <Loader size={24} /> : null
+          }
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
@@ -210,7 +212,7 @@ const Leads = () => {
           }}
           onActionPress={() => onDeleteActionPress(deleteLeadId || 0)}
           icon={<TrashIcon color={colors?.deleteColor} />}
-          loading={loading}
+          loading={loadingStatus === LoadingStatus.SCREEN}
         />
       )}
     </ScreenTemplate>

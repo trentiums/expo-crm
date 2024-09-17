@@ -51,7 +51,7 @@ export const CrossIconView = styled(Pressable)`
   display: flex;
   align-items: flex-end;
 `;
-export const LoaderView = styled(View)`
+export const LoaderContainer = styled(View)`
   height: 100%;
   justify-content: center;
   align-items: center;
