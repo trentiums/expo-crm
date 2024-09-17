@@ -35,7 +35,7 @@ export const SubContainerView = styled(View)`
 export const FormButtonText = styled(Text)<{ valid?: boolean }>`
   font-weight: 700;
   color: ${({ valid, theme }) =>
-    valid ? theme.colors.white : theme.colors.gray};
+    valid ? theme.colors.white : theme.colors.textDark};
 `;
 export const BackButton = styled(Button)`
   height: 48px;

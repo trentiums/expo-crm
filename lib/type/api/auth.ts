@@ -48,4 +48,7 @@ export interface LeadInformationFromValuesType {
   selectedStage: number;
   selectedServices: number[];
   assignTo?: number;
+  budgetCurrencyCode: number;
+  dealAmountCurrencyCode: number;
+  timeFrameType: number;
 }

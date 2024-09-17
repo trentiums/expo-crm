@@ -23,4 +23,5 @@ export interface AddLeadState {
   assignTo?: number;
   budgetCurrencyCode?: number;
   dealAmountCurrencyCode?: number;
+  timeFrameType?: number;
 }

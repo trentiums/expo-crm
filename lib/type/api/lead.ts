@@ -89,6 +89,9 @@ export interface LeadListData {
   documents: DocumentTye[];
   assign_from_user_id?: number;
   assign_to_user_id?: number;
+  budget_currency_id: number;
+  timeline_timeframe: number;
+  deal_amount_currency_id: number;
 }
 
 export interface DocumentTye {

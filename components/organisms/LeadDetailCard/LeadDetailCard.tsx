@@ -316,7 +316,7 @@ const LeadDetailCard: React.FC<LeadDetailCardProps> = ({
           leadId: leadId,
         }}
         isShowLeadInfo
-        showSocialMedia
+        isSocialMediaVisible
       />
     </LeadDetailCardContainer>
   );

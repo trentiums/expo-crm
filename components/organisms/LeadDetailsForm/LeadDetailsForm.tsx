@@ -316,7 +316,8 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             dropdownDataType={DropdownDataType.USERS}
             heading={t('selectUser')}
           />
-          {values?.assignTo && (
+          {/* TODO: users api changes */}
+          {/* {values?.assignTo && (
             <ShowMultipleDataList
               data={leadAssignToData?.filter((item) =>
                 values.assignTo.includes(item.id),
@@ -325,7 +326,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
               keyExtractor={(item, index) => `${item}-${index}`}
               ItemSeparatorComponent={<Spacer size={8} />}
             />
-          )}
+          )} */}
           <Spacer size={16} />
           <Label>{t('budgetLabel')}</Label>
           <RowView>
