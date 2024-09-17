@@ -29,7 +29,7 @@ const TitleWithButton: React.FC<TitleWithButtonProps> = ({
           <Back />
         </Pressable>
       </IconCon>
-      {text && (
+      {!!text && (
         <HeaderTextCon>
           <TextInHeader>{text}</TextInHeader>
         </HeaderTextCon>

@@ -1,28 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  ActionMenuIcon,
   ContactBox,
   DateTimeText,
   DetailContainer,
   LeadInfoView,
   NameAndStatusContainer,
   NameText,
-  CommunicationOptionCon,
+  CommunicationOptionContainer,
 } from './LeadDetail.styles';
 import { useTranslation } from 'react-i18next';
 import {
   generateWhatsAppUrl,
-  handleEmail,
   handleOpenDialCall,
-  handlePhoneCall,
+  handleOpenEmail,
 } from '@utils/common';
 import WhatsApp from '@atoms/Illustrations/WhatsApp';
 import { LeadDetailsProps } from './LeadDetail.props';
-import ActionMenu from '@molecules/ActionMenu/ActionMenu';
-import { router } from 'expo-router';
-import Trash from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
-import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import ActionModal from '@molecules/ActionModal/ActionModal';
 import EmailSendBox from '@atoms/Illustrations/EmailBox';
 import PhoneIcon from '@atoms/Illustrations/PhoneIcon';
 import { RootState, useSelector } from '@redux/store';
@@ -32,18 +27,16 @@ import moment from 'moment';
 import { dateTimeFormate } from '@constants/common';
 import { Flexed } from '@atoms/common/common.styles';
 import LeadStatus from '@molecules/LeadStatus/LeadStatus';
+import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
+import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
 import LeadInfoCard from '@molecules/LeadInfoCard/LeadInfoCard';
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
   leadData,
-  onEdit,
-  onDelete,
-  isDeleteLoading,
-  showModal,
-  onChangeModalState,
-  isServices,
-  onChangeDeleteId,
   isSocialMediaVisible,
+  optionType,
+  onDelete,
+  editRoute,
   isShowLeadInfo,
 }) => {
   const { t } = useTranslation('leadDetailCardDetails');
@@ -51,6 +44,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   const toast = useToast();
   const { colors } = useAppTheme();
   const leads = useSelector((state: RootState) => state.leads.leadList.leads);
+  const [visibleBottomSheet, setVisibleBottomSheet] = useState(false);
 
   const handleEmail = () => {
     const email = leadData?.email;
@@ -69,34 +63,6 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   const handleWhatsApp = (phoneNumber: number | string) => {
     generateWhatsAppUrl(phoneNumber);
   };
-  const onEditLead = () => {
-    if (onEdit) {
-      onEdit();
-    } else {
-      if (leadData?.id) {
-        router.navigate(`/(protected)/add-lead/${leadData.id}`);
-      } else {
-        toast.show(t('canNotFindId'), {
-          type: ToastType.Custom,
-          data: {
-            type: ToastTypeProps.Error,
-          },
-        });
-      }
-    }
-  };
-
-  const onDeleteLead = (id: number) => {
-    onChangeModalState(true);
-    onChangeDeleteId?.(id);
-  };
-
-  const onDeleteActionPress = async () => {
-    await handleDeleteLead();
-  };
-  const handleDeleteLead = async () => {
-    onDelete(leadData?.leadId || leadData?.id);
-  };
   const handlePhoneCall = (phoneNumber) => {
     try {
       handleOpenDialCall(phoneNumber);
@@ -110,9 +76,9 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
     }
   };
 
-  const hideActionModal = () => {
-    onChangeModalState(false);
-  };
+  const openBottomSheet = () => setVisibleBottomSheet(true);
+
+  const closeBottomSheet = () => setVisibleBottomSheet(false);
 
   return (
     <DetailContainer>
@@ -133,47 +99,45 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
             </DateTimeText>
           )}
         </Flexed>
-        <ActionMenu
-          onEdit={onEditLead}
-          onDelete={(id) => onDeleteLead(id)}
-          id={leadData?.leadId || leadData?.id}
+        <ActionMenuIcon
+          icon="dots-vertical"
+          onPress={openBottomSheet}
+          iconColor={colors.textDark}
         />
       </LeadInfoView>
       {isShowLeadInfo && <LeadInfoCard leadId={leadData.leadId} />}
       {isSocialMediaVisible && (
         <ContactBox>
           {leadData?.email && (
-            <CommunicationOptionCon onPress={handleEmail}>
+            <CommunicationOptionContainer onPress={handleEmail}>
               <EmailSendBox />
-            </CommunicationOptionCon>
+            </CommunicationOptionContainer>
           )}
           {leadData?.phone && (
-            <CommunicationOptionCon
-              onPress={() => handlePhoneCall(leadData.phone)}>
-              <PhoneIcon />
-            </CommunicationOptionCon>
-          )}
-          {leadData?.phone && (
-            <CommunicationOptionCon
-              onPress={() => handleWhatsApp(leadData.phone)}>
-              <WhatsApp />
-            </CommunicationOptionCon>
+            <>
+              <CommunicationOptionContainer
+                onPress={() => handlePhoneCall(leadData.phone)}>
+                <PhoneIcon />
+              </CommunicationOptionContainer>
+              <CommunicationOptionContainer
+                onPress={() => handleWhatsApp(leadData.phone)}>
+                <WhatsApp />
+              </CommunicationOptionContainer>
+            </>
           )}
         </ContactBox>
       )}
-      {showModal && (
-        <ActionModal
-          isModal={showModal}
-          onBackdropPress={hideActionModal}
-          heading={tm('discardMedia')}
-          description={tm('disCardDescription')}
-          label={tm('yesDiscard')}
-          actionType={Actions.delete}
-          actiontext={tm('cancel')}
-          onCancelPress={hideActionModal}
-          onActionPress={() => handleDeleteLead()}
-          icon={<Trash color={colors?.deleteColor} />}
-          loading={isDeleteLoading}
+
+      {visibleBottomSheet && (
+        <BottomSheetNavigator
+          initialRouteName="ModifyLeadOption"
+          onClosePress={closeBottomSheet}
+          meta={{
+            leadId: leadData?.id,
+            optionType: optionType || ScreenOptionType.DASHBOARD,
+            onDelete: onDelete,
+            editRoute: editRoute,
+          }}
         />
       )}
     </DetailContainer>

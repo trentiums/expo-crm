@@ -9,6 +9,7 @@ export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   justify-content: center;
   border-width: 1px;
   background-color: ${({ theme }) => theme.colors.blueChaos};
+  border-radius: 50px;
 `;
 
 export const KeyboardAwareScrollViewContainer = styled(KeyboardAwareScrollView)`

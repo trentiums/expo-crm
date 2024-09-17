@@ -1,3 +1,4 @@
+import { logoutUserAction } from '@redux/actions/auth';
 import {
   deleteUserAction,
   getAssignUserListAction,
@@ -94,6 +95,9 @@ const userSlice = createSlice({
         state.assignUserList = formatAssignUser(action.payload.data);
       },
     );
+    builder.addCase(logoutUserAction.fulfilled, () => {
+      return initialState;
+    });
   },
 });
 

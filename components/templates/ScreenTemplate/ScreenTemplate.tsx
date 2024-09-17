@@ -8,8 +8,8 @@ import {
 import { ScreenTemplateProps } from './ScreenTemplate.props';
 import PlusIcon from '@atoms/Illustrations/PlusIcon';
 import { useAppTheme } from '@constants/theme';
-import MoreMenuButton from '@molecules/MoreMenuButton/MoreMenuButton';
 import TitleWithButton from '@molecules/TitleWithButton/TitleWithButton';
+import MoreMenuButton from '@molecules/MoreMenuButton/MoreMenuButton';
 
 const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
   children,
@@ -24,7 +24,7 @@ const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
   const { colors } = useAppTheme();
   return (
     <Container {...safeAreaProps} backgroundColor={backgroundColor}>
-      {title && <TitleWithButton text={title} onBackPress={onBackPress} />}
+      {!!title && <TitleWithButton text={title} onBackPress={onBackPress} />}
       {moreVisible && <MoreMenuButton />}
       <ScreenTemplateView>
         {children}

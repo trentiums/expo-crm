@@ -5,35 +5,43 @@ import {
   DocumentInfoContainer,
   DocumentName,
   DocumentView,
-  FlatListCon,
   PickerContainer,
   UploadAnotherDocumentText,
   UploadText,
 } from './DocumentPicker.styles';
 import * as DocumentPicker from 'expo-document-picker';
-import UploadCon from '@atoms/Illustrations/UploadCon';
+import UploadIcon from '@atoms/Illustrations/UploadCon';
 import * as MediaLibrary from 'expo-media-library';
 import { MAX_FILE_SIZE } from '@utils/constant';
 import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useTranslation } from 'react-i18next';
 import { DocumentPickerProps, PermissionType } from './DocumentPicker.props';
-import { HeaderText } from '@organisms/BasicInformatioForm/BasicInformationForm.styles';
 import { Spacer } from '@atoms/common/common.styles';
 import ActionModal from '@molecules/ActionModal/ActionModal';
-import { deleteLeadDocumentsAction } from '@redux/actions/lead';
+import {
+  deleteLeadDocumentsAction,
+  getLeadDetailsAction,
+} from '@redux/actions/lead';
 import { useAppDispatch } from '@redux/store';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import { Pressable } from 'react-native';
-import Delete from '@atoms/Illustrations/Delete';
-import Plus from '@atoms/Illustrations/Plus';
+import { FlatList, Pressable } from 'react-native';
+import PlusIcon from '@atoms/Illustrations/Plus';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import TaskIcon from '@atoms/Illustrations/Task';
 import { useAppTheme } from '@constants/theme';
+import { HeaderText } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
+import {
+  deleteProductServiceDocumentAction,
+  getProductServiceDetailAction,
+} from '@redux/actions/productService';
+import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 
 const DocumentPick: React.FC<DocumentPickerProps> = ({
   setDocumentArray,
   documentArray,
+  isProductServices,
+  id,
 }) => {
   const { t } = useTranslation('addProduct');
   const { t: tb } = useTranslation('BasicInformation');
@@ -42,8 +50,8 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
   const toast = useToast();
   const { colors } = useAppTheme();
   const [deleteDocumentUrl, setDeleteDocumentUrl] = useState(null);
-  const [deleteShowModal, setDeleteShowModal] = useState<Boolean>(false);
-  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [visibleDeleteModal, setVisibleDeleteModal] = useState<Boolean>(false);
+  const [deleteLoader, setDeleteLoader] = useState(false);
   const pickFile = async () => {
     try {
       const { status } = await MediaLibrary.requestPermissionsAsync();
@@ -69,7 +77,12 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
           }
         });
       } else {
-        console.log('cancelled');
+        toast.show(t('canceled'), {
+          type: ToastType.Custom,
+          data: {
+            type: ToastTypeProps.Error,
+          },
+        });
       }
     } catch (err) {
       console.log('error', err);
@@ -77,7 +90,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
     }
   };
 
-  const renderFilePreview = (file: any) => {
+  const renderFilePreview = (file: FileSystemProps) => {
     return (
       <DocumentDetailContainer>
         <DocumentInfoContainer>
@@ -86,65 +99,82 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
         </DocumentInfoContainer>
         <Pressable
           onPress={() => {
-            setDeleteShowModal(true);
+            setVisibleDeleteModal(true);
             setDeleteDocumentUrl(file?.uri);
           }}>
-          <Delete color={colors.roseMadder} />
+          <TrashIcon color={colors.roseMadder} />
         </Pressable>
       </DocumentDetailContainer>
     );
   };
   const onDeleteActionPress = async () => {
-    const deletedDocument = documentArray?.filter(
-      (item) => item?.uri === deleteDocumentUrl,
-    );
+    if (documentArray?.length > 0) {
+      const deletedDocument = documentArray.filter(
+        (item) => item?.uri === deleteDocumentUrl,
+      );
 
-    const updatedDocuments = documentArray?.filter(
-      (item) => item?.uri !== deleteDocumentUrl,
-    );
+      const updatedDocuments = documentArray.filter(
+        (item) => item?.uri !== deleteDocumentUrl,
+      );
 
-    if (deletedDocument?.[0]?.id) {
-      try {
-        setDeleteLoading(true);
-        const response = await dispatch(
-          deleteLeadDocumentsAction({ media_id: deletedDocument[0].id }),
-        ).unwrap();
-        toast.show(response?.message, {
-          type: ToastType.Custom,
-          data: {
-            type: ToastTypeProps.Success,
-          },
-        });
-      } catch (error) {
-        toast.show(error, {
-          type: ToastType.Custom,
-          data: {
-            type: ToastTypeProps.Error,
-          },
-        });
+      if (deletedDocument[0].id) {
+        try {
+          setDeleteLoader(true);
+          let response;
+          if (isProductServices) {
+            response = await dispatch(
+              deleteProductServiceDocumentAction({
+                media_id: deletedDocument[0].id,
+              }),
+            ).unwrap();
+
+            await dispatch(
+              getProductServiceDetailAction({
+                product_service_id: id,
+              }),
+            );
+          } else {
+            response = await dispatch(
+              deleteLeadDocumentsAction({
+                media_id: deletedDocument[0].id,
+              }),
+            ).unwrap();
+
+            dispatch(
+              getLeadDetailsAction({
+                lead_id: id,
+              }),
+            );
+          }
+          toast.show(response?.message, {
+            type: ToastType.Custom,
+            data: {
+              type: ToastTypeProps.Success,
+            },
+          });
+        } catch (error) {
+          toast.show(error, {
+            type: ToastType.Custom,
+            data: {
+              type: ToastTypeProps.Error,
+            },
+          });
+        }
+        setDeleteLoader(false);
+      } else {
+        setDocumentArray(updatedDocuments);
       }
-      setDeleteLoading(false);
+      setVisibleDeleteModal(false);
     }
-    setDeleteShowModal(false);
-    setDocumentArray(updatedDocuments);
   };
   return (
     <>
-      {documentArray?.length === 0 && (
-        <PickerContainer onPress={pickFile}>
-          <AddIconButton>
-            <UploadCon />
-            <UploadText>{t('uploadDocuments')}</UploadText>
-          </AddIconButton>
-        </PickerContainer>
-      )}
-
-      {documentArray?.length > 0 && (
+      {documentArray?.length > 0 ? (
         <>
           <Spacer size={8} />
           <HeaderText>{tb('attachments')}</HeaderText>
           <Spacer size={16} />
-          <FlatListCon
+          <FlatList
             data={documentArray}
             renderItem={({ item }) => (
               <DocumentView>{renderFilePreview(item)}</DocumentView>
@@ -154,20 +184,27 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
           <Spacer size={8} />
           <Pressable onPress={pickFile}>
             <DocumentInfoContainer>
-              <Plus />
+              <PlusIcon />
               <UploadAnotherDocumentText>
                 {t('uploadAnotherDocument')}
               </UploadAnotherDocumentText>
             </DocumentInfoContainer>
           </Pressable>
         </>
+      ) : (
+        <PickerContainer onPress={pickFile}>
+          <AddIconButton>
+            <UploadIcon />
+            <UploadText>{t('uploadDocuments')}</UploadText>
+          </AddIconButton>
+        </PickerContainer>
       )}
 
-      {deleteShowModal && (
+      {visibleDeleteModal && (
         <ActionModal
           isModal
           onBackdropPress={() => {
-            setDeleteShowModal(false);
+            setVisibleDeleteModal(false);
           }}
           heading={tm('discardMedia')}
           description={tm('disCardDescription')}
@@ -175,10 +212,10 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
           actionType={Actions.delete}
           actiontext={tm('cancel')}
           onCancelPress={() => {
-            setDeleteShowModal(false);
+            setVisibleDeleteModal(false);
           }}
           onActionPress={() => onDeleteActionPress()}
-          loading={deleteLoading}
+          loading={deleteLoader}
           icon={<TrashIcon />}
         />
       )}

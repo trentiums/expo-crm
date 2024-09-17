@@ -3,8 +3,7 @@ import Modal from '@atoms/Modal/Modal';
 import Text from '@atoms/Text/Text';
 import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
-import { Image } from 'expo-image';
-import { FlatList, Pressable } from 'react-native';
+import { FlatList, Image, Pressable } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const BasicInformationButtons = styled(View)`
@@ -98,10 +97,11 @@ export const HeaderText = styled(Text)`
 export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   height: 48px;
   justify-content: center;
+  background-color: ${({ theme }) => theme.colors.blueChaos};
+  border-radius: 50px;
   border-width: 1px;
-  border-color: ${({ valid, theme }) =>
-    valid ? theme.colors.primaryColor : theme.colors.lightGray};
-  background-color: ${({ theme }) => theme.colors.bgColor};
+  margin-bottom: -16px;
+  z-index: 10;
 `;
 
 export const KeyboardAwareScrollViewContainer = styled(KeyboardAwareScrollView)`
@@ -168,9 +168,9 @@ export const StyledImage = styled(Image)`
   height: 90%;
 `;
 
-export const PressAbleContainer = styled(Pressable)<{ isWidthShort?: boolean }>`
+export const PressAbleContainer = styled(Pressable)`
   position: relative;
-  width: ${({ isWidthShort }) => (isWidthShort ? 30 : 100)}%;
+  width: 100%;
   height: 120px;
   background-color: ${({ theme }) => theme.colors.backgroundCardColor};
   border-radius: 8px;

@@ -109,6 +109,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({ form, loading }) => {
             placeholder={t('status')}
             dropDownTitle={`${t('status')} ${t('list')}`}
             isAllowDeselect
+            isMultiple
           />
           <Spacer size={16} />
           <Label>{`${t('conversion')}`}</Label>
@@ -124,6 +125,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({ form, loading }) => {
             placeholder={t('conversion')}
             dropDownTitle={`${t('conversion')} ${t('list')}`}
             isAllowDeselect
+            isMultiple
           />
           <Spacer size={16} />
         </FiltersDropDownViews>

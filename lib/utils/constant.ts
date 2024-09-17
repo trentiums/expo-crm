@@ -1,3 +1,5 @@
+import { LanguageEnum } from '@redux/slices/auth';
+
 export const dashboardLeads = [
   {
     title: 'lead completed',
@@ -79,5 +81,22 @@ export const leadsQuickFilters = [
       sort_order: 2,
       order_by: 3,
     },
+  },
+];
+export const languageList = [
+  {
+    id: 1,
+    name: LanguageEnum.english,
+    shortForm: 'en',
+  },
+  {
+    id: 2,
+    name: LanguageEnum.gujarati,
+    shortForm: 'gu',
+  },
+  {
+    id: 3,
+    name: LanguageEnum.hindi,
+    shortForm: 'hi',
   },
 ];

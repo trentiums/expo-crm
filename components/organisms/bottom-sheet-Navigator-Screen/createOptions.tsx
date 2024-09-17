@@ -10,7 +10,7 @@ import { router } from 'expo-router';
 
 const CreateOptions: React.FC<CreateOptionProps> = ({
   changeSnapPoints,
-  changeRoute,
+  handleBottomSheetClose,
 }) => {
   const { t } = useTranslation('bottomSheetCreatePotion');
   const onLayout = useCallback(() => {
@@ -36,7 +36,7 @@ const CreateOptions: React.FC<CreateOptionProps> = ({
   ];
 
   const handleRedirection = (route: string) => {
-    changeRoute?.();
+    handleBottomSheetClose?.();
     router.navigate(route);
   };
 

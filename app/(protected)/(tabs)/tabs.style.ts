@@ -37,7 +37,7 @@ export const NoDataFoundText = styled(Text)`
 `;
 export const ProductsFlatList = styled(FlatList).attrs({
   contentContainerStyle: {
-    paddingTop: 16,
+    paddingTop: 0,
     paddingBottom: 48,
   },
 })``;
@@ -51,7 +51,7 @@ export const CrossIconView = styled(Pressable)`
   display: flex;
   align-items: flex-end;
 `;
-export const LoaderView = styled(View)`
+export const LoaderContainer = styled(View)`
   height: 100%;
   justify-content: center;
   align-items: center;
@@ -59,7 +59,6 @@ export const LoaderView = styled(View)`
 export const NoLeadsFoundContainer = styled(View)`
   justify-content: center;
   align-items: center;
-  height: 100%;
 `;
 export const AddLeadContainer = styled(View)`
   padding: 16px;
@@ -124,7 +123,7 @@ export const DashboardFilterView = styled(View)`
   flex: 1;
 `;
 
-export const LineContainer = styled(View)`
+export const DividerContainer = styled(View)`
   flex: 0.8;
   height: 2px;
   background-color: ${({ theme }) => theme.colors.aria};
@@ -136,3 +135,8 @@ export const LeadsHeadingView = styled(View)`
   align-items: flex-end;
   padding: 0px 4px;
 `;
+export const LeadsFlatList = styled(FlatList).attrs({
+  contentContainerStyle: {
+    paddingBottom: 60,
+  },
+})``;
