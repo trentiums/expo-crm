@@ -25,7 +25,6 @@ export const ForgotScreenContainer = styled(View)`
 export const ForgotFormContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 24px;
-  padding: 24px;
   flex: 1;
   display: flex;
   flex-direction: column;
