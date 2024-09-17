@@ -2,7 +2,6 @@ import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { styled } from '@utils/styled';
 import { FlatList, View, Pressable } from 'react-native';
 import Text from '@atoms/Text/Text';
-import CircleCheck from '@atoms/Illustrations/CircleCheck';
 
 export const CreateOptionContainer = styled(View)`
   flex-direction: row;
@@ -23,7 +22,7 @@ export const LeadsSortFilterText = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.englishHolly};
 `;
-export const IconWrapper = styled.View(View)`
+export const IconWrapper = styled(View)`
   width: 24px;
   height: 24px;
   display: flex;
