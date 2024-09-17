@@ -11,6 +11,7 @@ export const FormsView = styled(View)`
   justify-content: space-between;
   flex: 1;
   flex-basis: auto;
+  margin-bottom: 16px;
 `;
 
 export const FieldDropDownContainer = styled(View)<{ isError?: boolean }>`
