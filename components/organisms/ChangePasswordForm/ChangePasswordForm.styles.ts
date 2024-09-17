@@ -9,11 +9,11 @@ export const Label = styled(Text)`
   padding-bottom: 8px;
 `;
 
-export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
+export const ButtonSubmit = styled(Button)<{ variant: boolean }>`
   height: 48px;
   justify-content: center;
-  background-color: ${({ theme, valid }) =>
-    valid ? theme.colors.blueChaos : theme.colors.gray};
+  background-color: ${({ theme, variant }) =>
+    variant ? theme.colors.blueChaos : theme.colors.gray};
   border-radius: 50px;
   border-width: 1px;
 `;
@@ -26,10 +26,10 @@ export const ViewMainContainer = styled(View)`
   flex: 1;
 `;
 
-export const FormButtonText = styled(Text)<{ valid: boolean }>`
+export const FormButtonText = styled(Text)<{ variant: boolean }>`
   font-weight: 700;
-  color: ${({ valid, theme }) =>
-    valid ? theme.colors.white : theme.colors.disabledTextColor};
+  color: ${({ variant, theme }) =>
+    variant ? theme.colors.white : theme.colors.disabledTextColor};
 `;
 
 export const BottomContainer = styled(View)`

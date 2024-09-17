@@ -117,8 +117,8 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
         <ButtonSubmit
           onPress={handleChangePassword}
           loading={loading}
-          valid={valid}>
-          <FormButtonText valid={valid}>{t('save')}</FormButtonText>
+          variant={valid}>
+          <FormButtonText variant={valid}>{t('save')}</FormButtonText>
         </ButtonSubmit>
       </BottomContainer>
     </ViewMainContainer>
