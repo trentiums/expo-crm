@@ -4,6 +4,7 @@ import { Label } from '@organisms/BasicInformationForm/BasicInformationForm.styl
 import {
   composeValidators,
   numberAndFractionalNumberValidator,
+  requiredValidator,
 } from '@utils/formValidators';
 import React, { useEffect, useState } from 'react';
 import { Field, useFormState } from 'react-final-form';
@@ -17,6 +18,7 @@ import {
   LabelDescriptionText,
   RowView,
   SelectedServiceData,
+  SelectedUserData,
   ServiceLabel,
   ServiceText,
 } from './LeadDetailsForm.styles';
@@ -27,6 +29,8 @@ import moment from 'moment';
 import { useRoute } from '@react-navigation/native';
 import { LeadListTypeState } from '@type/api/lead';
 import {
+  BackButton,
+  BackButtonText,
   ButtonSubmit,
   ContainerView,
   FormButtonText,
@@ -110,6 +114,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         comments: values.comments,
         budgetCurrencyCode: values?.budgetCurrencyCode,
         dealAmountCurrencyCode: values?.dealAmountCurrencyCode,
+        timeFrameType: values?.timeFrameType,
       }),
     );
   }, [values]);
@@ -176,6 +181,10 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       'dealCloseDate',
       id ? leadsDetail?.dealCloseDate : addLeadFormData?.dealCloseDate,
     );
+    form.change(
+      'timeFrameType',
+      id ? leadsDetail?.timeFrameType : addLeadFormData?.timeFrameType,
+    );
   }, [id]);
 
   const handleDeleteService = (deleteId: number) => {
@@ -183,6 +192,12 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       (service) => service !== deleteId,
     );
     form.change('selectedServices', updatedServices);
+  };
+  const handleDeleteAssignedUser = (deleteId: number) => {
+    const updatedServices = values?.assignTo?.filter(
+      (service) => service !== deleteId,
+    );
+    form.change('assignTo', updatedServices);
   };
   const renderSelectedServices = ({ item }) => {
     return (
@@ -192,6 +207,16 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
           <CrossSmallIcon />
         </Pressable>
       </SelectedServiceData>
+    );
+  };
+  const renderSelectedUsers = ({ item }) => {
+    return (
+      <SelectedUserData>
+        <ServiceText>{item.name}</ServiceText>
+        <Pressable onPress={() => handleDeleteAssignedUser(item.id)}>
+          <CrossSmallIcon />
+        </Pressable>
+      </SelectedUserData>
     );
   };
   return (
@@ -221,12 +246,13 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             isSearch
             dropdownDataType={DropdownDataType.SERVICES}
             heading={t('selectService')}
+            validate={requiredValidator}
           />
           <Spacer size={8} />
           {values?.selectedServices?.length > 0 && (
             <ShowMultipleDataList
               data={servicesData?.filter((item) =>
-                values?.selectedServices?.includes(item.id),
+                values.selectedServices.includes(item.id),
               )}
               renderItem={renderSelectedServices}
               keyExtractor={(item, index) => `${item}-${index}`}
@@ -247,6 +273,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             name="selectedChannel"
             dropDownTitle={`${tl('leadChannel')} ${t('list')}`}
             isStaff={!isAdmin && id}
+            validate={requiredValidator}
           />
           <Spacer size={16} />
           <Label>{`${tl('leadStatus')} *`}</Label>
@@ -261,6 +288,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             })}
             placeholder={tl('leadStatus')}
             dropDownTitle={`${tl('leadStatus')} ${t('list')}`}
+            validate={requiredValidator}
           />
           <Spacer size={16} />
           <Label>{`${tl('LeadStage')} *`}</Label>
@@ -275,6 +303,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             placeholder={tl('LeadStage')}
             component={FieldDropDown}
             dropDownTitle={`${tl('LeadStage')} ${t('list')}`}
+            validate={requiredValidator}
           />
           <Spacer size={16} />
           <Label>{`${tl('assignTo')}`}</Label>
@@ -287,6 +316,16 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             dropdownDataType={DropdownDataType.USERS}
             heading={t('selectUser')}
           />
+          {values?.assignTo && (
+            <ShowMultipleDataList
+              data={leadAssignToData?.filter((item) =>
+                values.assignTo.includes(item.id),
+              )}
+              renderItem={renderSelectedUsers}
+              keyExtractor={(item, index) => `${item}-${index}`}
+              ItemSeparatorComponent={<Spacer size={8} />}
+            />
+          )}
           <Spacer size={16} />
           <Label>{t('budgetLabel')}</Label>
           <RowView>
@@ -320,7 +359,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
           <RowView>
             <DropdownView>
               <Field
-                name={'timeFrame'}
+                name={'timeFrameType'}
                 component={FieldDropDown}
                 listData={Object.entries(settings?.timeframe).map(
                   ([key, value]) => ({
@@ -332,11 +371,14 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 placeholder={t('time')}
               />
             </DropdownView>
-            {console.log(values?.timeFrame, 'timeFrame', settings?.timeframe)}
             <InputView>
               <Field
                 name="timeFrame"
-                placeholder={`${tl('timeFrameEg')}`}
+                placeholder={`${tl('timeFrameEg')} ${
+                  settings?.timeframe[
+                    values?.timeFrameType as string
+                  ]?.toLowerCase() || ''
+                }`}
                 component={FieldTextInput}
               />
             </InputView>
@@ -409,36 +451,16 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       </KeyboardAwareScrollView>
       <ContainerView>
         <SubContainerView>
-          <ButtonSubmit onPress={() => onBackClick?.()} valid={true}>
-            <FormButtonText valid={true}>{tb('previous')}</FormButtonText>
-          </ButtonSubmit>
+          <BackButton onPress={() => onBackClick?.()} valid={false}>
+            <BackButtonText valid={true}>{tb('previous')}</BackButtonText>
+          </BackButton>
         </SubContainerView>
         <SubContainerView>
           <ButtonSubmit
-            onPress={
-              values?.selectedServices?.length > 0 &&
-              values?.selectedChannel &&
-              values?.selectedLead &&
-              values?.selectedStage &&
-              !loading &&
-              form.submit
-            }
+            onPress={!loading && form.submit}
             loading={loading}
-            valid={
-              valid &&
-              values?.selectedServices?.length > 0 &&
-              values?.selectedChannel &&
-              values?.selectedLead &&
-              values?.selectedStage
-            }>
-            <FormButtonText
-              valid={
-                valid &&
-                values?.selectedServices?.length > 0 &&
-                values?.selectedChannel &&
-                values?.selectedLead &&
-                values?.selectedStage
-              }>
+            valid={valid}>
+            <FormButtonText valid={valid}>
               {id ? tb('save') : tb('next')}
             </FormButtonText>
           </ButtonSubmit>

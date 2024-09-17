@@ -112,3 +112,14 @@ export const showMultipleDataList = styled(FlatList).attrs({
     alignItems: 'center',
   },
 })``;
+export const SelectedUserData = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: ${({ theme }) => theme.colors.plaster};
+  border-radius: 19px;
+  gap: 8px;
+  margin-right: 8px;
+`;
