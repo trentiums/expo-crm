@@ -25,6 +25,7 @@ const DropDown: React.FC<DropDownProps> = ({
   onChange,
   placeholder,
   isShowSelected,
+  heading,
 }) => {
   const [showDropList, setShowDropList] = useState(false);
   const renderMultipleData = ({ selectedData }) => {
@@ -109,6 +110,7 @@ const DropDown: React.FC<DropDownProps> = ({
           initialRouteName="DropdownListing"
           onClosePress={handleCloseDropList}
           meta={{
+            heading: heading,
             dropdownData: data,
             handelSelectData: (id) => handelSelectData(id),
           }}

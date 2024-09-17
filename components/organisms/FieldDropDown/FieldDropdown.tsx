@@ -13,6 +13,7 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
   isAllowDeselect,
   isShowSelected,
   placeholder,
+  heading,
 }) => {
   const handleSelect = (value: any) => {
     if (isMultiple) {
@@ -41,6 +42,7 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
         value={input.value}
         isShowSelected={isShowSelected}
         placeholder={placeholder}
+        heading={heading}
       />
       {!!(meta.touched && meta.error) && (
         <FormError

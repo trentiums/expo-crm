@@ -8,6 +8,7 @@ export type BottomSheetNavigatorProps = {
     optionType?: ScreenOptionType;
     dropdownData?: Dropdown[];
     handelSelectData?: (id: number) => void;
+    heading?: string;
   };
 };
 

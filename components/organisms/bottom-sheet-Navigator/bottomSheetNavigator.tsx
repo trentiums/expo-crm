@@ -319,7 +319,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
             options={() => ({
               header: () => (
                 <CustomHeader
-                  title={t('sortBy')}
+                  title={meta.heading || t('sortBy')}
                   onClose={() => handleClosePress()}
                 />
               ),
