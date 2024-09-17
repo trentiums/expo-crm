@@ -12,14 +12,15 @@ import { useAppDispatch } from '@redux/store';
 import { getLeadListAction } from '@redux/actions/lead';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
-import Back from '@atoms/Illustrations/Back';
 import { CreateOptionProps, LeadSortFilterItemProp } from './screen.props';
 import {
+  IconWrapper,
   LeadsFilterButton,
   LeadsFilterContainer,
   LeadsSortFilterText,
   LeasFilterScreenContainer,
 } from './screen.style';
+import CircleCheckIcon from '@atoms/Illustrations/CircleCheck';
 
 const LeadsSortFilter: React.FC<CreateOptionProps> = ({ changeRoute }) => {
   const dispatch = useAppDispatch();
@@ -32,8 +33,9 @@ const LeadsSortFilter: React.FC<CreateOptionProps> = ({ changeRoute }) => {
   }) => (
     <LeadsFilterContainer onPress={() => setSelectedSort(item)}>
       <LeadsSortFilterText>{item.title}</LeadsSortFilterText>
-      {/* TODO: here icon is temporary replace as pr merge */}
-      {selectedSort?.id === item.id && <Back />}
+      <IconWrapper>
+        {selectedSort?.id === item.id && <CircleCheckIcon />}
+      </IconWrapper>
     </LeadsFilterContainer>
   );
   const handleRemoveFilters = () => {

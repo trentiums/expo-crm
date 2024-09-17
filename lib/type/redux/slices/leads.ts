@@ -1,4 +1,4 @@
-import { fileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
+import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 
 export interface AddLeadState {
   fullName: string;
@@ -19,7 +19,7 @@ export interface AddLeadState {
   dealAmount: number;
   winCloseReason: string;
   dealCloseDate: Date | string;
-  documents?: fileSystemProps[];
+  documents?: FileSystemProps[];
   assignTo?: number;
   budgetCurrencyCode?: number;
   dealAmountCurrencyCode?: number;

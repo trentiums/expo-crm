@@ -18,6 +18,17 @@ export const dashboardLeadListAction = createAsyncThunk<
   }),
 );
 
+export const dashboardAdminLeadListAction = createAsyncThunk<
+  DashboardLeadListResponse,
+  DashboardLeadListParams
+>(
+  'dashboard/adminLeadList',
+  withToastForError(async (body) => {
+    const response = await dashboardLeadList(body);
+    return response.data;
+  }),
+);
+
 export const dashboardLeadStageCountAction = createAsyncThunk<
   DashboardLeadStageCountResponse,
   void

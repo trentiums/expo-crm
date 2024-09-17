@@ -23,6 +23,13 @@ export const LeadsSortFilterText = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.englishHolly};
 `;
+export const IconWrapper = styled(View)`
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 export const LeadsFilterContainer = styled(Pressable)`
   display: flex;
   flex-direction: row;

@@ -1,4 +1,5 @@
 import {
+  DashboardAdminLeadListItem,
   DashboardLeadListItem,
   LeadStageCountLeadListItem,
 } from '@type/api/dashboard';
@@ -19,7 +20,20 @@ export const formatDashboardLeadList = (
     updatedAt: item?.created_at,
   }));
 };
-
+export const formatDashboardAdminLeadList = (
+  data: DashboardAdminLeadListItem[],
+) => {
+  return data?.map((item) => ({
+    id: item.user_id,
+    name: item.user_name,
+    total: item.total_leads,
+    initial: item.lead_initial_count,
+    proposal: item.lead_proposal_count,
+    negotiation: item.lead_negotiation_count,
+    closedWon: item.lead_closed_won_count,
+    closedLost: item.lead_closed_lost_count,
+  }));
+};
 export const formatDashboardLeadStageCountList = (
   data: LeadStageCountLeadListItem[],
 ): LeadStageCountLeadList[] => {

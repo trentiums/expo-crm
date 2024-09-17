@@ -42,3 +42,7 @@ export const assignUserList = (
 ): AxiosPromise<AssignUserListResponse> => {
   return api.get('/assign-company-user-list', { params: body });
 };
+
+export const deleteAccount = (): AxiosPromise<ApiResponse> => {
+  return api.post('/delete-account');
+};

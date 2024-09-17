@@ -1,7 +1,7 @@
 import { withToastForError } from '@utils/thunk';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
-  DeleteLeadDocumentsParams,
+  DeleteLeadDocumentParams,
   DeleteLeadParams,
   LeadDetailsParams,
   LeadDetailsResponse,
@@ -63,7 +63,7 @@ export const updateLeadStatusAction = createAsyncThunk(
 
 export const deleteLeadDocumentsAction = createAsyncThunk(
   'lead/deleteDocument',
-  withToastForError<DeleteLeadDocumentsParams, ApiResponse>(async (data) => {
+  withToastForError<DeleteLeadDocumentParams, ApiResponse>(async (data) => {
     const response = await deleteLeadDocuments(data);
     return response.data;
   }),

@@ -1,3 +1,4 @@
+import { logoutUserAction } from '@redux/actions/auth';
 import {
   deleteUserAction,
   getAssignUserListAction,
@@ -121,6 +122,9 @@ const userSlice = createSlice({
         state.assignUserList.total = action.payload.data.total;
       },
     );
+    builder.addCase(logoutUserAction.fulfilled, () => {
+      return initialState;
+    });
   },
 });
 

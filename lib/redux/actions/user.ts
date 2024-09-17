@@ -12,6 +12,7 @@ import {
 } from '@type/api/user';
 import {
   assignUserList,
+  deleteAccount,
   deleteUser,
   saveUser,
   updateUser,
@@ -69,5 +70,13 @@ export const getAssignUserListAction = createAsyncThunk<
   withToastForError(async (body) => {
     const response = await assignUserList(body);
     return response.data;
+  }),
+);
+
+export const deleteAccountAction = createAsyncThunk<ApiResponse>(
+  'user/deleteAccount',
+  withToastForError(async () => {
+    const response = await deleteAccount();
+    return { ...response.data };
   }),
 );

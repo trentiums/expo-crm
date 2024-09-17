@@ -12,6 +12,8 @@ export type BottomSheetNavigatorProps = {
     selectedValue?: number[] | number | string;
     dropdownDataType?: DropdownDataType;
     heading?: string;
+    editRoute?: string;
+    onDelete?: () => void;
   };
 };
 

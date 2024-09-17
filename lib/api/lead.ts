@@ -1,5 +1,5 @@
 import {
-  DeleteLeadDocumentsParams,
+  DeleteLeadDocumentParams,
   DeleteLeadParams,
   LeadDetailsParams,
   LeadDetailsResponse,
@@ -40,7 +40,7 @@ export const updateLeadStatus = (
 ): AxiosPromise<ApiResponse> => api.post(`/update-lead-status`, body);
 
 export const deleteLeadDocuments = (
-  body: DeleteLeadDocumentsParams,
+  body: DeleteLeadDocumentParams,
 ): AxiosPromise<ApiResponse> => api.post(`/delete-lead-document`, body);
 
 export const getLeadDetails = (
