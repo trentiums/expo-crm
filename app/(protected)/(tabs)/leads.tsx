@@ -17,7 +17,6 @@ import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import isEmpty from 'lodash/isEmpty';
 import { useDebounce } from '@utils/useDebounce';
-import { SeparatorComponent } from './drawer.style';
 import FilterIcon from '@atoms/Illustrations/Filter';
 import SearchFilter from '@molecules/Search/Search';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';

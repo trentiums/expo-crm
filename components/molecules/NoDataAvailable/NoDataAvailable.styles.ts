@@ -8,6 +8,7 @@ export const NoDataContainer = styled(View)`
   justify-content: center;
   align-items: center;
   flex-basis: auto;
+  flex: 1;
 `;
 
 export const NoDataImage = styled(Image)`
