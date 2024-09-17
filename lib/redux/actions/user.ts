@@ -2,6 +2,7 @@ import { withToastForError } from '@utils/thunk';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   AssignUserListResponse,
+  ChangePasswordParams,
   DeleteUserParams,
   SaveUserParams,
   UpdateUserParams,
@@ -13,6 +14,7 @@ import {
 import {
   assignUserList,
   deleteAccount,
+  changePassword,
   deleteUser,
   saveUser,
   updateUser,
@@ -75,5 +77,16 @@ export const deleteAccountAction = createAsyncThunk<ApiResponse>(
   withToastForError(async () => {
     const response = await deleteAccount();
     return { ...response.data };
+  }),
+);
+
+export const changePasswordAction = createAsyncThunk<
+  ApiResponse,
+  ChangePasswordParams
+>(
+  'user/changePassword',
+  withToastForError(async (body) => {
+    const response = await changePassword(body);
+    return response.data;
   }),
 );
