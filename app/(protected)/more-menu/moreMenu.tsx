@@ -25,6 +25,7 @@ import { changeTheme, ThemeTypes } from '@redux/slices/theme';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import MoreMenuBottom from '@organisms/MoreMenuBottom/MoreMenuBottom';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
+import { router } from 'expo-router';
 
 const MoreMenu = () => {
   const { t } = useTranslation('screenTitle');
@@ -82,6 +83,8 @@ const MoreMenu = () => {
     {
       label: 'changePassword',
       icon: <LockIcon />,
+      onPress: () =>
+        router.navigate('/(protected)/change-password/changePassword'),
     },
   ];
 

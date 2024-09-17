@@ -300,6 +300,13 @@ export const English = {
   toast: {
     ok: 'OK',
   },
+  changePassword: {
+    password: 'Password',
+    oldPassword: 'Old Password',
+    confirmPassword: 'Confirm Password',
+    save: 'Change Password',
+    changePassword: 'Change Password',
+  },
 };
 
 export const Gujarati = {
