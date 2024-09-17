@@ -16,7 +16,6 @@ export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
     valid ? theme.colors.blueChaos : theme.colors.gray};
   border-radius: 50px;
   border-width: 1px;
-  margin-bottom: -16px;
 `;
 
 export const ViewMainContainer = styled(View)`
@@ -36,5 +35,5 @@ export const FormButtonText = styled(Text)<{ valid: boolean }>`
 export const BottomContainer = styled(View)`
   flex: 0.2;
   justify-content: flex-end;
-  margin-bottom: 35px;
+  margin-bottom: 20px;
 `;
