@@ -2,7 +2,7 @@ import Text from '@atoms/Text/Text';
 import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
 import { StyleSheet, FlatList, Pressable } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const styles = StyleSheet.create({
   badgeStyle: {
@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
-export const DashboardScreenContainer = styled(ScrollView)`
+export const DashboardScreenContainer = styled(KeyboardAwareScrollView)`
   padding-bottom: 16px;
 `;
 export const TitleText = styled(Text)`
@@ -93,8 +93,6 @@ export const HeadingView = styled(View)`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
-  flex: 1;
-  flex-basis: auto;
 `;
 export const HeadingText = styled(Text)`
   font-size: 36px;
@@ -116,4 +114,17 @@ export const FilterIconView = styled(Pressable)`
   top: 0;
   bottom: 0;
   z-index: 1;
+`;
+export const DashboardFilterView = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+`;
+
+export const DividerContainer  = styled(View)`
+  flex: 0.8;
+  height: 2px;
+  background-color: ${({ theme }) => theme.colors.aria};
 `;

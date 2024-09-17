@@ -75,4 +75,5 @@ export const persistor = persistStore(store);
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
+export const userRole = (state: RootState) => state.auth?.user?.userRole;
 export default store;

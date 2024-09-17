@@ -77,6 +77,8 @@ export const English = {
     welcome: 'Welcome,',
     searchUsers: 'Search User',
     services: 'Services',
+    leadsCount: 'Leads count',
+    sortBy: 'Sort by',
   },
   screenTitle: {
     notification: 'Notification',
@@ -218,6 +220,9 @@ export const English = {
       ' Oops ! No Leads Found want to add lead then click on add button',
     noUsersFound: 'Oops ! No Users Found',
     addLeads: 'Add Lead',
+    totalLeads: 'Total leads',
+    noLeadsTitle: 'No leads available yet.',
+    noLeadsDesc: 'Currently, there are no leads in the database.',
   },
   addProduct: {
     name: 'Name',
@@ -253,6 +258,13 @@ export const English = {
     leads: 'Leads',
     users: 'Users',
     services: 'Services',
+  },
+  leadStage: {
+    initial: 'Initial',
+    proposed: 'Proposed',
+    negotiation: 'Negotiation',
+    closedWon: 'Closed-won',
+    closedLost: 'Closed-lost',
   },
   bottomSheetNavigator: {
     ChooseOptionToAdd: 'Choose option to add',

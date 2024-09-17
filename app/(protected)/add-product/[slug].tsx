@@ -53,7 +53,7 @@ const addProducts = () => {
         response = await dispatch(editProductServiceAction(formData)).unwrap();
         await dispatch(
           getProductServiceDetailAction({
-            product_service_id: params?.slug,
+            product_service_id: +params?.slug,
           }),
         );
       } else {
@@ -79,15 +79,7 @@ const addProducts = () => {
     }
     setLoading(false);
   };
-  useEffect(() => {
-    navigation.setOptions({
-      title: t('editProducts'),
-      headerStyle: {
-        backgroundColor: colors.tabBar,
-      },
-      headerTintColor: colors.white,
-    });
-  }, [navigation]);
+
   return (
     <ScreenTemplate title={t('editProducts')}>
       <AddProductContainer>
