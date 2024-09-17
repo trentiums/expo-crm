@@ -83,6 +83,11 @@ export const leadsQuickFilters = [
     },
   },
 ];
+export const stepData = [
+  { id: 1, title: 'Basic' },
+  { id: 2, title: 'Company' },
+  { id: 3, title: 'Lead' },
+];
 export const languageList = [
   {
     id: 1,
