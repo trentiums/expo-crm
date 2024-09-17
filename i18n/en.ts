@@ -317,6 +317,10 @@ export const English = {
     privacyPolicy: 'Privacy Policy',
     version: 'Version',
     notAvailable: 'not available',
+    disCardDescription: 'Are you sure want to delete account?',
+    discardMedia: 'Confirmation',
+    yesDiscard: 'Delete',
+    cancel: 'Cancel',
   },
   toast: {
     ok: 'OK',
