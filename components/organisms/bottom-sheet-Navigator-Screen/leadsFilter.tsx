@@ -2,13 +2,12 @@ import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import LeadsFilterForm from '@organisms/LeadsFilterForm/LeadsFilterForm';
 import { getLeadListAction } from '@redux/actions/lead';
 import { setLeadsFilters } from '@redux/slices/leads';
-import { RootState, useAppDispatch } from '@redux/store';
+import { useAppDispatch } from '@redux/store';
 import FormTemplate from '@templates/FormTemplate/FormTemplate';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
 import { LeadsFilterProps } from './leadsFilter.props';
-import { useSelector } from 'react-redux';
 import { CreateOptionProps } from './screen.props';
 
 const LeadsFilter: React.FC<CreateOptionProps> = ({ changeRoute }) => {
