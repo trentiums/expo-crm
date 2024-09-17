@@ -11,6 +11,11 @@ const Text: React.FC<LabelProps> = memo((props) => {
     if (color) {
       _style.push({ color });
     }
+    if (variant) {
+      _style.push({
+        fontFamily: `${variant ? variant : 'SF-Pro-Display-Regular_400'}`,
+      });
+    }
     return _style;
   }, [style, fonts, color]);
 

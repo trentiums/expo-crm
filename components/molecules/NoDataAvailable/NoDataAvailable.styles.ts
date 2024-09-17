@@ -1,12 +1,18 @@
 import Text from '@atoms/Text/Text';
 import { styled } from '@utils/styled';
-import { View } from 'react-native';
+import { Image, View } from 'react-native';
 
 export const NoDataContainer = styled(View)`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-basis: auto;
+`;
+
+export const NoDataImage = styled(Image)`
+  width: 240px;
+  height: 240px;
 `;
 
 export const NoDataText = styled(Text)`

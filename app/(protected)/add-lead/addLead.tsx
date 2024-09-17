@@ -4,8 +4,8 @@ import { AddLeadTabBarData } from '@constants/dummyData';
 import { useAppTheme } from '@constants/theme';
 import TabBar from '@molecules/TabBar/TabBar';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
-import BasicInformationForm from '@organisms/BasicInformatioForm/BasicInformationForm';
-import { fileSystemProps } from '@organisms/BasicInformatioForm/BasicInformationForm.props';
+import BasicInformationForm from '@organisms/BasicInformationForm/BasicInformationForm';
+import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 import CompanyInformationForm from '@organisms/CompanyInformationForm/CompanyInformationForm';
 import LeadDetailsForm from '@organisms/LeadDetailsForm/LeadDetailsForm';
 import { getLeadListAction, saveLeadAction } from '@redux/actions/lead';
@@ -48,7 +48,7 @@ const AddLead = () => {
     (state: RootState) => state.leads.leadList?.leads,
   );
   const toast = useToast();
-  const [documentArray, setDocumentArray] = useState<fileSystemProps[]>([]);
+  const [documentArray, setDocumentArray] = useState<FileSystemProps[]>([]);
   const [loading, setLoading] = useState(false);
   const [leadsDetailLoading, setDetailLoading] = useState(false);
   const [selectedData, setSelectedData] = useState<LeadListState>(

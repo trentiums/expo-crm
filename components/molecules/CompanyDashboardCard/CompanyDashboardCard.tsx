@@ -9,7 +9,7 @@ import {
   TotalLeadsCountContainer,
   TotalLeadTitle,
   UserInformationContainer,
-  UserName,
+  UserNameText,
 } from './CompanyDashboardCard.styles';
 import ProfileIcon from '@atoms/Illustrations/Profile';
 import { CompanyDashboardCardProps, Leads } from './CompanyDashboardCard.props';
@@ -39,7 +39,7 @@ const CompanyDashboardCard: React.FC<CompanyDashboardCardProps> = ({
     <CompanyDashboardCardContainer>
       <UserInformationContainer>
         <ProfileIcon />
-        <UserName numberOfLines={1}>{name}</UserName>
+        <UserNameText numberOfLines={1}>{name}</UserNameText>
       </UserInformationContainer>
       <Spacer size={16} />
       <LeadsStatusDetailContainer>

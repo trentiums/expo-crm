@@ -6,8 +6,6 @@ export interface UserDetailCardProps {
   onEdit: () => void;
   id?: number;
   loading?: boolean;
-  setDeleteId?: (value: number) => void;
-  isServices?: boolean;
   onChangeDeleteId?: (value: number) => void;
   isSocialMediaVisible?: boolean;
 }
