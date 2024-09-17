@@ -1,8 +1,10 @@
+import { ReactNode } from 'react';
+
 export interface SearchFilterProps {
   setSearch: (value: string) => void;
   search: string;
   handleSearch: (search: SearchType) => void;
-  rightIcon?: React.FC;
+  rightIcon?: ReactNode;
   onRightIconPress?: () => void;
 }
 export interface SearchType {

@@ -7,6 +7,7 @@ import BottomSheet, {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomSheetCreateOption from '../bottom-sheet-Navigator-Screen/createOptions';
+import ModifyLeadOption from '../bottom-sheet-Navigator-Screen/modifyLeadOption';
 import {
   BottomSheetHeaderContainer,
   BottomSheetHeaderTitle,
@@ -21,12 +22,21 @@ import { useAppTheme } from '@constants/theme';
 import BottomSheetCloseIcon from '@atoms/Illustrations/BottomSheetClose';
 import LeadsFilter from '@organisms/bottom-sheet-Navigator-Screen/leadsFilter';
 import LeadsSortFilter from '@organisms/bottom-sheet-Navigator-Screen/leadsSortFilter';
+import AssignedUserList from '@organisms/bottom-sheet-Navigator-Screen/assignedUserList';
+import LeadStatusList from '@organisms/bottom-sheet-Navigator-Screen/LeadStatusList';
+import LeadStatusChange from '@organisms/bottom-sheet-Navigator-Screen/LeadStatusChange';
+import LeadStageList from '@organisms/bottom-sheet-Navigator-Screen/LeadStageList';
+import LeadStageCloseWon from '@organisms/bottom-sheet-Navigator-Screen/LeadStageCloseWon';
+import LeadStageNegotiation from '@organisms/bottom-sheet-Navigator-Screen/LeadStageNegotiation';
+import LeadChannelList from '@organisms/bottom-sheet-Navigator-Screen/LeadChannelList';
+import LanguageList from '@organisms/bottom-sheet-Navigator-Screen/LanguageList';
 
 const Stack = createNativeStackNavigator();
 
 const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
   initialRouteName,
   onClosePress,
+  meta,
 }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [snapPoints, setSnapPoints] = useState(['50%', '90%']);
@@ -99,7 +109,192 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
               <BottomSheetCreateOption
                 {...props}
                 changeSnapPoints={changeSnapPoints}
-                changeRoute={handleClosePress}
+                handleBottomSheetClose={handleClosePress}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="ModifyLeadOption"
+            options={() => ({
+              header: () => (
+                <CustomHeader
+                  title={t('chooseOption')}
+                  onClose={() => handleClosePress()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <ModifyLeadOption
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+                handleBottomSheetClose={handleClosePress}
+                leadId={meta.leadId}
+                optionType={meta.optionType}
+                editRoute={meta.editRoute}
+                onDelete={meta.onDelete}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="AssignedUserList"
+            options={({ navigation }) => ({
+              header: () => (
+                <CustomHeader
+                  title={t('updateAssignedUsers')}
+                  onClose={() => handleClosePress()}
+                  backVisible={true}
+                  onBackPress={() => navigation.goBack()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <AssignedUserList
+                {...props}
+                handleBottomSheetClose={handleClosePress}
+                leadId={meta.leadId}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="LeadStatusList"
+            options={({ navigation }) => ({
+              header: () => (
+                <CustomHeader
+                  title={t('updateStatus')}
+                  onClose={() => handleClosePress()}
+                  backVisible={true}
+                  onBackPress={() => navigation.goBack()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <LeadStatusList
+                {...props}
+                handleBottomSheetClose={handleClosePress}
+                leadId={meta.leadId}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="LeadStageList"
+            options={({ navigation }) => ({
+              header: () => (
+                <CustomHeader
+                  title={t('updateStage')}
+                  onClose={() => handleClosePress()}
+                  backVisible={true}
+                  onBackPress={() => navigation.goBack()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <LeadStageList
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+                handleBottomSheetClose={handleClosePress}
+                leadId={meta.leadId}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="LeadChannelList"
+            options={({ navigation }) => ({
+              header: () => (
+                <CustomHeader
+                  title={t('UpdateChannel')}
+                  onClose={() => handleClosePress()}
+                  backVisible={true}
+                  onBackPress={() => navigation.goBack()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <LeadChannelList
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+                handleBottomSheetClose={handleClosePress}
+                leadId={meta.leadId}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="LeadStatusChange"
+            options={({ navigation }) => ({
+              header: () => (
+                <CustomHeader
+                  title={t('changeLeadStatus')}
+                  onClose={() => handleClosePress()}
+                  backVisible={true}
+                  onBackPress={() => navigation.goBack()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <LeadStatusChange
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+                handleBottomSheetClose={handleClosePress}
+                leadId={meta.leadId}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="LeadStageCloseWon"
+            options={({ navigation }) => ({
+              header: () => (
+                <CustomHeader
+                  title={t('changeLeadStage')}
+                  onClose={() => handleClosePress()}
+                  backVisible={true}
+                  onBackPress={() => navigation.goBack()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <LeadStageCloseWon
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+                handleBottomSheetClose={handleClosePress}
+                leadId={meta.leadId}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="LeadStageNegotiation"
+            options={({ navigation }) => ({
+              header: () => (
+                <CustomHeader
+                  title={t('changeLeadStage')}
+                  onClose={() => handleClosePress()}
+                  backVisible={true}
+                  onBackPress={() => navigation.goBack()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <LeadStageNegotiation
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+                handleBottomSheetClose={handleClosePress}
+                leadId={meta.leadId}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="LanguageList"
+            options={() => ({
+              header: () => (
+                <CustomHeader
+                  title={t('changeLanguage')}
+                  onClose={() => handleClosePress()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <LanguageList
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+                handleBottomSheetClose={handleClosePress}
               />
             )}
           </Stack.Screen>

@@ -2,35 +2,19 @@ import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import LeadsFilterForm from '@organisms/LeadsFilterForm/LeadsFilterForm';
 import { getLeadListAction } from '@redux/actions/lead';
 import { setLeadsFilters } from '@redux/slices/leads';
-import { RootState, useAppDispatch } from '@redux/store';
+import { useAppDispatch } from '@redux/store';
 import FormTemplate from '@templates/FormTemplate/FormTemplate';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
 import { LeadsFilterProps } from './leadsFilter.props';
-import { useSelector } from 'react-redux';
 import { CreateOptionProps } from './screen.props';
 
 const LeadsFilter: React.FC<CreateOptionProps> = ({ changeRoute }) => {
   const dispatch = useAppDispatch();
   const toast = useToast();
-  const leadsAppliedFilter = useSelector(
-    (state: RootState) => state.leads.leadsFilter,
-  );
   const [filterLoading, setFilterLoading] = useState(false);
   const handleApplyFilter = async (values: LeadsFilterProps) => {
-    const states = [
-      values?.startDate || leadsAppliedFilter?.startDate,
-      values?.endDate || leadsAppliedFilter?.endDate,
-      //TODO: as api change the channel will go in array
-      values?.selectedChannel?.[0] || leadsAppliedFilter?.selectedChannel,
-      values?.selectedStatus || leadsAppliedFilter?.selectedStatus,
-      values?.selectedStage || leadsAppliedFilter?.selectedStage,
-    ];
-
-    const count = states.filter(
-      (state) => state !== null && state !== undefined && state !== '',
-    ).length;
     dispatch(setLeadsFilters(values));
     try {
       setFilterLoading(true);

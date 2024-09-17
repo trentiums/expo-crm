@@ -2,6 +2,7 @@ import { UserRole } from './auth';
 
 export interface UserListParams {
   page?: number;
+  search?: string;
 }
 export interface User {
   id: number;

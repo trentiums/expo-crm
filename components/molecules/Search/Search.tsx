@@ -9,9 +9,9 @@ import { SearchFilterProps } from './Search.props';
 import {
   FilterContainer,
   FilterIconView,
+  FilterRightIconView,
   SearchInputContainer,
   SearchTextInput,
-  FilterRightIconView,
 } from './Search.styles';
 
 const SearchFilter: React.FC<SearchFilterProps> = ({
@@ -51,7 +51,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         <FilterIconView>
           <Search />
         </FilterIconView>
-        {rightIcon && (
+        {rightIcon && onRightIconPress && (
           <FilterRightIconView onPress={onRightIconPress}>
             {rightIcon}
           </FilterRightIconView>

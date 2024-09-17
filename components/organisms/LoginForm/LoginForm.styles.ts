@@ -19,7 +19,7 @@ export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   height: 48px;
   justify-content: center;
   background-color: ${({ theme, valid }) =>
-    valid ? theme.colors.BlueChaos : theme.colors.gray};
+    valid ? theme.colors.blueChaos : theme.colors.gray};
   border-radius: 50px;
 `;
 

@@ -1,3 +1,5 @@
+import { LanguageEnum } from '@redux/slices/auth';
+
 export const dashboardLeads = [
   {
     title: 'lead completed',
@@ -85,4 +87,21 @@ export const stepData = [
   { id: 1, title: 'Basic' },
   { id: 2, title: 'Company' },
   { id: 3, title: 'Lead' },
+];
+export const languageList = [
+  {
+    id: 1,
+    name: LanguageEnum.english,
+    shortForm: 'en',
+  },
+  {
+    id: 2,
+    name: LanguageEnum.gujarati,
+    shortForm: 'gu',
+  },
+  {
+    id: 3,
+    name: LanguageEnum.hindi,
+    shortForm: 'hi',
+  },
 ];
