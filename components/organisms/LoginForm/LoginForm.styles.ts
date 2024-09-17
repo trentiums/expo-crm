@@ -15,11 +15,11 @@ export const LoginFormView = styled(View)`
   justify-content: space-between;
 `;
 
-export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
+export const ButtonSubmit = styled(Button)<{ variant: boolean }>`
   height: 48px;
   justify-content: center;
-  background-color: ${({ theme, valid }) =>
-    valid ? theme.colors.blueChaos : theme.colors.gray};
+  background-color: ${({ theme, variant }) =>
+    variant ? theme.colors.blueChaos : theme.colors.gray};
   border-radius: 50px;
 `;
 

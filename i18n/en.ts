@@ -46,6 +46,7 @@ export const English = {
     emailLabel: 'Enter your Email',
     loginSuccess: 'Login Successfully',
     forgotPassword: 'Forgot password?',
+    sendEmail: 'Send email',
   },
   forgot: {
     forgotusername: 'Forgot your username?',
