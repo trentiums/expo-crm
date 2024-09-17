@@ -85,21 +85,6 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   const leadAssignToData = useSelector(
     (state: RootState) => state.user.assignUserList,
   );
-  const handleGetMoreServices = async () => {
-    if (
-      productServiceListData?.currentPage !== productServiceListData?.lastPage
-    ) {
-      try {
-        await dispatch(
-          getProductServiceListAction({
-            page: productServiceListData?.currentPage + 1,
-          }),
-        ).unwrap();
-      } catch (error: any) {
-        console.log(error);
-      }
-    }
-  };
 
   useEffect(() => {
     const data = leadsData?.filter((item) => item.id === id);
@@ -235,6 +220,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             isFullWidth
             isSearch
             dropdownDataType={DropdownDataType.SERVICES}
+            heading={t('selectService')}
           />
           <Spacer size={8} />
           {values?.selectedServices?.length > 0 && (
@@ -296,9 +282,10 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             component={FieldDropDown}
             name="assignTo"
             listData={leadAssignToData}
-            placeholder={td('searchUsers')}
+            placeholder={tl('assignToEg')}
             isSearch
             dropdownDataType={DropdownDataType.USERS}
+            heading={t('selectUser')}
           />
           <Spacer size={16} />
           <Label>{t('budgetLabel')}</Label>
@@ -320,7 +307,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             <InputView>
               <Field
                 name="budget"
-                placeholder={t('budgetLabelPlaceholder')}
+                placeholder={tl('budgetEg')}
                 component={FieldTextInput}
                 keyboardType="numeric"
                 isFloatValue
@@ -342,13 +329,14 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                   }),
                 )}
                 isShowSelected
-                placeholder={t('timeFrameToPurchaseLabel')}
+                placeholder={t('time')}
               />
             </DropdownView>
+            {console.log(values?.timeFrame, 'timeFrame', settings?.timeframe)}
             <InputView>
               <Field
                 name="timeFrame"
-                placeholder={t('timeFrame')}
+                placeholder={`${tl('timeFrameEg')}`}
                 component={FieldTextInput}
               />
             </InputView>
@@ -357,12 +345,12 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
           <Label>{t('commentsLabel')}</Label>
           <Field
             name="comments"
-            placeholder={t('commentsLabel')}
+            placeholder={t('commentsEg')}
             component={FieldTextInput}
             numberOfLines={5}
             style={{
               height: 85,
-              backgroundColor: colors?.transparent,
+              backgroundColor: colors?.iceWindDale,
             }}
             multiline
             contentStyle={{ marginTop: -10 }}

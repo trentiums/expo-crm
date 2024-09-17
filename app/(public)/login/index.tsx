@@ -54,10 +54,10 @@ const LoginScreen = () => {
           dispatch(leadConversionListAction()),
           dispatch(leadStatusListAction()),
           dispatch(countryListAction()),
-          // dispatch(getProductServiceListAction({})),
-          // dispatch(getLeadListAction({})),
-          // dispatch(getUserListAction({})),
-          // dispatch(getAssignUserListAction()),
+          dispatch(getProductServiceListAction({})),
+          dispatch(getLeadListAction({})),
+          dispatch(getUserListAction({})),
+          dispatch(getAssignUserListAction({})),
         ]);
       }
       router.replace('/(protected)/(tabs)/leads');

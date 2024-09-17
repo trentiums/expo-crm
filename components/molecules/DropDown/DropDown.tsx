@@ -5,6 +5,7 @@ import {
   DropDownDataContainer,
   DropDownDataView,
   DropdownLeftView,
+  DropdownPlaceHolderText,
   DropDownSelectedView,
   DropDownTitleText,
   ImageView,
@@ -132,10 +133,12 @@ const DropDown: React.FC<DropDownProps> = ({
             onFocus={() => setShowDropList(true)}
             ref={searchInputRef}
             onBlur={() => Keyboard.dismiss()}
+            disabled
           />
           <FilterIconView>
             <Search />
           </FilterIconView>
+          <DropdownPlaceHolderText>{placeholder}</DropdownPlaceHolderText>
         </SearchFilterContainer>
       ) : (
         <ShowMultipleDataList

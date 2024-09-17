@@ -1,3 +1,5 @@
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
+
 export interface SearchFilterProps {
   setSearch: (value: string) => void;
   search: string;
@@ -5,6 +7,7 @@ export interface SearchFilterProps {
   rightIcon?: React.FC;
   onRightIconPress?: () => void;
   searchRadius?: number;
+  dropdownDataType?: DropdownDataType;
 }
 export interface SearchType {
   search: string;

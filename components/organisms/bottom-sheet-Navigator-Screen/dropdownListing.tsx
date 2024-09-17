@@ -25,7 +25,6 @@ const DropdownListing = ({
   const dispatch = useAppDispatch();
   const [dropListData, setDropListData] = useState(dropdownData);
   const [search, setSearch] = useState('');
-  console.log(dropListData, 'dropdownData');
   const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>('NONE');
   const productServiceListData = useSelector(
     (state: RootState) => state.productService.productServiceList,
@@ -132,7 +131,12 @@ const DropdownListing = ({
   return (
     <LeasFilterScreenContainer>
       <DropdownListingView>
-        <SearchFilter search={search} setSearch={setSearch} searchRadius={44} />
+        <SearchFilter
+          search={search}
+          setSearch={setSearch}
+          searchRadius={44}
+          dropdownDataType={dropdownDataType}
+        />
         {loadingStatus === 'SCREEN' ? (
           <Loader />
         ) : (

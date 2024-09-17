@@ -92,4 +92,13 @@ export const ShowMultipleDataList = styled(FlatList).attrs({
     flexWrap: 'wrap',
   },
 })``;
-export const SearchFilterContainer = styled(Pressable)``;
+export const SearchFilterContainer = styled(Pressable)`
+  position: relative;
+`;
+export const DropdownPlaceHolderText = styled(Text)`
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.moreThan};
+  position: absolute;
+  left: 60;
+  top: 17;
+`;
