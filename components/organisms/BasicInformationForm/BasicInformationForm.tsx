@@ -1,36 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Field, useFormState } from 'react-final-form';
-import * as DocumentPicker from 'expo-document-picker';
 import {
-  AddIconButton,
   ButtonSubmit,
-  CloseButton,
   CountryCodeInput,
-  CrossIconContainer,
-  DialCodeDropDownView,
-  DialCodeText,
-  DocumentView,
-  ErrorText,
-  FlatListCon,
   FormButtonText,
-  HeaderText,
-  ImagePreviewShow,
-  ImageView,
   KeyboardAwareScrollViewContainer,
   Label,
-  ModalView,
   NumberInput,
   PhoneNumberFieldView,
-  PickerContainer,
-  PressAbleContainer,
-  PreviewImageView,
-  SelectedFlagView,
-  StyledModal,
-  SvgShowContainer,
-  UploadText,
 } from './BasicInformationForm.styles';
 import { useTranslation } from 'react-i18next';
-import PdfRendererView from 'react-native-pdf-renderer';
 import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
 import {
   composeValidators,
@@ -42,13 +21,10 @@ import {
 } from '@utils/formValidators';
 import { BasicInfoFormProps } from './BasicInformationForm.props';
 import { Spacer } from '@atoms/common/common.styles';
-import AddIcon from '@atoms/Illustrations/AddIcon';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import DocumentIcon from '@atoms/Illustrations/Document';
-import CrossIcon from '@atoms/Illustrations/Cross';
 import { FormsView } from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import { LeadListState } from '@type/api/lead';
@@ -58,25 +34,16 @@ import {
 } from '@redux/actions/lead';
 import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
-import { MAX_FILE_SIZE } from '@utils/constant';
-import { SvgUri } from 'react-native-svg';
 import { addLeadInformation } from '@redux/slices/leads';
 import { useLocalSearchParams } from 'expo-router';
-import * as MediaLibrary from 'expo-media-library';
-import DropDown from '@molecules/DropDown/DropDown';
-import Pdf from 'react-native-pdf';
-import { ActivityIndicator } from 'react-native-paper';
-import PdfReader from '@hashiprobr/expo-pdf-reader';
-import WebView from 'react-native-webview';
 import * as Print from 'expo-print';
-import { Linking } from 'react-native';
+import DocumentPick from '@molecules/DocumentPicker/DocumentPicker';
+import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
 
 const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   loading,
   form,
   isSave,
-  setSelectedCountryCodeValue,
-  selectedCountryCodeValue,
   documentArray,
   setDocumentArray,
 }) => {
@@ -119,24 +86,22 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   }, [id]);
   const [deleteDocumentUrl, setDeleteDocumentUrl] = useState(null);
   useEffect(() => {
-    if (values.phoneNumber && !selectedCountryCodeValue) {
+    if (values.phoneNumber && !values?.countryCode) {
       setCountryCodeError(t('countryCodeError'));
-    } else if (!values.phoneNumber && selectedCountryCodeValue) {
+    } else if (!values.phoneNumber && values?.countryCode) {
       setCountryCodeError(t('phoneNumberError'));
     } else if (
-      (values.phoneNumber && selectedCountryCodeValue) ||
-      (!values.phoneNumber && !selectedCountryCodeValue)
+      (values.phoneNumber && values?.countryCode) ||
+      (!values.phoneNumber && !values?.countryCode)
     ) {
       setCountryCodeError('');
     }
-  }, [values, selectedCountryCodeValue]);
+  }, [values]);
 
   useEffect(() => {
     const initializePermissionsAndForm = async () => {
       const data = leadsData.filter((item) => item?.id === id)?.[0];
-      if (id) {
-        setSelectedCountryCodeValue(leadsDetail?.countryId || data?.countryId);
-      }
+      form.change('countryCode', +addLeadFormData?.countryCode);
       if (id) {
         setDocumentArray(leadsDetail?.documents);
       }
@@ -159,38 +124,6 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
 
     initializePermissionsAndForm();
   }, [id, selectedData]);
-  const pickFile = async () => {
-    try {
-      const { status } = await MediaLibrary.requestPermissionsAsync();
-      if (status !== 'granted') {
-        return;
-      }
-      const res = await DocumentPicker.getDocumentAsync({
-        type: ['application/pdf', 'image/*', 'text/plain'],
-        copyToCacheDirectory: true,
-      });
-
-      if (!res.canceled) {
-        res.assets.forEach((file) => {
-          if (file.size > MAX_FILE_SIZE) {
-            toast.show(t('fileSizeExceeded'), {
-              type: ToastType.Custom,
-              data: {
-                type: ToastTypeProps.Error,
-              },
-            });
-          } else {
-            setDocumentArray((prevImages) => [...prevImages, file]);
-          }
-        });
-      } else {
-        console.log('cancelled');
-      }
-    } catch (err) {
-      console.log('error', err);
-      throw err;
-    }
-  };
 
   const onDeleteActionPress = async () => {
     const deletedDocument = documentArray?.filter(
@@ -228,34 +161,6 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
     setDocumentArray(updatedDocuments);
   };
 
-  const renderFilePreview = (file: any) => {
-    const type = file?.type || file.mimeType;
-    return (
-      <PressAbleContainer
-        onPress={() => {
-          setImageURI(file);
-          if (file && file?.uri?.endsWith('pdf')) {
-            Linking.openURL(file.uri);
-          }
-        }}>
-        <CrossIconContainer
-          onPress={() => {
-            setDeleteShowModal(true);
-            setDeleteDocumentUrl(file?.uri);
-          }}>
-          <CrossIcon color={colors.white} />
-        </CrossIconContainer>
-        {type?.includes('image') ? (
-          <ImagePreviewShow source={{ uri: file?.uri }} />
-        ) : (
-          <SvgShowContainer>
-            <DocumentIcon />
-          </SvgShowContainer>
-        )}
-      </PressAbleContainer>
-    );
-  };
-
   useEffect(() => {
     dispatch(
       addLeadInformation({
@@ -263,10 +168,10 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
         fullName: values.firstName,
         email: values.email,
         phoneNumber: values.phoneNumber,
-        countryCode: selectedCountryCodeValue,
+        countryCode: values?.countryCode,
       }),
     );
-  }, [values, selectedCountryCodeValue]);
+  }, [values]);
   const generatePdf = async () => {
     try {
       const { uri } = await Print.printToFileAsync({
@@ -312,21 +217,17 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
         <Label>{t('phoneNumberLabel')}</Label>
         <PhoneNumberFieldView>
           <CountryCodeInput>
-            <DropDown
-              data={countryListData?.map((item) => ({
-                title: item?.dialCode,
+            <Field
+              name={'countryCode'}
+              component={FieldDropDown}
+              listData={countryListData?.map((item) => ({
+                title: `+${item?.dialCode} ${item.name}`,
                 id: item?.id,
                 image: item?.flag,
               }))}
+              isShowSelected
               placeholder={t('selectCountry')}
-              value={selectedCountryCodeValue}
-              onChange={(value: { label: string | number }) => {
-                if (selectedCountryCodeValue !== value) {
-                  setSelectedCountryCodeValue(value);
-                } else {
-                  setSelectedCountryCodeValue('');
-                }
-              }}
+              heading={t('countryCode')}
             />
           </CountryCodeInput>
           <NumberInput>
@@ -342,31 +243,13 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
             />
           </NumberInput>
         </PhoneNumberFieldView>
-        <Spacer size={8} />
-
+        <Spacer size={24} />
+        {documentArray?.length === 0 && <Label>{t('documents')}</Label>}
+        <DocumentPick
+          setDocumentArray={setDocumentArray}
+          documentArray={documentArray}
+        />
         <Spacer size={16} />
-        <PickerContainer onPress={pickFile}>
-          <AddIconButton>
-            <AddIcon />
-            <UploadText>{t('uploadDocuments')}</UploadText>
-          </AddIconButton>
-        </PickerContainer>
-        <Spacer size={16} />
-
-        {documentArray?.length > 0 && (
-          <>
-            <HeaderText>{t('attachments')}</HeaderText>
-            <Spacer size={8} />
-            <FlatListCon
-              data={documentArray}
-              renderItem={({ item }) => (
-                <DocumentView>{renderFilePreview(item)}</DocumentView>
-              )}
-              keyExtractor={(item, index) => index.toString()}
-              numColumns={3}
-            />
-          </>
-        )}
 
         {deleteShowModal && (
           <ActionModal
@@ -387,100 +270,6 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
             loading={deleteLoading}
           />
         )}
-
-        <StyledModal
-          animationType="slide"
-          transparent={true}
-          onRequestClose={() => setShowModal(false)}
-          visible={showModal}>
-          <ModalView>
-            <CloseButton onPress={() => setShowModal(false)}>
-              <CrossIcon color={colors.black} />
-            </CloseButton>
-            <Spacer size={64} />
-            {/* <PdfReader
-              source={{
-                uri: "https://morth.nic.in/sites/default/files/dd12-13_0.pdf",
-              }}
-              onLoad={() => console.log("PDF loaded successfully")}
-              onError={(error) => console.error("Error loading PDF:", error)}
-              style={{ flex: 1 }}
-              renderActivityIndicator={() => (
-                <ActivityIndicator size="large" color="#0000ff" />
-              )}
-            /> */}
-            {/* <PreviewImageView source={{ uri: ImageURI?.uri }} /> */}
-            {/* <WebView
-              source={{
-                uri: "https://morth.nic.in/sites/default/files/dd12-13_0.pdf",
-              }}
-              style={{
-                container: {
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                },
-                webview: {
-                  flex: 1,
-                  width: "100%",
-                },
-              }}
-            /> */}
-            {/* <PdfReader
-              source={{
-                uri: "https://morth.nic.in/sites/default/files/dd12-13_0.pdf",
-              }}
-              style={{ flex: 1 }}
-            /> */}
-
-            {/* {console.log(
-              ImageURI && ImageURI?.uri?.endsWith("pdf"),
-              " ImageURI?.uri"
-            )}
-            <Pdf
-              source={{
-                uri: null,
-                cache: true,
-              }}
-              trustAllCerts={false}
-              style={{
-                flex: 1,
-                width: "100%",
-              }}
-              onError={(error) => {
-                console.error(error, "error");
-              }}
-            /> */}
-            {/* <PdfRendererView
-              source="https://morth.nic.in/sites/default/files/dd12-13_0.pdf"
-              distanceBetweenPages={16}
-              maxZoom={5}
-              onPageChange={(current, total) => {
-                console.log(current, total);
-              }}
-            /> */}
-            {/* {ImageURI && ImageURI?.uri?.endsWith("pdf") ? (
-              <>
-                <Pdf
-                  source={{
-                    uri: ImageURI?.uri,
-                  }}
-                  trustAllCerts={false}
-                  style={{
-                    flex: 1,
-                    width: "100%",
-                  }}
-                  onError={(error) => {
-                    console.error(error, "error");
-                  }}
-                />
-              </>
-            ) : (
-              <PreviewImageView source={{ uri: ImageURI?.uri }} />
-            )} */}
-          </ModalView>
-        </StyledModal>
-        <Spacer size={70} />
       </KeyboardAwareScrollViewContainer>
       <ButtonSubmit
         onPress={!loading && !countryCodeError && form.submit}
