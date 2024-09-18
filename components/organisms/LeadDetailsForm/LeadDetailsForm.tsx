@@ -45,6 +45,9 @@ import { Pressable } from 'react-native';
 import { ShowMultipleDataList } from '@molecules/DropDown/DropDown.styles';
 import CrossSmallIcon from '@atoms/Illustrations/CrossSmall';
 import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
+import { getLeadProductServiceListAction } from '@redux/actions/productService';
+import { getAssignUserListAction } from '@redux/actions/user';
+import ProfileIcon from '@atoms/Illustrations/Profile';
 
 const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   form,
@@ -67,7 +70,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   const settings = useSelector((state: RootState) => state.general.settings);
   const general = useSelector((state: RootState) => state.general);
   const servicesData = useSelector(
-    (state: RootState) => state.productService.productServiceList?.serviceList,
+    (state: RootState) => state.productService.leadProductService,
   );
   const currencyList = useSelector(
     (state: RootState) => state.general.currencyList,
@@ -86,7 +89,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
     leadsData?.[0],
   );
   const leadAssignToData = useSelector(
-    (state: RootState) => state.user.assignUserList,
+    (state: RootState) => state.user.assignUserList?.assignUsers,
   );
 
   useEffect(() => {
@@ -119,6 +122,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   }, [values]);
 
   useEffect(() => {
+    handleGetLeadsServices();
     form.change(
       'selectedChannel',
       id ? leadsDetail?.leadChannelId : addLeadFormData?.selectedChannel,
@@ -126,7 +130,9 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
 
     form.change(
       'budgetCurrencyCode',
-      id ? leadsDetail?.leadChannelId : addLeadFormData?.budgetCurrencyCode,
+      id
+        ? leadsDetail?.budgetCurrencyCode
+        : addLeadFormData?.budgetCurrencyCode,
     );
     form.change(
       'dealAmountCurrencyCode',
@@ -188,7 +194,10 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       id ? `${leadsDetail?.timeFrameType}` : addLeadFormData?.timeFrameType,
     );
   }, [id]);
-
+  const handleGetLeadsServices = async () => {
+    await dispatch(getLeadProductServiceListAction());
+    await dispatch(getAssignUserListAction({}));
+  };
   const handleDeleteService = (deleteId: number) => {
     const updatedServices = values?.selectedServices?.filter(
       (service) => service !== deleteId,
@@ -214,7 +223,8 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   const renderSelectedUsers = ({ item }) => {
     return (
       <SelectedUserData>
-        <ServiceText>{item.name}</ServiceText>
+        <ProfileIcon />
+        <ServiceText>{item.title}</ServiceText>
         <Pressable onPress={() => handleDeleteAssignedUser(item.id)}>
           <CrossSmallIcon />
         </Pressable>
@@ -318,17 +328,17 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             dropdownDataType={DropdownDataType.USERS}
             heading={t('selectUser')}
           />
-          {/* TODO: users api changes */}
-          {/* {values?.assignTo && (
+          <Spacer size={8} />
+          {values?.assignTo && (
             <ShowMultipleDataList
-              data={leadAssignToData?.filter((item) =>
-                values.assignTo.includes(item.id),
+              data={leadAssignToData?.filter(
+                (item) => values?.assignTo === item.id,
               )}
               renderItem={renderSelectedUsers}
               keyExtractor={(item, index) => `${item}-${index}`}
               ItemSeparatorComponent={<Spacer size={8} />}
             />
-          )} */}
+          )}
           <Spacer size={16} />
           <Label>{t('budgetLabel')}</Label>
           <RowView>
@@ -343,7 +353,9 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                   };
                 })}
                 isShowSelected
+                dropdownDataType={DropdownDataType.BUDGET}
                 placeholder={t('budget')}
+                heading={t('selectBudget')}
               />
             </DropdownView>
             <InputView>
@@ -372,6 +384,8 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 )}
                 isShowSelected
                 placeholder={t('time')}
+                dropdownDataType={DropdownDataType.TIMELINE}
+                heading={t('selectTimeline')}
               />
             </DropdownView>
             <InputView>
@@ -432,6 +446,8 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                     })}
                     isShowSelected
                     placeholder={t('Amount')}
+                    dropdownDataType={DropdownDataType.BUDGET}
+                    heading={t('selectDealAmount')}
                   />
                 </DropdownView>
                 <InputView>

@@ -125,6 +125,7 @@ export interface ProductService {
 }
 
 export interface LeadListState {
+  dealAmountCurrencyCode: number;
   id: number;
   companyUserId: number;
   name: string;

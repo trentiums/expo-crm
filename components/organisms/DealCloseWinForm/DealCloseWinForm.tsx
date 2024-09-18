@@ -30,6 +30,7 @@ import { useAppTheme } from '@constants/theme';
 import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
 import { getLeadDetailsAction } from '@redux/actions/lead';
 import Loader from '@atoms/Loader/Loader';
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 
 const DealCloseWinForm: React.FC<DealWinCloseFormProps> = ({
   loading,
@@ -40,6 +41,7 @@ const DealCloseWinForm: React.FC<DealWinCloseFormProps> = ({
 }) => {
   const { t } = useTranslation('dealWinClose');
   const { t: tb } = useTranslation('formButtonName');
+  const { t: tl } = useTranslation('leadDetails');
   const dispatch = useAppDispatch();
   const colors = useAppTheme();
   const { valid } = useFormState({ subscription: { valid: true } });
@@ -94,6 +96,8 @@ const DealCloseWinForm: React.FC<DealWinCloseFormProps> = ({
                   })}
                   isShowSelected
                   placeholder={t('budget')}
+                  heading={tl('selectBudget')}
+                  dropdownDataType={DropdownDataType.BUDGET}
                 />
               </DropdownView>
               <InputView>
@@ -120,6 +124,7 @@ const DealCloseWinForm: React.FC<DealWinCloseFormProps> = ({
                   numberOfLines={5}
                   style={{
                     height: 85,
+                    backgroundColor: colors?.iceWindDale,
                   }}
                   multiline
                   contentStyle={{ marginTop: -10 }}
@@ -143,7 +148,7 @@ const DealCloseWinForm: React.FC<DealWinCloseFormProps> = ({
             </SubContainerView>
             <SubContainerView>
               <ButtonSubmit
-                onPress={form.submit}
+                onPress={!loading && form.submit}
                 loading={loading}
                 variant={valid}>
                 <FormButtonText valid={valid}>{tb('save')}</FormButtonText>

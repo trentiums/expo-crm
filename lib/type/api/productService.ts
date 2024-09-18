@@ -10,11 +10,22 @@ export interface ProductService {
   description: string;
   documents: DocumentTye[];
 }
+
+export interface LeadProductService {
+  id: number;
+  name: string;
+}
 export interface ProductServiceResponse {
   status: boolean;
   message: string;
   data: ProductService[];
 }
+export interface LeadProductServiceResponse {
+  status: boolean;
+  message: string;
+  data: LeadProductService[];
+}
+
 export interface SaveProductServiceParams {
   name: string;
   description?: string;
