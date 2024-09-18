@@ -79,7 +79,6 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   const openBottomSheet = () => setVisibleBottomSheet(true);
 
   const closeBottomSheet = () => setVisibleBottomSheet(false);
-
   return (
     <DetailContainer>
       <LeadInfoView>
@@ -88,8 +87,9 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
             <NameText numberOfLines={1}>{leadData?.name}</NameText>
             <LeadStatus
               leadStatus={
-                leads?.filter((item) => item?.id === leadData?.id)[0]
-                  ?.leadStatusId
+                leads?.filter(
+                  (item) => item?.id === (leadData?.id || leadData?.leadId),
+                )[0]?.leadStatusId
               }
             />
           </NameAndStatusContainer>
