@@ -9,7 +9,7 @@ export const Container = styled(Card)<{ isError?: boolean }>`
   padding-bottom: 5px;
   border-radius: 6px;
   background-color: ${({ isError, theme }) =>
-    isError ? theme.colors.notificationError : theme.colors.notificationScrBg};
+    isError ? theme.colors.notificationError : theme.colors.funGreen};
 `;
 
 export const NotificationBox = styled(View)`
