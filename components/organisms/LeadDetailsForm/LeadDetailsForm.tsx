@@ -205,10 +205,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
     form.change('selectedServices', updatedServices);
   };
   const handleDeleteAssignedUser = (deleteId: number) => {
-    const updatedServices = values?.assignTo?.filter(
-      (service) => service !== deleteId,
-    );
-    form.change('assignTo', updatedServices);
+    form.change('assignTo', null);
   };
   const renderSelectedServices = ({ item }) => {
     return (
@@ -225,9 +222,11 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       <SelectedUserData>
         <ProfileIcon />
         <ServiceText>{item.title}</ServiceText>
-        <Pressable onPress={() => handleDeleteAssignedUser(item.id)}>
-          <CrossSmallIcon />
-        </Pressable>
+        {!id && (
+          <Pressable onPress={() => handleDeleteAssignedUser(item.id)}>
+            <CrossSmallIcon />
+          </Pressable>
+        )}
       </SelectedUserData>
     );
   };
