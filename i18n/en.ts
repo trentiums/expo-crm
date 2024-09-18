@@ -47,7 +47,9 @@ export const English = {
     emailLabel: 'Enter your Email',
     loginSuccess: 'Login Successfully',
     forgotPassword: 'Forgot password?',
+    forgotPasswordTitle: 'Forgot password',
     sendEmail: 'Send email',
+    backToLogin: 'Back to Login',
   },
   forgot: {
     forgotusername: 'Forgot your username?',

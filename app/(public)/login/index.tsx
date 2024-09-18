@@ -60,7 +60,7 @@ const LoginScreen = () => {
           dispatch(getAssignUserListAction({})),
         ]);
       }
-      router.replace('/(protected)/(tabs)/leads');
+      router.replace('/(protected)/(tabs)/dashboard');
     } catch (error: any) {
       toast.show(error, {
         type: ToastType.Custom,
@@ -73,7 +73,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <LoginScrollView>
+    <LoginScrollView keyboardShouldPersistTaps="always">
       <LoginScreenContainer>
         <Container>
           <ImageView source={images.loginImage} resizeMode="cover" />
