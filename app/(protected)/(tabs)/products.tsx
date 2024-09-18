@@ -20,6 +20,7 @@ import ProductCard from '@molecules/ProductCard/ProductCard';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
 import { LoadingStatus } from '../../(public)/login/LoginScreen.props';
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 
 const products = () => {
   const { t: ts } = useTranslation('drawer');
@@ -86,6 +87,7 @@ const products = () => {
         search={productSearch}
         setSearch={setProductUserSearch}
         handleSearch={handleSearchProducts}
+        dropdownDataType={DropdownDataType.SERVICES}
       />
     );
   };

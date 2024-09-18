@@ -1,6 +1,15 @@
-import { leadsQuickFilters } from '@utils/constant';
 import React, { useCallback, useState } from 'react';
+import {
+  DashboardFilterButton,
+  DashboardFilterContainer,
+  DashboardFilterScreenContainer,
+  DashboardSortFilterText,
+  IconWrapper,
+} from './screen.style';
 import { FlatList, ListRenderItem } from 'react-native';
+import { dashboardQuickFilters, leadsQuickFilters } from '@utils/constant';
+import { CreateOptionProps, DashboardSortFilterItemProp } from './screen.props';
+import CircleCheckIcon from '@atoms/Illustrations/CircleCheck';
 import {
   FilterApplyButton,
   RemoveButtonText,
@@ -9,48 +18,42 @@ import {
 import { FormButtonText } from '@organisms/UserInformationForm/UserInformationForm.styles';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '@redux/store';
-import { getLeadListAction } from '@redux/actions/lead';
-import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
-import { CreateOptionProps, LeadSortFilterItemProp } from './screen.props';
-import {
-  IconWrapper,
-  LeadsFilterButton,
-  LeadsFilterContainer,
-  LeadsSortFilterText,
-  LeasFilterScreenContainer,
-} from './screen.style';
-import CircleCheckIcon from '@atoms/Illustrations/CircleCheck';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { dashboardAdminLeadListAction } from '@redux/actions/dashboard';
+import { Spacer } from '@atoms/common/common.styles';
 
-const LeadsSortFilter: React.FC<CreateOptionProps> = ({
+const DashboardSortFilter: React.FC<CreateOptionProps> = ({
   changeRoute,
   changeSnapPoints,
 }) => {
+  const { t } = useTranslation('leadsFilter');
   const dispatch = useAppDispatch();
   const toast = useToast();
-  const { t } = useTranslation('leadsFilter');
-  const [selectedSort, setSelectedSort] = useState(null);
+  const [selectedSort, setSelectedSort] = useState(dashboardQuickFilters?.[0]);
   const [filterLoading, setFilterLoading] = useState(false);
-  const renderLeadsSortFilter: ListRenderItem<LeadSortFilterItemProp> = ({
+  const renderLeadsSortFilter: ListRenderItem<DashboardSortFilterItemProp> = ({
     item,
   }) => (
-    <LeadsFilterContainer onPress={() => setSelectedSort(item)}>
-      <LeadsSortFilterText>{item.title}</LeadsSortFilterText>
+    <DashboardFilterContainer onPress={() => setSelectedSort(item)}>
+      <DashboardSortFilterText>{item.title}</DashboardSortFilterText>
       <IconWrapper>
         {selectedSort?.id === item.id && <CircleCheckIcon />}
       </IconWrapper>
-    </LeadsFilterContainer>
+    </DashboardFilterContainer>
   );
-  const onLayout = useCallback(() => {
-    changeSnapPoints(['50%', '90%']);
-  }, []);
   const handleRemoveFilters = () => {
     setSelectedSort(null);
   };
+  const onLayout = useCallback(() => {
+    changeSnapPoints(['32%', '90%']);
+  }, []);
   const handleApplySortFilter = async () => {
     try {
       setFilterLoading(true);
-      await dispatch(getLeadListAction(selectedSort.filter)).unwrap();
+      await dispatch(
+        dashboardAdminLeadListAction(selectedSort.filters),
+      ).unwrap();
     } catch (error) {
       toast.show(error, {
         type: ToastType.Custom,
@@ -62,16 +65,16 @@ const LeadsSortFilter: React.FC<CreateOptionProps> = ({
     setFilterLoading(false);
     changeRoute();
   };
-
   return (
-    <LeasFilterScreenContainer onLayout={onLayout}>
+    <DashboardFilterScreenContainer onLayout={onLayout}>
       <FlatList
-        data={leadsQuickFilters}
+        data={dashboardQuickFilters}
         renderItem={renderLeadsSortFilter}
         keyExtractor={(item) => item.id.toString()}
         numColumns={1}
       />
-      <LeadsFilterButton>
+      <Spacer size={32} />
+      <DashboardFilterButton>
         <RemoveFilterButton onPress={handleRemoveFilters}>
           <RemoveButtonText>{t('removeFilter')}</RemoveButtonText>
         </RemoveFilterButton>
@@ -80,9 +83,9 @@ const LeadsSortFilter: React.FC<CreateOptionProps> = ({
           onPress={handleApplySortFilter}>
           <FormButtonText valid={true}>{t('applyFilter')}</FormButtonText>
         </FilterApplyButton>
-      </LeadsFilterButton>
-    </LeasFilterScreenContainer>
+      </DashboardFilterButton>
+    </DashboardFilterScreenContainer>
   );
 };
 
-export default LeadsSortFilter;
+export default DashboardSortFilter;

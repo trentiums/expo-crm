@@ -30,6 +30,7 @@ import QuickFilter from '@molecules/QuickFilter/QuickFilter';
 import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
 import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
 import { LoadingStatus } from '../../(public)/login/LoginScreen.props';
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 
 const Leads = () => {
   const { t } = useTranslation('modalText');
@@ -163,6 +164,7 @@ const Leads = () => {
         handleSearch={handleSearchLead}
         rightIcon={<FilterIcon />}
         onRightIconPress={handleVisibleLeadsFilter}
+        dropdownDataType={DropdownDataType.LEADS}
       />
     );
   };

@@ -39,7 +39,6 @@ export const LeadsFilterContainer = styled(Pressable)`
 `;
 export const LeasFilterScreenContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
-  flex: 1;
 `;
 export const LeadsFilterButton = styled(View)`
   display: flex;
@@ -108,4 +107,31 @@ export const BottomSheetFlatListContainer = styled(BottomSheetFlatList).attrs({
 
 export const LoaderContainer = styled(View)`
   height: 100px;
+`;
+export const DashboardFilterScreenContainer = styled(View)`
+  background-color: ${({ theme }) => theme.colors.white};
+`;
+export const DashboardFilterButton = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+  padding: 16px;
+`;
+export const DashboardFilterContainer = styled(Pressable)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+`;
+export const DashboardSortFilterText = styled(Text)`
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.englishHolly};
+`;
+export const LeadsFilterView = styled(View)`
+  flex: 1;
+  flex-basis: auto;
 `;

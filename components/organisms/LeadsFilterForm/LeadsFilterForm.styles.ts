@@ -31,9 +31,6 @@ export const FilterFormView = styled(View)`
   flex: 1;
 `;
 export const FiltersDropDownViews = styled(View)`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
   justify-content: flex-start;
 `;
 export const RemoveFilterBtnText = styled(Text)`
