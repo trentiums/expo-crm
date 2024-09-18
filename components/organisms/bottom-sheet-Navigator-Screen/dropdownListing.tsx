@@ -25,7 +25,9 @@ const DropdownListing = ({
   const dispatch = useAppDispatch();
   const [dropListData, setDropListData] = useState(dropdownData);
   const [search, setSearch] = useState('');
-  const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>('NONE');
+  const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>(
+    LoadingStatus?.NONE,
+  );
   const productServiceListData = useSelector(
     (state: RootState) => state.productService.productServiceList,
   );
@@ -90,7 +92,7 @@ const DropdownListing = ({
     }
   };
   useEffect(() => {
-    setLoadingStatus('SCREEN');
+    setLoadingStatus(LoadingStatus?.SCREEN);
     if (dropdownDataType === DropdownDataType.USERS) {
       handleSearchUser();
     } else if (dropdownDataType === DropdownDataType.SERVICES) {
@@ -101,11 +103,11 @@ const DropdownListing = ({
       );
       setDropListData(filtered);
     }
-    setLoadingStatus('NONE');
+    setLoadingStatus(LoadingStatus?.NONE);
   }, [search]);
 
   const handleGetMoreData = () => {
-    setLoadingStatus('MORE');
+    setLoadingStatus(LoadingStatus?.MORE);
 
     if (dropdownDataType === DropdownDataType.USERS) {
       handleGetMoreUsers();
@@ -113,7 +115,7 @@ const DropdownListing = ({
       handleGetServicesWithSearch();
     }
 
-    setLoadingStatus('NONE');
+    setLoadingStatus(LoadingStatus?.NONE);
   };
 
   const renderDownListData = ({ item }) => (
@@ -137,7 +139,7 @@ const DropdownListing = ({
           searchRadius={44}
           dropdownDataType={dropdownDataType}
         />
-        {loadingStatus === 'SCREEN' ? (
+        {loadingStatus === LoadingStatus?.SCREEN ? (
           <Loader />
         ) : (
           <BottomSheetFlatList
@@ -145,12 +147,16 @@ const DropdownListing = ({
               return {
                 title: item?.name || item?.title || item?.currencyCodeAlpha,
                 id: item?.id,
+                image: item?.flag,
               };
             })}
             renderItem={renderDownListData}
             keyExtractor={(item) => item.id.toString()}
             onEndReached={handleGetMoreData}
-            ListFooterComponent={loadingStatus === 'MORE' && <Loader />}
+            ListFooterComponent={
+              loadingStatus === LoadingStatus?.MORE && <Loader />
+            }
+            keyboardShouldPersistTaps
           />
         )}
       </DropdownListingView>

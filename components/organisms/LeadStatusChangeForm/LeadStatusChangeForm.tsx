@@ -113,7 +113,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
   useEffect(() => {
     setDocuments(leadDetails?.documents);
     form.change('budgetCurrencyCode', leadDetails?.budgetCurrencyCode);
-    form.change('timeFrameType', leadDetails?.timeFrameType);
+    form.change('timeFrameType', `${leadDetails?.timeFrameType}`);
     form.change('budget', leadDetails.budget);
     form.change('budget', `${leadDetails.budget || ''}`);
     form.change('companyName', leadDetails.companyName || '');

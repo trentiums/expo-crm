@@ -56,7 +56,7 @@ const DealCloseWinForm: React.FC<DealWinCloseFormProps> = ({
 
   const [leadLoading, setLeadLoading] = useState(false);
   useEffect(() => {
-    form.change('budgetCurrencyCode', leadDetails?.budgetCurrencyCode);
+    form.change('dealAmountCurrencyCode', leadDetails?.budgetCurrencyCode);
     form.change('dealAmount', `${leadDetails.dealAmount || ''}`);
     form.change('reason', leadDetails.winCloseReason || '');
   }, []);
@@ -84,7 +84,7 @@ const DealCloseWinForm: React.FC<DealWinCloseFormProps> = ({
             <RowView>
               <DropdownView>
                 <Field
-                  name={'budgetCurrencyCode'}
+                  name={'dealAmountCurrencyCode'}
                   component={FieldDropDown}
                   listData={currencyList?.map((item) => {
                     return {

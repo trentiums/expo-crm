@@ -39,6 +39,7 @@ import { useLocalSearchParams } from 'expo-router';
 import * as Print from 'expo-print';
 import DocumentPick from '@molecules/DocumentPicker/DocumentPicker';
 import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 
 const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   loading,
@@ -101,7 +102,10 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
   useEffect(() => {
     const initializePermissionsAndForm = async () => {
       const data = leadsData.filter((item) => item?.id === id)?.[0];
-      form.change('countryCode', +addLeadFormData?.countryCode);
+      form.change(
+        'countryCode',
+        id ? leadsDetail?.countryId : +addLeadFormData?.countryCode,
+      );
       if (id) {
         setDocumentArray(leadsDetail?.documents);
       }
@@ -228,6 +232,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
               isShowSelected
               placeholder={t('selectCountry')}
               heading={t('countryCode')}
+              dropdownDataType={DropdownDataType.COUNTRY}
             />
           </CountryCodeInput>
           <NumberInput>

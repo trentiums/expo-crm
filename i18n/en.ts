@@ -146,7 +146,8 @@ export const English = {
     phoneNumberIsNotAvailable: 'Phone Number address is not available',
     itemWithCount: '{{count}} item',
     itemWithCount_plural: '{{count}} items',
-    noServices: 'Oops ! No Services Found',
+    noServices: 'no Services Available',
+    leads: 'Leads',
   },
   BasicInformation: {
     firstNameLabel: 'Lead name',

@@ -10,7 +10,12 @@ import { useTranslation } from 'react-i18next';
 import { FlatList } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
-import { CountsText, HeadingText, HeadingView, LoaderContainer } from './tabs.style';
+import {
+  CountsText,
+  HeadingText,
+  HeadingView,
+  LoaderContainer,
+} from './tabs.style';
 import { ActivityIndicator } from 'react-native-paper';
 import Loader from '@atoms/Loader/Loader';
 import { Spacer } from '@atoms/common/common.styles';
