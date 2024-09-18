@@ -6,6 +6,14 @@ export type CreateOptionProps = {
   changeRoute?: () => void;
 };
 
+export type DashboardSortFilterProps = {
+  selectedSort?: number;
+  setSelectedSort?: (id: number) => void;
+  changeSnapPoints: (points: string[]) => void;
+  handleBottomSheetClose?: () => void;
+  changeRoute?: () => void;
+};
+
 export type CreateOptionItemProps = {
   label: string;
   icon: ReactNode;

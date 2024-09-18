@@ -376,6 +376,8 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 {...props}
                 changeSnapPoints={changeSnapPoints}
                 changeRoute={handleClosePress}
+                selectedSort={meta.selectedSort}
+                setSelectedSort={(id: number) => meta.setSelectedSort(id)}
               />
             )}
           </Stack.Screen>

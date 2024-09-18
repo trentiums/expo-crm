@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import {
+  DashboardFilterApplyButton,
   DashboardFilterButton,
   DashboardFilterContainer,
   DashboardFilterScreenContainer,
@@ -7,14 +8,12 @@ import {
   IconWrapper,
 } from './screen.style';
 import { FlatList, ListRenderItem } from 'react-native';
-import { dashboardQuickFilters, leadsQuickFilters } from '@utils/constant';
-import { CreateOptionProps, DashboardSortFilterItemProp } from './screen.props';
-import CircleCheckIcon from '@atoms/Illustrations/CircleCheck';
+import { dashboardQuickFilters } from '@utils/constant';
 import {
-  FilterApplyButton,
-  RemoveButtonText,
-  RemoveFilterButton,
-} from '@organisms/LeadsFilterForm/LeadsFilterForm.styles';
+  DashboardSortFilterItemProp,
+  DashboardSortFilterProps,
+} from './screen.props';
+import CircleCheckIcon from '@atoms/Illustrations/CircleCheck';
 import { FormButtonText } from '@organisms/UserInformationForm/UserInformationForm.styles';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch } from '@redux/store';
@@ -23,14 +22,15 @@ import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { dashboardAdminLeadListAction } from '@redux/actions/dashboard';
 import { Spacer } from '@atoms/common/common.styles';
 
-const DashboardSortFilter: React.FC<CreateOptionProps> = ({
+const DashboardSortFilter: React.FC<DashboardSortFilterProps> = ({
   changeRoute,
   changeSnapPoints,
+  setSelectedSort,
+  selectedSort,
 }) => {
   const { t } = useTranslation('leadsFilter');
   const dispatch = useAppDispatch();
   const toast = useToast();
-  const [selectedSort, setSelectedSort] = useState(dashboardQuickFilters?.[0]);
   const [filterLoading, setFilterLoading] = useState(false);
   const renderLeadsSortFilter: ListRenderItem<DashboardSortFilterItemProp> = ({
     item,
@@ -42,9 +42,7 @@ const DashboardSortFilter: React.FC<CreateOptionProps> = ({
       </IconWrapper>
     </DashboardFilterContainer>
   );
-  const handleRemoveFilters = () => {
-    setSelectedSort(null);
-  };
+
   const onLayout = useCallback(() => {
     changeSnapPoints(['32%', '90%']);
   }, []);
@@ -75,14 +73,11 @@ const DashboardSortFilter: React.FC<CreateOptionProps> = ({
       />
       <Spacer size={32} />
       <DashboardFilterButton>
-        <RemoveFilterButton onPress={handleRemoveFilters}>
-          <RemoveButtonText>{t('removeFilter')}</RemoveButtonText>
-        </RemoveFilterButton>
-        <FilterApplyButton
+        <DashboardFilterApplyButton
           loading={filterLoading}
           onPress={handleApplySortFilter}>
           <FormButtonText valid={true}>{t('applyFilter')}</FormButtonText>
-        </FilterApplyButton>
+        </DashboardFilterApplyButton>
       </DashboardFilterButton>
     </DashboardFilterScreenContainer>
   );

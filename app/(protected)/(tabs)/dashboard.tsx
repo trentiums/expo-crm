@@ -38,6 +38,7 @@ import QuickFilter from '@molecules/QuickFilter/QuickFilter';
 import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
 import { UserRole } from '@type/api/auth';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
+import { dashboardQuickFilters } from '@utils/constant';
 
 const Dashboard = () => {
   const { colors } = useAppTheme();
@@ -56,7 +57,12 @@ const Dashboard = () => {
   >(dashboardLeadList.leadList);
   const [visibleLeadsSortFilterSheet, setVisibleLeadsSortFilterSheet] =
     useState(false);
+  const [selectedSort, setSelectedSort] = useState(dashboardQuickFilters?.[0]);
   const dispatch = useAppDispatch();
+
+  const handleChangeSortValue = (id) => {
+    setSelectedSort(id);
+  };
   const handelFetchLead = async () => {
     setLoading(true);
     //TODO: here we are passing order_by and sort_by static until leads UI comes in master
@@ -280,6 +286,10 @@ const Dashboard = () => {
         <BottomSheetNavigator
           initialRouteName="DashboardSortFilter"
           onClosePress={handleCloseVisibleSortFilter}
+          meta={{
+            setSelectedSort: (value) => handleChangeSortValue(value),
+            selectedSort: selectedSort,
+          }}
         />
       )}
     </ScreenTemplate>
