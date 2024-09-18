@@ -38,6 +38,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   onDelete,
   editRoute,
   isShowLeadInfo,
+  assignLeadOnDelete,
 }) => {
   const { t } = useTranslation('leadDetailCardDetails');
   const { t: tm } = useTranslation('modalText');
@@ -134,9 +135,11 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           onClosePress={closeBottomSheet}
           meta={{
             leadId: leadData?.leadId,
+            userId: leadData?.id,
             optionType: optionType || ScreenOptionType.DASHBOARD,
             onDelete: onDelete,
             editRoute: editRoute,
+            assignLeadOnDelete: assignLeadOnDelete,
           }}
         />
       )}

@@ -32,6 +32,8 @@ import LeadStageNegotiation from '@organisms/bottom-sheet-Navigator-Screen/LeadS
 import LeadChannelList from '@organisms/bottom-sheet-Navigator-Screen/LeadChannelList';
 import LanguageList from '@organisms/bottom-sheet-Navigator-Screen/LanguageList';
 import DashboardSortFilter from '@organisms/bottom-sheet-Navigator-Screen/dashboardSortFilter';
+import { useAppDispatch } from '@redux/store';
+import { getAssignUserListAction } from '@redux/actions/user';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,9 +45,9 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [snapPoints, setSnapPoints] = useState(['50%', '90%']);
   const { colors } = useAppTheme();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation('bottomSheetNavigator');
   const { t: tb } = useTranslation('bottomSheetCreatePotion');
-
   const CustomHeader = ({
     title,
     onClose,
@@ -84,7 +86,10 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
     [],
   );
 
-  const handleClosePress = () => {
+  const handleClosePress = async () => {
+    if (meta.userId) {
+      await dispatch(getAssignUserListAction({}));
+    }
     bottomSheetRef.current?.close();
     onClosePress?.();
   };
@@ -136,6 +141,8 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 optionType={meta.optionType}
                 editRoute={meta.editRoute}
                 onDelete={meta.onDelete}
+                userId={meta.userId}
+                assignLeadOnDelete={meta.assignLeadOnDelete}
               />
             )}
           </Stack.Screen>

@@ -3,6 +3,7 @@ import { UserRole } from './auth';
 export interface UserListParams {
   page?: number;
   search?: string;
+  user_id?: number;
 }
 export interface User {
   id: number;

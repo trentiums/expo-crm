@@ -43,6 +43,8 @@ export type ModifyLeadOptionProps = {
   optionType: ScreenOptionType;
   editRoute?: string;
   onDelete?: () => void;
+  assignLeadOnDelete?: boolean;
+  userId?: number;
 };
 
 export enum ScreenOptionType {
@@ -62,6 +64,8 @@ export type ModifyLeadOptionItemProps = {
 export type AssignedUsersListProps = {
   handleBottomSheetClose?: () => void;
   leadId?: number;
+  userId?: number;
+  assignLeadOnDelete?: boolean;
 };
 
 export type AssignedUsersListItemProps = {

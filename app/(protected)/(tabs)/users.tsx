@@ -78,7 +78,11 @@ const Users = () => {
     index: number;
   }) => (
     <>
-      <UserDetailCard key={`${item.id}-${index}`} data={item} />
+      <UserDetailCard
+        key={`${item.id}-${index}`}
+        data={item}
+        assignLeadOnDelete={true}
+      />
       <Spacer size={12} />
     </>
   );

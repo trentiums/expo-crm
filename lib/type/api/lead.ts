@@ -236,3 +236,8 @@ export enum updateLeadStatusTypes {
   CHANNEL = 2,
   CONVERSION = 3,
 }
+
+export interface AssignLeadOnDeleteParams {
+  assign_from_user_id: number;
+  assign_to_user_id: number;
+}

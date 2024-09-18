@@ -16,7 +16,10 @@ import {
 } from '@redux/actions/user';
 import BottomSheetItemListing from '@molecules/BottomSheetItemListing/BottomSheetItemListing';
 import Loader from '@atoms/Loader/Loader';
-import { getLeadDetailsAction } from '@redux/actions/lead';
+import {
+  assignLeadOnDeleteAction,
+  getLeadDetailsAction,
+} from '@redux/actions/lead';
 import {
   dashboardLeadListAction,
   dashboardLeadStageCountAction,
@@ -27,6 +30,8 @@ import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 const AssignedUserList: React.FC<AssignedUsersListProps> = ({
   handleBottomSheetClose,
   leadId,
+  userId,
+  assignLeadOnDelete,
 }) => {
   const { t } = useTranslation('bottomSheetModifyLead');
   const dispatch = useAppDispatch();
@@ -39,25 +44,46 @@ const AssignedUserList: React.FC<AssignedUsersListProps> = ({
     (state: RootState) => state.leads.leadsDetail,
   );
   const getAssignUserList = async () => {
-    await dispatch(getAssignUserListAction({}));
+    if (assignLeadOnDelete) {
+      await dispatch(getAssignUserListAction({ user_id: userId }));
+    } else {
+      await dispatch(getAssignUserListAction({}));
+    }
   };
+
+  useEffect(() => {
+    getAssignUserList();
+  }, []);
 
   const handleItemPress = async (ItemId: number) => {
     setIsLoading(true);
     try {
-      const response = await dispatch(
-        assignLeadToUserAction({ assign_to_user_id: ItemId, lead_id: leadId }),
-      ).unwrap();
-      await dispatch(getLeadDetailsAction({ lead_id: leadId }));
-      dispatch(dashboardLeadListAction({}));
-      dispatch(dashboardLeadStageCountAction());
-      handleBottomSheetClose?.();
-      toast.show(response.message, {
-        type: ToastType.Custom,
-        data: {
-          type: ToastTypeProps.Success,
-        },
-      });
+      if (assignLeadOnDelete) {
+        await dispatch(
+          assignLeadOnDeleteAction({
+            assign_to_user_id: ItemId,
+            assign_from_user_id: userId,
+          }),
+        );
+        handleBottomSheetClose?.();
+      } else {
+        const response = await dispatch(
+          assignLeadToUserAction({
+            assign_to_user_id: ItemId,
+            lead_id: leadId,
+          }),
+        ).unwrap();
+        await dispatch(getLeadDetailsAction({ lead_id: leadId }));
+        dispatch(dashboardLeadListAction({}));
+        dispatch(dashboardLeadStageCountAction());
+        handleBottomSheetClose?.();
+        toast.show(response.message, {
+          type: ToastType.Custom,
+          data: {
+            type: ToastTypeProps.Success,
+          },
+        });
+      }
       setIsLoading(false);
     } catch (error) {
       toast.show(error, {
@@ -90,6 +116,7 @@ const AssignedUserList: React.FC<AssignedUsersListProps> = ({
       />
     );
   };
+
   return (
     <BottomSheetListContainer>
       {isLoading ? (

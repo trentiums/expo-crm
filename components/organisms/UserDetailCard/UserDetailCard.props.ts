@@ -8,6 +8,7 @@ export interface UserDetailCardProps {
   loading?: boolean;
   onChangeDeleteId?: (value: number) => void;
   isSocialMediaVisible?: boolean;
+  assignLeadOnDelete?: boolean;
 }
 export interface UserDetailCardValue {
   id?: number;

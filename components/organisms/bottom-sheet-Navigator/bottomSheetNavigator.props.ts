@@ -16,6 +16,8 @@ export type BottomSheetNavigatorProps = {
     onDelete?: () => void;
     setSelectedSort?: (id: number) => void;
     selectedSort: number;
+    assignLeadOnDelete?: boolean;
+    userId?: number;
   };
 };
 
