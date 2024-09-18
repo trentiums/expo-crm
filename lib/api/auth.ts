@@ -12,3 +12,7 @@ export const login = (body: LoginParams): AxiosPromise<LoginResponse> =>
 export const forgotPassword = (
   body: ForgotPasswordParams,
 ): AxiosPromise<ApiResponse> => api.post(`/forgot-password`, body);
+
+export const logoutAccount = (): AxiosPromise<ApiResponse> => {
+  return api.post('/logout');
+};

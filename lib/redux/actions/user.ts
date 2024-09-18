@@ -1,6 +1,7 @@
 import { withToastForError } from '@utils/thunk';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  AssignLeadToUserParams,
   AssignUserListResponse,
   DeleteUserParams,
   SaveUserParams,
@@ -11,6 +12,7 @@ import {
   UserListResponse,
 } from '@type/api/user';
 import {
+  assignLeadToUserList,
   assignUserList,
   deleteAccount,
   deleteUser,
@@ -78,5 +80,16 @@ export const deleteAccountAction = createAsyncThunk<ApiResponse>(
   withToastForError(async () => {
     const response = await deleteAccount();
     return { ...response.data };
+  }),
+);
+
+export const assignLeadToUserAction = createAsyncThunk<
+  ApiResponse,
+  AssignLeadToUserParams
+>(
+  'user/assignLeadToUser',
+  withToastForError(async (body) => {
+    const response = await assignLeadToUserList(body);
+    return response.data;
   }),
 );

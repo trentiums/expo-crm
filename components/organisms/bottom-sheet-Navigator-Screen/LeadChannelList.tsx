@@ -19,6 +19,8 @@ import {
   dashboardLeadStageCountAction,
 } from '@redux/actions/dashboard';
 import Loader from '@atoms/Loader/Loader';
+import { useToast } from 'react-native-toast-notifications';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 
 const LeadChannelList: React.FC<LeadChannelListProps> = ({
   handleBottomSheetClose,
@@ -27,6 +29,7 @@ const LeadChannelList: React.FC<LeadChannelListProps> = ({
 }) => {
   const { t } = useTranslation('bottomSheetModifyLead');
   const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
   const dispatch = useAppDispatch();
   const leadChannelList = useSelector(
     (state: RootState) => state.general.leadChannelList,
@@ -43,22 +46,37 @@ const LeadChannelList: React.FC<LeadChannelListProps> = ({
 
   const handleItemPress = async (channelId: number) => {
     setIsLoading(true);
-    const leadChannelId = leadsDetail.leadChannelId;
-    if (leadChannelId !== channelId) {
-      const updatedLeadStatusRequestParams: UpdateLeadStatusParams = {
-        type: updateLeadStatusTypes.CHANNEL,
-        lead_id: leadId,
-        lead_channel_id: channelId,
-      };
-      await dispatch(
-        updateLeadStatusAction(updatedLeadStatusRequestParams),
-      ).unwrap();
-      await dispatch(getLeadDetailsAction({ lead_id: leadId }));
-      dispatch(dashboardLeadListAction({}));
-      dispatch(dashboardLeadStageCountAction());
+    try {
+      const leadChannelId = leadsDetail.leadChannelId;
+      if (leadChannelId !== channelId) {
+        const updatedLeadStatusRequestParams: UpdateLeadStatusParams = {
+          type: updateLeadStatusTypes.CHANNEL,
+          lead_id: leadId,
+          lead_channel_id: channelId,
+        };
+        const response = await dispatch(
+          updateLeadStatusAction(updatedLeadStatusRequestParams),
+        ).unwrap();
+        await dispatch(getLeadDetailsAction({ lead_id: leadId }));
+        dispatch(dashboardLeadListAction({}));
+        dispatch(dashboardLeadStageCountAction());
+        toast.show(response.message, {
+          type: ToastType.Custom,
+          data: {
+            type: ToastTypeProps.Success,
+          },
+        });
+      }
+      handleBottomSheetClose?.();
+      setIsLoading(false);
+    } catch (error) {
+      toast.show(error, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
     }
-    handleBottomSheetClose?.();
-    setIsLoading(false);
   };
 
   const handleRefresh = useCallback(() => {

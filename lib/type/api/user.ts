@@ -55,13 +55,7 @@ export interface UserDetailsResponse {
 export interface AssignUserListResponse {
   status: boolean;
   message: string;
-  data: {
-    current_page: number;
-    last_page: number;
-    per_page: number;
-    total: number;
-    data: AssignUser[];
-  };
+  data: AssignUser[];
 }
 
 export interface AssignUser {
@@ -71,4 +65,9 @@ export interface AssignUser {
 export interface AssignUserState {
   id: number;
   title: string;
+}
+
+export interface AssignLeadToUserParams {
+  lead_id: number;
+  assign_to_user_id: number;
 }
