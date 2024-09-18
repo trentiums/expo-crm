@@ -85,7 +85,6 @@ export const English = {
     searchCountries: 'Search countries',
     leadsCount: 'Leads count',
     sortBy: 'Sort by',
-    searchLeads: 'Search lead',
   },
   screenTitle: {
     notification: 'Notification',
@@ -298,6 +297,12 @@ export const English = {
     sortBy: 'Sort by',
     select: 'Select',
     chooseOption: 'Choose option',
+    updateAssignedUsers: 'Update assigned users',
+    updateStatus: 'Update status',
+    changeLeadStatus: 'Change lead status',
+    updateStage: 'Update stage',
+    changeLeadStage: 'Change lead stage',
+    UpdateChannel: 'Update channel',
   },
   bottomSheetCreatePotion: {
     user: 'User',

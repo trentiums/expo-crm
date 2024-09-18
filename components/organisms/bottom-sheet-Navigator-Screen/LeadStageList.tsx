@@ -1,7 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   BottomSheetListContainer,
   BottomSheetFlatListContainer,
+  LoaderContainer,
 } from './screen.style';
 import { LeadStageListItemProps, LeadStageListProps } from './screen.props';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +19,9 @@ import {
   dashboardLeadListAction,
   dashboardLeadStageCountAction,
 } from '@redux/actions/dashboard';
+import { useToast } from 'react-native-toast-notifications';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import Loader from '@atoms/Loader/Loader';
 
 const LeadStageList: React.FC<LeadStageListProps> = ({
   handleBottomSheetClose,
@@ -27,6 +31,8 @@ const LeadStageList: React.FC<LeadStageListProps> = ({
 }) => {
   const { t } = useTranslation('bottomSheetModifyLead');
   const dispatch = useAppDispatch();
+  const toast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
   const leadStageList = useSelector(
     (state: RootState) => state.general.leadConversionList,
   );
@@ -55,20 +61,28 @@ const LeadStageList: React.FC<LeadStageListProps> = ({
     ) {
       navigation.navigate('LeadStageNegotiation', slug);
     } else {
+      setIsLoading(true);
       if (leadConversionId !== conversionId) {
         const updatedLeadStatusRequestParams: UpdateLeadStatusParams = {
           type: updateLeadStatusTypes.CONVERSION,
           lead_id: leadId,
           lead_conversion_id: conversionId,
         };
-        await dispatch(
+        const response = await dispatch(
           updateLeadStatusAction(updatedLeadStatusRequestParams),
         ).unwrap();
         await dispatch(getLeadDetailsAction({ lead_id: leadId }));
         dispatch(dashboardLeadListAction({}));
         dispatch(dashboardLeadStageCountAction());
+        toast.show(response.message, {
+          type: ToastType.Custom,
+          data: {
+            type: ToastTypeProps.Success,
+          },
+        });
       }
       handleBottomSheetClose?.();
+      setIsLoading(false);
     }
   };
 
@@ -95,17 +109,23 @@ const LeadStageList: React.FC<LeadStageListProps> = ({
   };
   return (
     <BottomSheetListContainer onLayout={onLayout}>
-      <BottomSheetFlatListContainer
-        data={leadStageList}
-        keyExtractor={(item: LeadStageListItemProps, index: number) =>
-          `${item.id}-${index}`
-        }
-        renderItem={renderModifyLeadOption}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        refreshing={false}
-        onRefresh={handleRefresh}
-      />
+      {isLoading ? (
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
+      ) : (
+        <BottomSheetFlatListContainer
+          data={leadStageList}
+          keyExtractor={(item: LeadStageListItemProps, index: number) =>
+            `${item.id}-${index}`
+          }
+          renderItem={renderModifyLeadOption}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          refreshing={false}
+          onRefresh={handleRefresh}
+        />
+      )}
     </BottomSheetListContainer>
   );
 };

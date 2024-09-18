@@ -87,6 +87,7 @@ export const DefaultTheme = {
     doctor: '#f9f9f8',
     distantCloud: '#e5e9e6',
     tarnishedSilver16: '#78788029',
+    funGreen: '#0f6936',
   },
 };
 
@@ -173,6 +174,7 @@ export const DarkTheme: AppTheme = {
     doctor: '#1C1C1C',
     distantCloud: '#3B3B3B',
     tarnishedSilver16: '#5A5A5A29',
+    funGreen: '#0f6936',
   },
 };
 
