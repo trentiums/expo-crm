@@ -85,6 +85,7 @@ export const English = {
     searchCountries: 'Search countries',
     leadsCount: 'Leads count',
     sortBy: 'Sort by',
+    searchLeads: 'Search leads',
   },
   screenTitle: {
     notification: 'Notification',

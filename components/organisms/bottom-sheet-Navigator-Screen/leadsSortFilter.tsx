@@ -8,11 +8,11 @@ import {
 } from '@organisms/LeadsFilterForm/LeadsFilterForm.styles';
 import { FormButtonText } from '@organisms/UserInformationForm/UserInformationForm.styles';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '@redux/store';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import { getLeadListAction } from '@redux/actions/lead';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
-import { CreateOptionProps, LeadSortFilterItemProp } from './screen.props';
+import { LeadSortFilterItemProp, LeadsSortFilterProps } from './screen.props';
 import {
   IconWrapper,
   LeadsFilterButton,
@@ -21,20 +21,34 @@ import {
   LeasFilterScreenContainer,
 } from './screen.style';
 import CircleCheckIcon from '@atoms/Illustrations/CircleCheck';
+import { setLeadsSort } from '@redux/slices/leads';
+import moment from 'moment';
 
-const LeadsSortFilter: React.FC<CreateOptionProps> = ({
+const LeadsSortFilter: React.FC<LeadsSortFilterProps> = ({
   changeRoute,
   changeSnapPoints,
 }) => {
   const dispatch = useAppDispatch();
   const toast = useToast();
   const { t } = useTranslation('leadsFilter');
-  const [selectedSort, setSelectedSort] = useState(null);
+
+  const leadsSortFilter = useSelector(
+    (state: RootState) => state.leads.leadsSort,
+  );
+  const leadsFilter = useSelector(
+    (state: RootState) => state.leads.leadsFilter,
+  );
+  const [selectedSort, setSelectedSort] = useState(leadsSortFilter);
   const [filterLoading, setFilterLoading] = useState(false);
+
+  const handleSelectSortFilter = (item) => {
+    setSelectedSort(item);
+    dispatch(setLeadsSort(item));
+  };
   const renderLeadsSortFilter: ListRenderItem<LeadSortFilterItemProp> = ({
     item,
   }) => (
-    <LeadsFilterContainer onPress={() => setSelectedSort(item)}>
+    <LeadsFilterContainer onPress={() => handleSelectSortFilter(item)}>
       <LeadsSortFilterText>{item.title}</LeadsSortFilterText>
       <IconWrapper>
         {selectedSort?.id === item.id && <CircleCheckIcon />}
@@ -46,11 +60,25 @@ const LeadsSortFilter: React.FC<CreateOptionProps> = ({
   }, []);
   const handleRemoveFilters = () => {
     setSelectedSort(null);
+    dispatch(setLeadsSort({}));
   };
   const handleApplySortFilter = async () => {
     try {
       setFilterLoading(true);
-      await dispatch(getLeadListAction(selectedSort.filter)).unwrap();
+      await dispatch(
+        getLeadListAction({
+          ...(leadsSortFilter?.filters ? leadsSortFilter.filters : undefined),
+          start_date:
+            leadsFilter?.startDate &&
+            moment(leadsFilter?.startDate).format('YYYY-MM-DD'),
+          end_date:
+            leadsFilter.endDate &&
+            moment(leadsFilter.endDate).format('YYYY-MM-DD'),
+          lead_channel_id: leadsFilter?.selectedChannel,
+          lead_conversion_id: leadsFilter?.selectedStage,
+          lead_status_id: leadsFilter?.selectedStatus,
+        }),
+      ).unwrap();
     } catch (error) {
       toast.show(error, {
         type: ToastType.Custom,

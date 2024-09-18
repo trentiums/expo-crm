@@ -124,3 +124,8 @@ export type LanguageListProps = {
   changeSnapPoints: (points: string[]) => void;
   handleBottomSheetClose?: () => void;
 };
+export type LeadsSortFilterProps = {
+  changeSnapPoints: (points: string[]) => void;
+  handleBottomSheetClose?: () => void;
+  changeRoute?: () => void;
+};
