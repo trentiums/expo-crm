@@ -40,6 +40,7 @@ export const LeadsFilterContainer = styled(Pressable)`
 `;
 export const LeasFilterScreenContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
+  flex: 1;
 `;
 export const LeadsFilterButton = styled(View)`
   display: flex;
@@ -66,6 +67,7 @@ export const DropdownListView = styled(Pressable)<{ isBorder?: boolean }>`
   align-items: center;
   flex: 1;
   padding: 16px 0px;
+  flex-basis: auto;
   width: 100%;
   border-bottom-width: ${({ isBorder }) => (isBorder ? 1 : 0)}px;
   border-bottom-color: ${({ theme, isBorder }) =>

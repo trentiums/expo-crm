@@ -76,7 +76,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
       </LoginFormContainer>
 
       <ButtonSubmit
-        onPress={form.submit}
+        onPress={!loading && form.submit}
         loading={loading}
         textColor={valid ? colors.black : colors.disabledTextColor}
         variant={valid}>

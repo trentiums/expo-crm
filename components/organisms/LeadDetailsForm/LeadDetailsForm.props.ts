@@ -14,6 +14,8 @@ export type LeadDetailsFormValues = {
   assignTo?: number;
   selectedServices?: number[];
   budgetCurrencyCode: number;
+  dealAmountCurrencyCode: number;
+  timeFrameType: number;
 };
 
 export type LeadDetailsFormProps = FormRenderProps<LeadDetailsFormValues> & {

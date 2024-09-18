@@ -53,4 +53,6 @@ export enum DropdownDataType {
   USERS = 'users',
   SERVICES = 'services',
   LEADS = 'leads',
+  BUDGET = 'budget',
+  TIMELINE = 'timeline',
 }

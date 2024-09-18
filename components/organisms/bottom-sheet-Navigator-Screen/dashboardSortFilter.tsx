@@ -47,18 +47,20 @@ const DashboardSortFilter: React.FC<DashboardSortFilterProps> = ({
     changeSnapPoints(['32%', '90%']);
   }, []);
   const handleApplySortFilter = async () => {
-    try {
-      setFilterLoading(true);
-      await dispatch(
-        dashboardAdminLeadListAction(selectedSort.filters),
-      ).unwrap();
-    } catch (error) {
-      toast.show(error, {
-        type: ToastType.Custom,
-        data: {
-          type: ToastTypeProps.Error,
-        },
-      });
+    if (!filterLoading) {
+      try {
+        setFilterLoading(true);
+        await dispatch(
+          dashboardAdminLeadListAction(selectedSort.filters),
+        ).unwrap();
+      } catch (error) {
+        toast.show(error, {
+          type: ToastType.Custom,
+          data: {
+            type: ToastTypeProps.Error,
+          },
+        });
+      }
     }
     setFilterLoading(false);
     changeRoute();
