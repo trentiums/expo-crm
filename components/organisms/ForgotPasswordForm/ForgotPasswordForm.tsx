@@ -3,6 +3,8 @@ import { useAppTheme } from '@constants/theme';
 import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
 import {
   ButtonSubmit,
+  ForgotPasswordContainer,
+  ForgotText,
   LoginFormContainer,
   LoginFormView,
 } from '@organisms/LoginForm/LoginForm.styles';
@@ -18,6 +20,7 @@ import { useTranslation } from 'react-i18next';
 import { ForgotPasswordFormProps } from './ForgotPasswordForm.props';
 import { FormButtonText } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
 import { Spacer } from '@atoms/common/common.styles';
+import { router } from 'expo-router';
 
 const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
   form,
@@ -42,13 +45,21 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
           left={() => <EmailIcon color={colors.gray} />}
         />
       </LoginFormContainer>
+      <ForgotPasswordContainer
+        onPress={() => router.navigate('/(public)/login')}>
+        <ForgotText variant="SF-Pro-Display-Medium_500">
+          {t('backToLogin')}
+        </ForgotText>
+      </ForgotPasswordContainer>
       <Spacer size={16} />
       <ButtonSubmit
         onPress={form.submit}
         loading={loading}
         textColor={valid ? colors.black : colors.disabledTextColor}
         variant={valid}>
-        <FormButtonText valid={valid}>{t('sendEmail')}</FormButtonText>
+        <FormButtonText valid={valid} variant="SF-Pro-Display-Semibold_600">
+          {t('sendEmail')}
+        </FormButtonText>
       </ButtonSubmit>
     </LoginFormView>
   );

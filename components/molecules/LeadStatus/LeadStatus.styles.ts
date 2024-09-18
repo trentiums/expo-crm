@@ -11,7 +11,6 @@ export const LeadStatusContainer = styled(View)<{ bgColor?: string }>`
 
 export const LeadStatusText = styled(Text)<{ color?: string }>`
   font-size: 13px;
-  font-weight: 500;
   color: ${({ theme, color }) => color || theme.colors.blue};
   padding: 1px 6px;
 `;

@@ -70,7 +70,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
         />
         <ForgotPasswordContainer
           onPress={() => router.navigate('/(public)/forgotPassword')}>
-          <ForgotText>{t('forgotPassword')}</ForgotText>
+          <ForgotText variant="SF-Pro-Display-Medium_500">
+            {t('forgotPassword')}
+          </ForgotText>
         </ForgotPasswordContainer>
         <Spacer size={16} />
       </LoginFormContainer>
@@ -80,7 +82,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
         loading={loading}
         textColor={valid ? colors.black : colors.disabledTextColor}
         variant={valid}>
-        <FormButtonText valid={valid}>{t('login')}</FormButtonText>
+        <FormButtonText valid={valid} variant="SF-Pro-Display-Semibold_600">
+          {t('login')}
+        </FormButtonText>
       </ButtonSubmit>
     </LoginFormView>
   );

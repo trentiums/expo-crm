@@ -124,7 +124,6 @@ export const ContainerView = styled(View)`
 `;
 
 export const FormButtonText = styled(Text)<{ valid?: boolean }>`
-  font-weight: 700;
   color: ${({ valid, theme }) =>
     valid ? theme.colors.white : theme.colors.lightGray};
 `;

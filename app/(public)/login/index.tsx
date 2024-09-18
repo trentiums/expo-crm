@@ -79,7 +79,9 @@ const LoginScreen = () => {
           <ImageView source={images.loginImage} resizeMode="cover" />
         </Container>
         <LoginFormContainer>
-          <IntroText>{t('welcomeBack')} 👋</IntroText>
+          <IntroText variant="SF-Pro-Display-Semibold_600">
+            {t('welcomeBack')} 👋
+          </IntroText>
           <FormTemplate
             Component={LoginForm}
             onSubmit={(values) => onLoginPress(values)}

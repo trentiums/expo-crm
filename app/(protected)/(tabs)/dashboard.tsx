@@ -50,17 +50,16 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [deletedId, setDeletedId] = useState<number | undefined>();
   const dashboardLeadList = useSelector((state: RootState) => state.dashboard);
+  const isAdmin =
+    user.userRole === UserRole.Admin || user.userRole === UserRole.CompanyAdmin;
   const [leads, setLeads] = useState<
     DashboardLeadsProps[] | DashboardAdminLeadsProps[]
   >(dashboardLeadList.leadList);
   const dispatch = useAppDispatch();
   const handelFetchLead = async () => {
     setLoading(true);
-    //TODO: here we are passing order_by and sort_by static until leads UI comes in master
-    if (
-      user.userRole === UserRole.Admin ||
-      user.userRole === UserRole.CompanyAdmin
-    ) {
+
+    if (isAdmin) {
       await dispatch(
         dashboardAdminLeadListAction({ order_by: 1, sort_order: 1 }),
       );
@@ -84,11 +83,7 @@ const Dashboard = () => {
       dashboardLeadList?.lastPage > 1 &&
       dashboardLeadList?.currentPage !== dashboardLeadList?.lastPage
     ) {
-      //TODO: here we are passing order_by and sort_by static until leads UI comes in master
-      if (
-        user.userRole === UserRole.Admin ||
-        user.userRole === UserRole.CompanyAdmin
-      ) {
+      if (isAdmin) {
         await dispatch(
           dashboardAdminLeadListAction({
             order_by: 1,
@@ -200,8 +195,12 @@ const Dashboard = () => {
         <Loader />
       ) : (
         <>
-          <GreetingText>{tr('welcome')}</GreetingText>
-          <NameText>{user?.name}</NameText>
+          <GreetingText variant="SF-Pro-Display-Semibold_600">
+            {tr('welcome')}
+          </GreetingText>
+          <NameText variant="SF-Pro-Display-Semibold_600">
+            {user?.name}
+          </NameText>
           <Spacer size={16} />
           {dashboardLeadList.leadStageCount?.every(
             (item) => item.leadCount === 0,
@@ -224,7 +223,9 @@ const Dashboard = () => {
                 })}
               />
               <Spacer size={16} />
-              <TitleText>{t('newLeads')}</TitleText>
+              <TitleText variant="SF-Pro-Display-Semibold_600">
+                {t('newLeads')}
+              </TitleText>
               <Spacer size={16} />
               <DashboardFilterView>
                 <DividerContainer />

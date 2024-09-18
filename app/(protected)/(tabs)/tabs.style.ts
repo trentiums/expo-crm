@@ -25,7 +25,6 @@ export const DashboardScreenContainer = styled(KeyboardAwareScrollView)`
 `;
 export const TitleText = styled(Text)`
   font-size: 22px;
-  font-weight: 700;
   color: ${({ theme }) => theme.colors.textDark};
 `;
 export const NoDataFoundText = styled(Text)`
@@ -70,12 +69,10 @@ export const AddLeadContainer = styled(View)`
 export const GreetingText = styled(Text)`
   font-size: 36px;
   color: ${({ theme }) => theme.colors.textDark};
-  font-weight: 600;
 `;
 export const NameText = styled(Text)`
   font-size: 36px;
   color: ${({ theme }) => theme.colors.blueChaos};
-  font-weight: 600;
 `;
 
 export const CreateOptionTabContainer = styled(Pressable)`

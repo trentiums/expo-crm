@@ -52,14 +52,16 @@ const index = () => {
         <Container>
           <ImageView source={images.loginImage} resizeMode="cover" />
         </Container>
-        <LoginFormContainer>
-          <ForgotText>{t('forgotPassword')}</ForgotText>
+        <ForgotFormContainer>
+          <ForgotText variant="SF-Pro-Display-Semibold_600">
+            {t('forgotPasswordTitle')}
+          </ForgotText>
           <FormTemplate
             Component={ForgotPasswordForm}
             onSubmit={(values) => onForgotPress(values)}
             loading={loading}
           />
-        </LoginFormContainer>
+        </ForgotFormContainer>
       </ForgotFormContainer>
     </ForgotScrollView>
   );

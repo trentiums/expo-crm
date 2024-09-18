@@ -85,7 +85,9 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
       <LeadInfoView>
         <Flexed>
           <NameAndStatusContainer>
-            <NameText numberOfLines={1}>{leadData?.name}</NameText>
+            <NameText numberOfLines={1} variant="SF-Pro-Display-Semibold_600">
+              {leadData?.name}
+            </NameText>
             <LeadStatus
               leadStatus={
                 leads?.filter((item) => item?.id === leadData?.id)[0]

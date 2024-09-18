@@ -30,9 +30,15 @@ export const PrivateKeyTextInput = styled(Field)`
 export const ForgotText = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.black};
-  font-weight: 500;
   padding-top: 4px;
 `;
 export const ForgotPasswordContainer = styled(Pressable)`
   align-self: flex-end;
+`;
+
+export const ForgotFormView = styled(View)`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
 `;
