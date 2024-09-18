@@ -40,6 +40,7 @@ export const LeadsFilterContainer = styled(Pressable)`
 `;
 export const LeasFilterScreenContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
+  height: 100%;
 `;
 export const LeadsFilterButton = styled(View)`
   display: flex;
@@ -53,6 +54,7 @@ export const LeadsFilterButton = styled(View)`
 export const DropdownListingView = styled(View)`
   padding: 0px 16px;
   width: 100%;
+  flex: 1;
 `;
 export const DropdownListingText = styled(Text)`
   font-size: 16px;
@@ -63,6 +65,7 @@ export const DropdownListView = styled(Pressable)<{ isBorder?: boolean }>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex: 1;
   padding: 16px 0px;
   width: 100%;
   border-bottom-width: ${({ isBorder }) => (isBorder ? 1 : 0)}px;

@@ -14,7 +14,6 @@ import { FlatList } from 'react-native-gesture-handler';
 import { Spacer } from '@atoms/common/common.styles';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useToast } from 'react-native-toast-notifications';
 import { useAppTheme } from '@constants/theme';
 import {
   DashboardAdminLeadsProps,
@@ -46,10 +45,11 @@ const Dashboard = () => {
   const { t: tm } = useTranslation('modalText');
   const { t: tr } = useTranslation('drawer');
   const { t: tl } = useTranslation('leadStage');
-  const toast = useToast();
   const user = useSelector((state: RootState) => state.auth.user);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const isAdmin =
+    user.userRole === UserRole.Admin || user.userRole === UserRole.CompanyAdmin;
   const [deletedId, setDeletedId] = useState<number | undefined>();
   const dashboardLeadList = useSelector((state: RootState) => state.dashboard);
   const [leads, setLeads] = useState<
@@ -57,7 +57,9 @@ const Dashboard = () => {
   >(dashboardLeadList.leadList);
   const [visibleLeadsSortFilterSheet, setVisibleLeadsSortFilterSheet] =
     useState(false);
-  const [selectedSort, setSelectedSort] = useState(dashboardQuickFilters?.[0]);
+  const [selectedSort, setSelectedSort] = useState(
+    isAdmin && dashboardQuickFilters?.[0],
+  );
   const dispatch = useAppDispatch();
 
   const handleChangeSortValue = (id) => {
@@ -66,10 +68,7 @@ const Dashboard = () => {
   const handelFetchLead = async () => {
     setLoading(true);
     //TODO: here we are passing order_by and sort_by static until leads UI comes in master
-    if (
-      user.userRole === UserRole.Admin ||
-      user.userRole === UserRole.CompanyAdmin
-    ) {
+    if (isAdmin) {
       await dispatch(
         dashboardAdminLeadListAction({ order_by: 1, sort_order: 1 }),
       );
@@ -94,10 +93,7 @@ const Dashboard = () => {
       dashboardLeadList?.currentPage !== dashboardLeadList?.lastPage
     ) {
       //TODO: here we are passing order_by and sort_by static until leads UI comes in master
-      if (
-        user.userRole === UserRole.Admin ||
-        user.userRole === UserRole.CompanyAdmin
-      ) {
+      if (isAdmin) {
         await dispatch(
           dashboardAdminLeadListAction({
             order_by: 1,

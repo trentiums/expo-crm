@@ -52,7 +52,7 @@ export const CrossIconView = styled(Pressable)`
   align-items: flex-end;
 `;
 export const LoaderContainer = styled(View)`
-  height: 100%;
+  flex: 1;
   justify-content: center;
   align-items: center;
 `;

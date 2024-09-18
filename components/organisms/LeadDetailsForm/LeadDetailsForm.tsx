@@ -40,7 +40,6 @@ import { addLeadInformation } from '@redux/slices/leads';
 import { UserRole } from '@type/api/auth';
 import { useAppTheme } from '@constants/theme';
 import { LeadStageType } from '@organisms/LeadDetailCard/LeadDetailCard.props';
-import { getProductServiceListAction } from '@redux/actions/productService';
 import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
 import { Pressable } from 'react-native';
 import { ShowMultipleDataList } from '@molecules/DropDown/DropDown.styles';
@@ -131,7 +130,9 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
     );
     form.change(
       'dealAmountCurrencyCode',
-      id ? leadsDetail?.leadChannelId : addLeadFormData?.dealAmountCurrencyCode,
+      id
+        ? leadsDetail?.dealAmountCurrencyCode
+        : addLeadFormData?.dealAmountCurrencyCode,
     );
     form.change(
       'selectedLead',
@@ -181,9 +182,10 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       'dealCloseDate',
       id ? leadsDetail?.dealCloseDate : addLeadFormData?.dealCloseDate,
     );
+    console.log(leadsDetail?.timeFrameType, 'leadsDetail?.timeFrameType');
     form.change(
       'timeFrameType',
-      id ? leadsDetail?.timeFrameType : addLeadFormData?.timeFrameType,
+      id ? `${leadsDetail?.timeFrameType}` : addLeadFormData?.timeFrameType,
     );
   }, [id]);
 

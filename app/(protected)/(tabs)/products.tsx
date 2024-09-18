@@ -117,7 +117,7 @@ const products = () => {
       ) : (
         <>
           {Array.isArray(products?.serviceList) &&
-          products?.serviceList.length > 0 ? (
+          products?.serviceList.length <= 0 ? (
             <ProductsFlatList
               data={products.serviceList}
               keyExtractor={(item, index) => `${item.id}-${index}`}

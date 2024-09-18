@@ -148,6 +148,7 @@ export const English = {
     itemWithCount: '{{count}} item',
     itemWithCount_plural: '{{count}} items',
     noServices: 'no Services Available',
+    leads: 'Leads',
   },
   BasicInformation: {
     firstNameLabel: 'Lead name',
