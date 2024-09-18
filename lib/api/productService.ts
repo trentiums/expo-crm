@@ -1,6 +1,7 @@
 import {
   DeleteProductServicesParams,
   EditProductServiceParams,
+  LeadProductServiceResponse,
   ProductServiceDetailsParams,
   ProductServiceDetailsResponse,
   ProductServiceListParams,
@@ -42,7 +43,12 @@ export const getProductServiceDetails = (
   body: ProductServiceDetailsParams,
 ): AxiosPromise<ProductServiceDetailsResponse> =>
   api.get(`/details-product-services`, { params: body });
+
 export const deleteProductServiceDocument = (
   body: DeleteLeadDocumentParams,
 ): AxiosPromise<ApiResponse> =>
   api.post('/delete-product-service-document', body);
+
+export const getLeadProductServiceList =
+  (): AxiosPromise<LeadProductServiceResponse> =>
+    api.get(`lead-product-services-list`);

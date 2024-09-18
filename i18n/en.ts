@@ -86,6 +86,9 @@ export const English = {
     leadsCount: 'Leads count',
     sortBy: 'Sort by',
     searchLeads: 'Search leads',
+    searchBudget: 'Search currency',
+    searchTimeline: 'Search timeline',
+    searchDealAmount: 'Search deal amount',
   },
   screenTitle: {
     notification: 'Notification',
@@ -204,6 +207,9 @@ export const English = {
     selectService: 'Select service',
     selectUser: 'Select user',
     commentsEg: 'Enter comment here...',
+    selectBudget: 'Select budget',
+    selectTimeline: 'Select timeline',
+    selectDealAmount: 'Select Deal amount',
   },
   addData: {
     lead: 'Lead',

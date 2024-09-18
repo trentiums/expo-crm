@@ -2,6 +2,7 @@ import {
   deleteProductService,
   deleteProductServiceDocument,
   editProductService,
+  getLeadProductServiceList,
   getProductServiceDetails,
   productServiceList,
   saveProductService,
@@ -12,6 +13,7 @@ import { DeleteLeadDocumentParams } from '@type/api/lead';
 import {
   DeleteProductServicesParams,
   EditProductServiceParams,
+  LeadProductServiceResponse,
   ProductServiceDetailsParams,
   ProductServiceDetailsResponse,
   ProductServiceListParams,
@@ -78,6 +80,16 @@ export const deleteProductServiceDocumentAction = createAsyncThunk<
   'productService/productServiceDetail',
   withToastForError(async (body) => {
     const response = await deleteProductServiceDocument(body);
+    return response.data;
+  }),
+);
+export const getLeadProductServiceListAction = createAsyncThunk<
+  LeadProductServiceResponse,
+  void
+>(
+  'productService/leadProductServiceList',
+  withToastForError(async () => {
+    const response = await getLeadProductServiceList();
     return response.data;
   }),
 );

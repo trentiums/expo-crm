@@ -62,6 +62,7 @@ import { Linking } from 'react-native';
 import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
 import Loader from '@atoms/Loader/Loader';
 import DocumentPick from '@molecules/DocumentPicker/DocumentPicker';
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 
 const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
   form,
@@ -254,6 +255,8 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
                   })}
                   isShowSelected
                   placeholder={t('budget')}
+                  dropdownDataType={DropdownDataType.BUDGET}
+                  heading={tl('selectBudget')}
                 />
               </DropdownView>
               <InputView>
@@ -284,6 +287,8 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
                   )}
                   isShowSelected
                   placeholder={t('time')}
+                  dropdownDataType={DropdownDataType.TIMELINE}
+                  heading={tl('selectTimeline')}
                 />
               </DropdownView>
               <InputView>
@@ -340,7 +345,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
             </SubContainerView>
             <SubContainerView>
               <ButtonSubmit
-                onPress={form.submit}
+                onPress={!loading && form.submit}
                 loading={loading}
                 variant={valid}>
                 <FormButtonText valid={valid}>{tb('save')}</FormButtonText>

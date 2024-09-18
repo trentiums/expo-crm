@@ -129,3 +129,8 @@ export type LeadsSortFilterProps = {
   handleBottomSheetClose?: () => void;
   changeRoute?: () => void;
 };
+export interface DropdownListingProps {
+  id: number;
+  title: string;
+  image?: string;
+}

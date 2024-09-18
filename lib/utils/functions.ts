@@ -183,7 +183,10 @@ export const getLeadStageNegotiationData = async (
     formData.append(`product_services[${index}]`, service);
   });
   formData.append('company_name', data?.companyName || '');
-  formData.append('budget', data?.budget || '');
+  if (data?.budget) {
+    formData.append('budget_currency_id', data?.budgetCurrencyCode);
+    formData.append('budget', data?.budget || '');
+  }
   if (data?.companySize) {
     formData.append('company_size', data?.companySize);
   }
@@ -191,10 +194,14 @@ export const getLeadStageNegotiationData = async (
     formData.append('assign_to_user_id', `${data?.assignTo}`);
   }
   formData.append('company_website', data?.webSite || '');
-  formData.append('time_line', data?.timeLine || '');
+  if (data?.timeLine) {
+    formData.append('time_line', data?.timeLine || '');
+    formData.append('timeline_timeframe', data.timeFrameType);
+  }
   formData.append('description', values?.description || '');
   if (data?.dealAmount) {
     formData.append('deal_amount', data?.dealAmount);
+    formData.append('deal_amount_currency_id', values.dealAmountCurrencyCode);
   }
   if (data?.dealCloseDate) {
     formData.append('deal_close_date', data?.dealCloseDate);

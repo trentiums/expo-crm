@@ -134,7 +134,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({ form, loading }) => {
         <RemoveFilterButton onPress={handleRemoveFilters}>
           <RemoveButtonText>{t('removeFilter')}</RemoveButtonText>
         </RemoveFilterButton>
-        <FilterApplyButton loading={loading} onPress={form.submit}>
+        <FilterApplyButton loading={loading} onPress={!loading && form.submit}>
           <FormButtonText valid={true}>{t('applyFilter')}</FormButtonText>
         </FilterApplyButton>
       </LeadsFilterButton>

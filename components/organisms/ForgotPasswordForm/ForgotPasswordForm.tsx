@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 import { ForgotPasswordFormProps } from './ForgotPasswordForm.props';
 import { FormButtonText } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
 import { Spacer } from '@atoms/common/common.styles';
-import {router} from 'expo-router';
+import { router } from 'expo-router';
 
 const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
   form,
@@ -47,13 +47,13 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
         />
       </LoginFormContainer>
       <ForgotPasswordContainer
-          onPress={() => router.navigate('/(public)/login')}>
-          <ForgotText>{t('backToLogin')}</ForgotText>
-        </ForgotPasswordContainer>
-        <Spacer size={16} />
+        onPress={() => router.navigate('/(public)/login')}>
+        <ForgotText>{t('backToLogin')}</ForgotText>
+      </ForgotPasswordContainer>
+      <Spacer size={16} />
 
       <ButtonSubmit
-        onPress={form.submit}
+        onPress={!loading && form.submit}
         loading={loading}
         textColor={valid ? colors.black : colors.disabledTextColor}
         variant={valid}>
