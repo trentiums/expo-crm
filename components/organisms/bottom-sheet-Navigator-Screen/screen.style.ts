@@ -3,6 +3,7 @@ import { styled } from '@utils/styled';
 import { FlatList, View, Pressable } from 'react-native';
 import Text from '@atoms/Text/Text';
 import { Image } from 'expo-image';
+import Button from '@atoms/Button/Button';
 
 export const CreateOptionContainer = styled(View)`
   flex-direction: row;
@@ -134,4 +135,10 @@ export const DashboardSortFilterText = styled(Text)`
 export const LeadsFilterView = styled(View)`
   flex: 1;
   flex-basis: auto;
+`;
+
+export const DashboardFilterApplyButton = styled(Button)`
+  background-color: ${({ theme }) => theme.colors.blueChaos};
+  border-radius: 50px;
+  width: 100%;
 `;
