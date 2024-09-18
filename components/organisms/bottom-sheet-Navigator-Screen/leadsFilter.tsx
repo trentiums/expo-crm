@@ -2,14 +2,13 @@ import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import LeadsFilterForm from '@organisms/LeadsFilterForm/LeadsFilterForm';
 import { getLeadListAction } from '@redux/actions/lead';
 import { setLeadsFilters } from '@redux/slices/leads';
-import { useAppDispatch } from '@redux/store';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import FormTemplate from '@templates/FormTemplate/FormTemplate';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
 import { LeadsFilterProps } from './leadsFilter.props';
 import { CreateOptionProps } from './screen.props';
-import View from '@atoms/View/View';
 import { LeadsFilterView } from './screen.style';
 
 const LeadsFilter: React.FC<CreateOptionProps> = ({
@@ -19,6 +18,9 @@ const LeadsFilter: React.FC<CreateOptionProps> = ({
   const dispatch = useAppDispatch();
   const toast = useToast();
   const [filterLoading, setFilterLoading] = useState(false);
+  const leadsSortFilter = useSelector(
+    (state: RootState) => state.leads.leadsSort,
+  );
   const handleApplyFilter = async (values: LeadsFilterProps) => {
     dispatch(setLeadsFilters(values));
     try {
@@ -35,6 +37,7 @@ const LeadsFilter: React.FC<CreateOptionProps> = ({
           lead_channel_id: values?.selectedChannel,
           lead_conversion_id: values?.selectedStage,
           lead_status_id: values?.selectedStatus,
+          ...(leadsSortFilter?.filters ? leadsSortFilter.filters : undefined),
         }),
       ).unwrap();
     } catch (error) {
