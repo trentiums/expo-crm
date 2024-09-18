@@ -1,4 +1,5 @@
 import { LanguageEnum } from '@redux/slices/auth';
+import { AddLeadTabBar } from '@type/api/api';
 
 export const dashboardLeads = [
   {
@@ -84,9 +85,9 @@ export const leadsQuickFilters = [
   },
 ];
 export const stepData = [
-  { id: 1, title: 'Basic' },
-  { id: 2, title: 'Company' },
-  { id: 3, title: 'Lead' },
+  { id: 1, title: 'Basic', name: AddLeadTabBar.BASICINFO },
+  { id: 2, title: 'Company', name: AddLeadTabBar.COMPANYINFO },
+  { id: 3, title: 'Lead', name: AddLeadTabBar.LEADDETAILS },
 ];
 export const companySizes = [
   { id: 1, title: '0—5 employees' },
@@ -111,5 +112,23 @@ export const languageList = [
     id: 3,
     name: LanguageEnum.hindi,
     shortForm: 'hi',
+  },
+];
+export const dashboardQuickFilters = [
+  {
+    id: 1,
+    title: 'Lead count low-high',
+    filters: {
+      sort_order: 1,
+      order_by: 1,
+    },
+  },
+  {
+    id: 2,
+    title: 'Lead count high-low',
+    filters: {
+      sort_order: 2,
+      order_by: 1,
+    },
   },
 ];

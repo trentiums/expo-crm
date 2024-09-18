@@ -114,6 +114,7 @@ export const getLeadStagePreparedDataForCLoseWonType = async (
     formData.append(`product_services[${index}]`, service);
   });
   formData.append('company_name', data?.companyName || '');
+  formData.append('budget_currency_id', values?.budgetCurrencyCode);
   formData.append('budget', data?.budget || '');
   if (data?.companySize) {
     formData.append('company_size', data?.companySize);
@@ -121,6 +122,7 @@ export const getLeadStagePreparedDataForCLoseWonType = async (
 
   formData.append('company_website', values?.webSite || data?.webSite || '');
   formData.append('time_line', data?.timeLine || '');
+  formData.append('timeline_timeframe', data.timeFrameType || undefined);
   formData.append(
     'description',
     leadConversionId !== LeadStageType.CLOSELOST
@@ -132,6 +134,7 @@ export const getLeadStagePreparedDataForCLoseWonType = async (
   }
   if (values?.dealAmount) {
     formData.append('deal_amount', values?.dealAmount);
+    formData.append('deal_amount_currency_id	', data.dealAmountCurrencyId);
   }
   if (data?.dealCloseDate) {
     formData.append('deal_close_date', data?.dealCloseDate);

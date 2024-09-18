@@ -53,6 +53,7 @@ const LeadStatusChangeScreen = () => {
       formData.append('company_name', values?.companyName || '');
       if (values?.budget) {
         formData.append('budget', values?.budget);
+        formData.append('budget_currency_id', values?.budgetCurrencyCode);
       }
       if (data?.companySize) {
         formData.append('company_size', data?.companySize);
@@ -62,9 +63,14 @@ const LeadStatusChangeScreen = () => {
       }
       formData.append('company_website', values?.webSite || '');
       formData.append('time_line', values?.timeFrame || '');
+      formData.append('timeline_timeframe	', values?.timeFrameType);
       formData.append('description', values?.comments || '');
       if (values?.dealAmount || data?.dealAmount) {
         formData.append('deal_amount', values?.dealAmount || data?.dealAmount);
+        formData.append(
+          'deal_amount_currency_id',
+          data?.dealAmountCurrencyCode,
+        );
       }
       if (data?.dealCloseDate) {
         formData.append('deal_close_date', data?.dealCloseDate);
@@ -110,15 +116,7 @@ const LeadStatusChangeScreen = () => {
     }
     setLoading(false);
   };
-  useEffect(() => {
-    navigation.setOptions({
-      title: t('leadStatusChange'),
-      headerStyle: {
-        backgroundColor: colors.tabBar,
-      },
-      headerTintColor: colors.white,
-    });
-  }, [navigation]);
+
   return (
     <ScreenTemplate title={t('leadStatusChange')}>
       <FormTemplate

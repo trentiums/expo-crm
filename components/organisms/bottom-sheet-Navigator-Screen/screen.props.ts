@@ -19,7 +19,14 @@ export interface LeadSortFilterItemProp {
     order_by: number;
   };
 }
-
+export interface DashboardSortFilterItemProp {
+  id: number;
+  title: string;
+  filters: {
+    sort_order: number;
+    order_by: number;
+  };
+}
 export type ModifyLeadOptionProps = {
   changeSnapPoints: (points: string[]) => void;
   handleBottomSheetClose?: () => void;

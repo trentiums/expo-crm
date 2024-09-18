@@ -48,15 +48,15 @@ export const ContainerView = styled(View)`
   gap: 16px;
 `;
 export const SubContainerView = styled(View)`
-  width: 100%;
   flex: 0.5;
   z-index: 2;
+  justify-content: flex-end;
 `;
 
 export const FormButtonText = styled(Text)<{ valid: boolean }>`
   font-weight: 700;
   color: ${({ valid, theme }) =>
-    valid ? theme.colors.black : theme.colors.lightGray};
+    valid ? theme.colors.white : theme.colors.lightGray};
 `;
 export const LabelDescriptionText = styled(Text)`
   font-size: 16px;
