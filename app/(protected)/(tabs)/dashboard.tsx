@@ -37,6 +37,7 @@ import CompanyDashboardCard from '@molecules/CompanyDashboardCard/CompanyDashboa
 import QuickFilter from '@molecules/QuickFilter/QuickFilter';
 import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
 import { UserRole } from '@type/api/auth';
+import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
 
 const Dashboard = () => {
   const { colors } = useAppTheme();
@@ -53,6 +54,8 @@ const Dashboard = () => {
   const [leads, setLeads] = useState<
     DashboardLeadsProps[] | DashboardAdminLeadsProps[]
   >(dashboardLeadList.leadList);
+  const [visibleLeadsSortFilterSheet, setVisibleLeadsSortFilterSheet] =
+    useState(false);
   const dispatch = useAppDispatch();
   const handelFetchLead = async () => {
     setLoading(true);
@@ -193,7 +196,12 @@ const Dashboard = () => {
       )}
     </>
   );
-
+  const handleVisibleLeadsSortFilter = () => {
+    setVisibleLeadsSortFilterSheet(true);
+  };
+  const handleCloseVisibleSortFilter = () => {
+    setVisibleLeadsSortFilterSheet(false);
+  };
   return (
     <ScreenTemplate moreVisible>
       {loading && dashboardLeadList.leadStageCount.length === 0 ? (
@@ -231,6 +239,7 @@ const Dashboard = () => {
                 <QuickFilter
                   filterTitle={tr('leadsCount')}
                   filterType={tr('sortBy')}
+                  onFilterPress={handleVisibleLeadsSortFilter}
                 />
               </DashboardFilterView>
               <Spacer size={16} />
@@ -266,6 +275,12 @@ const Dashboard = () => {
             </DashboardScreenContainer>
           )}
         </>
+      )}
+      {visibleLeadsSortFilterSheet && (
+        <BottomSheetNavigator
+          initialRouteName="DashboardSortFilter"
+          onClosePress={handleCloseVisibleSortFilter}
+        />
       )}
     </ScreenTemplate>
   );

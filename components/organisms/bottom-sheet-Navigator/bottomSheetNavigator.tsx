@@ -31,6 +31,7 @@ import LeadStageCloseWon from '@organisms/bottom-sheet-Navigator-Screen/LeadStag
 import LeadStageNegotiation from '@organisms/bottom-sheet-Navigator-Screen/LeadStageNegotiation';
 import LeadChannelList from '@organisms/bottom-sheet-Navigator-Screen/LeadChannelList';
 import LanguageList from '@organisms/bottom-sheet-Navigator-Screen/LanguageList';
+import DashboardSortFilter from '@organisms/bottom-sheet-Navigator-Screen/dashboardSortFilter';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
   const [snapPoints, setSnapPoints] = useState(['50%', '90%']);
   const { colors } = useAppTheme();
   const { t } = useTranslation('bottomSheetNavigator');
+  const { t: tb } = useTranslation('bottomSheetCreatePotion');
 
   const CustomHeader = ({
     title,
@@ -161,7 +163,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
             options={({ navigation }) => ({
               header: () => (
                 <CustomHeader
-                  title={t('updateStatus')}
+                  title={tb('updateStatus')}
                   onClose={() => handleClosePress()}
                   backVisible={true}
                   onBackPress={() => navigation.goBack()}
@@ -181,7 +183,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
             options={({ navigation }) => ({
               header: () => (
                 <CustomHeader
-                  title={t('updateStage')}
+                  title={tb('updateStage')}
                   onClose={() => handleClosePress()}
                   backVisible={true}
                   onBackPress={() => navigation.goBack()}
@@ -202,7 +204,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
             options={({ navigation }) => ({
               header: () => (
                 <CustomHeader
-                  title={t('UpdateChannel')}
+                  title={tb('UpdateChannel')}
                   onClose={() => handleClosePress()}
                   backVisible={true}
                   onBackPress={() => navigation.goBack()}
@@ -223,7 +225,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
             options={({ navigation }) => ({
               header: () => (
                 <CustomHeader
-                  title={t('changeLeadStatus')}
+                  title={tb('changeLeadStatus')}
                   onClose={() => handleClosePress()}
                   backVisible={true}
                   onBackPress={() => navigation.goBack()}
@@ -244,7 +246,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
             options={({ navigation }) => ({
               header: () => (
                 <CustomHeader
-                  title={t('changeLeadStage')}
+                  title={tb('changeLeadStage')}
                   onClose={() => handleClosePress()}
                   backVisible={true}
                   onBackPress={() => navigation.goBack()}
@@ -265,7 +267,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
             options={({ navigation }) => ({
               header: () => (
                 <CustomHeader
-                  title={t('changeLeadStage')}
+                  title={tb('changeLeadStage')}
                   onClose={() => handleClosePress()}
                   backVisible={true}
                   onBackPress={() => navigation.goBack()}
@@ -299,6 +301,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
               />
             )}
           </Stack.Screen>
+
           <Stack.Screen
             name="LeadsFilter"
             options={() => ({
@@ -354,6 +357,24 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 dropdownData={meta.dropdownData}
                 handelSelectData={(id) => meta.handelSelectData(id)}
                 dropdownDataType={meta.dropdownDataType}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="DashboardSortFilter"
+            options={() => ({
+              header: () => (
+                <CustomHeader
+                  title={t('sortBy')}
+                  onClose={() => handleClosePress()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <DashboardSortFilter
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+                changeRoute={handleClosePress}
               />
             )}
           </Stack.Screen>

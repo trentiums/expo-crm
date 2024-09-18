@@ -5,12 +5,17 @@ import { setLeadsFilters } from '@redux/slices/leads';
 import { useAppDispatch } from '@redux/store';
 import FormTemplate from '@templates/FormTemplate/FormTemplate';
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
 import { LeadsFilterProps } from './leadsFilter.props';
 import { CreateOptionProps } from './screen.props';
+import View from '@atoms/View/View';
+import { LeadsFilterView } from './screen.style';
 
-const LeadsFilter: React.FC<CreateOptionProps> = ({ changeRoute }) => {
+const LeadsFilter: React.FC<CreateOptionProps> = ({
+  changeRoute,
+  changeSnapPoints,
+}) => {
   const dispatch = useAppDispatch();
   const toast = useToast();
   const [filterLoading, setFilterLoading] = useState(false);
@@ -43,12 +48,17 @@ const LeadsFilter: React.FC<CreateOptionProps> = ({ changeRoute }) => {
     setFilterLoading(false);
     changeRoute();
   };
+  const onLayout = useCallback(() => {
+    changeSnapPoints(['90%', '90%']);
+  }, []);
   return (
-    <FormTemplate
-      Component={LeadsFilterForm}
-      onSubmit={(values) => handleApplyFilter(values)}
-      loading={filterLoading}
-    />
+    <LeadsFilterView onLayout={onLayout}>
+      <FormTemplate
+        Component={LeadsFilterForm}
+        onSubmit={(values) => handleApplyFilter(values)}
+        loading={filterLoading}
+      />
+    </LeadsFilterView>
   );
 };
 

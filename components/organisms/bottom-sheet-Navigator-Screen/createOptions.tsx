@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import CreateOptionsItem from '@molecules/CreateOptionItem/CreateOptionItem';
 import { CreateOptionContainer, CreateOptionsFlatList } from './screen.style';
 import SingleUserIcon from '@atoms/Illustrations/SingleUser';
@@ -7,11 +7,14 @@ import ServicesComputerIcon from '@atoms/Illustrations/ServicesComputer';
 import { CreateOptionItemProps, CreateOptionProps } from './screen.props';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
+import { addLeadInformation } from '@redux/slices/leads';
+import { useAppDispatch } from '@redux/store';
 
 const CreateOptions: React.FC<CreateOptionProps> = ({
   changeSnapPoints,
   handleBottomSheetClose,
 }) => {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation('bottomSheetCreatePotion');
   const onLayout = useCallback(() => {
     changeSnapPoints(['20%', '90%']);
@@ -56,6 +59,9 @@ const CreateOptions: React.FC<CreateOptionProps> = ({
       />
     );
   };
+  useEffect(() => {
+    dispatch(addLeadInformation({}));
+  }, []);
   return (
     <CreateOptionContainer onLayout={onLayout}>
       <CreateOptionsFlatList

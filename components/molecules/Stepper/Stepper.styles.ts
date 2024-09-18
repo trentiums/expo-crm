@@ -1,8 +1,8 @@
 import Text from '@atoms/Text/Text';
 import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
-import { FlatList } from 'react-native';
-export const StepInfoContainer = styled(View)`
+import { FlatList, Pressable } from 'react-native';
+export const StepInfoContainer = styled(Pressable)`
   display: flex;
   flex-direction: row;
   justify-content: space-around;

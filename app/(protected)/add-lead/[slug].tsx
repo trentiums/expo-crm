@@ -25,6 +25,9 @@ import React, { useEffect, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
 import { AddLeadContainer } from '../(tabs)/tabs.style';
 import { useTranslation } from 'react-i18next';
+import View from '@atoms/View/View';
+import Stepper from '@molecules/Stepper/Stepper';
+import { stepData } from '@utils/constant';
 
 const AddLead = () => {
   const dispatch = useAppDispatch();
@@ -347,18 +350,13 @@ const AddLead = () => {
     <ScreenTemplate title={id ? t('editLead') : t('addLead')}>
       <AddLeadContainer>
         <Spacer size={16} />
-        <TabBar
-          selectedActiveTab={selectedTabNav}
-          setSelectedTabNav={setSelectedTabNav}
-          tab={AddLeadTabBarData?.map(({ title }) => title)}
-          selectedTabColor={colors.selectedTabColor}
-          color={colors.primaryColor}
-          radius={20}
-          selectedTab={(val: any) => {
-            setSelectedTabNav(val);
-          }}
-          isTabChange={id}
-        />
+        <View>
+          <Stepper
+            stepData={stepData}
+            currentId={selectedTabNav.id}
+            setSelectedTabNav={setSelectedTabNav}
+          />
+        </View>
         <Spacer size={32} />
         {leadsDetailLoading ? <Loader /> : renderForm()}
       </AddLeadContainer>
