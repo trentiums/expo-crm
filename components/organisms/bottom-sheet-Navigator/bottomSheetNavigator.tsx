@@ -73,6 +73,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
   const renderBackdrop = useCallback(
     (props: any) => (
       <BottomSheetBackdrop
+        onPress={handleClosePress}
         appearsOnIndex={0}
         disappearsOnIndex={-1}
         {...props}

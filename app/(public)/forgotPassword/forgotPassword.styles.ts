@@ -4,7 +4,7 @@ import { Image, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export const Container = styled(View)`
-  flex: 0.6;
+  flex: 1;
 `;
 
 export const ImageView = styled(Image)`
@@ -20,13 +20,14 @@ export const ForgotText = styled(Text)`
 `;
 export const ForgotScreenContainer = styled(View)`
   flex: 1;
-  background-color: ${({ theme }) => theme.colors.white};
+  /* background-color: ${({ theme }) => theme.colors.white}; */
 `;
 export const ForgotFormContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
-  border-radius: 24px;
+  border-top-right-radius: 24px;
+  border-top-left-radius: 24px;
   padding: 24px;
-  flex: 1;
+  flex: 0.3;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

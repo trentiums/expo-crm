@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Container,
   ForgotFormContainer,
+  ForgotScreenContainer,
   ForgotScrollView,
   ForgotText,
   ImageView,
@@ -47,20 +48,20 @@ const index = () => {
     setLoading(false);
   };
   return (
-    <ForgotScrollView>
-      <ForgotFormContainer>
+    <ForgotScrollView keyboardShouldPersistTaps="always">
+      <ForgotScreenContainer>
         <Container>
           <ImageView source={images.loginImage} resizeMode="cover" />
         </Container>
-        <LoginFormContainer>
-          <ForgotText>{t('forgotPassword')}</ForgotText>
+        <ForgotFormContainer>
+          <ForgotText>{t('forgotPasswordTitle')}</ForgotText>
           <FormTemplate
             Component={ForgotPasswordForm}
             onSubmit={(values) => onForgotPress(values)}
             loading={loading}
           />
-        </LoginFormContainer>
-      </ForgotFormContainer>
+        </ForgotFormContainer>
+      </ForgotScreenContainer>
     </ForgotScrollView>
   );
 };
