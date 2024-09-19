@@ -183,7 +183,9 @@ const MoreMenu = () => {
                 <DividerContainer />
                 <Spacer size={20} />
                 <Pressable onPress={() => setDeleteShowModal(true)}>
-                  <DeleteText>{tm('deleteAccount')}</DeleteText>
+                  <DeleteText variant="SF-Pro-Display-Semibold_600">
+                    {tm('deleteAccount')}
+                  </DeleteText>
                 </Pressable>
               </>
             )}

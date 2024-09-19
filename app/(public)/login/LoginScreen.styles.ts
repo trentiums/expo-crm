@@ -15,7 +15,6 @@ export const ImageView = styled(Image)`
 export const IntroText = styled(Text)`
   color: ${({ theme }) => theme.colors.textDark};
   font-size: 36px;
-  font-weight: 700;
   text-align: center;
 `;
 export const LoginScreenContainer = styled(View)`

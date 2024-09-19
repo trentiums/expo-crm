@@ -42,12 +42,10 @@ export const NumberView = styled(View)`
 export const NameText = styled(Text)`
   color: ${({ theme }) => theme.colors.white};
   font-size: 20px;
-  font-weight: 700;
 `;
 export const SubNameText = styled(Text)`
   color: ${({ theme }) => theme.colors.white};
   font-size: 14px;
-  font-weight: 500;
 `;
 
 export const PressAbleContainer = styled(Pressable)`

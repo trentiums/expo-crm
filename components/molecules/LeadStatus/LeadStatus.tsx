@@ -12,7 +12,9 @@ const LeadStatus: React.FC<LeadStatusProps> = ({ leadStatus }) => {
     case LeadStatusTypes.CONTACTED:
       return (
         <LeadStatusContainer bgColor={colors.lightYellow}>
-          <LeadStatusText color={colors.yellow}>
+          <LeadStatusText
+            color={colors.yellow}
+            variant="SF-Pro-Display-Medium_500">
             {t('contacted')}
           </LeadStatusText>
         </LeadStatusContainer>
@@ -21,21 +23,33 @@ const LeadStatus: React.FC<LeadStatusProps> = ({ leadStatus }) => {
     case LeadStatusTypes.QUALIFIED:
       return (
         <LeadStatusContainer bgColor={colors.lightBlue}>
-          <LeadStatusText color={colors.blue}>{t('qualified')}</LeadStatusText>
+          <LeadStatusText
+            color={colors.blue}
+            variant="SF-Pro-Display-Medium_500">
+            {t('qualified')}
+          </LeadStatusText>
         </LeadStatusContainer>
       );
 
     case LeadStatusTypes.UNQUALIFIED:
       return (
         <LeadStatusContainer bgColor={colors.lightRed}>
-          <LeadStatusText color={colors.red}>{t('unQualified')}</LeadStatusText>
+          <LeadStatusText
+            color={colors.red}
+            variant="SF-Pro-Display-Medium_500">
+            {t('unQualified')}
+          </LeadStatusText>
         </LeadStatusContainer>
       );
 
     case LeadStatusTypes.NEW:
       return (
         <LeadStatusContainer bgColor={colors.boogieBlast12}>
-          <LeadStatusText color={colors.green}>{t('new')}</LeadStatusText>
+          <LeadStatusText
+            color={colors.green}
+            variant="SF-Pro-Display-Medium_500">
+            {t('new')}
+          </LeadStatusText>
         </LeadStatusContainer>
       );
 

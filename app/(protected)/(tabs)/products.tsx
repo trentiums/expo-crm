@@ -43,7 +43,6 @@ const products = () => {
     item: UserDetailCardProps;
     index: number;
   }) => <ProductCard key={`${item.id}-${index}`} data={item} />;
-
   const handleGetMoreProductsData = async () => {
     if (products?.currentPage !== products?.lastPage) {
       try {
@@ -69,7 +68,7 @@ const products = () => {
     try {
       setLoadingStatus(LoadingStatus.SCREEN);
       await dispatch(
-        getProductServiceListAction({ search: productSearch }),
+        getProductServiceListAction({ search: productSearch || undefined }),
       ).unwrap();
     } catch (error: any) {
       toast.show(error, {
@@ -117,7 +116,7 @@ const products = () => {
       ) : (
         <>
           {Array.isArray(products?.serviceList) &&
-          products?.serviceList.length <= 0 ? (
+          products?.serviceList.length > 0 ? (
             <ProductsFlatList
               data={products.serviceList}
               keyExtractor={(item, index) => `${item.id}-${index}`}

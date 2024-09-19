@@ -29,7 +29,6 @@ export const StepList = styled(FlatList).attrs({
 `;
 export const StepText = styled(Text)<{ isCurrentStep: boolean }>`
   font-size: 14px;
-  font-weight: 500;
   color: ${({ theme, isCurrentStep }) =>
     !isCurrentStep ? theme.colors.textGray : theme.colors.englishHolly};
 `;

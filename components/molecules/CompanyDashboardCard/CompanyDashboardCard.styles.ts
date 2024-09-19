@@ -18,7 +18,6 @@ export const UserInformationContainer = styled(View)`
 export const UserNameText = styled(Text)`
   font-size: 18px;
   color: ${({ theme }) => theme.colors.textDark};
-  font-weight: 600;
 `;
 export const LeadsStatusDetailContainer = styled(View)`
   border-radius: 10px;
@@ -36,7 +35,6 @@ export const LeadsCountContainer = styled(View)`
 export const LeadCount = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.textDark};
-  font-weight: 400;
 `;
 export const LeadTitle = styled(Text)<{ bgColor?: string; color?: string }>`
   background-color: ${({ bgColor, theme }) =>
@@ -67,5 +65,4 @@ export const TotalLeadTitle = styled(Text)`
   color: ${({ theme }) => theme.colors.textDark};
   font-size: 16px;
   border-radius: 100px;
-  font-weight: 600;
 `;

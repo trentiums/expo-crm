@@ -198,7 +198,9 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always">
-        <Label>{`${t('firstNameLabel')} *`}</Label>
+        <Label variant="SF-Pro-Display-Medium_500">{`${t(
+          'firstNameLabel',
+        )} *`}</Label>
         <Field
           name="firstName"
           placeholder={t('firstNameLabel')}
@@ -206,7 +208,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
           validate={requiredValidator}
         />
         <Spacer size={16} />
-        <Label>{t('emailLabel')}</Label>
+        <Label variant="SF-Pro-Display-Medium_500">{t('emailLabel')}</Label>
         <Field
           name="email"
           placeholder={t('emailLabel')}
@@ -218,7 +220,9 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
           )}
         />
         <Spacer size={16} />
-        <Label>{t('phoneNumberLabel')}</Label>
+        <Label variant="SF-Pro-Display-Medium_500">
+          {t('phoneNumberLabel')}
+        </Label>
         <PhoneNumberFieldView>
           <CountryCodeInput>
             <Field
@@ -280,7 +284,9 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
         onPress={!loading && !countryCodeError && form.submit}
         loading={loading}
         valid={valid && !countryCodeError}>
-        <FormButtonText valid={valid && !countryCodeError}>
+        <FormButtonText
+          valid={valid && !countryCodeError}
+          variant="SF-Pro-Display-Semibold_600">
           {id ? tb('save') : tb('next')}
         </FormButtonText>
       </ButtonSubmit>

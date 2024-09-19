@@ -60,7 +60,9 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
           <ArrowLeftIcon color={colors.black} />
         </Pressable>
       )}
-      <BottomSheetHeaderTitle>{title}</BottomSheetHeaderTitle>
+      <BottomSheetHeaderTitle variant="SF-Pro-Display-Semibold_600">
+        {title}
+      </BottomSheetHeaderTitle>
       <Pressable onPress={onClose}>
         <BottomSheetCloseIcon />
       </Pressable>
@@ -296,7 +298,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
             options={() => ({
               header: () => (
                 <CustomHeader
-                  title={t('changeLanguage')}
+                  title={tb('changeLanguage')}
                   onClose={() => handleClosePress()}
                 />
               ),

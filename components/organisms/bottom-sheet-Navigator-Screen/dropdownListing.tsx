@@ -41,7 +41,9 @@ const DropdownListing = ({
       <DropdownListView
         onPress={() => handelSelectData(item.id)}
         isBorder={item.image}>
-        <DropdownListingText>{item?.title}</DropdownListingText>
+        <DropdownListingText variant="SF-Pro-Display-Medium_500">
+          {item?.title}
+        </DropdownListingText>
         {Array.isArray(selectedValue) && !item.image
           ? selectedValue.includes(item.id) && <CheckCircleIcon />
           : selectedValue === item.id && <CheckCircleIcon />}

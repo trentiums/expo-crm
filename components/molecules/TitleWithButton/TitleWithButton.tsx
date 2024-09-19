@@ -31,7 +31,9 @@ const TitleWithButton: React.FC<TitleWithButtonProps> = ({
       </IconCon>
       {!!text && (
         <HeaderTextCon>
-          <TextInHeader>{text}</TextInHeader>
+          <TextInHeader variant="SF-Pro-Display-Semibold_600">
+            {text}
+          </TextInHeader>
         </HeaderTextCon>
       )}
     </HeaderWithTextContainer>

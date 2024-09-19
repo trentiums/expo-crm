@@ -33,7 +33,6 @@ export const SubContainerView = styled(View)`
 `;
 
 export const FormButtonText = styled(Text)<{ valid?: boolean }>`
-  font-weight: 700;
   color: ${({ valid, theme }) =>
     valid ? theme.colors.white : theme.colors.textDark};
 `;
@@ -46,6 +45,5 @@ export const BackButton = styled(Button)`
   border-radius: 50px;
 `;
 export const BackButtonText = styled(Text)`
-  font-weight: 700;
   color: ${({ theme }) => theme.colors.black};
 `;

@@ -91,7 +91,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="always">
-            <Label>{t('name')}</Label>
+            <Label variant="SF-Pro-Display-Medium_500">{t('name')}</Label>
             <Field
               name="name"
               placeholder={t('nameEg')}
@@ -100,7 +100,9 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
               validate={composeValidators(requiredValidator)}
             />
             <Spacer size={16} />
-            <Label>{t('description')}</Label>
+            <Label variant="SF-Pro-Display-Medium_500">
+              {t('description')}
+            </Label>
             <Field
               name="description"
               placeholder={t('descriptionEg')}
@@ -125,7 +127,9 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
             onPress={handleAddProducts}
             loading={loading}
             valid={valid}>
-            <FormButtonText valid={valid}>{t('save')}</FormButtonText>
+            <FormButtonText valid={valid} variant="SF-Pro-Display-Semibold_600">
+              {t('save')}
+            </FormButtonText>
           </ButtonSubmit>
         </FormView>
       )}

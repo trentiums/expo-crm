@@ -33,5 +33,4 @@ export const AddText = styled(Text)`
   font-size: 12px;
   text-align: center;
   color: ${({ theme }) => theme.colors.bgColor};
-  font-weight: 700;
 `;

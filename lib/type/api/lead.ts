@@ -153,8 +153,8 @@ export interface LeadListState {
 }
 
 export interface LeadsFilterType {
-  startDate: string;
-  endDate: string;
+  startDate?: string;
+  endDate?: string;
   selectedChannel?: number;
   selectedStage?: number;
   selectedStatus?: number;

@@ -20,7 +20,7 @@ const MenuOptionItem: React.FC<MenuOptionsItemProps> = ({
       <Spacer size={15} />
       <OptionLabelContainer>
         <Flexed>
-          <OptionLabel>{label}</OptionLabel>
+          <OptionLabel variant="SF-Pro-Display-Medium_500">{label}</OptionLabel>
         </Flexed>
         <>{rightContainer?.()}</>
       </OptionLabelContainer>

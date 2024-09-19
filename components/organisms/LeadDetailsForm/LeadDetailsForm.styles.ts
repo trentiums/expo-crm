@@ -54,13 +54,11 @@ export const SubContainerView = styled(View)`
 `;
 
 export const FormButtonText = styled(Text)<{ valid: boolean }>`
-  font-weight: 700;
   color: ${({ valid, theme }) =>
     valid ? theme.colors.white : theme.colors.lightGray};
 `;
 export const LabelDescriptionText = styled(Text)`
   font-size: 16px;
-  font-weight: 400;
   color: ${({ theme }) => theme.colors.textGray};
 `;
 export const ServiceLabel = styled(Text)`
@@ -102,7 +100,6 @@ export const SelectedServiceData = styled(View)`
 `;
 export const ServiceText = styled(Text)`
   font-size: 15px;
-  font-weight: 400;
   color: ${({ theme }) => theme.colors.carbonFootprint};
 `;
 export const showMultipleDataList = styled(FlatList).attrs({

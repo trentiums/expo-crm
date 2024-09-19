@@ -90,7 +90,7 @@ const Users = () => {
   const handleSearch = async () => {
     try {
       setLoadingStatus(LoadingStatus.SCREEN);
-      await dispatch(getUserListAction({ search: userSearch }));
+      await dispatch(getUserListAction({ search: userSearch || undefined }));
     } catch (error) {
       console.log(error);
     }
@@ -109,7 +109,9 @@ const Users = () => {
   return (
     <ScreenTemplate moreVisible>
       <HeadingView>
-        <HeadingText>{ts('users')}</HeadingText>
+        <HeadingText variant="SF-Pro-Display-Semibold_600">
+          {ts('users')}
+        </HeadingText>
         <CountsText>
           {t('itemWithCount', { count: userList?.total })}
         </CountsText>

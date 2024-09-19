@@ -38,7 +38,6 @@ export const DrawerItemSection = styled(View)`
 
 export const UserName = styled(Text)`
   font-size: 18px;
-  font-weight: bold;
   color: ${({ theme }) => theme.colors.white};
 `;
 

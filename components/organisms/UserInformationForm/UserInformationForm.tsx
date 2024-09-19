@@ -64,7 +64,9 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always">
         <Spacer size={16} />
-        <Label>{`${t('firstNameLabel')} *`}</Label>
+        <Label variant="SF-Pro-Display-Medium_500">{`${t(
+          'firstNameLabel',
+        )} *`}</Label>
         <Field
           name="name"
           placeholder={t('firstNameLabel')}
@@ -72,7 +74,9 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
           validate={requiredValidator}
         />
         <Spacer size={16} />
-        <Label>{`${t('emailLabel')} *`}</Label>
+        <Label variant="SF-Pro-Display-Medium_500">{`${t(
+          'emailLabel',
+        )} *`}</Label>
         <Field
           name="email"
           placeholder={t('emailLabel')}
@@ -81,7 +85,9 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
           validate={composeValidators(requiredValidator, emailValidator)}
         />
         <Spacer size={16} />
-        <Label>{slug ? t('password') : `${t('password')} *`}</Label>
+        <Label variant="SF-Pro-Display-Medium_500">
+          {slug ? t('password') : `${t('password')} *`}
+        </Label>
 
         <Field
           name="password"
@@ -106,7 +112,9 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
           secureTextEntry={secureTextEntry}
         />
         <Spacer size={16} />
-        <Label>{`${t('confirmPassword')}`}</Label>
+        <Label variant="SF-Pro-Display-Medium_500">{`${t(
+          'confirmPassword',
+        )}`}</Label>
         <Field
           name="confirmPassword"
           placeholder={t('confirmPassword')}
@@ -137,7 +145,9 @@ const UserInformationForm: React.FC<UserInformationFormProps> = ({
         <Spacer size={50} />
       </KeyboardAwareScrollViewContainer>
       <ButtonSubmit onPress={handleAddUser} loading={loading} valid={valid}>
-        <FormButtonText valid={valid}>{tb('save')}</FormButtonText>
+        <FormButtonText valid={valid} variant="SF-Pro-Display-Semibold_600">
+          {tb('save')}
+        </FormButtonText>
       </ButtonSubmit>
     </ViewMainContainer>
   );

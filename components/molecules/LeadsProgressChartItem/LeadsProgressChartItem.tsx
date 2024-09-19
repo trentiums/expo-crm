@@ -44,7 +44,9 @@ const LeadsProgressChartItem: React.FC<LeadsIndicatorItemProps> = ({
   return (
     <IndicatorContainer>
       {item?.progress > 0 ? (
-        <IndicatorValue>{item.progress}</IndicatorValue>
+        <IndicatorValue variant="SF-Pro-Display-Medium_500">
+          {item.progress}
+        </IndicatorValue>
       ) : (
         <>
           <BlockIcon />

@@ -62,7 +62,6 @@ export const DocumentInfoContainer = styled(View)`
 `;
 export const DocumentName = styled(Text)`
   font-size: 16px;
-  font-weight: 400;
   color: ${({ theme }) => theme.colors.textDark};
 `;
 export const UploadAnotherDocumentText = styled(Text)`

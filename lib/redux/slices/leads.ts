@@ -88,10 +88,7 @@ const initialState: LeadsState = {
     dealAmountCurrencyCode: undefined,
     timeFrameType: undefined,
   },
-  leadsFilter: {
-    endDate: '',
-    startData: '',
-  },
+  leadsFilter: {},
   leadsSort: undefined,
 };
 

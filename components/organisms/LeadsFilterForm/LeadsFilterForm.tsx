@@ -59,7 +59,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({ form, loading }) => {
       <FilterFormView>
         <DateFilterContainer>
           <DateContainer>
-            <Label>{t('startDate')}</Label>
+            <Label variant="SF-Pro-Display-Medium_500">{t('startDate')}</Label>
             <Field
               name="startDate"
               component={FieldDatePicker}
@@ -68,7 +68,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({ form, loading }) => {
             />
           </DateContainer>
           <DateContainer>
-            <Label>{t('endDate')}</Label>
+            <Label variant="SF-Pro-Display-Medium_500">{t('endDate')}</Label>
             <Field
               name="endDate"
               component={FieldDatePicker}
@@ -80,7 +80,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({ form, loading }) => {
         </DateFilterContainer>
         <FiltersDropDownViews>
           <Spacer size={16} />
-          <Label>{`${t('channel')}`}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{`${t('channel')}`}</Label>
           <Field
             name={'selectedChannel'}
             component={FieldDropDown}
@@ -96,7 +96,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({ form, loading }) => {
             isMultiple
           />
           <Spacer size={16} />
-          <Label>{`${t('status')}`}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{`${t('status')}`}</Label>
           <Field
             name={'selectedStatus'}
             component={FieldDropDown}
@@ -112,7 +112,9 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({ form, loading }) => {
             isMultiple
           />
           <Spacer size={16} />
-          <Label>{`${t('conversion')}`}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{`${t(
+            'conversion',
+          )}`}</Label>
           <Field
             component={FieldDropDown}
             name={'selectedStage'}
@@ -132,10 +134,14 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({ form, loading }) => {
       </FilterFormView>
       <LeadsFilterButton>
         <RemoveFilterButton onPress={handleRemoveFilters}>
-          <RemoveButtonText>{t('removeFilter')}</RemoveButtonText>
+          <RemoveButtonText variant="SF-Pro-Display-Semibold_600">
+            {t('removeFilter')}
+          </RemoveButtonText>
         </RemoveFilterButton>
         <FilterApplyButton loading={loading} onPress={!loading && form.submit}>
-          <FormButtonText valid={true}>{t('applyFilter')}</FormButtonText>
+          <FormButtonText valid={true} variant="SF-Pro-Display-Semibold_600">
+            {t('applyFilter')}
+          </FormButtonText>
         </FilterApplyButton>
       </LeadsFilterButton>
     </LeadsFilterFormContainer>

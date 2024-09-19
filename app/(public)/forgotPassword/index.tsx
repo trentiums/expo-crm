@@ -12,7 +12,6 @@ import {
   ForgotText,
   ImageView,
 } from './forgotPassword.styles';
-import { LoginFormContainer } from '../login/LoginScreen.styles';
 import { useAppDispatch } from '@redux/store';
 import { forgotPasswordAction } from '@redux/actions/auth';
 import { useToast } from 'react-native-toast-notifications';
@@ -54,7 +53,9 @@ const index = () => {
           <ImageView source={images.loginImage} resizeMode="cover" />
         </Container>
         <ForgotFormContainer>
-          <ForgotText>{t('forgotPasswordTitle')}</ForgotText>
+          <ForgotText variant="SF-Pro-Display-Semibold_600">
+            {t('forgotPasswordTitle')}
+          </ForgotText>
           <FormTemplate
             Component={ForgotPasswordForm}
             onSubmit={(values) => onForgotPress(values)}

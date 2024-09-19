@@ -36,7 +36,9 @@ const DashboardSortFilter: React.FC<DashboardSortFilterProps> = ({
     item,
   }) => (
     <DashboardFilterContainer onPress={() => setSelectedSort(item)}>
-      <DashboardSortFilterText>{item.title}</DashboardSortFilterText>
+      <DashboardSortFilterText variant="SF-Pro-Display-Medium_500">
+        {item.title}
+      </DashboardSortFilterText>
       <IconWrapper>
         {selectedSort?.id === item.id && <CircleCheckIcon />}
       </IconWrapper>

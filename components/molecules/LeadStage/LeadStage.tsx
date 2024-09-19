@@ -12,27 +12,39 @@ const LeadStage: React.FC<LeadStageProps> = ({ leadStage }) => {
     case LeadStageType.PROPOSED:
       return (
         <LeadStageContainer bgColor={colors.lightYellow}>
-          <LeadStageText color={colors.yellow}>{t('proposed')}</LeadStageText>
+          <LeadStageText
+            color={colors.yellow}
+            variant="SF-Pro-Display-Medium_500">
+            {t('proposed')}
+          </LeadStageText>
         </LeadStageContainer>
       );
 
     case LeadStageType.CLOSEWON:
       return (
         <LeadStageContainer bgColor={colors.lightBlue}>
-          <LeadStageText color={colors.blue}>{t('closedWon')}</LeadStageText>
+          <LeadStageText
+            color={colors.blue}
+            variant="SF-Pro-Display-Medium_500">
+            {t('closedWon')}
+          </LeadStageText>
         </LeadStageContainer>
       );
     case LeadStageType.NEGOTIATION:
       return (
         <LeadStageContainer bgColor={colors.redLight}>
-          <LeadStageText color={colors.red}>{t('negotiation')}</LeadStageText>
+          <LeadStageText color={colors.red} variant="SF-Pro-Display-Medium_500">
+            {t('negotiation')}
+          </LeadStageText>
         </LeadStageContainer>
       );
 
     case LeadStageType.CLOSELOST:
       return (
         <LeadStageContainer bgColor={colors.gray}>
-          <LeadStageText color={colors.textDark}>
+          <LeadStageText
+            color={colors.textDark}
+            variant="SF-Pro-Display-Medium_500">
             {t('closedLost')}
           </LeadStageText>
         </LeadStageContainer>
@@ -41,7 +53,11 @@ const LeadStage: React.FC<LeadStageProps> = ({ leadStage }) => {
     case LeadStageType.INITIAL:
       return (
         <LeadStageContainer bgColor={colors.boogieBlast12}>
-          <LeadStageText color={colors.green}>{t('initial')}</LeadStageText>
+          <LeadStageText
+            color={colors.green}
+            variant="SF-Pro-Display-Medium_500">
+            {t('initial')}
+          </LeadStageText>
         </LeadStageContainer>
       );
 

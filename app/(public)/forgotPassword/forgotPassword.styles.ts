@@ -15,7 +15,6 @@ export const ImageView = styled(Image)`
 export const ForgotText = styled(Text)`
   color: ${({ theme }) => theme.colors.textDark};
   font-size: 36px;
-  font-weight: 700;
   text-align: center;
 `;
 export const ForgotScreenContainer = styled(View)`
