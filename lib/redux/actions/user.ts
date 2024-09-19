@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   AssignLeadToUserParams,
   AssignUserListResponse,
+  ChangePasswordParams,
   DeleteUserParams,
   SaveUserParams,
   UpdateUserParams,
@@ -15,6 +16,7 @@ import {
   assignLeadToUserList,
   assignUserList,
   deleteAccount,
+  changePassword,
   deleteUser,
   saveUser,
   updateUser,
@@ -80,6 +82,17 @@ export const deleteAccountAction = createAsyncThunk<ApiResponse>(
   withToastForError(async () => {
     const response = await deleteAccount();
     return { ...response.data };
+  }),
+);
+
+export const changePasswordAction = createAsyncThunk<
+  ApiResponse,
+  ChangePasswordParams
+>(
+  'user/changePassword',
+  withToastForError(async (body) => {
+    const response = await changePassword(body);
+    return response.data;
   }),
 );
 

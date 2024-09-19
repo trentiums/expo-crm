@@ -1,6 +1,7 @@
 import {
   AssignLeadToUserParams,
   AssignUserListResponse,
+  ChangePasswordParams,
   DeleteUserParams,
   SaveUserParams,
   UpdateUserParams,
@@ -47,6 +48,10 @@ export const assignUserList = (
 export const deleteAccount = (): AxiosPromise<ApiResponse> => {
   return api.post('/delete-account');
 };
+
+export const changePassword = (
+  body: ChangePasswordParams,
+): AxiosPromise<ApiResponse> => api.post(`/change-password`, body);
 
 export const assignLeadToUserList = (
   body: AssignLeadToUserParams,

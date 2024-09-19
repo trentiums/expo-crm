@@ -33,6 +33,7 @@ import TrashIcon from '@atoms/Illustrations/Trash';
 import { useAppTheme } from '@constants/theme';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useToast } from 'react-native-toast-notifications';
+import { router } from 'expo-router';
 
 const MoreMenu = () => {
   const { t } = useTranslation('screenTitle');
@@ -134,6 +135,7 @@ const MoreMenu = () => {
     {
       label: 'changePassword',
       icon: <LockIcon />,
+      onPress: () => router.navigate('/(protected)/change-password'),
     },
   ];
 

@@ -68,6 +68,11 @@ export interface AssignUserState {
   title: string;
 }
 
+export interface ChangePasswordParams {
+  old_password: string;
+  password: string;
+  password_confirmation: string;
+}
 export interface AssignLeadToUserParams {
   lead_id: number;
   assign_to_user_id: number;
