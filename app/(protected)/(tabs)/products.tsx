@@ -10,7 +10,7 @@ import {
   HeadingText,
   HeadingView,
   LoaderContainer,
-} from './tabs.style';
+} from '../tabs.style';
 import { RefreshControl } from 'react-native';
 import { UserDetailCardProps } from '@organisms/UserDetailCard/UserDetailCard.props';
 import { getProductServiceListAction } from '@redux/actions/productService';

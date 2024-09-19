@@ -15,7 +15,7 @@ import {
   HeadingText,
   HeadingView,
   LoaderContainer,
-} from './tabs.style';
+} from '../tabs.style';
 import { ActivityIndicator } from 'react-native-paper';
 import Loader from '@atoms/Loader/Loader';
 import { Spacer } from '@atoms/common/common.styles';
