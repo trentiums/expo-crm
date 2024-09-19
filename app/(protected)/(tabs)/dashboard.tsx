@@ -48,7 +48,6 @@ const Dashboard = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [deleteLoading, setDeleteLoading] = useState(false);
   const [deletedId, setDeletedId] = useState<number | undefined>();
   const dashboardLeadList = useSelector((state: RootState) => state.dashboard);
   const [leads, setLeads] = useState<

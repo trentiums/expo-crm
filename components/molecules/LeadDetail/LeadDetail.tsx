@@ -63,7 +63,6 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   const handleWhatsApp = (phoneNumber: number | string) => {
     generateWhatsAppUrl(phoneNumber);
   };
-
   const handlePhoneCall = (phoneNumber) => {
     try {
       handleOpenDialCall(phoneNumber);

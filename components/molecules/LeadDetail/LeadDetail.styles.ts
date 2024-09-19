@@ -10,6 +10,7 @@ export const DetailContainer = styled(View)`
   align-content: flex-start;
   gap: 8px;
 `;
+
 export const LeadDetailView = styled(View)`
   flex: 1;
 `;

@@ -4,8 +4,8 @@ import Text from '@atoms/Text/Text';
 import Modal from '@atoms/Modal/Modal';
 
 export const Container = styled(View)`
-  background-color: ${({ theme }) => theme.colors.transparent};
-  border-radius: 4px;
+  background-color: ${({ theme }) => theme.colors.iceWindDale};
+  border-radius: 10px;
   flex-direction: row;
   padding: 16px;
   border-width: 1px;
@@ -19,7 +19,7 @@ export const DateView = styled(View)`
 export const DateText = styled(Text)<{ input?: string }>`
   font-size: 16px;
   color: ${({ theme, input }) =>
-    input ? theme.colors.white : theme.colors.placeholderTextColor};
+    input ? theme.colors.englishHolly : theme.colors.placeholderTextColor};
   margin: 0px 0px 2px;
   padding-top: 2px;
 `;

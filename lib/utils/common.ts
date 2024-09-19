@@ -123,7 +123,6 @@ export const generateWhatsAppUrl = (phoneNumber: number | string) => {
       console.error('An error occurred', err);
     });
 };
-
 export const handleOpenEmail = (email: string) => {
   const emailUrl = `mailto:${email}?subject=Your%20Subject%20Here&body=Your%20Message%20Here`;
 

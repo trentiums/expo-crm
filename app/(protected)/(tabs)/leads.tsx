@@ -19,6 +19,7 @@ import isEmpty from 'lodash/isEmpty';
 import { useDebounce } from '@utils/useDebounce';
 import FilterIcon from '@atoms/Illustrations/Filter';
 import SearchFilter from '@molecules/Search/Search';
+import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
 import { Spacer } from '@atoms/common/common.styles';
 import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
 import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
@@ -41,6 +42,7 @@ const Leads = () => {
   const [leadSearch, setLeadSearch] = useState('');
   const dispatch = useAppDispatch();
   const [refreshing, setRefreshing] = useState(false);
+  const [visibleLeadsFilterSheet, setVisibleLeadsFilterSheet] = useState(false);
   const debouncedLeadSearch = useDebounce(leadSearch || undefined, 300);
   const onDeleteActionPress = async (slug: number) => {
     setLoadingStatus(LoadingStatus.SCREEN);
@@ -149,8 +151,7 @@ const Leads = () => {
         setSearch={setLeadSearch}
         handleSearch={handleSearchLead}
         rightIcon={<FilterIcon />}
-        //TODO: here in next PR filter api done
-        onRightIconPress={() => console.log('hello')}
+        onRightIconPress={handleVisibleLeadsFilter}
       />
     );
   };
@@ -164,6 +165,12 @@ const Leads = () => {
       </ScreenTemplate>
     );
   }
+  const handleVisibleLeadsFilter = () => {
+    setVisibleLeadsFilterSheet(true);
+  };
+  const handleCloseVisibleFilter = () => {
+    setVisibleLeadsFilterSheet(false);
+  };
   return (
     <ScreenTemplate moreVisible>
       {renderHeader()}
@@ -213,6 +220,12 @@ const Leads = () => {
           onActionPress={() => onDeleteActionPress(deleteLeadId || 0)}
           icon={<TrashIcon color={colors?.deleteColor} />}
           loading={loadingStatus === LoadingStatus.SCREEN}
+        />
+      )}
+      {visibleLeadsFilterSheet && (
+        <BottomSheetNavigator
+          initialRouteName="LeadsFilter"
+          onClosePress={handleCloseVisibleFilter}
         />
       )}
     </ScreenTemplate>

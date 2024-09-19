@@ -7,12 +7,12 @@ import {
   DropdownLeftView,
   DropDownSelectedView,
   DropDownTitleText,
-  FlatListCon,
   ImageView,
   MultipleSelectedText,
   PlaceHolderText,
   PressableView,
   SelectedText,
+  ShowMultipleDataList,
 } from './DropDown.styles';
 import ArrowDownIcon from '@atoms/Illustrations/ArrowDown';
 import { DropdownBottomSheetSnapPoints } from '@constants/common';
@@ -39,11 +39,21 @@ const DropDown: React.FC<DropDownProps> = ({
   const { colors } = useAppTheme();
   const { top, bottom } = useSafeAreaInsets();
   const bottomSheetRef = useRef<any>(null);
-  const renderMultipleData = ({ selectedData }) => (
-    <MultipleSelectedText>
-      {`${data?.filter((item) => item.id === +selectedData)?.[0]?.title}`}
-    </MultipleSelectedText>
-  );
+  const renderMultipleData = ({ selectedData }) => {
+    const isSelectedData = Array.isArray(value)
+      ? value.includes(selectedData.id)
+      : value === selectedData.id;
+    return (
+      <PressableView
+        onPress={() => handelSelectData(selectedData?.id)}
+        isSelected={isSelectedData}
+        key={selectedData.id}>
+        <MultipleSelectedText isSelected={isSelectedData}>
+          {selectedData.title}
+        </MultipleSelectedText>
+      </PressableView>
+    );
+  };
   const [showBottomSheet, setShowBottomSheet] = useState(false);
   const handelSelectData = (id) => {
     onChange(id);
@@ -73,52 +83,11 @@ const DropDown: React.FC<DropDownProps> = ({
   return (
     <>
       <DropDownContainer>
-        <PressableView
-          onPress={() => {
-            handleOpenBottomSheetOpen();
-            setShowBottomSheet(true);
-          }}
-          isLeadChange={isLeadChange}
-          isDisabled={isStaff}>
-          <DropdownLeftView
-            isImage={data?.filter((item) => item.id === value)[0]?.image}
-            isFullWidth={isFullWidth}>
-            {
-              <ImageView
-                source={data?.filter((item) => item.id === value)[0]?.image}
-                contentFit="cover"
-              />
-            }
-            <DropDownSelectedView>
-              {isMultiple && Array.isArray(value) ? (
-                <>
-                  {value?.length > 0 ? (
-                    <FlatListCon
-                      data={value}
-                      renderItem={({ item }) =>
-                        renderMultipleData({ selectedData: item })
-                      }
-                      keyExtractor={(item, index) => `${item} - ${index}`}
-                    />
-                  ) : (
-                    <PlaceHolderText>{placeholder}</PlaceHolderText>
-                  )}
-                </>
-              ) : (
-                <>
-                  {data?.filter((item) => item.id === value)?.[0]?.title ? (
-                    <SelectedText numberOfLines={1}>
-                      {data?.filter((item) => item.id === value)?.[0]?.title}
-                    </SelectedText>
-                  ) : (
-                    <PlaceHolderText>{placeholder}</PlaceHolderText>
-                  )}
-                </>
-              )}
-            </DropDownSelectedView>
-          </DropdownLeftView>
-          <ArrowDownIcon />
-        </PressableView>
+        <ShowMultipleDataList
+          data={data}
+          renderItem={({ item }) => renderMultipleData({ selectedData: item })}
+          keyExtractor={(item, index) => `${item.id} - ${index}`}
+        />
       </DropDownContainer>
       {showBottomSheet && !isStaff && (
         <BottomSheetModal

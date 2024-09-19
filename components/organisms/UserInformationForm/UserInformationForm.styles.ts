@@ -7,7 +7,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 export const Label = styled(Text)`
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.textDark};
+  color: ${({ theme }) => theme.colors.englishHolly};
   padding-bottom: 8px;
 `;
 
