@@ -25,6 +25,17 @@ export const FilterIconView = styled(Pressable)`
 export const SearchInputContainer = styled(RNView)`
   flex: 1;
 `;
+export const FilterRightIconView = styled(Pressable)`
+  width: 50px;
+  border-radius: 12px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 10;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+`;
 export const SearchTextInput = styled(TextInput)`
   background-color: ${({ theme }) => theme.colors.snowflake};
   border-radius: 25px;
