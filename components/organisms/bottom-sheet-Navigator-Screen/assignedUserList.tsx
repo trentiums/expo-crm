@@ -3,6 +3,9 @@ import {
   BottomSheetListContainer,
   BottomSheetFlatListContainer,
   LoaderContainer,
+  ButtonSubmit,
+  ButtonUpdateText,
+  ButtonContainer,
 } from './screen.style';
 import {
   AssignedUsersListItemProps,
@@ -26,23 +29,30 @@ import {
 } from '@redux/actions/dashboard';
 import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { Flexed } from '@atoms/common/common.styles';
 
 const AssignedUserList: React.FC<AssignedUsersListProps> = ({
   handleBottomSheetClose,
   leadId,
   userId,
   assignLeadOnDelete,
+  changeSnapPoints,
 }) => {
   const { t } = useTranslation('bottomSheetModifyLead');
-  const dispatch = useAppDispatch();
-  const toast = useToast();
-  const [isLoading, setIsLoading] = useState(false);
-  const leadAssignToData = useSelector(
-    (state: RootState) => state.user.assignUserList.assignUsers,
-  );
   const leadsDetail = useSelector(
     (state: RootState) => state.leads.leadsDetail,
   );
+  const dispatch = useAppDispatch();
+  const toast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const [SelectedId, setSelectedId] = useState(leadsDetail.assignTo);
+  const leadAssignToData = useSelector(
+    (state: RootState) => state.user.assignUserList.assignUsers,
+  );
+  const onLayout = useCallback(() => {
+    changeSnapPoints(['50%', '50%']);
+  }, []);
+
   const getAssignUserList = async () => {
     if (assignLeadOnDelete) {
       await dispatch(getAssignUserListAction({ user_id: userId }));
@@ -84,7 +94,6 @@ const AssignedUserList: React.FC<AssignedUsersListProps> = ({
           },
         });
       }
-      setIsLoading(false);
     } catch (error) {
       toast.show(error, {
         type: ToastType.Custom,
@@ -93,6 +102,7 @@ const AssignedUserList: React.FC<AssignedUsersListProps> = ({
         },
       });
     }
+    setIsLoading(false);
   };
 
   const handleRefresh = useCallback(() => {
@@ -106,10 +116,10 @@ const AssignedUserList: React.FC<AssignedUsersListProps> = ({
     item: AssignedUsersListItemProps;
     index: number;
   }) => {
-    const isStatusSelected = !!(leadsDetail.assignTo === item.id);
+    const isStatusSelected = !!(SelectedId === item.id);
     return (
       <BottomSheetItemListing
-        handlePress={() => handleItemPress(item.id)}
+        handlePress={() => setSelectedId(item.id)}
         label={t(`${item.title}`)}
         key={`${item.id}-${index}`}
         isSelected={!assignLeadOnDelete && isStatusSelected}
@@ -118,23 +128,39 @@ const AssignedUserList: React.FC<AssignedUsersListProps> = ({
   };
 
   return (
-    <BottomSheetListContainer>
+    <BottomSheetListContainer onLayout={onLayout}>
       {isLoading ? (
         <LoaderContainer>
           <Loader />
         </LoaderContainer>
       ) : (
-        <BottomSheetFlatListContainer
-          data={leadAssignToData}
-          keyExtractor={(item: AssignedUsersListItemProps, index: number) =>
-            `${item.id}-${index}`
-          }
-          renderItem={renderModifyLeadOption}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          refreshing={false}
-          onRefresh={handleRefresh}
-        />
+        <Flexed>
+          <Flexed>
+            <BottomSheetFlatListContainer
+              data={leadAssignToData}
+              keyExtractor={(item: AssignedUsersListItemProps, index: number) =>
+                `${item.id}-${index}`
+              }
+              renderItem={renderModifyLeadOption}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              refreshing={false}
+              onRefresh={handleRefresh}
+            />
+          </Flexed>
+          <ButtonContainer>
+            <ButtonSubmit
+              onPress={() => handleItemPress(SelectedId)}
+              loading={isLoading}
+              valid={SelectedId}>
+              <ButtonUpdateText
+                valid={SelectedId}
+                variant="SF-Pro-Display-Semibold_600">
+                {t('update')}
+              </ButtonUpdateText>
+            </ButtonSubmit>
+          </ButtonContainer>
+        </Flexed>
       )}
     </BottomSheetListContainer>
   );

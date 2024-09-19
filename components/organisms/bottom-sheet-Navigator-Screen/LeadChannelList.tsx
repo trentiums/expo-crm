@@ -3,6 +3,9 @@ import {
   BottomSheetListContainer,
   BottomSheetFlatListContainer,
   LoaderContainer,
+  ButtonContainer,
+  ButtonSubmit,
+  ButtonUpdateText,
 } from './screen.style';
 import { LeadChannelListProps, LeadStageListItemProps } from './screen.props';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +24,7 @@ import {
 import Loader from '@atoms/Loader/Loader';
 import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { Flexed } from '@atoms/common/common.styles';
 
 const LeadChannelList: React.FC<LeadChannelListProps> = ({
   handleBottomSheetClose,
@@ -37,11 +41,12 @@ const LeadChannelList: React.FC<LeadChannelListProps> = ({
   const leadsDetail = useSelector(
     (state: RootState) => state.leads.leadsDetail,
   );
+  const [SelectedId, setSelectedId] = useState(leadsDetail.leadChannelId);
   const getLeadSChannelList = async () => {
     await dispatch(leadChannelListAction());
   };
   const onLayout = useCallback(() => {
-    changeSnapPoints(['50%', '90%']);
+    changeSnapPoints(['50%', '50%']);
   }, []);
 
   const handleItemPress = async (channelId: number) => {
@@ -90,10 +95,10 @@ const LeadChannelList: React.FC<LeadChannelListProps> = ({
     item: LeadStageListItemProps;
     index: number;
   }) => {
-    const isStatusSelected = leadsDetail.leadChannelId === item.id;
+    const isStatusSelected = SelectedId === item.id;
     return (
       <BottomSheetItemListing
-        handlePress={() => handleItemPress(item.id)}
+        handlePress={() => setSelectedId(item.id)}
         label={t(`${item.name}`)}
         key={`${item.id}-${index}`}
         isSelected={isStatusSelected}
@@ -107,17 +112,33 @@ const LeadChannelList: React.FC<LeadChannelListProps> = ({
           <Loader />
         </LoaderContainer>
       ) : (
-        <BottomSheetFlatListContainer
-          data={leadChannelList}
-          keyExtractor={(item: LeadStageListItemProps, index: number) =>
-            `${item.id}-${index}`
-          }
-          renderItem={renderModifyLeadOption}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          refreshing={false}
-          onRefresh={handleRefresh}
-        />
+        <Flexed>
+          <Flexed>
+            <BottomSheetFlatListContainer
+              data={leadChannelList}
+              keyExtractor={(item: LeadStageListItemProps, index: number) =>
+                `${item.id}-${index}`
+              }
+              renderItem={renderModifyLeadOption}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              refreshing={false}
+              onRefresh={handleRefresh}
+            />
+          </Flexed>
+          <ButtonContainer>
+            <ButtonSubmit
+              onPress={() => handleItemPress(SelectedId)}
+              loading={isLoading}
+              valid={SelectedId}>
+              <ButtonUpdateText
+                valid={SelectedId}
+                variant="SF-Pro-Display-Semibold_600">
+                {t('update')}
+              </ButtonUpdateText>
+            </ButtonSubmit>
+          </ButtonContainer>
+        </Flexed>
       )}
     </BottomSheetListContainer>
   );

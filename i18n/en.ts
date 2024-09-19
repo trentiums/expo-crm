@@ -338,6 +338,7 @@ export const English = {
     updateStage: 'Update stage',
     updateAssignedUsers: 'Update assigned users',
     updateChannel: 'Update channel',
+    update: 'Update',
   },
   moreMenu: {
     setting: 'SETTING',
@@ -707,6 +708,7 @@ export const Gujarati = {
     updateStage: 'દશા અપડેટ કરો',
     updateAssignedUsers: 'સોંપેલ વપરાશકર્તાઓ અપડેટ કરો',
     updateChannel: 'ચેનલ અપડેટ કરો',
+    update: 'અપડેટ',
   },
   moreMenu: {
     setting: 'સેટિંગ',
@@ -1071,6 +1073,7 @@ export const Hindi = {
     updateStage: 'मंच अपडेट करें',
     updateAssignedUsers: 'सौंपे गए उपयोगकर्ताओं को अपडेट करें',
     updateChannel: 'चैनल अपडेट करें',
+    update: 'अपडेट',
   },
   moreMenu: {
     setting: 'सेटिंग',
