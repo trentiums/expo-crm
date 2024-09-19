@@ -300,6 +300,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
                     ]?.toLowerCase() || ''
                   }`}
                   component={FieldTextInput}
+                  keyboardType="numeric"
                 />
               </InputView>
             </RowView>

@@ -385,7 +385,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
               <Field
                 name={'timeFrameType'}
                 component={FieldDropDown}
-                listData={Object.entries(settings?.timeframe).map(
+                listData={Object?.entries(settings?.timeframe).map(
                   ([key, value]) => ({
                     id: key,
                     title: value,
@@ -406,6 +406,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                   ]?.toLowerCase() || ''
                 }`}
                 component={FieldTextInput}
+                keyboardType="numeric"
               />
             </InputView>
           </RowView>

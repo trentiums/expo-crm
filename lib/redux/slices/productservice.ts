@@ -108,6 +108,7 @@ const productServiceSlice = createSlice({
         );
       const data = formatProductServiceDetail(action.payload.data);
       state.productServiceDetail = data;
+      state.productServiceList.total = state.productServiceList.total - 1;
     });
   },
 });
