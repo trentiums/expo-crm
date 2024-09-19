@@ -41,6 +41,7 @@ export const LeadsFilterContainer = styled(Pressable)`
 `;
 export const LeasFilterScreenContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
+  flex: 1;
 `;
 export const LeadsFilterButton = styled(View)`
   display: flex;
@@ -145,4 +146,7 @@ export const DashboardFilterApplyButton = styled(Button)`
   background-color: ${({ theme }) => theme.colors.blueChaos};
   border-radius: 50px;
   width: 100%;
+`;
+export const LeasSortFilterScreenContainer = styled(View)`
+  background-color: ${({ theme }) => theme.colors.white};
 `;

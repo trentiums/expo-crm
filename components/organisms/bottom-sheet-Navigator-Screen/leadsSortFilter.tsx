@@ -19,6 +19,7 @@ import {
   LeadsFilterContainer,
   LeadsSortFilterText,
   LeasFilterScreenContainer,
+  LeasSortFilterScreenContainer,
 } from './screen.style';
 import CircleCheckIcon from '@atoms/Illustrations/CircleCheck';
 import { setLeadsSort } from '@redux/slices/leads';
@@ -96,7 +97,7 @@ const LeadsSortFilter: React.FC<LeadsSortFilterProps> = ({
   };
 
   return (
-    <LeasFilterScreenContainer onLayout={onLayout}>
+    <LeasSortFilterScreenContainer onLayout={onLayout}>
       <FlatList
         data={leadsQuickFilters}
         renderItem={renderLeadsSortFilter}
@@ -117,7 +118,7 @@ const LeadsSortFilter: React.FC<LeadsSortFilterProps> = ({
           </FormButtonText>
         </FilterApplyButton>
       </LeadsFilterButton>
-    </LeasFilterScreenContainer>
+    </LeasSortFilterScreenContainer>
   );
 };
 
