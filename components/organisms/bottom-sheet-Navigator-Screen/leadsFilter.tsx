@@ -22,11 +22,11 @@ const LeadsFilter: React.FC<CreateOptionProps> = ({ changeRoute }) => {
       await dispatch(
         getLeadListAction({
           end_date:
-            (values?.endDate && moment(values?.endDate).format('YYYY-MM-DD')) ||
+            (values?.endDate && moment(values.endDate).format('YYYY-MM-DD')) ||
             undefined,
           start_date:
             (values?.startDate &&
-              moment(values?.startDate).format('YYYY-MM-DD')) ||
+              moment(values.startDate).format('YYYY-MM-DD')) ||
             undefined,
           lead_channel_id: values?.selectedChannel,
           lead_conversion_id: values?.selectedStage,
