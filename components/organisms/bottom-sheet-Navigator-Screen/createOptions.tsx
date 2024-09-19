@@ -39,7 +39,7 @@ const CreateOptions: React.FC<CreateOptionProps> = ({
     user.userRole === UserRole.Admin ||
     user.userRole === UserRole.CompanyAdmin
   ) {
-    createOptions.splice(1, 0, {
+    createOptions.splice(0, 0, {
       label: 'user',
       icon: <SingleUserIcon />,
       route: '../../(protected)/add-user/add',

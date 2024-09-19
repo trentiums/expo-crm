@@ -66,6 +66,7 @@ export type AssignedUsersListProps = {
   leadId?: number;
   userId?: number;
   assignLeadOnDelete?: boolean;
+  changeSnapPoints: (points: string[]) => void;
 };
 
 export type AssignedUsersListItemProps = {
@@ -77,6 +78,7 @@ export type LeadStatusListProps = {
   handleBottomSheetClose?: () => void;
   leadId?: number;
   navigation: any;
+  changeSnapPoints: (points: string[]) => void;
 };
 
 export type LeadStatusListItemProps = {

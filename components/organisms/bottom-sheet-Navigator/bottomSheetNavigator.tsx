@@ -166,6 +166,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 {...props}
                 handleBottomSheetClose={handleClosePress}
                 leadId={meta.leadId}
+                changeSnapPoints={changeSnapPoints}
               />
             )}
           </Stack.Screen>
@@ -186,6 +187,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 {...props}
                 handleBottomSheetClose={handleClosePress}
                 leadId={meta.leadId}
+                changeSnapPoints={changeSnapPoints}
               />
             )}
           </Stack.Screen>

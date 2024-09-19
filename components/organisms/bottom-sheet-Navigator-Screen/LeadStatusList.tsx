@@ -3,6 +3,9 @@ import {
   BottomSheetListContainer,
   BottomSheetFlatListContainer,
   LoaderContainer,
+  ButtonContainer,
+  ButtonSubmit,
+  ButtonUpdateText,
 } from './screen.style';
 import { LeadStatusListItemProps, LeadStatusListProps } from './screen.props';
 import { useTranslation } from 'react-i18next';
@@ -22,11 +25,13 @@ import {
 import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import Loader from '@atoms/Loader/Loader';
+import { Flexed } from '@atoms/common/common.styles';
 
 const LeadStatusList: React.FC<LeadStatusListProps> = ({
   handleBottomSheetClose,
   leadId,
   navigation,
+  changeSnapPoints,
 }) => {
   const { t } = useTranslation('bottomSheetModifyLead');
   const dispatch = useAppDispatch();
@@ -38,10 +43,14 @@ const LeadStatusList: React.FC<LeadStatusListProps> = ({
   const leadsDetail = useSelector(
     (state: RootState) => state.leads.leadsDetail,
   );
+  const [SelectedId, setSelectedId] = useState(leadsDetail.leadStatusId);
   const getLeadStatusList = async () => {
     await dispatch(leadStatusListAction());
   };
 
+  const onLayout = useCallback(() => {
+    changeSnapPoints(['50%', '50%']);
+  }, []);
   const handleItemPress = async (statusId: number) => {
     const leadStatusId = leadsDetail.leadStatusId;
     if (
@@ -93,10 +102,10 @@ const LeadStatusList: React.FC<LeadStatusListProps> = ({
     item: LeadStatusListItemProps;
     index: number;
   }) => {
-    const isStatusSelected = leadsDetail.leadStatusId === item.id;
+    const isStatusSelected = SelectedId === item.id;
     return (
       <BottomSheetItemListing
-        handlePress={() => handleItemPress(item.id)}
+        handlePress={() => setSelectedId(item.id)}
         label={t(`${item.name}`)}
         key={`${item.id}-${index}`}
         isSelected={isStatusSelected}
@@ -104,23 +113,39 @@ const LeadStatusList: React.FC<LeadStatusListProps> = ({
     );
   };
   return (
-    <BottomSheetListContainer>
+    <BottomSheetListContainer onLayout={onLayout}>
       {isLoading ? (
         <LoaderContainer>
           <Loader />
         </LoaderContainer>
       ) : (
-        <BottomSheetFlatListContainer
-          data={leadStatusList}
-          keyExtractor={(item: LeadStatusListItemProps, index: number) =>
-            `${item.id}-${index}`
-          }
-          renderItem={renderModifyLeadOption}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          refreshing={false}
-          onRefresh={handleRefresh}
-        />
+        <Flexed>
+          <Flexed>
+            <BottomSheetFlatListContainer
+              data={leadStatusList}
+              keyExtractor={(item: LeadStatusListItemProps, index: number) =>
+                `${item.id}-${index}`
+              }
+              renderItem={renderModifyLeadOption}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+              refreshing={false}
+              onRefresh={handleRefresh}
+            />
+          </Flexed>
+          <ButtonContainer>
+            <ButtonSubmit
+              onPress={() => handleItemPress(SelectedId)}
+              loading={isLoading}
+              valid={SelectedId}>
+              <ButtonUpdateText
+                valid={SelectedId}
+                variant="SF-Pro-Display-Semibold_600">
+                {t('update')}
+              </ButtonUpdateText>
+            </ButtonSubmit>
+          </ButtonContainer>
+        </Flexed>
       )}
     </BottomSheetListContainer>
   );

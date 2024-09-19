@@ -151,3 +151,23 @@ export const DashboardFilterApplyButton = styled(Button)`
 export const LeasSortFilterScreenContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
 `;
+
+export const ButtonContainer = styled(View)`
+  justify-content: flex-end;
+  margin-bottom: 15;
+  padding-left: 20px;
+  padding-right: 20px;
+`;
+
+export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
+  height: 48px;
+  background-color: ${({ theme, valid }) =>
+    valid ? theme.colors.blueChaos : theme.colors.gray};
+  border-radius: 50px;
+  border-width: 1px;
+`;
+
+export const ButtonUpdateText = styled(Text)<{ valid?: boolean }>`
+  color: ${({ valid, theme }) =>
+    valid ? theme.colors.funWhite : theme.colors.lightGray};
+`;
