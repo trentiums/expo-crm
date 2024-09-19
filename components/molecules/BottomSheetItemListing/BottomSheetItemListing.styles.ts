@@ -12,7 +12,7 @@ export const ItemContainer = styled(Pressable)`
   padding-top: 10px;
   padding-bottom: 10px;
   align-items: center;
-  flex: 1;
+  /* flex: 1; */
 `;
 
 export const OptionLabelContainer = styled(View)`

@@ -17,7 +17,10 @@ import {
 } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
 import {
   ContainerView,
+  DropdownView,
   FormButtonText,
+  InputView,
+  RowView,
   SubContainerView,
 } from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
 import React, { useEffect, useState } from 'react';
@@ -56,6 +59,10 @@ import {
 } from '@utils/formValidators';
 import * as MediaLibrary from 'expo-media-library';
 import { Linking } from 'react-native';
+import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
+import Loader from '@atoms/Loader/Loader';
+import DocumentPick from '@molecules/DocumentPicker/DocumentPicker';
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 
 const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
   form,
@@ -70,32 +77,49 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
   const { t } = useTranslation('companyInformation');
   const { t: tl } = useTranslation('leadDetails');
   const { t: tb } = useTranslation('formButtonName');
-  const { t: tbb } = useTranslation('BasicInformation');
+  const { t: tbb } = useTranslation('leadDetailList');
   const toast = useToast();
+  const settings = useSelector((state: RootState) => state.general.settings);
   const dispatch = useAppDispatch();
-  const { valid } = useFormState({ subscription: { valid: true } });
+  const currencyList = useSelector(
+    (state: RootState) => state.general.currencyList,
+  );
+  const { valid, values } = useFormState({ subscription: { valid: true } });
   const leadsData = useSelector(
     (state: RootState) => state.leads.leadList.leads,
   );
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteDocumentUrl, setDeleteDocumentUrl] = useState(null);
   const [deleteShowModal, setDeleteShowModal] = useState<Boolean>(false);
-  const [showModal, setShowModal] = useState<Boolean>(false);
+  const [leadLoading, setLeadLoading] = useState(false);
   const [ImageURI, setImageURI] = useState<{
     name?: string;
     uri?: string;
   }>({});
-  const data = leadsData?.filter((item) => item?.id === +leadCardId);
+  const leadDetails = useSelector(
+    (state: RootState) => state.leads.leadsDetail,
+  );
   const handleGetLeadsDetails = async () => {
     await dispatch(getLeadDetailsAction({ lead_id: leadCardId }));
   };
+
+  const handleGetLeadDetails = async () => {
+    setLeadLoading(true);
+    await dispatch(getLeadDetailsAction({ lead_id: leadCardId }));
+    setLeadLoading(false);
+  };
   useEffect(() => {
-    setDocuments(data?.[0]?.documents);
-    form.change('budget', data?.[0]?.budget);
-    form.change('budget', `${data?.[0]?.budget || ''}`);
-    form.change('companyName', data?.[0]?.companyName || '');
-    form.change('timeFrame', data?.[0]?.timeLine || '');
-    form.change('webSite', data?.[0]?.webSite || '');
+    handleGetLeadDetails();
+  }, [leadCardId]);
+  useEffect(() => {
+    setDocuments(leadDetails?.documents);
+    form.change('budgetCurrencyCode', leadDetails?.budgetCurrencyCode);
+    form.change('timeFrameType', `${leadDetails?.timeFrameType}`);
+    form.change('budget', leadDetails.budget);
+    form.change('budget', `${leadDetails.budget || ''}`);
+    form.change('companyName', leadDetails.companyName || '');
+    form.change('timeFrame', leadDetails.timeLine || '');
+    form.change('webSite', leadDetails.webSite || '');
     handleGetLeadsDetails();
   }, []);
   const onDeleteActionPress = async () => {
@@ -194,134 +218,143 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
     );
   };
   return (
-    <FormsView>
-      <KeyboardAwareScrollView
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="always">
-        <Label>{t('companyNameLabel')}</Label>
-        <Field
-          name="companyName"
-          placeholder={t('companyNameLabel')}
-          component={FieldTextInput}
-        />
-        <Spacer size={16} />
-        <Label>{t('websiteLabel')}</Label>
-        <Field
-          name="webSite"
-          placeholder={t('websiteLabel')}
-          component={FieldTextInput}
-        />
-        <Spacer size={16} />
-        <Label>{tl('budgetLabel')}</Label>
-        <Field
-          name="budget"
-          placeholder={tl('budgetLabel')}
-          component={FieldTextInput}
-          keyboardType="numeric"
-          isFloatValue
-          validate={composeValidators(numberAndFractionalNumberValidator)}
-        />
-        <Spacer size={16} />
-        <Label>{tl('timeFrameToPurchaseLabel')}</Label>
-        <Field
-          name="timeFrame"
-          placeholder={tl('timeFrameToPurchaseEg')}
-          component={FieldTextInput}
-        />
-        <Spacer size={16} />
-        <Label>{tl('commentsLabel')}</Label>
-        <Field
-          name="comments"
-          placeholder={tl('commentsLabel')}
-          component={FieldTextInput}
-        />
-        <Spacer size={16} />
-        <PickerContainer onPress={pickFile}>
-          <AddIconButton>
-            <AddIcon />
-            <UploadText>{tbb('uploadDocuments')}</UploadText>
-          </AddIconButton>
-        </PickerContainer>
-        {documents?.length > 0 && (
-          <>
-            <HeaderText>{tbb('attachments')}</HeaderText>
-            <Spacer size={8} />
-            <FlatListCon
-              data={documents}
-              renderItem={({ item }) => (
-                <DocumentView>{renderFilePreview(item)}</DocumentView>
-              )}
-              keyExtractor={(item, index) => index.toString()}
-              numColumns={3}
+    <>
+      {leadLoading ? (
+        <Loader color={colors.blueChaos} />
+      ) : (
+        <FormsView>
+          <KeyboardAwareScrollView
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="always">
+            <Label>{t('companyNameLabel')}</Label>
+            <Field
+              name="companyName"
+              placeholder={t('companyNameLabel')}
+              component={FieldTextInput}
             />
-          </>
-        )}
-        {deleteShowModal && (
-          <ActionModal
-            isModal
-            onBackdropPress={() => {
-              setDeleteShowModal(false);
-            }}
-            heading={tm('discardMedia')}
-            description={tm('disCardDescription')}
-            label={tm('yesDiscard')}
-            actionType={Actions.delete}
-            actiontext={tm('cancel')}
-            onCancelPress={() => {
-              setDeleteShowModal(false);
-            }}
-            onActionPress={() => onDeleteActionPress()}
-            icon={<TrashIcon color={colors?.deleteColor} />}
-            loading={deleteLoading}
-          />
-        )}
-        {/* <StyledModal
-          animationType="slide"
-          transparent={true}
-          onRequestClose={() => setShowModal(false)}
-          visible={showModal}>
-          <ModalView>
-            <CloseButton onPress={() => setShowModal(false)}>
-              <CrossIcon color={colors.black} />
-            </CloseButton>
-            <Spacer size={64} />
-            {ImageURI && ImageURI?.uri?.endsWith("pdf") ? (
-              <>
-                <Pdf
-                  source={{
-                    uri: ImageURI?.uri,
-                  }}
-                  trustAllCerts={false}
-                  style={{
-                    flex: 1,
-                    width: "100%",
-                  }}
-                  onError={(error) => {
-                    console.error(error, "error");
-                  }}
+            <Spacer size={16} />
+            <Label>{t('websiteLabel')}</Label>
+            <Field
+              name="webSite"
+              placeholder={t('websiteLabel')}
+              component={FieldTextInput}
+            />
+            <Spacer size={16} />
+            <Label>{tl('budgetLabel')}</Label>
+            <RowView>
+              <DropdownView>
+                <Field
+                  name={'budgetCurrencyCode'}
+                  component={FieldDropDown}
+                  listData={currencyList?.map((item) => {
+                    return {
+                      id: item.id,
+                      title: item.currencyCodeAlpha,
+                    };
+                  })}
+                  isShowSelected
+                  placeholder={t('budget')}
+                  dropdownDataType={DropdownDataType.BUDGET}
+                  heading={tl('selectBudget')}
                 />
-              </>
-            ) : (
-              <PreviewImageView source={{ uri: ImageURI?.uri }} />
+              </DropdownView>
+              <InputView>
+                <Field
+                  name="budget"
+                  placeholder={tl('budgetLabel')}
+                  component={FieldTextInput}
+                  keyboardType="numeric"
+                  isFloatValue
+                  validate={composeValidators(
+                    numberAndFractionalNumberValidator,
+                  )}
+                />
+              </InputView>
+            </RowView>
+            <Spacer size={16} />
+            <Label>{tl('timeFrameToPurchaseLabel')}</Label>
+            <RowView>
+              <DropdownView>
+                <Field
+                  name={'timeFrameType'}
+                  component={FieldDropDown}
+                  listData={Object.entries(settings?.timeframe).map(
+                    ([key, value]) => ({
+                      id: key,
+                      title: value,
+                    }),
+                  )}
+                  isShowSelected
+                  placeholder={t('time')}
+                  dropdownDataType={DropdownDataType.TIMELINE}
+                  heading={tl('selectTimeline')}
+                />
+              </DropdownView>
+              <InputView>
+                <Field
+                  name="timeFrame"
+                  placeholder={`${tbb('timeFrameEg')} ${
+                    settings?.timeframe[
+                      values?.timeFrameType as string
+                    ]?.toLowerCase() || ''
+                  }`}
+                  component={FieldTextInput}
+                />
+              </InputView>
+            </RowView>
+            <Spacer size={16} />
+            <Label>{tl('commentsLabel')}</Label>
+            <Field
+              name="comments"
+              placeholder={tl('commentsLabel')}
+              component={FieldTextInput}
+            />
+            <Spacer size={16} />
+            <DocumentPick
+              setDocumentArray={setDocuments}
+              documentArray={documents}
+              id={leadCardId}
+            />
+            {deleteShowModal && (
+              <ActionModal
+                isModal
+                onBackdropPress={() => {
+                  setDeleteShowModal(false);
+                }}
+                heading={tm('discardMedia')}
+                description={tm('disCardDescription')}
+                label={tm('yesDiscard')}
+                actionType={Actions.delete}
+                actiontext={tm('cancel')}
+                onCancelPress={() => {
+                  setDeleteShowModal(false);
+                }}
+                onActionPress={() => onDeleteActionPress()}
+                icon={<TrashIcon color={colors?.deleteColor} />}
+                loading={deleteLoading}
+              />
             )}
-          </ModalView>
-        </StyledModal> */}
-      </KeyboardAwareScrollView>
+          </KeyboardAwareScrollView>
 
-      <ContainerView>
-        <SubContainerView>
-          <CancelButtonView onPress={() => onCancelPress?.()}>
-            <CancelText>{tb('cancel')}</CancelText>
-          </CancelButtonView>
-        </SubContainerView>
-        <SubContainerView>
-          <ButtonSubmit onPress={form.submit} loading={loading} valid={valid}>
-            <FormButtonText valid={valid}>{tb('save')}</FormButtonText>
-          </ButtonSubmit>
-        </SubContainerView>
-      </ContainerView>
-    </FormsView>
+          <ContainerView>
+            <SubContainerView>
+              <CancelButtonView onPress={() => onCancelPress?.()}>
+                <CancelText>{tb('cancel')}</CancelText>
+              </CancelButtonView>
+            </SubContainerView>
+            <SubContainerView>
+              <ButtonSubmit
+                onPress={!loading && form.submit}
+                loading={loading}
+                variant={valid}>
+                <FormButtonText valid={valid}>{tb('save')}</FormButtonText>
+              </ButtonSubmit>
+            </SubContainerView>
+          </ContainerView>
+        </FormsView>
+      )}
+    </>
   );
 };
 

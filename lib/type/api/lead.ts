@@ -125,6 +125,7 @@ export interface ProductService {
 }
 
 export interface LeadListState {
+  dealAmountCurrencyCode: number;
   id: number;
   companyUserId: number;
   name: string;
@@ -235,4 +236,9 @@ export enum updateLeadStatusTypes {
   STATUS = 1,
   CHANNEL = 2,
   CONVERSION = 3,
+}
+
+export interface AssignLeadOnDeleteParams {
+  assign_from_user_id: number;
+  assign_to_user_id: number;
 }

@@ -47,7 +47,7 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
     );
     form.change(
       'companySize',
-      id ? leadsDetail.companySize || '' : addLeadFormData?.companySize,
+      id ? +leadsDetail.companySize || '' : addLeadFormData?.companySize,
     );
     form.change(
       'webSite',

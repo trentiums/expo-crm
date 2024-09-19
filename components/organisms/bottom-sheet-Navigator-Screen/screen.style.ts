@@ -3,6 +3,7 @@ import { styled } from '@utils/styled';
 import { FlatList, View, Pressable } from 'react-native';
 import Text from '@atoms/Text/Text';
 import { Image } from 'expo-image';
+import Button from '@atoms/Button/Button';
 
 export const CreateOptionContainer = styled(View)`
   flex-direction: row;
@@ -53,6 +54,7 @@ export const LeadsFilterButton = styled(View)`
 export const DropdownListingView = styled(View)`
   padding: 0px 16px;
   width: 100%;
+  flex: 1;
 `;
 export const DropdownListingText = styled(Text)`
   font-size: 16px;
@@ -63,7 +65,9 @@ export const DropdownListView = styled(Pressable)<{ isBorder?: boolean }>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex: 1;
   padding: 16px 0px;
+  flex-basis: auto;
   width: 100%;
   border-bottom-width: ${({ isBorder }) => (isBorder ? 1 : 0)}px;
   border-bottom-color: ${({ theme, isBorder }) =>
@@ -108,4 +112,37 @@ export const BottomSheetFlatListContainer = styled(BottomSheetFlatList).attrs({
 
 export const LoaderContainer = styled(View)`
   height: 100px;
+`;
+export const DashboardFilterScreenContainer = styled(View)`
+  background-color: ${({ theme }) => theme.colors.white};
+`;
+export const DashboardFilterButton = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+  padding: 16px;
+`;
+export const DashboardFilterContainer = styled(Pressable)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+`;
+export const DashboardSortFilterText = styled(Text)`
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.englishHolly};
+`;
+export const LeadsFilterView = styled(View)`
+  flex: 1;
+  flex-basis: auto;
+`;
+
+export const DashboardFilterApplyButton = styled(Button)`
+  background-color: ${({ theme }) => theme.colors.blueChaos};
+  border-radius: 50px;
+  width: 100%;
 `;

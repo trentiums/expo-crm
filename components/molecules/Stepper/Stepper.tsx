@@ -12,7 +12,11 @@ import NextStep from '@atoms/Illustrations/NextStep';
 import CurrentStep from '@atoms/Illustrations/CurrentStep';
 import { Spacer } from '@atoms/common/common.styles';
 
-const Stepper: React.FC<StepperProps> = ({ stepData, currentId }) => {
+const Stepper: React.FC<StepperProps> = ({
+  stepData,
+  currentId,
+  setSelectedTabNav,
+}) => {
   const renderIcon = (itemId: number) => {
     if (currentId === itemId) {
       return <CurrentStep />;
@@ -23,7 +27,7 @@ const Stepper: React.FC<StepperProps> = ({ stepData, currentId }) => {
     }
   };
   const renderStep = ({ item, index }) => (
-    <StepInfoContainer>
+    <StepInfoContainer onPress={() => setSelectedTabNav?.(item.name)}>
       <StepInfo>
         {renderIcon(item.id)}
         <Spacer size={4} />

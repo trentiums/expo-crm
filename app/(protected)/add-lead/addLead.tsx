@@ -138,33 +138,40 @@ const AddLead = () => {
       formData.append('name', `${addLeadData.fullName || ''}`);
       formData.append('company_name', addLeadData?.companyName || '');
       if (values?.budget) {
+        formData.append(
+          'budget_currency_id',
+          values?.budgetCurrencyCode ||
+            addLeadData?.budgetCurrencyCode ||
+            undefined,
+        );
         formData.append('budget', `${values?.budget}`);
       }
       if (addLeadData?.companySize) {
         formData.append('company_size', `${addLeadData?.companySize}`);
       }
+      if (
+        values?.timeFrameType ||
+        addLeadData?.timeFrameType ||
+        values?.timeFrame
+      ) {
+        formData.append(
+          'timeline_timeframe',
+          values?.timeFrameType || addLeadData?.timeFrameType || '',
+        );
+        formData.append('time_line', values?.timeFrame || '');
+      }
 
-      formData.append(
-        'budget_currency_id	',
-        values?.budgetCurrencyCode ||
-          addLeadData?.budgetCurrencyCode ||
-          undefined,
-      );
-      formData.append(
-        'timeline_timeframe	',
-        values?.timeFrameType || addLeadData?.timeFrameType || undefined,
-      );
-      formData.append(
-        'deal_amount_currency_id',
-        values?.dealAmountCurrencyCode ||
-          addLeadData?.dealAmountCurrencyCode ||
-          undefined,
-      );
       formData.append('company_website', addLeadData?.webSite || '');
-      formData.append('time_line', values?.timeFrame || '');
+
       formData.append('description', values?.comments || '');
       if (values?.dealAmount) {
         formData.append('deal_amount', `${values?.dealAmount}`);
+        formData.append(
+          'deal_amount_currency_id',
+          values?.dealAmountCurrencyCode ||
+            addLeadData?.dealAmountCurrencyCode ||
+            undefined,
+        );
       }
       formData.append(
         'deal_close_date',

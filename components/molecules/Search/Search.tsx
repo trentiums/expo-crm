@@ -44,6 +44,12 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         return ts('searchUsers');
       case DropdownDataType.SERVICES:
         return ts('searchServices');
+      case DropdownDataType.LEADS:
+        return ts('searchLeads');
+      case DropdownDataType.BUDGET:
+        return ts('searchBudget');
+      case DropdownDataType.TIMELINE:
+        return ts('searchTimeline');
       default:
         return ts('searchUsers');
     }

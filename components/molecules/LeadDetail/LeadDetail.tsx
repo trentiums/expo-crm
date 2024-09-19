@@ -38,6 +38,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   onDelete,
   editRoute,
   isShowLeadInfo,
+  assignLeadOnDelete,
 }) => {
   const { t } = useTranslation('leadDetailCardDetails');
   const { t: tm } = useTranslation('modalText');
@@ -79,7 +80,6 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   const openBottomSheet = () => setVisibleBottomSheet(true);
 
   const closeBottomSheet = () => setVisibleBottomSheet(false);
-
   return (
     <DetailContainer>
       <LeadInfoView>
@@ -90,8 +90,9 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
             </NameText>
             <LeadStatus
               leadStatus={
-                leads?.filter((item) => item?.id === leadData?.id)[0]
-                  ?.leadStatusId
+                leads?.filter(
+                  (item) => item?.id === (leadData?.id || leadData?.leadId),
+                )[0]?.leadStatusId
               }
             />
           </NameAndStatusContainer>
@@ -136,9 +137,11 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           onClosePress={closeBottomSheet}
           meta={{
             leadId: leadData?.leadId,
+            userId: leadData?.id,
             optionType: optionType || ScreenOptionType.DASHBOARD,
             onDelete: onDelete,
             editRoute: editRoute,
+            assignLeadOnDelete: assignLeadOnDelete,
           }}
         />
       )}

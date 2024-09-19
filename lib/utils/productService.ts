@@ -1,4 +1,4 @@
-import { ProductService } from '@type/api/productService';
+import { LeadProductService, ProductService } from '@type/api/productService';
 
 export const formatServiceListData = (data: ProductService[]) => {
   return data?.map((item) => ({
@@ -27,4 +27,10 @@ export const formatProductServiceDetail = (data: ProductService) => {
       type: item?.mime_type,
     })),
   };
+};
+export const formatLeadProductService = (data: LeadProductService[]) => {
+  return data?.map((item) => ({
+    id: item.id,
+    name: item.name,
+  }));
 };

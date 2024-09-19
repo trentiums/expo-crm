@@ -51,7 +51,7 @@ export const CrossIconView = styled(Pressable)`
   align-items: flex-end;
 `;
 export const LoaderContainer = styled(View)`
-  height: 100%;
+  flex: 1;
   justify-content: center;
   align-items: center;
 `;
@@ -125,8 +125,8 @@ export const DashboardFilterView = styled(View)`
 `;
 
 export const DividerContainer = styled(View)`
-  flex: 0.8;
-  height: 2px;
+  flex: 0.9;
+  height: 1.5px;
   background-color: ${({ theme }) => theme.colors.aria};
 `;
 export const LeadsHeadingView = styled(View)`

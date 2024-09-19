@@ -1,16 +1,20 @@
 import { logoutUserAction } from '@redux/actions/auth';
 import {
   deleteProductServiceAction,
+  getLeadProductServiceListAction,
   getProductServiceDetailAction,
   getProductServiceListAction,
 } from '@redux/actions/productService';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ProductServicesListResponse } from '@type/api/general';
 import {
+  LeadProductService,
+  LeadProductServiceResponse,
   ProductService,
   ProductServiceDetailsResponse,
 } from '@type/api/productService';
 import {
+  formatLeadProductService,
   formatProductServiceDetail,
   formatServiceListData,
 } from '@utils/productService';
@@ -23,7 +27,7 @@ export interface ProductServiceState {
     total: number;
     serviceList: ProductService[];
   };
-  productServiceDetail: ProductService;
+  leadProductService: LeadProductService[];
 }
 const initialState: ProductServiceState = {
   productServiceList: {
@@ -46,6 +50,7 @@ const initialState: ProductServiceState = {
       size: 0,
     },
   },
+  leadProductService: [],
 };
 
 const productServiceSlice = createSlice({
@@ -88,6 +93,14 @@ const productServiceSlice = createSlice({
         state.productServiceDetail = data;
       },
     );
+    builder.addCase(
+      getLeadProductServiceListAction.fulfilled,
+      (state, action: PayloadAction<LeadProductServiceResponse>) => {
+        const data = formatLeadProductService(action.payload.data);
+        state.leadProductService = data;
+      },
+    );
+
     builder.addCase(deleteProductServiceAction.fulfilled, (state, action) => {
       state.productServiceList.serviceList =
         state.productServiceList.serviceList?.filter(

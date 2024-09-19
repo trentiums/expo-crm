@@ -15,13 +15,12 @@ import {
   LeadsHeadingView,
   LoaderContainer,
   LeadsFlatList,
+  HeadingText,
 } from './tabs.style';
 import Loader from '@atoms/Loader/Loader';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import TrashIcon from '@atoms/Illustrations/Trash';
-import isEmpty from 'lodash/isEmpty';
-import { useDebounce } from '@utils/useDebounce';
 import FilterIcon from '@atoms/Illustrations/Filter';
 import SearchFilter from '@molecules/Search/Search';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
@@ -30,6 +29,7 @@ import QuickFilter from '@molecules/QuickFilter/QuickFilter';
 import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
 import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
 import { LoadingStatus } from '../../(public)/login/LoginScreen.props';
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 
 const Leads = () => {
   const { t } = useTranslation('modalText');
@@ -37,9 +37,6 @@ const Leads = () => {
   const { t: tb } = useTranslation('bottomSheetNavigator');
   const { colors } = useAppTheme();
   const leadsData = useSelector((state: RootState) => state.leads.leadList);
-  const leadsFilter = useSelector(
-    (state: RootState) => state.leads.leadsFilter,
-  );
   const leadListData = useSelector((state: RootState) => state.leads.leadList);
   const toast = useToast();
   const [showModal, setShowModal] = useState(false);
@@ -54,7 +51,6 @@ const Leads = () => {
   const [visibleLeadsSortFilterSheet, setVisibleLeadsSortFilterSheet] =
     useState(false);
 
-  const debouncedLeadSearch = useDebounce(leadSearch || undefined, 300);
   const onDeleteActionPress = async (slug: number) => {
     setLoadingStatus(LoadingStatus.SCREEN);
     try {
@@ -133,22 +129,11 @@ const Leads = () => {
     }
     setRefreshing(false);
   };
-  const searchFilter = useMemo(() => {
-    if (isEmpty(leadSearch)) {
-      return {};
-    }
-    const filtersValue = {};
-    filtersValue['search'] = leadSearch;
-    return filtersValue;
-  }, [leadSearch, debouncedLeadSearch]);
-  useEffect(() => {
-    handleSearchLead();
-  }, [debouncedLeadSearch]);
 
   const handleSearchLead = async () => {
     try {
       setLoadingStatus(LoadingStatus.SCREEN);
-      await dispatch(getLeadListAction(searchFilter)).unwrap();
+      // await dispatch(getLeadListAction({ search: leadSearch })).unwrap();
     } catch (error) {
       console.log(error);
     }
@@ -163,6 +148,7 @@ const Leads = () => {
         handleSearch={handleSearchLead}
         rightIcon={<FilterIcon />}
         onRightIconPress={handleVisibleLeadsFilter}
+        dropdownDataType={DropdownDataType.LEADS}
       />
     );
   };
@@ -191,6 +177,7 @@ const Leads = () => {
 
   return (
     <ScreenTemplate moreVisible>
+      <HeadingText>{t('leads')}</HeadingText>
       {renderHeader()}
       <LeadsHeadingView>
         <CountsText>

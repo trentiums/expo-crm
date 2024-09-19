@@ -3,6 +3,7 @@ import { useAppTheme } from '@constants/theme';
 import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
 import {
   ButtonSubmit,
+  ForgotFormView,
   ForgotPasswordContainer,
   ForgotText,
   LoginFormContainer,
@@ -30,7 +31,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
   const { colors } = useAppTheme();
   const { valid } = useFormState({ subscription: { valid: true } });
   return (
-    <LoginFormView>
+    <ForgotFormView>
       <LoginFormContainer>
         <Field
           name="email"
@@ -52,8 +53,9 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
         </ForgotText>
       </ForgotPasswordContainer>
       <Spacer size={16} />
+
       <ButtonSubmit
-        onPress={form.submit}
+        onPress={!loading && form.submit}
         loading={loading}
         textColor={valid ? colors.black : colors.disabledTextColor}
         variant={valid}>
@@ -61,7 +63,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
           {t('sendEmail')}
         </FormButtonText>
       </ButtonSubmit>
-    </LoginFormView>
+    </ForgotFormView>
   );
 };
 

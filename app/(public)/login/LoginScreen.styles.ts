@@ -24,7 +24,8 @@ export const LoginScreenContainer = styled(View)`
 `;
 export const LoginFormContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
-  border-radius: 24px;
+  border-top-right-radius: 24px;
+  border-top-left-radius: 24px;
   padding: 24px;
   flex: 1;
   display: flex;

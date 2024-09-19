@@ -24,6 +24,7 @@ export interface LeadsState {
   };
   leadsDetail: LeadListState;
   leadsFilter: LeadsFilterType;
+  leadsSort?: number;
 }
 const initialState: LeadsState = {
   addLead: {
@@ -91,6 +92,7 @@ const initialState: LeadsState = {
     endDate: '',
     startData: '',
   },
+  leadsSort: undefined,
 };
 
 const leadSlice = createSlice({
@@ -108,6 +110,9 @@ const leadSlice = createSlice({
     },
     resetLeadsFilters: (state, action) => {
       state.leadsDetail = initialState.leadsDetail;
+    },
+    setLeadsSort: (state, action) => {
+      state.leadsSort = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -150,6 +155,10 @@ const leadSlice = createSlice({
     });
   },
 });
-export const { addLeadInformation, setLeadsInformation, setLeadsFilters } =
-  leadSlice.actions;
+export const {
+  addLeadInformation,
+  setLeadsInformation,
+  setLeadsFilters,
+  setLeadsSort,
+} = leadSlice.actions;
 export default leadSlice.reducer;

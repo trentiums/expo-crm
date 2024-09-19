@@ -7,11 +7,11 @@ import { useTranslation } from 'react-i18next';
 import {
   Container,
   ForgotFormContainer,
+  ForgotScreenContainer,
   ForgotScrollView,
   ForgotText,
   ImageView,
 } from './forgotPassword.styles';
-import { LoginFormContainer } from '../login/LoginScreen.styles';
 import { useAppDispatch } from '@redux/store';
 import { forgotPasswordAction } from '@redux/actions/auth';
 import { useToast } from 'react-native-toast-notifications';
@@ -47,8 +47,8 @@ const index = () => {
     setLoading(false);
   };
   return (
-    <ForgotScrollView>
-      <ForgotFormContainer>
+    <ForgotScrollView keyboardShouldPersistTaps="always">
+      <ForgotScreenContainer>
         <Container>
           <ImageView source={images.loginImage} resizeMode="cover" />
         </Container>
@@ -62,7 +62,7 @@ const index = () => {
             loading={loading}
           />
         </ForgotFormContainer>
-      </ForgotFormContainer>
+      </ForgotScreenContainer>
     </ForgotScrollView>
   );
 };

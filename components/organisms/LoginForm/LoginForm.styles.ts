@@ -32,6 +32,7 @@ export const ForgotText = styled(Text)`
   color: ${({ theme }) => theme.colors.black};
   padding-top: 4px;
 `;
+
 export const ForgotPasswordContainer = styled(Pressable)`
   align-self: flex-end;
 `;

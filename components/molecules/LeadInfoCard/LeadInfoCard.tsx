@@ -31,26 +31,28 @@ const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
   const leadAssignToData = useSelector(
     (state: RootState) => state.user.assignUserList,
   );
-  const servicesTitle = leadDetail.productService.map((item) => item.name);
+  const servicesTitle =
+    leadDetail?.productService?.map((item) => item.name) || '';
   const channelName = generalLists?.leadChannelList?.filter(
-    (item) => item.id === leadDetail.leadChannelId,
+    (item) => item?.id === leadDetail?.leadChannelId,
   )?.[0]?.name;
-  const assignedName = leadAssignToData?.assignUsers?.filter(
-    (item) => item.id === leadDetail.assignTo,
-  )?.[0]?.title;
+  const assignedName =
+    leadAssignToData?.assignUsers?.filter(
+      (item) => item?.id === leadDetail?.assignTo,
+    )?.[0]?.title || '';
   const leadInfo = [
     {
       key: t('phone'),
       icon: <PhoneIcon />,
-      value: leadDetail.phone && (
-        <LeadInfoValue>{leadDetail.phone}</LeadInfoValue>
+      value: leadDetail?.phone && (
+        <LeadInfoValue>{leadDetail?.phone}</LeadInfoValue>
       ),
     },
     {
       key: t('email'),
       icon: <EmailIcon color={colors.modernLavender} />,
-      value: leadDetail.email && (
-        <LeadInfoValue>{leadDetail.email}</LeadInfoValue>
+      value: leadDetail?.email && (
+        <LeadInfoValue>{leadDetail?.email}</LeadInfoValue>
       ),
     },
     {
@@ -69,7 +71,7 @@ const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
       key: t('stage'),
       title: t('stage'),
       icon: <StageIcon />,
-      value: <LeadStage leadStage={leadDetail.leadStatusId} />,
+      value: <LeadStage leadStage={leadDetail?.leadStatusId} />,
     },
     {
       key: t('channel'),
@@ -81,7 +83,7 @@ const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
       key: t('assignedTo'),
       title: t('assignedTo'),
       icon: <AssignedToIcon />,
-      value: leadDetail.assignTo && (
+      value: leadDetail?.assignTo && (
         <LeadAssignedToContainer>
           <ProfileIcon />
           <LeadInfoValue>{assignedName}</LeadInfoValue>
