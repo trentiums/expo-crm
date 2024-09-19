@@ -17,7 +17,9 @@ const QuickFilter: React.FC<QuickFilterProps> = ({
     <QuickFilterContainer>
       <FilterType>{`${filterType}: `}</FilterType>
       <SelectedFilterWithIcon onPress={onFilterPress}>
-        <FilterTitle>{filterTitle}</FilterTitle>
+        <FilterTitle variant="SF-Pro-Display-Medium_500">
+          {filterTitle}
+        </FilterTitle>
         <ArrowDown />
       </SelectedFilterWithIcon>
     </QuickFilterContainer>

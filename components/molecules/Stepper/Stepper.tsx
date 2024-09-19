@@ -31,7 +31,15 @@ const Stepper: React.FC<StepperProps> = ({
       <StepInfo>
         {renderIcon(item.id)}
         <Spacer size={4} />
-        <StepText isCurrentStep={currentId === item.id}>{item.title}</StepText>
+        <StepText
+          isCurrentStep={currentId === item.id}
+          variant={`${
+            currentId === item.id
+              ? 'SF-Pro-Display-Medium_500'
+              : 'SF-Pro-Display-Regular_400'
+          }`}>
+          {item.title}
+        </StepText>
       </StepInfo>
 
       {index < stepData.length - 1 && (

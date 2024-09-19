@@ -39,12 +39,16 @@ const CompanyDashboardCard: React.FC<CompanyDashboardCardProps> = ({
     <CompanyDashboardCardContainer>
       <UserInformationContainer>
         <ProfileIcon />
-        <UserNameText numberOfLines={1}>{name}</UserNameText>
+        <UserNameText numberOfLines={1} variant="SF-Pro-Display-Semibold_600">
+          {name}
+        </UserNameText>
       </UserInformationContainer>
       <Spacer size={16} />
       <LeadsStatusDetailContainer>
         <TotalLeadsCountContainer>
-          <TotalLeadTitle color={colors.englishHolly}>
+          <TotalLeadTitle
+            color={colors.englishHolly}
+            variant="SF-Pro-Display-Semibold_600">
             {t('totalLeads')}
           </TotalLeadTitle>
           <LeadCount>{leadsCount}</LeadCount>

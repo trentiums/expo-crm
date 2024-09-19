@@ -237,7 +237,9 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always">
         <View>
-          <ServiceLabel>{`${t('sourceLabel')} *`}</ServiceLabel>
+          <ServiceLabel variant="SF-Pro-Display-Medium_500">{`${t(
+            'sourceLabel',
+          )} *`}</ServiceLabel>
           <LabelDescriptionText>
             {t('servicedDescription')}
           </LabelDescriptionText>
@@ -271,7 +273,9 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             />
           )}
           <Spacer size={16} />
-          <Label>{`${tl('leadChannel')} *`}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{`${tl(
+            'leadChannel',
+          )} *`}</Label>
           <Field
             component={FieldDropDown}
             listData={general.leadChannelList?.map((item) => {
@@ -287,7 +291,9 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             validate={requiredValidator}
           />
           <Spacer size={16} />
-          <Label>{`${tl('leadStatus')} *`}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{`${tl(
+            'leadStatus',
+          )} *`}</Label>
           <Field
             component={FieldDropDown}
             name="selectedLead"
@@ -302,7 +308,9 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             validate={requiredValidator}
           />
           <Spacer size={16} />
-          <Label>{`${tl('LeadStage')} *`}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{`${tl(
+            'LeadStage',
+          )} *`}</Label>
           <Field
             name="selectedStage"
             listData={general.leadConversionList?.map((item) => {
@@ -317,7 +325,9 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             validate={requiredValidator}
           />
           <Spacer size={16} />
-          <Label>{`${tl('assignTo')}`}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{`${tl(
+            'assignTo',
+          )}`}</Label>
           <Field
             component={FieldDropDown}
             name="assignTo"
@@ -339,7 +349,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             />
           )}
           <Spacer size={16} />
-          <Label>{t('budgetLabel')}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{t('budgetLabel')}</Label>
           <RowView>
             <DropdownView>
               <Field
@@ -369,7 +379,9 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             </InputView>
           </RowView>
           <Spacer size={16} />
-          <Label>{t('timeFrameToPurchaseLabel')}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">
+            {t('timeFrameToPurchaseLabel')}
+          </Label>
           <RowView>
             <DropdownView>
               <Field
@@ -400,7 +412,9 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             </InputView>
           </RowView>
           <Spacer size={16} />
-          <Label>{t('commentsLabel')}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">
+            {t('commentsLabel')}
+          </Label>
           <Field
             name="comments"
             placeholder={t('commentsEg')}
@@ -417,21 +431,27 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
           {(values?.selectedStage === LeadStageType.CLOSELOST ||
             values?.selectedStage === LeadStageType.CLOSEWON) && (
             <>
-              <Label>{t('winCloseReason')}</Label>
+              <Label variant="SF-Pro-Display-Medium_500">
+                {t('winCloseReason')}
+              </Label>
               <Field
                 name="winCloseReason"
                 placeholder={t('winCloseReason')}
                 component={FieldTextInput}
               />
               <Spacer size={16} />
-              <Label>{t('dealCloseDate')}</Label>
+              <Label variant="SF-Pro-Display-Medium_500">
+                {t('dealCloseDate')}
+              </Label>
               <Field
                 name="dealCloseDate"
                 component={FieldDatePicker}
                 initialDate={values?.dealCloseDate || moment().clone().toDate()}
               />
               <Spacer size={16} />
-              <Label>{t('dealAmount')}</Label>
+              <Label variant="SF-Pro-Display-Medium_500">
+                {t('dealAmount')}
+              </Label>
               <RowView>
                 <DropdownView>
                   <Field
@@ -469,7 +489,10 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       </KeyboardAwareScrollView>
       <ContainerView>
         <SubContainerView>
-          <BackButton onPress={() => onBackClick?.()} valid={false}>
+          <BackButton
+            onPress={() => onBackClick?.()}
+            valid={false}
+            variant="SF-Pro-Display-Semibold_600">
             <BackButtonText valid={true}>{tb('previous')}</BackButtonText>
           </BackButton>
         </SubContainerView>
@@ -478,7 +501,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             onPress={!loading && form.submit}
             loading={loading}
             valid={valid}>
-            <FormButtonText valid={valid}>
+            <FormButtonText valid={valid} variant="SF-Pro-Display-Semibold_600">
               {id ? tb('save') : tb('next')}
             </FormButtonText>
           </ButtonSubmit>

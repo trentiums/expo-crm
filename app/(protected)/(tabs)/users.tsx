@@ -109,7 +109,9 @@ const Users = () => {
   return (
     <ScreenTemplate moreVisible>
       <HeadingView>
-        <HeadingText>{ts('users')}</HeadingText>
+        <HeadingText variant="SF-Pro-Display-Semibold_600">
+          {ts('users')}
+        </HeadingText>
         <CountsText>
           {t('itemWithCount', { count: userList?.total })}
         </CountsText>

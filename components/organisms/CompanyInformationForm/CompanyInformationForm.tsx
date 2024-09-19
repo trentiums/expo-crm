@@ -70,7 +70,9 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always">
-        <Label>{t('companyNameLabel')}</Label>
+        <Label variant="SF-Pro-Display-Medium_500">
+          {t('companyNameLabel')}
+        </Label>
         <Field
           name="companyName"
           placeholder={t('companyNameLabel')}
@@ -78,14 +80,16 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
         />
         <Spacer size={16} />
 
-        <Label>{t('companySizeLabel')}</Label>
+        <Label variant="SF-Pro-Display-Medium_500">
+          {t('companySizeLabel')}
+        </Label>
         <Field
           name={'companySize'}
           component={FieldDropDown}
           listData={companySizes}
         />
         <Spacer size={16} />
-        <Label>{t('websiteLabel')}</Label>
+        <Label variant="SF-Pro-Display-Medium_500">{t('websiteLabel')}</Label>
         <Field
           name="webSite"
           placeholder={t('websiteLabel')}
@@ -96,7 +100,9 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
       <ContainerView>
         <SubContainerView>
           <BackButton onPress={() => onBackClick?.()} loading={false}>
-            <BackButtonText valid={true}>{tb('previous')}</BackButtonText>
+            <BackButtonText valid={true} variant="SF-Pro-Display-Semibold_600">
+              {tb('previous')}
+            </BackButtonText>
           </BackButton>
         </SubContainerView>
         <SubContainerView>
@@ -104,7 +110,7 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
             onPress={!loading && form.submit}
             loading={loading}
             valid={valid}>
-            <FormButtonText valid={valid}>
+            <FormButtonText valid={valid} variant="SF-Pro-Display-Semibold_600">
               {id ? tb('save') : tb('next')}
             </FormButtonText>
           </ButtonSubmit>

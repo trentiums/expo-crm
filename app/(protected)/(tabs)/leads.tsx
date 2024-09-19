@@ -177,7 +177,9 @@ const Leads = () => {
 
   return (
     <ScreenTemplate moreVisible>
-      <HeadingText>{t('leads')}</HeadingText>
+      <HeadingText variant="SF-Pro-Display-Semibold_600">
+        {t('leads')}
+      </HeadingText>
       {renderHeader()}
       <LeadsHeadingView>
         <CountsText>
