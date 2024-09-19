@@ -1,0 +1,36 @@
+import Text from '@atoms/Text/Text';
+import { styled } from '@utils/styled';
+import { Image, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+export const Container = styled(View)`
+  flex: 1;
+`;
+
+export const ImageView = styled(Image)`
+  display: flex;
+  align-self: center;
+`;
+
+export const ForgotText = styled(Text)`
+  color: ${({ theme }) => theme.colors.textDark};
+  font-size: 36px;
+  text-align: center;
+`;
+export const ForgotScreenContainer = styled(View)`
+  flex: 1;
+  /* background-color: ${({ theme }) => theme.colors.white}; */
+`;
+export const ForgotFormContainer = styled(View)`
+  background-color: ${({ theme }) => theme.colors.white};
+  border-top-right-radius: 24px;
+  border-top-left-radius: 24px;
+  padding: 24px;
+  flex: 0.3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+export const ForgotScrollView = styled(KeyboardAwareScrollView).attrs(() => ({
+  contentContainerStyle: { flexGrow: 1 },
+}))``;

@@ -15,16 +15,16 @@ export const ImageView = styled(Image)`
 export const IntroText = styled(Text)`
   color: ${({ theme }) => theme.colors.textDark};
   font-size: 36px;
-  font-weight: 700;
   text-align: center;
 `;
 export const LoginScreenContainer = styled(View)`
   flex: 1;
-  background-color: ${({ theme }) => theme.colors.white};
+  /* background-color: ${({ theme }) => theme.colors.white}; */
 `;
 export const LoginFormContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
-  border-radius: 24px;
+  border-top-right-radius: 24px;
+  border-top-left-radius: 24px;
   padding: 24px;
   flex: 1;
   display: flex;

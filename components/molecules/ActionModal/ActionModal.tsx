@@ -53,18 +53,22 @@ const ActionModal: React.FC<RNModalProps> = memo(
             </CrossIconContainer>
           )}
           {icon || null}
-          <Header isIcon={isIcon}>{heading}</Header>
+          <Header isIcon={isIcon} variant="SF-Pro-Display-Semibold_600">{heading}</Header>
           <Spacer size={8} />
           <Description>{description}</Description>
           <Spacer size={16} />
           <ButtonContainer>
             <AllButtonView>
               <CancelPressable onPress={onCancelPress}>
-                <SecondaryLabel>{actiontext}</SecondaryLabel>
+                <SecondaryLabel variant="SF-Pro-Display-Semibold_600">
+                  {actiontext}
+                </SecondaryLabel>
               </CancelPressable>
               <ActionPressable onPress={handleSubmit}>
                 {loading && <Loader size={16} color={colors?.blueChaos} />}
-                <PrimaryLabel actionType={actionType || Actions.default}>
+                <PrimaryLabel
+                  actionType={actionType || Actions.default}
+                  variant="SF-Pro-Display-Semibold_600">
                   {label}
                 </PrimaryLabel>
               </ActionPressable>

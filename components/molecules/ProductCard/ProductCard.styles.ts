@@ -23,9 +23,9 @@ export const ProductDetailContainer = styled(View)`
 export const NameText = styled(Text)`
   color: ${({ theme }) => theme.colors.textDark};
   font-size: 20px;
-  font-weight: 400;
   padding-top: 8px;
   padding-bottom: 24px;
+  flex: 0.9;
 `;
 export const DetailContainer = styled(View)`
   display: flex;

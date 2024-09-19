@@ -1,6 +1,7 @@
 import { withToastForError } from '@utils/thunk';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  AssignLeadToUserParams,
   AssignUserListResponse,
   ChangePasswordParams,
   DeleteUserParams,
@@ -12,6 +13,7 @@ import {
   UserListResponse,
 } from '@type/api/user';
 import {
+  assignLeadToUserList,
   assignUserList,
   deleteAccount,
   changePassword,
@@ -64,10 +66,13 @@ export const getUserDetailAction = createAsyncThunk<
   }),
 );
 
-export const getAssignUserListAction = createAsyncThunk<AssignUserListResponse>(
+export const getAssignUserListAction = createAsyncThunk<
+  AssignUserListResponse,
+  UserListParams
+>(
   'user/assignUserList',
-  withToastForError(async () => {
-    const response = await assignUserList();
+  withToastForError(async (body) => {
+    const response = await assignUserList(body);
     return response.data;
   }),
 );
@@ -87,6 +92,17 @@ export const changePasswordAction = createAsyncThunk<
   'user/changePassword',
   withToastForError(async (body) => {
     const response = await changePassword(body);
+    return response.data;
+  }),
+);
+
+export const assignLeadToUserAction = createAsyncThunk<
+  ApiResponse,
+  AssignLeadToUserParams
+>(
+  'user/assignLeadToUser',
+  withToastForError(async (body) => {
+    const response = await assignLeadToUserList(body);
     return response.data;
   }),
 );

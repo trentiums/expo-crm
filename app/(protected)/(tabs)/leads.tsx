@@ -5,32 +5,38 @@ import { deleteLeadAction, getLeadListAction } from '@redux/actions/lead';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
 import { LeadListState } from '@type/api/lead';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
-import { LeadsFlatList, LoaderContainer } from './tabs.style';
+import {
+  CountsText,
+  LeadsHeadingView,
+  LoaderContainer,
+  LeadsFlatList,
+  HeadingText,
+} from '../tabs.style';
 import Loader from '@atoms/Loader/Loader';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import TrashIcon from '@atoms/Illustrations/Trash';
-import isEmpty from 'lodash/isEmpty';
-import { useDebounce } from '@utils/useDebounce';
 import FilterIcon from '@atoms/Illustrations/Filter';
 import SearchFilter from '@molecules/Search/Search';
+import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
 import { Spacer } from '@atoms/common/common.styles';
+import QuickFilter from '@molecules/QuickFilter/QuickFilter';
 import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
 import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
 import { LoadingStatus } from '../../(public)/login/LoginScreen.props';
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 
 const Leads = () => {
   const { t } = useTranslation('modalText');
   const { t: td } = useTranslation('dashBoard');
+  const { t: tb } = useTranslation('bottomSheetNavigator');
   const { colors } = useAppTheme();
-  const leadsData = useSelector(
-    (state: RootState) => state.leads.leadList?.leads,
-  );
+  const leadsData = useSelector((state: RootState) => state.leads.leadList);
   const leadListData = useSelector((state: RootState) => state.leads.leadList);
   const toast = useToast();
   const [showModal, setShowModal] = useState(false);
@@ -41,7 +47,10 @@ const Leads = () => {
   const [leadSearch, setLeadSearch] = useState('');
   const dispatch = useAppDispatch();
   const [refreshing, setRefreshing] = useState(false);
-  const debouncedLeadSearch = useDebounce(leadSearch || undefined, 300);
+  const [visibleLeadsFilterSheet, setVisibleLeadsFilterSheet] = useState(false);
+  const [visibleLeadsSortFilterSheet, setVisibleLeadsSortFilterSheet] =
+    useState(false);
+
   const onDeleteActionPress = async (slug: number) => {
     setLoadingStatus(LoadingStatus.SCREEN);
     try {
@@ -106,7 +115,12 @@ const Leads = () => {
           }),
         ).unwrap();
       } catch (error) {
-        console.log(error);
+        toast.show(error, {
+          type: ToastType.Custom,
+          data: {
+            type: ToastTypeProps.Error,
+          },
+        });
       }
       setLoadingStatus(LoadingStatus.NONE);
     }
@@ -114,30 +128,29 @@ const Leads = () => {
   const onRefreshLeadList = async () => {
     try {
       setRefreshing(true);
-      await dispatch(getLeadListAction({}));
+      await dispatch(getLeadListAction({})).unwrap();
     } catch (error) {
-      console.log(error);
+      toast.show(error, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
     }
     setRefreshing(false);
   };
-  const searchFilter = useMemo(() => {
-    if (isEmpty(leadSearch)) {
-      return {};
-    }
-    const filtersValue = {};
-    filtersValue['search'] = leadSearch;
-    return filtersValue;
-  }, [leadSearch, debouncedLeadSearch]);
-  useEffect(() => {
-    handleSearchLead();
-  }, [debouncedLeadSearch]);
 
-  const handleSearchLead = async () => {
+  const handleSearch = async () => {
     try {
       setLoadingStatus(LoadingStatus.SCREEN);
-      await dispatch(getLeadListAction(searchFilter)).unwrap();
+      await dispatch(getLeadListAction({ search: leadSearch || undefined }));
     } catch (error) {
-      console.log(error);
+      toast.show(error, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
     }
     setLoadingStatus(LoadingStatus.NONE);
   };
@@ -147,52 +160,83 @@ const Leads = () => {
       <SearchFilter
         search={leadSearch}
         setSearch={setLeadSearch}
-        handleSearch={handleSearchLead}
+        handleSearch={handleSearch}
         rightIcon={<FilterIcon />}
-        //TODO: here in next PR filter api done
-        onRightIconPress={() => console.log('hello')}
+        onRightIconPress={handleVisibleLeadsFilter}
+        dropdownDataType={DropdownDataType.LEADS}
       />
     );
   };
-  if (loadingStatus === LoadingStatus.SCREEN) {
-    return (
-      <ScreenTemplate moreVisible>
-        {renderHeader()}
-        <LoaderContainer>
-          <Loader color={colors.blueChaos} />
-        </LoaderContainer>
-      </ScreenTemplate>
-    );
-  }
+
+  const handleVisibleLeadsFilter = () => {
+    setVisibleLeadsFilterSheet(true);
+    handleCloseVisibleSortFilter();
+  };
+  const handleCloseVisibleFilter = () => {
+    setVisibleLeadsFilterSheet(false);
+  };
+  const handleVisibleLeadsSortFilter = () => {
+    setVisibleLeadsSortFilterSheet(true);
+    handleCloseVisibleFilter();
+  };
+  const handleCloseVisibleSortFilter = () => {
+    setVisibleLeadsSortFilterSheet(false);
+  };
   return (
     <ScreenTemplate moreVisible>
+      <HeadingText variant="SF-Pro-Display-Semibold_600">
+        {t('leads')}
+      </HeadingText>
       {renderHeader()}
-      {leadsData?.length > 0 ? (
-        <LeadsFlatList
-          data={leadsData}
-          keyExtractor={(item: { id: number }, index: number) =>
-            `${item.id}-${index}`
-          }
-          renderItem={renderLeads}
-          showsVerticalScrollIndicator={false}
-          onEndReached={handleGetMoreData}
-          ListFooterComponent={
-            loadingStatus === LoadingStatus.MORE ? <Loader size={24} /> : null
-          }
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefreshLeadList}
-              colors={[colors.primaryColor]}
-            />
-          }
-        />
-      ) : (
-        <NoDataAvailable
-          text={td('noLeadsTitle')}
-          description={td('noLeadsDesc')}
-        />
-      )}
+      {
+        <>
+          {loadingStatus === LoadingStatus.SCREEN ? (
+            <Loader />
+          ) : (
+            <>
+              <LeadsHeadingView>
+                <CountsText>
+                  {t('itemWithCount', { count: leadsData?.total })}
+                </CountsText>
+                <QuickFilter
+                  filterTitle={tb('select')}
+                  filterType={tb('sortBy')}
+                  onFilterPress={handleVisibleLeadsSortFilter}
+                />
+              </LeadsHeadingView>
+              <Spacer size={16} />
+              {leadsData.leads.length > 0 ? (
+                <LeadsFlatList
+                  data={leadsData?.leads}
+                  keyExtractor={(item: any, index: number) =>
+                    `${item.id}-${index}`
+                  }
+                  renderItem={renderLeads}
+                  showsVerticalScrollIndicator={false}
+                  onEndReached={handleGetMoreData}
+                  ListFooterComponent={
+                    loadingStatus === LoadingStatus.MORE ? (
+                      <Loader size={24} />
+                    ) : null
+                  }
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefreshLeadList}
+                      colors={[colors.primaryColor]}
+                    />
+                  }
+                />
+              ) : (
+                <NoDataAvailable
+                  text={td('noLeadsTitle')}
+                  description={td('noLeadsDesc')}
+                />
+              )}
+            </>
+          )}
+        </>
+      }
 
       {showModal && (
         <ActionModal
@@ -212,7 +256,19 @@ const Leads = () => {
           }}
           onActionPress={() => onDeleteActionPress(deleteLeadId || 0)}
           icon={<TrashIcon color={colors?.deleteColor} />}
-          loading={loadingStatus === LoadingStatus.SCREEN}
+          loading={loadingStatus === LoadingStatus.DELETE}
+        />
+      )}
+      {visibleLeadsFilterSheet && (
+        <BottomSheetNavigator
+          initialRouteName="LeadsFilter"
+          onClosePress={handleCloseVisibleFilter}
+        />
+      )}
+      {visibleLeadsSortFilterSheet && (
+        <BottomSheetNavigator
+          initialRouteName="LeadsSortFilter"
+          onClosePress={handleCloseVisibleSortFilter}
         />
       )}
     </ScreenTemplate>

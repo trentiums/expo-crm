@@ -27,9 +27,9 @@ import moment from 'moment';
 import { dateTimeFormate } from '@constants/common';
 import { Flexed } from '@atoms/common/common.styles';
 import LeadStatus from '@molecules/LeadStatus/LeadStatus';
+import LeadInfoCard from '@molecules/LeadInfoCard/LeadInfoCard';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
 import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
-import LeadInfoCard from '@molecules/LeadInfoCard/LeadInfoCard';
 
 const LeadDetail: React.FC<LeadDetailsProps> = ({
   leadData,
@@ -38,6 +38,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   onDelete,
   editRoute,
   isShowLeadInfo,
+  assignLeadOnDelete,
 }) => {
   const { t } = useTranslation('leadDetailCardDetails');
   const { t: tm } = useTranslation('modalText');
@@ -63,7 +64,6 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   const handleWhatsApp = (phoneNumber: number | string) => {
     generateWhatsAppUrl(phoneNumber);
   };
-
   const handlePhoneCall = (phoneNumber) => {
     try {
       handleOpenDialCall(phoneNumber);
@@ -80,17 +80,19 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
   const openBottomSheet = () => setVisibleBottomSheet(true);
 
   const closeBottomSheet = () => setVisibleBottomSheet(false);
-
   return (
     <DetailContainer>
       <LeadInfoView>
         <Flexed>
           <NameAndStatusContainer>
-            <NameText numberOfLines={1}>{leadData?.name}</NameText>
+            <NameText numberOfLines={1} variant="SF-Pro-Display-Semibold_600">
+              {leadData?.name}
+            </NameText>
             <LeadStatus
               leadStatus={
-                leads?.filter((item) => item?.id === leadData?.id)[0]
-                  ?.leadStatusId
+                leads?.filter(
+                  (item) => item?.id === (leadData?.id || leadData?.leadId),
+                )[0]?.leadStatusId
               }
             />
           </NameAndStatusContainer>
@@ -128,16 +130,17 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           )}
         </ContactBox>
       )}
-
       {visibleBottomSheet && (
         <BottomSheetNavigator
           initialRouteName="ModifyLeadOption"
           onClosePress={closeBottomSheet}
           meta={{
-            leadId: leadData?.id,
+            leadId: leadData?.leadId || leadData?.id,
+            userId: leadData?.id,
             optionType: optionType || ScreenOptionType.DASHBOARD,
             onDelete: onDelete,
             editRoute: editRoute,
+            assignLeadOnDelete: assignLeadOnDelete,
           }}
         />
       )}

@@ -24,7 +24,9 @@ export interface UserState {
     total: number;
     users: UserStateType[];
   };
-  assignUserList: AssignUserState[];
+  assignUserList: {
+    assignUsers: AssignUserState[];
+  };
   userDetail: UserStateType;
 }
 const initialState: UserState = {
@@ -42,7 +44,9 @@ const initialState: UserState = {
     userRole: 0,
     createdAt: '',
   },
-  assignUserList: [],
+  assignUserList: {
+    assignUsers: [],
+  },
 };
 const userSlice = createSlice({
   name: 'user',
@@ -87,12 +91,14 @@ const userSlice = createSlice({
         state.userList.users = state.userList.users?.filter(
           (item) => item?.id !== action.payload.body?.user_id,
         );
+        state.userList.total = state.userList.total - 1;
       },
     );
     builder.addCase(
       getAssignUserListAction.fulfilled,
       (state, action: PayloadAction<AssignUserListResponse>) => {
-        state.assignUserList = formatAssignUser(action.payload.data);
+        const assignUserList = formatAssignUser(action?.payload?.data);
+        state.assignUserList.assignUsers = assignUserList;
       },
     );
     builder.addCase(logoutUserAction.fulfilled, () => {

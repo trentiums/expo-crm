@@ -19,10 +19,12 @@ export interface LeadsState {
     currentPage: number;
     lastPage: number;
     perPage: number;
+    total: number;
     leads: LeadListState[];
   };
   leadsDetail: LeadListState;
   leadsFilter: LeadsFilterType;
+  leadsSort?: number;
 }
 const initialState: LeadsState = {
   addLead: {
@@ -46,11 +48,15 @@ const initialState: LeadsState = {
     dealCloseDate: '',
     documents: [],
     assignTo: 0,
+    dealAmountCurrencyCode: undefined,
+    budgetCurrencyCode: undefined,
+    timeFrameType: undefined,
   },
   leadList: {
     currentPage: 0,
     lastPage: 0,
     perPage: 0,
+    total: 0,
     leads: [],
   },
   leadsDetail: {
@@ -78,11 +84,12 @@ const initialState: LeadsState = {
     webSite: '',
     documents: [],
     assignTo: 0,
+    budgetCurrencyCode: undefined,
+    dealAmountCurrencyCode: undefined,
+    timeFrameType: undefined,
   },
-  leadsFilter: {
-    endDate: '',
-    startData: '',
-  },
+  leadsFilter: {},
+  leadsSort: undefined,
 };
 
 const leadSlice = createSlice({
@@ -100,6 +107,9 @@ const leadSlice = createSlice({
     },
     resetLeadsFilters: (state, action) => {
       state.leadsDetail = initialState.leadsDetail;
+    },
+    setLeadsSort: (state, action) => {
+      state.leadsSort = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -119,6 +129,7 @@ const leadSlice = createSlice({
         state.leadList.currentPage = action.payload.data.current_page;
         state.leadList.lastPage = action.payload.data.last_page;
         state.leadList.perPage = action.payload.data.per_page;
+        state.leadList.total = action.payload.data.total;
       },
     );
     builder.addCase(
@@ -135,12 +146,17 @@ const leadSlice = createSlice({
       state.leadList.leads = state.leadList.leads.filter(
         (item) => item.id !== action.payload.data.lead_id,
       );
+      state.leadList.total = state.leadList.total - 1;
     });
     builder.addCase(logoutUserAction.fulfilled, () => {
       return initialState;
     });
   },
 });
-export const { addLeadInformation, setLeadsInformation, setLeadsFilters } =
-  leadSlice.actions;
+export const {
+  addLeadInformation,
+  setLeadsInformation,
+  setLeadsFilters,
+  setLeadsSort,
+} = leadSlice.actions;
 export default leadSlice.reducer;

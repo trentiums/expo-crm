@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import CreateOptionsItem from '@molecules/CreateOptionItem/CreateOptionItem';
 import { CreateOptionContainer, CreateOptionsFlatList } from './screen.style';
 import SingleUserIcon from '@atoms/Illustrations/SingleUser';
@@ -7,22 +7,22 @@ import ServicesComputerIcon from '@atoms/Illustrations/ServicesComputer';
 import { CreateOptionItemProps, CreateOptionProps } from './screen.props';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
+import { addLeadInformation } from '@redux/slices/leads';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
+import { UserRole } from '@type/api/auth';
 
 const CreateOptions: React.FC<CreateOptionProps> = ({
   changeSnapPoints,
   handleBottomSheetClose,
 }) => {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation('bottomSheetCreatePotion');
   const onLayout = useCallback(() => {
     changeSnapPoints(['20%', '90%']);
   }, []);
 
+  const user = useSelector((state: RootState) => state.auth.user);
   const createOptions = [
-    {
-      label: 'user',
-      icon: <SingleUserIcon />,
-      route: '../../(protected)/add-user/add',
-    },
     {
       label: 'lead',
       icon: <LeadDocumentIcon />,
@@ -34,6 +34,17 @@ const CreateOptions: React.FC<CreateOptionProps> = ({
       route: '../../(protected)/add-product/add',
     },
   ];
+
+  if (
+    user.userRole === UserRole.Admin ||
+    user.userRole === UserRole.CompanyAdmin
+  ) {
+    createOptions.splice(1, 0, {
+      label: 'user',
+      icon: <SingleUserIcon />,
+      route: '../../(protected)/add-user/add',
+    });
+  }
 
   const handleRedirection = (route: string) => {
     handleBottomSheetClose?.();
@@ -56,6 +67,9 @@ const CreateOptions: React.FC<CreateOptionProps> = ({
       />
     );
   };
+  useEffect(() => {
+    dispatch(addLeadInformation({}));
+  }, []);
   return (
     <CreateOptionContainer onLayout={onLayout}>
       <CreateOptionsFlatList

@@ -28,7 +28,7 @@ export interface LeadListParams {
   page?: number;
   search?: string;
   lead_status_id?: number;
-  lead_channel_id?: number;
+  lead_channel_id?: number | number[];
   lead_conversion_id?: number;
 }
 export enum ORDERBY {
@@ -89,6 +89,9 @@ export interface LeadListData {
   documents: DocumentTye[];
   assign_from_user_id?: number;
   assign_to_user_id?: number;
+  budget_currency_id: number;
+  timeline_timeframe: number;
+  deal_amount_currency_id: number;
 }
 
 export interface DocumentTye {
@@ -96,7 +99,7 @@ export interface DocumentTye {
   original_url: string;
   mime_type: string;
   id: number;
-  name: string;
+  file_name: string;
   size: number;
 }
 export interface LeadListResponse {
@@ -106,6 +109,7 @@ export interface LeadListResponse {
     current_page: number;
     last_page: number;
     per_page: number;
+    total: number;
     data: LeadListData[];
   };
 }
@@ -121,6 +125,7 @@ export interface ProductService {
 }
 
 export interface LeadListState {
+  dealAmountCurrencyCode: number;
   id: number;
   companyUserId: number;
   name: string;
@@ -148,8 +153,8 @@ export interface LeadListState {
 }
 
 export interface LeadsFilterType {
-  startDate: string;
-  endDate: string;
+  startDate?: string;
+  endDate?: string;
   selectedChannel?: number;
   selectedStage?: number;
   selectedStatus?: number;
@@ -231,4 +236,9 @@ export enum updateLeadStatusTypes {
   STATUS = 1,
   CHANNEL = 2,
   CONVERSION = 3,
+}
+
+export interface AssignLeadOnDeleteParams {
+  assign_from_user_id: number;
+  assign_to_user_id: number;
 }

@@ -30,7 +30,6 @@ export const TouchableOpacityContainer = styled(TouchableOpacity)<{
 export const SwipeText = styled(Text)`
   color: ${({ theme }) => theme.colors.white};
   font-size: 14px;
-  font-weight: 700;
   text-align: center;
 `;
 

@@ -1,9 +1,9 @@
-import Button from "@atoms/Button/Button";
-import Text from "@atoms/Text/Text";
-import View from "@atoms/View/View";
-import { Pressable } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import styled from "styled-components";
+import Button from '@atoms/Button/Button';
+import Text from '@atoms/Text/Text';
+import View from '@atoms/View/View';
+import { FlatList } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import styled from 'styled-components';
 
 export const FormsView = styled(View)`
   display: flex;
@@ -11,6 +11,7 @@ export const FormsView = styled(View)`
   justify-content: space-between;
   flex: 1;
   flex-basis: auto;
+  margin-bottom: 16px;
 `;
 
 export const FieldDropDownContainer = styled(View)<{ isError?: boolean }>`
@@ -47,14 +48,79 @@ export const ContainerView = styled(View)`
   gap: 16px;
 `;
 export const SubContainerView = styled(View)`
-  width: 100%;
   flex: 0.5;
   z-index: 2;
+  justify-content: flex-end;
 `;
 
 export const FormButtonText = styled(Text)<{ valid: boolean }>`
-  font-weight: 700;
   color: ${({ valid, theme }) =>
-    valid ? theme.colors.black : theme.colors.lightGray};
+    valid ? theme.colors.white : theme.colors.lightGray};
+`;
+export const LabelDescriptionText = styled(Text)`
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.textGray};
+`;
+export const ServiceLabel = styled(Text)`
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.textDark};
+`;
+export const RowView = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+`;
+export const DropdownView = styled(View)`
+  flex: 0.3;
+  padding: 18px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.iceWindDale};
 `;
 
+export const InputView = styled(View)`
+  flex: 0.7;
+  border-radius: 20px;
+  background-color: ${({ theme }) => theme.colors.iceWindDale};
+`;
+export const SelectedServiceData = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px 8px 8px;
+  background-color: ${({ theme }) => theme.colors.white};
+  border-width: 1px;
+  border-color: ${({ theme }) => theme.colors.lightGray};
+  border-radius: 19px;
+  gap: 8px;
+  margin-right: 8px;
+  flex: 1;
+  flex-basis: auto;
+  max-width: 95%;
+`;
+export const ServiceText = styled(Text)`
+  font-size: 15px;
+  color: ${({ theme }) => theme.colors.carbonFootprint};
+`;
+export const showMultipleDataList = styled(FlatList).attrs({
+  contentContainerStyle: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+})``;
+export const SelectedUserData = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: ${({ theme }) => theme.colors.plaster};
+  border-radius: 19px;
+  gap: 8px;
+  margin-right: 8px;
+`;

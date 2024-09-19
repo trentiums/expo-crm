@@ -26,6 +26,7 @@ import {
 } from '@utils/formValidators';
 import { Spacer } from '@atoms/common/common.styles';
 import { FormButtonText } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
+import { router } from 'expo-router';
 
 const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
   const { t } = useTranslation('login');
@@ -67,18 +68,23 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
           right
           secureTextEntry={secureTextEntry}
         />
-        <ForgotPasswordContainer>
-          <ForgotText>{t('forgotPassword')}</ForgotText>
+        <ForgotPasswordContainer
+          onPress={() => router.navigate('/(public)/forgotPassword')}>
+          <ForgotText variant="SF-Pro-Display-Medium_500">
+            {t('forgotPassword')}
+          </ForgotText>
         </ForgotPasswordContainer>
         <Spacer size={16} />
       </LoginFormContainer>
 
       <ButtonSubmit
-        onPress={form.submit}
+        onPress={!loading && form.submit}
         loading={loading}
         textColor={valid ? colors.black : colors.disabledTextColor}
-        valid={valid}>
-        <FormButtonText valid={valid}>{t('login')}</FormButtonText>
+        variant={valid}>
+        <FormButtonText valid={valid} variant="SF-Pro-Display-Semibold_600">
+          {t('login')}
+        </FormButtonText>
       </ButtonSubmit>
     </LoginFormView>
   );

@@ -4,13 +4,24 @@ import { Label } from '@organisms/BasicInformationForm/BasicInformationForm.styl
 import {
   composeValidators,
   numberAndFractionalNumberValidator,
+  requiredValidator,
 } from '@utils/formValidators';
 import React, { useEffect, useState } from 'react';
 import { Field, useFormState } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LeadDetailsFormProps } from './LeadDetailsForm.props';
-import { FormsView } from './LeadDetailsForm.styles';
+import {
+  DropdownView,
+  FormsView,
+  InputView,
+  LabelDescriptionText,
+  RowView,
+  SelectedServiceData,
+  SelectedUserData,
+  ServiceLabel,
+  ServiceText,
+} from './LeadDetailsForm.styles';
 import View from '@atoms/View/View';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import FieldDatePicker from '@molecules/FieldDatePicker/FieldDatePicker';
@@ -18,6 +29,8 @@ import moment from 'moment';
 import { useRoute } from '@react-navigation/native';
 import { LeadListTypeState } from '@type/api/lead';
 import {
+  BackButton,
+  BackButtonText,
   ButtonSubmit,
   ContainerView,
   FormButtonText,
@@ -27,8 +40,14 @@ import { addLeadInformation } from '@redux/slices/leads';
 import { UserRole } from '@type/api/auth';
 import { useAppTheme } from '@constants/theme';
 import { LeadStageType } from '@organisms/LeadDetailCard/LeadDetailCard.props';
-import { getProductServiceListAction } from '@redux/actions/productService';
 import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
+import { Pressable } from 'react-native';
+import { ShowMultipleDataList } from '@molecules/DropDown/DropDown.styles';
+import CrossSmallIcon from '@atoms/Illustrations/CrossSmall';
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
+import { getLeadProductServiceListAction } from '@redux/actions/productService';
+import { getAssignUserListAction } from '@redux/actions/user';
+import ProfileIcon from '@atoms/Illustrations/Profile';
 
 const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   form,
@@ -47,9 +66,13 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   const addLeadFormData = useSelector(
     (state: RootState) => state.leads.addLead,
   );
+  const settings = useSelector((state: RootState) => state.general.settings);
   const general = useSelector((state: RootState) => state.general);
   const servicesData = useSelector(
-    (state: RootState) => state.productService.productServiceList?.serviceList,
+    (state: RootState) => state.productService.leadProductService,
+  );
+  const currencyList = useSelector(
+    (state: RootState) => state.general.currencyList,
   );
   const productServiceListData = useSelector(
     (state: RootState) => state.productService.productServiceList,
@@ -65,26 +88,9 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
     leadsData?.[0],
   );
   const leadAssignToData = useSelector(
-    (state: RootState) => state.user.assignUserList,
+    (state: RootState) => state.user.assignUserList?.assignUsers,
   );
-  const handleGetMoreServices = async () => {
-    if (
-      productServiceListData?.currentPage !== productServiceListData?.lastPage
-    ) {
-      try {
-        await dispatch(
-          getProductServiceListAction({
-            page: productServiceListData?.currentPage + 1,
-          }),
-        ).unwrap();
-      } catch (error: any) {
-        console.log(error);
-      }
-    }
-  };
-  useEffect(() => {
-    handleGetMoreServices();
-  }, [productServiceListData]);
+
   useEffect(() => {
     const data = leadsData?.filter((item) => item.id === id);
     setSelectedData(data?.[0]);
@@ -107,16 +113,32 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
           ? moment(values.dealCloseDate).format('YYYY-MM-DD')
           : '',
         comments: values.comments,
+        budgetCurrencyCode: values?.budgetCurrencyCode,
+        dealAmountCurrencyCode: values?.dealAmountCurrencyCode,
+        timeFrameType: values?.timeFrameType,
       }),
     );
   }, [values]);
 
   useEffect(() => {
+    handleGetLeadsServices();
     form.change(
       'selectedChannel',
       id ? leadsDetail?.leadChannelId : addLeadFormData?.selectedChannel,
     );
 
+    form.change(
+      'budgetCurrencyCode',
+      id
+        ? leadsDetail?.budgetCurrencyCode
+        : addLeadFormData?.budgetCurrencyCode,
+    );
+    form.change(
+      'dealAmountCurrencyCode',
+      id
+        ? leadsDetail?.dealAmountCurrencyCode
+        : addLeadFormData?.dealAmountCurrencyCode,
+    );
     form.change(
       'selectedLead',
       id ? leadsDetail?.leadStatusId : addLeadFormData?.selectedLead,
@@ -165,8 +187,47 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       'dealCloseDate',
       id ? leadsDetail?.dealCloseDate : addLeadFormData?.dealCloseDate,
     );
+    form.change(
+      'timeFrameType',
+      id ? `${leadsDetail?.timeFrameType}` : addLeadFormData?.timeFrameType,
+    );
   }, [id]);
-
+  const handleGetLeadsServices = async () => {
+    await dispatch(getLeadProductServiceListAction());
+    await dispatch(getAssignUserListAction({}));
+  };
+  const handleDeleteService = (deleteId: number) => {
+    const updatedServices = values?.selectedServices?.filter(
+      (service) => service !== deleteId,
+    );
+    form.change('selectedServices', updatedServices);
+  };
+  const handleDeleteAssignedUser = (deleteId: number) => {
+    form.change('assignTo', null);
+  };
+  const renderSelectedServices = ({ item }) => {
+    return (
+      <SelectedServiceData>
+        <ServiceText>{item.name}</ServiceText>
+        <Pressable onPress={() => handleDeleteService(item.id)}>
+          <CrossSmallIcon />
+        </Pressable>
+      </SelectedServiceData>
+    );
+  };
+  const renderSelectedUsers = ({ item }) => {
+    return (
+      <SelectedUserData>
+        <ProfileIcon />
+        <ServiceText>{item.title}</ServiceText>
+        {!id && (
+          <Pressable onPress={() => handleDeleteAssignedUser(item.id)}>
+            <CrossSmallIcon />
+          </Pressable>
+        )}
+      </SelectedUserData>
+    );
+  };
   return (
     <FormsView>
       <KeyboardAwareScrollView
@@ -174,7 +235,13 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always">
         <View>
-          <Label>{`${t('sourceLabel')} *`}</Label>
+          <ServiceLabel variant="SF-Pro-Display-Medium_500">{`${t(
+            'sourceLabel',
+          )} *`}</ServiceLabel>
+          <LabelDescriptionText>
+            {t('servicedDescription')}
+          </LabelDescriptionText>
+          <Spacer size={8} />
           <Field
             component={FieldDropDown}
             name={'selectedServices'}
@@ -184,13 +251,29 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 title: item?.name,
               };
             })}
-            placeholder={`${t('sourceLabel')}`}
+            placeholder={`${t('searchService')}`}
             isMultiple
             isFullWidth
-            dropDownTitle={`${t('sourceLabel')} ${t('list')}`}
+            isSearch
+            dropdownDataType={DropdownDataType.SERVICES}
+            heading={t('selectService')}
+            validate={requiredValidator}
           />
+          <Spacer size={8} />
+          {values?.selectedServices?.length > 0 && (
+            <ShowMultipleDataList
+              data={servicesData?.filter((item) =>
+                values.selectedServices.includes(item.id),
+              )}
+              renderItem={renderSelectedServices}
+              keyExtractor={(item, index) => `${item}-${index}`}
+              ItemSeparatorComponent={<Spacer size={8} />}
+            />
+          )}
           <Spacer size={16} />
-          <Label>{`${tl('leadChannel')} *`}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{`${tl(
+            'leadChannel',
+          )} *`}</Label>
           <Field
             component={FieldDropDown}
             listData={general.leadChannelList?.map((item) => {
@@ -203,9 +286,12 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             name="selectedChannel"
             dropDownTitle={`${tl('leadChannel')} ${t('list')}`}
             isStaff={!isAdmin && id}
+            validate={requiredValidator}
           />
           <Spacer size={16} />
-          <Label>{`${tl('leadStatus')} *`}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{`${tl(
+            'leadStatus',
+          )} *`}</Label>
           <Field
             component={FieldDropDown}
             name="selectedLead"
@@ -217,9 +303,12 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             })}
             placeholder={tl('leadStatus')}
             dropDownTitle={`${tl('leadStatus')} ${t('list')}`}
+            validate={requiredValidator}
           />
           <Spacer size={16} />
-          <Label>{`${tl('LeadStage')} *`}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{`${tl(
+            'LeadStage',
+          )} *`}</Label>
           <Field
             name="selectedStage"
             listData={general.leadConversionList?.map((item) => {
@@ -231,47 +320,108 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             placeholder={tl('LeadStage')}
             component={FieldDropDown}
             dropDownTitle={`${tl('LeadStage')} ${t('list')}`}
+            validate={requiredValidator}
           />
           <Spacer size={16} />
-          <Label>{`${tl('assignTo')}`}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{`${tl(
+            'assignTo',
+          )}`}</Label>
           <Field
             component={FieldDropDown}
             name="assignTo"
             listData={leadAssignToData}
-            placeholder={tl('assignTo')}
-            dropDownTitle={`${tl('assignTo')} ${t('list')}`}
-            dataToShow={leadAssignToData?.filter(
-              (item) => item.id !== assignTo,
-            )}
-            isDataToShow
+            placeholder={tl('assignToEg')}
+            isSearch
+            dropdownDataType={DropdownDataType.USERS}
+            heading={t('selectUser')}
           />
+          <Spacer size={8} />
+          {values?.assignTo && (
+            <ShowMultipleDataList
+              data={leadAssignToData?.filter(
+                (item) => values?.assignTo === item.id,
+              )}
+              renderItem={renderSelectedUsers}
+              keyExtractor={(item, index) => `${item}-${index}`}
+              ItemSeparatorComponent={<Spacer size={8} />}
+            />
+          )}
           <Spacer size={16} />
-          <Label>{t('budgetLabel')}</Label>
-          <Field
-            name="budget"
-            placeholder={t('budgetLabelPlaceholder')}
-            component={FieldTextInput}
-            keyboardType="numeric"
-            isFloatValue
-            validate={composeValidators(numberAndFractionalNumberValidator)}
-          />
+          <Label variant="SF-Pro-Display-Medium_500">{t('budgetLabel')}</Label>
+          <RowView>
+            <DropdownView>
+              <Field
+                name={'budgetCurrencyCode'}
+                component={FieldDropDown}
+                listData={currencyList?.map((item) => {
+                  return {
+                    id: item.id,
+                    title: item.currencyCodeAlpha,
+                  };
+                })}
+                isShowSelected
+                dropdownDataType={DropdownDataType.BUDGET}
+                placeholder={t('budget')}
+                heading={t('selectBudget')}
+              />
+            </DropdownView>
+            <InputView>
+              <Field
+                name="budget"
+                placeholder={tl('budgetEg')}
+                component={FieldTextInput}
+                keyboardType="numeric"
+                isFloatValue
+                validate={composeValidators(numberAndFractionalNumberValidator)}
+              />
+            </InputView>
+          </RowView>
           <Spacer size={16} />
-          <Label>{t('timeFrameToPurchaseLabel')}</Label>
-          <Field
-            name="timeFrame"
-            placeholder={t('timeFrameToPurchaseEg')}
-            component={FieldTextInput}
-          />
+          <Label variant="SF-Pro-Display-Medium_500">
+            {t('timeFrameToPurchaseLabel')}
+          </Label>
+          <RowView>
+            <DropdownView>
+              <Field
+                name={'timeFrameType'}
+                component={FieldDropDown}
+                listData={Object?.entries(settings?.timeframe).map(
+                  ([key, value]) => ({
+                    id: key,
+                    title: value,
+                  }),
+                )}
+                isShowSelected
+                placeholder={t('time')}
+                dropdownDataType={DropdownDataType.TIMELINE}
+                heading={t('selectTimeline')}
+              />
+            </DropdownView>
+            <InputView>
+              <Field
+                name="timeFrame"
+                placeholder={`${tl('timeFrameEg')} ${
+                  settings?.timeframe[
+                    values?.timeFrameType as string
+                  ]?.toLowerCase() || ''
+                }`}
+                component={FieldTextInput}
+                keyboardType="numeric"
+              />
+            </InputView>
+          </RowView>
           <Spacer size={16} />
-          <Label>{t('commentsLabel')}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">
+            {t('commentsLabel')}
+          </Label>
           <Field
             name="comments"
-            placeholder={t('commentsLabel')}
+            placeholder={t('commentsEg')}
             component={FieldTextInput}
             numberOfLines={5}
             style={{
               height: 85,
-              backgroundColor: colors?.transparent,
+              backgroundColor: colors?.iceWindDale,
             }}
             multiline
             contentStyle={{ marginTop: -10 }}
@@ -280,29 +430,57 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
           {(values?.selectedStage === LeadStageType.CLOSELOST ||
             values?.selectedStage === LeadStageType.CLOSEWON) && (
             <>
-              <Label>{t('winCloseReason')}</Label>
+              <Label variant="SF-Pro-Display-Medium_500">
+                {t('winCloseReason')}
+              </Label>
               <Field
                 name="winCloseReason"
                 placeholder={t('winCloseReason')}
                 component={FieldTextInput}
               />
               <Spacer size={16} />
-              <Label>{t('dealCloseDate')}</Label>
+              <Label variant="SF-Pro-Display-Medium_500">
+                {t('dealCloseDate')}
+              </Label>
               <Field
                 name="dealCloseDate"
                 component={FieldDatePicker}
                 initialDate={values?.dealCloseDate || moment().clone().toDate()}
               />
               <Spacer size={16} />
-              <Label>{t('dealAmount')}</Label>
-              <Field
-                name="dealAmount"
-                placeholder={t('dealAmount')}
-                component={FieldTextInput}
-                keyboardType="numeric"
-                isFloatValue
-                validate={composeValidators(numberAndFractionalNumberValidator)}
-              />
+              <Label variant="SF-Pro-Display-Medium_500">
+                {t('dealAmount')}
+              </Label>
+              <RowView>
+                <DropdownView>
+                  <Field
+                    name={'dealAmountCurrencyCode'}
+                    component={FieldDropDown}
+                    listData={currencyList?.map((item) => {
+                      return {
+                        id: item.id,
+                        title: item.currencyCodeAlpha,
+                      };
+                    })}
+                    isShowSelected
+                    placeholder={t('Amount')}
+                    dropdownDataType={DropdownDataType.BUDGET}
+                    heading={t('selectDealAmount')}
+                  />
+                </DropdownView>
+                <InputView>
+                  <Field
+                    name="dealAmount"
+                    placeholder={t('dealAmount')}
+                    component={FieldTextInput}
+                    keyboardType="numeric"
+                    isFloatValue
+                    validate={composeValidators(
+                      numberAndFractionalNumberValidator,
+                    )}
+                  />
+                </InputView>
+              </RowView>
               <Spacer size={16} />
             </>
           )}
@@ -310,36 +488,26 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       </KeyboardAwareScrollView>
       <ContainerView>
         <SubContainerView>
-          <ButtonSubmit onPress={() => onBackClick?.()} valid={true}>
-            <FormButtonText valid={true}>{tb('previous')}</FormButtonText>
-          </ButtonSubmit>
+          <BackButton
+            onPress={() => onBackClick?.()}
+            valid={false}
+            variant="SF-Pro-Display-Semibold_600">
+            <BackButtonText valid={true}>{tb('previous')}</BackButtonText>
+          </BackButton>
         </SubContainerView>
         <SubContainerView>
           <ButtonSubmit
             onPress={
-              values?.selectedServices?.length > 0 &&
-              values?.selectedChannel &&
-              values?.selectedLead &&
-              values?.selectedStage &&
               !loading &&
+              valid &&
+              values?.selectedServices?.length > 0 &&
               form.submit
             }
             loading={loading}
-            valid={
-              valid &&
-              values?.selectedServices?.length > 0 &&
-              values?.selectedChannel &&
-              values?.selectedLead &&
-              values?.selectedStage
-            }>
+            valid={valid && values?.selectedServices?.length > 0}>
             <FormButtonText
-              valid={
-                valid &&
-                values?.selectedServices?.length > 0 &&
-                values?.selectedChannel &&
-                values?.selectedLead &&
-                values?.selectedStage
-              }>
+              valid={valid && values?.selectedServices?.length > 0}
+              variant="SF-Pro-Display-Semibold_600">
               {id ? tb('save') : tb('next')}
             </FormButtonText>
           </ButtonSubmit>

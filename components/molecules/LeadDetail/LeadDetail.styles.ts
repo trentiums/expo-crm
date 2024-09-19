@@ -10,6 +10,7 @@ export const DetailContainer = styled(View)`
   align-content: flex-start;
   gap: 8px;
 `;
+
 export const LeadDetailView = styled(View)`
   flex: 1;
 `;
@@ -26,7 +27,6 @@ export const LeadInfoView = styled(View)`
 export const NameText = styled(Text)`
   color: ${({ theme }) => theme.colors.textDark};
   font-size: 18px;
-  font-weight: 700;
 `;
 
 export const DateTimeText = styled(Text)`

@@ -5,7 +5,7 @@ import LeadsProgressChartItem from '@molecules/LeadsProgressChartItem/LeadsProgr
 
 const LeadsProgressChart: React.FC<LeadsProgressDataProps> = ({ leads }) => {
   const findMaxValue = (data: Leads[]) => {
-    if (!data || data.length === 0) return 0;
+    if (!data || data?.length === 0) return 0;
     return Math.max(...data.map((item) => item.progress));
   };
 

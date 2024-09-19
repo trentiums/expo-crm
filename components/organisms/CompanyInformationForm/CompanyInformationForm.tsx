@@ -1,17 +1,13 @@
 import { Spacer } from '@atoms/common/common.styles';
 import FieldTextInput from '@molecules/FieldTextInput/FieldTextInput';
 import { Label } from '@organisms/BasicInformationForm/BasicInformationForm.styles';
-import {
-  composeValidators,
-  numberValidator,
-  requiredValidator,
-  websiteLinkValidator,
-} from '@utils/formValidators';
 import React, { useEffect, useState } from 'react';
 import { Field, useFormState } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { CompanyInfoFormProps } from './CompanyInformation.props';
 import {
+  BackButton,
+  BackButtonText,
   ButtonSubmit,
   ContainerView,
   FormButtonText,
@@ -22,11 +18,12 @@ import { FormsView } from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import { useRoute } from '@react-navigation/native';
 import { addLeadInformation } from '@redux/slices/leads';
+import { companySizes } from '@utils/constant';
+import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
 
 const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
   form,
   loading,
-  isSave,
   onBackClick,
 }) => {
   const { t } = useTranslation('companyInformation');
@@ -50,7 +47,7 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
     );
     form.change(
       'companySize',
-      id ? leadsDetail.companySize || '' : addLeadFormData?.companySize,
+      id ? +leadsDetail.companySize || '' : addLeadFormData?.companySize,
     );
     form.change(
       'webSite',
@@ -73,7 +70,9 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="always">
-        <Label>{t('companyNameLabel')}</Label>
+        <Label variant="SF-Pro-Display-Medium_500">
+          {t('companyNameLabel')}
+        </Label>
         <Field
           name="companyName"
           placeholder={t('companyNameLabel')}
@@ -81,16 +80,16 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
         />
         <Spacer size={16} />
 
-        <Label>{t('companySizeLabel')}</Label>
+        <Label variant="SF-Pro-Display-Medium_500">
+          {t('companySizeLabel')}
+        </Label>
         <Field
-          name="companySize"
-          placeholder={t('companySizeLabel')}
-          component={FieldTextInput}
-          keyboardType="numeric"
-          validate={composeValidators(numberValidator)}
+          name={'companySize'}
+          component={FieldDropDown}
+          listData={companySizes}
         />
         <Spacer size={16} />
-        <Label>{t('websiteLabel')}</Label>
+        <Label variant="SF-Pro-Display-Medium_500">{t('websiteLabel')}</Label>
         <Field
           name="webSite"
           placeholder={t('websiteLabel')}
@@ -100,19 +99,18 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
       </KeyboardAwareScrollViewContainer>
       <ContainerView>
         <SubContainerView>
-          <ButtonSubmit
-            onPress={() => onBackClick?.()}
-            loading={false}
-            valid={true}>
-            <FormButtonText valid={true}>{tb('previous')}</FormButtonText>
-          </ButtonSubmit>
+          <BackButton onPress={() => onBackClick?.()} loading={false}>
+            <BackButtonText valid={true} variant="SF-Pro-Display-Semibold_600">
+              {tb('previous')}
+            </BackButtonText>
+          </BackButton>
         </SubContainerView>
         <SubContainerView>
           <ButtonSubmit
             onPress={!loading && form.submit}
             loading={loading}
-            valid={valid}>
-            <FormButtonText valid={valid}>
+            valid={true}>
+            <FormButtonText valid={true} variant="SF-Pro-Display-Semibold_600">
               {id ? tb('save') : tb('next')}
             </FormButtonText>
           </ButtonSubmit>

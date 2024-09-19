@@ -10,15 +10,12 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
   listData,
   value,
   isMultiple,
-  placeholder,
-  dropDownTitle,
-  dataToShow,
-  isDataToShow,
-  isLeadChange,
-  isFullWidth,
-  isStaff,
-  handleBottomSheetClose,
   isAllowDeselect,
+  isShowSelected,
+  isSearch,
+  placeholder,
+  dropdownDataType,
+  heading,
 }) => {
   const handleSelect = (value: any) => {
     if (isMultiple) {
@@ -42,17 +39,14 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
     <>
       <DropDown
         data={listData}
-        placeholder={placeholder}
-        dataToShow={dataToShow}
-        dropDownTitle={dropDownTitle}
-        handleBottomSheetClose={handleBottomSheetClose}
-        isStaff={isStaff}
-        isDataToShow={isDataToShow}
-        isFullWidth={isFullWidth}
-        isLeadChange={isLeadChange}
         isMultiple={isMultiple}
         onChange={(value: string) => handleSelect(value)}
         value={input.value}
+        isShowSelected={isShowSelected}
+        placeholder={placeholder}
+        isSearch={isSearch}
+        dropdownDataType={dropdownDataType}
+        heading={heading}
       />
       {!!(meta.touched && meta.error) && (
         <FormError

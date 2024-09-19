@@ -11,7 +11,6 @@ export const LeadStageContainer = styled(View)<{ bgColor?: string }>`
 
 export const LeadStageText = styled(Text)<{ color?: string }>`
   font-size: 14px;
-  font-weight: 500;
   color: ${({ theme, color }) => color || theme.colors.blue};
   padding: 4px 8px;
 `;

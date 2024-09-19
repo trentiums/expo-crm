@@ -4,15 +4,12 @@ import { styled } from '@utils/styled';
 import { FlatList, Pressable } from 'react-native';
 import { Image } from 'expo-image';
 
-export const DropDownContainer = styled(View)`
-  flex: 1;
-`;
+export const DropDownContainer = styled(Pressable)``;
 
 export const DropDownTitleText = styled(Text)`
   font-size: 18px;
   color: ${({ theme }) => theme.colors.white};
   text-align: center;
-  font-weight: bold;
 `;
 
 export const DropDownDataContainer = styled(View)`
@@ -28,30 +25,30 @@ export const DropdownLeftView = styled(View)<{
 }>`
   display: flex;
   flex-direction: row;
-  margin-left: ${({ isImage }) => (isImage ? 4 : -20)}px;
+  margin-left: ${({ isImage }) => (isImage ? -10 : -20)}px;
   align-items: center;
   gap: 8px;
+
   width: ${({ isFullWidth }) => (isFullWidth ? 100 : 80)}%;
 `;
-export const PressableView = styled(Pressable)<{
-  isLeadChange?: boolean;
-  isDisabled?: boolean;
-}>`
+export const PressableView = styled(Pressable)<{ isSelected: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.colors.transparent};
+  margin-right: 4px;
+  margin-bottom: 4px;
+  background-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.carolinaBlue : theme.colors.white};
+  border-radius: 19px;
   border-width: 1px;
-  border-color: ${({ theme, isDisabled }) =>
-    isDisabled ? theme.colors.lightBorder : theme.colors.disabledTextColor};
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top: ${({ isLeadChange }) => (isLeadChange ? 4 : 14)}px;
-  padding-bottom: ${({ isLeadChange }) => (isLeadChange ? 4 : 14)}px;
-  border-radius: 4px;
+  border-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.carolinaBlue : theme.colors.lightGray};
 `;
+
 export const SelectedText = styled(Text)`
   font-size: 16px;
+  color: ${({ theme }) => theme.colors.black};
+  text-align: 'center';
 `;
 
 export const DropDownSelectedView = styled(View)`
@@ -77,20 +74,29 @@ export const ImageView = styled(Image)`
 `;
 export const PlaceHolderText = styled(Text)`
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.disabledTextColor};
+  color: ${({ theme }) => theme.colors.moreThan};
 `;
-export const MultipleSelectedText = styled(Text)`
-  background-color: ${({ theme }) => theme.colors.transparent};
+export const MultipleSelectedText = styled(Text)<{ isSelected: boolean }>`
   font-size: 16px;
-  margin-right: 4px;
-  padding: 4px 16px 6px 16px;
-  border-radius: 16px;
-  margin-bottom: 8px;
+  padding: 8px 12px;
+  color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.flyByNight : theme.colors.lightGray};
 `;
-export const FlatListCon = styled(FlatList).attrs({
+
+export const ShowMultipleDataList = styled(FlatList).attrs({
   contentContainerStyle: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
 })``;
+export const SearchFilterContainer = styled(Pressable)`
+  position: relative;
+`;
+export const DropdownPlaceHolderText = styled(Text)`
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.moreThan};
+  position: absolute;
+  left: 60;
+  top: 17;
+`;

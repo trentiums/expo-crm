@@ -3,7 +3,7 @@ import { Tabs } from 'expo-router';
 import DashboardIcon from '@atoms/Illustrations/Dashboard';
 import { useAppTheme } from '@constants/theme';
 import LeadsIcon from '@atoms/Illustrations/Leads';
-import { CreateOptionTabContainer, styles, TabLabel } from './tabs.style';
+import { CreateOptionTabContainer, styles, TabLabel } from '../tabs.style';
 import { RootState, useSelector } from '@redux/store';
 import UsersIcon from '@atoms/Illustrations/Users';
 import AddCircleIcon from '@atoms/Illustrations/addCircle';
@@ -20,13 +20,34 @@ const TabsLayout = () => {
   const { t } = useTranslation('tabs');
 
   const renderTabBarLabel = (focused: boolean, label: string) => {
-    return <TabLabel focused={focused}>{label}</TabLabel>;
+    return (
+      <TabLabel focused={focused} variant="SF-Pro-Display-Semibold_600">
+        {label}
+      </TabLabel>
+    );
   };
 
   const handleAddLeadPress = () => {
     setVisibleCreateOptionSheet(!visibleCreateOptionSheet);
   };
-
+  const renderServices = () => {
+    return (
+      <Tabs.Screen
+        name="products"
+        options={{
+          title: t('services'),
+          headerTitle: t('services'),
+          tabBarLabel: ({ focused }) =>
+            renderTabBarLabel(focused, t('services')),
+          tabBarIcon: ({ focused }) => (
+            <ProductIcon
+              color={focused ? colors.englishHolly : colors.americanSilver}
+            />
+          ),
+        }}
+      />
+    );
+  };
   return (
     <>
       <Tabs
@@ -72,6 +93,7 @@ const TabsLayout = () => {
             ),
           }}
         />
+        {user.userRole === UserRole.CompanyStaff && renderServices()}
         <Tabs.Screen
           name="create-new"
           options={{
@@ -88,7 +110,6 @@ const TabsLayout = () => {
               handleAddLeadPress();
             },
           }}
-          redirect={user.userRole === UserRole.CompanyStaff}
         />
         <Tabs.Screen
           name="users"
@@ -105,21 +126,7 @@ const TabsLayout = () => {
           }}
           redirect={user.userRole === UserRole.CompanyStaff}
         />
-        <Tabs.Screen
-          name="products"
-          options={{
-            title: t('services'),
-            headerTitle: t('services'),
-            tabBarLabel: ({ focused }) =>
-              renderTabBarLabel(focused, t('services')),
-            tabBarIcon: ({ focused }) => (
-              <ProductIcon
-                color={focused ? colors.englishHolly : colors.americanSilver}
-              />
-            ),
-          }}
-          redirect={user.userRole === UserRole.CompanyStaff}
-        />
+        {user.userRole !== UserRole.CompanyStaff && renderServices()}
       </Tabs>
 
       {visibleCreateOptionSheet && (

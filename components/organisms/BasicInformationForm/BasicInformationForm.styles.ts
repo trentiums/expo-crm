@@ -91,19 +91,18 @@ export const DocumentView = styled(View)`
 export const HeaderText = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.textDark};
-  font-weight: 500;
 `;
 
 export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   height: 48px;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.blueChaos};
+  background-color: ${({ theme, valid }) =>
+    valid ? theme.colors.blueChaos : theme.colors.gray};
   border-radius: 50px;
   border-width: 1px;
   margin-bottom: -16px;
   z-index: 10;
 `;
-
 export const KeyboardAwareScrollViewContainer = styled(KeyboardAwareScrollView)`
   min-height: 50%;
   z-index: 1;
@@ -124,9 +123,8 @@ export const ContainerView = styled(View)`
 `;
 
 export const FormButtonText = styled(Text)<{ valid?: boolean }>`
-  font-weight: 700;
   color: ${({ valid, theme }) =>
-    valid ? theme.colors.white : theme.colors.lightGray};
+    valid ? theme.colors.funWhite : theme.colors.lightGray};
 `;
 
 export const FlatListCon = styled(FlatList).attrs({
@@ -195,11 +193,16 @@ export const PhoneNumberFieldView = styled(View)`
 `;
 
 export const CountryCodeInput = styled(View)`
-  flex: 0.4;
+  flex: 0.3;
+  padding: 18px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.iceWindDale};
 `;
 
 export const NumberInput = styled(View)`
   flex: 0.7;
+  border-radius: 20px;
+  background-color: ${({ theme }) => theme.colors.iceWindDale};
 `;
 
 export const DialCodeDropDownView = styled(View)`
@@ -226,4 +229,12 @@ export const ErrorText = styled(Text)`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.error};
   padding-left: 4px;
+`;
+export const FormsView = styled(View)`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  flex-basis: auto;
+  margin-bottom: 32px;
 `;

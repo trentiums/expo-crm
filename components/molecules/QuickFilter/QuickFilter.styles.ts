@@ -18,11 +18,9 @@ export const SelectedFilterWithIcon = styled(Pressable)`
 `;
 export const FilterTitle = styled(Text)`
   font-size: 16px;
-  font-weight: 500;
   color: ${({ theme }) => theme.colors.textGray};
 `;
 export const FilterType = styled(Text)`
   font-size: 16px;
-  font-weight: 400;
   color: ${({ theme }) => theme.colors.textGray};
 `;

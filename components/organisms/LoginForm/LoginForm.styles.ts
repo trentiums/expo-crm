@@ -15,11 +15,11 @@ export const LoginFormView = styled(View)`
   justify-content: space-between;
 `;
 
-export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
+export const ButtonSubmit = styled(Button)<{ variant: boolean }>`
   height: 48px;
   justify-content: center;
-  background-color: ${({ theme, valid }) =>
-    valid ? theme.colors.blueChaos : theme.colors.gray};
+  background-color: ${({ theme, variant }) =>
+    variant ? theme.colors.blueChaos : theme.colors.gray};
   border-radius: 50px;
 `;
 
@@ -30,9 +30,16 @@ export const PrivateKeyTextInput = styled(Field)`
 export const ForgotText = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.black};
-  font-weight: 500;
   padding-top: 4px;
 `;
+
 export const ForgotPasswordContainer = styled(Pressable)`
   align-self: flex-end;
+`;
+
+export const ForgotFormView = styled(View)`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
 `;

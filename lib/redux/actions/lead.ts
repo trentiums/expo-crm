@@ -1,6 +1,7 @@
 import { withToastForError } from '@utils/thunk';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
+  AssignLeadOnDeleteParams,
   DeleteLeadDocumentParams,
   DeleteLeadParams,
   LeadDetailsParams,
@@ -13,6 +14,7 @@ import {
 } from '@type/api/lead';
 import { ApiResponse } from '@type/api/api';
 import {
+  assignLeadOnDelete,
   deleteLead,
   deleteLeadDocuments,
   getLeadDetails,
@@ -73,6 +75,14 @@ export const getLeadDetailsAction = createAsyncThunk(
   'lead/leadDetails',
   withToastForError<LeadDetailsParams, LeadDetailsResponse>(async (data) => {
     const response = await getLeadDetails(data);
+    return response.data;
+  }),
+);
+
+export const assignLeadOnDeleteAction = createAsyncThunk(
+  'lead/assignLeadOnDelete',
+  withToastForError<AssignLeadOnDeleteParams, ApiResponse>(async (data) => {
+    const response = await assignLeadOnDelete(data);
     return response.data;
   }),
 );

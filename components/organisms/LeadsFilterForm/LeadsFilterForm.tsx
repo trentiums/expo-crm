@@ -2,37 +2,34 @@ import React, { useEffect } from 'react';
 import {
   DateContainer,
   DateFilterContainer,
+  FilterApplyButton,
   FilterFormView,
   FiltersDropDownViews,
+  LeadsFilterButton,
   LeadsFilterFormContainer,
+  RemoveButtonText,
+  RemoveFilterButton,
 } from './LeadsFilterForm.styles';
 import { Field, useFormState } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
-import { Label } from '@organisms/UserInformationForm/UserInformationForm.styles';
+import {
+  FormButtonText,
+  Label,
+} from '@organisms/UserInformationForm/UserInformationForm.styles';
 import FieldDatePicker from '@molecules/FieldDatePicker/FieldDatePicker';
 import moment from 'moment';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import { Spacer } from '@atoms/common/common.styles';
-import { orderByList, sortOrderList } from '../../../constant';
 import { LeadFilterFormProps } from './LeadsFilterForm.props';
 import { getLeadListAction } from '@redux/actions/lead';
-import Button from '@atoms/Button/Button';
-import { useAppTheme } from '@constants/theme';
 import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
 import { setLeadsFilters } from '@redux/slices/leads';
 
-const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
-  form,
-  handleDropDownClose,
-  loading,
-  bottomSheetClose,
-  setFilterCount,
-}) => {
+const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({ form, loading }) => {
   const { t } = useTranslation('leadsFilter');
   const { values } = useFormState();
   const general = useSelector((state: RootState) => state.general);
   const dispatch = useAppDispatch();
-  const { colors } = useAppTheme();
   const leadsFilter = useSelector(
     (state: RootState) => state.leads.leadsFilter,
   );
@@ -40,8 +37,6 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
   useEffect(() => {
     form.change('startDate', leadsFilter?.startDate);
     form.change('endDate', leadsFilter?.endDate);
-    form.change('orderBy', leadsFilter?.orderBy);
-    form.change('sortBy', leadsFilter?.sortBy);
     form.change('selectedChannel', leadsFilter?.selectedChannel);
     form.change('selectedStatus', leadsFilter?.selectedStatus);
     form.change('selectedStage', leadsFilter?.selectedStage);
@@ -52,9 +47,6 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
   const handleRemoveFilters = () => {
     form.reset();
     handleGetLeadList();
-    handleDropDownClose();
-    setFilterCount(0);
-    bottomSheetClose();
     dispatch(setLeadsFilters({}));
   };
   useEffect(() => {
@@ -67,7 +59,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
       <FilterFormView>
         <DateFilterContainer>
           <DateContainer>
-            <Label>{t('startDate')}</Label>
+            <Label variant="SF-Pro-Display-Medium_500">{t('startDate')}</Label>
             <Field
               name="startDate"
               component={FieldDatePicker}
@@ -76,7 +68,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             />
           </DateContainer>
           <DateContainer>
-            <Label>{t('endDate')}</Label>
+            <Label variant="SF-Pro-Display-Medium_500">{t('endDate')}</Label>
             <Field
               name="endDate"
               component={FieldDatePicker}
@@ -88,30 +80,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
         </DateFilterContainer>
         <FiltersDropDownViews>
           <Spacer size={16} />
-          <Label>{`${t('orderBy')}`}</Label>
-          <Field
-            component={FieldDropDown}
-            listData={orderByList}
-            placeholder={t('orderBy')}
-            name={'orderBy'}
-            dropDownTitle={`${t('orderBy')} ${t('list')}`}
-            handleBottomSheetClose={handleDropDownClose}
-            isAllowDeselect
-          />
-          <Spacer size={16} />
-          <Label>{`${t('sortOrder')}`}</Label>
-          <Field
-            name={'sortBy'}
-            listData={sortOrderList}
-            component={FieldDropDown}
-            placeholder={t('sortOrder')}
-            dropDownTitle={`${t('sortOrder')} ${t('list')}`}
-            handleBottomSheetClose={handleDropDownClose}
-            isStaff={!values?.orderBy}
-            isAllowDeselect
-          />
-          <Spacer size={16} />
-          <Label>{`${t('channel')}`}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{`${t('channel')}`}</Label>
           <Field
             name={'selectedChannel'}
             component={FieldDropDown}
@@ -123,11 +92,11 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             })}
             placeholder={t('channel')}
             dropDownTitle={`${t('channel')} ${t('list')}`}
-            handleBottomSheetClose={handleDropDownClose}
             isAllowDeselect
+            isMultiple
           />
           <Spacer size={16} />
-          <Label>{`${t('status')}`}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{`${t('status')}`}</Label>
           <Field
             name={'selectedStatus'}
             component={FieldDropDown}
@@ -139,11 +108,13 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             })}
             placeholder={t('status')}
             dropDownTitle={`${t('status')} ${t('list')}`}
-            handleBottomSheetClose={handleDropDownClose}
             isAllowDeselect
+            isMultiple
           />
           <Spacer size={16} />
-          <Label>{`${t('conversion')}`}</Label>
+          <Label variant="SF-Pro-Display-Medium_500">{`${t(
+            'conversion',
+          )}`}</Label>
           <Field
             component={FieldDropDown}
             name={'selectedStage'}
@@ -155,28 +126,24 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
             })}
             placeholder={t('conversion')}
             dropDownTitle={`${t('conversion')} ${t('list')}`}
-            handleBottomSheetClose={handleDropDownClose}
             isAllowDeselect
+            isMultiple
           />
           <Spacer size={16} />
         </FiltersDropDownViews>
       </FilterFormView>
-      <Button
-        mode="contained"
-        buttonColor={colors.primaryColor}
-        textColor={colors.white}
-        onPress={form.submit}
-        uppercase={false}
-        loading={loading}>
-        {t('applyFilter')}
-      </Button>
-      <Button
-        mode="text"
-        textColor={colors.errorText}
-        uppercase={false}
-        onPress={handleRemoveFilters}>
-        {t('removeFilter')}
-      </Button>
+      <LeadsFilterButton>
+        <RemoveFilterButton onPress={handleRemoveFilters}>
+          <RemoveButtonText variant="SF-Pro-Display-Semibold_600">
+            {t('removeFilter')}
+          </RemoveButtonText>
+        </RemoveFilterButton>
+        <FilterApplyButton loading={loading} onPress={!loading && form.submit}>
+          <FormButtonText valid={true} variant="SF-Pro-Display-Semibold_600">
+            {t('applyFilter')}
+          </FormButtonText>
+        </FilterApplyButton>
+      </LeadsFilterButton>
     </LeadsFilterFormContainer>
   );
 };

@@ -32,7 +32,7 @@ export const LeadAssignedToContainer = styled(View)`
   flex-direction: row;
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.plaster};
-  padding: 2px 8px 4px 8px;
+  padding: 4px 8px 4px 8px;
   border-radius: 15px;
 `;
 export const LeadServicesText = styled(Text)`

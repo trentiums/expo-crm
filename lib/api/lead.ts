@@ -1,4 +1,5 @@
 import {
+  AssignLeadOnDeleteParams,
   DeleteLeadDocumentParams,
   DeleteLeadParams,
   LeadDetailsParams,
@@ -47,3 +48,7 @@ export const getLeadDetails = (
   body: LeadDetailsParams,
 ): AxiosPromise<LeadDetailsResponse> =>
   api.get(`/lead-details`, { params: body });
+
+export const assignLeadOnDelete = (
+  body: AssignLeadOnDeleteParams,
+): AxiosPromise<ApiResponse> => api.post(`/assign-lead-on-delete`, body);

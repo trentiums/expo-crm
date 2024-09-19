@@ -66,16 +66,14 @@ const addUser = () => {
   }, [navigation]);
   return (
     <ScreenTemplate title={t('addUser')}>
-      <PaddingSpace>
-        <Spacer size={16} />
-        <FormTemplate
-          Component={UserInformationForm}
-          loading={loading}
-          onSubmit={onUserInformationSubmitPress}
-          isSave
-        />
-        <Spacer size={32} />
-      </PaddingSpace>
+      <Spacer size={16} />
+      <FormTemplate
+        Component={UserInformationForm}
+        loading={loading}
+        onSubmit={onUserInformationSubmitPress}
+        isSave
+      />
+      <Spacer size={32} />
     </ScreenTemplate>
   );
 };

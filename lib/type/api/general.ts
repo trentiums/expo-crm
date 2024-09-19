@@ -36,8 +36,54 @@ export interface CountryType {
   country_code_alpha: string;
   flag: string;
 }
+
+export interface CurrencyType {
+  id: number;
+  currency_code_alpha: string;
+  currency_symbol: string;
+}
 export interface CountryListResponse {
   status: boolean;
   message: string;
   data: CountryType[];
+}
+
+export interface CurrencyListResponse {
+  status: boolean;
+  message: string;
+  data: CurrencyType[];
+}
+export interface SettingsResponse {
+  status: boolean;
+  data: {
+    log_type: string[];
+    date_format: string;
+    supported_file_format: {
+      general: string;
+      image: string;
+      icon: string;
+      video: string;
+    };
+    file_size: {
+      general: number;
+      image: number;
+      icon: number;
+      video: number;
+    };
+    supported_file_extension: {
+      general: string;
+      icon: string;
+      video: string;
+    };
+    cache_data_limit: {
+      seconds: number;
+      days: number;
+    };
+    company_size: {
+      [key: string]: string;
+    };
+    timeframe: {
+      [key: string]: string;
+    };
+  };
 }

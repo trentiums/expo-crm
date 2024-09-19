@@ -1,4 +1,4 @@
-import { ProductService } from '@type/api/productService';
+import { LeadProductService, ProductService } from '@type/api/productService';
 
 export const formatServiceListData = (data: ProductService[]) => {
   return data?.map((item) => ({
@@ -8,7 +8,7 @@ export const formatServiceListData = (data: ProductService[]) => {
     documents: item?.documents?.map((item) => ({
       id: item?.id,
       uri: item?.original_url,
-      name: item?.name,
+      name: item?.file_name,
       size: item?.size,
       type: item?.mime_type,
     })),
@@ -22,9 +22,15 @@ export const formatProductServiceDetail = (data: ProductService) => {
     documents: data?.documents?.map((item) => ({
       id: item?.id,
       uri: item?.original_url,
-      name: item?.name,
+      name: item?.file_name,
       size: item?.size,
       type: item?.mime_type,
     })),
   };
+};
+export const formatLeadProductService = (data: LeadProductService[]) => {
+  return data?.map((item) => ({
+    id: item.id,
+    name: item.name,
+  }));
 };

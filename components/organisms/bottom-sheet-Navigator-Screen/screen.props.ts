@@ -3,6 +3,15 @@ import { ReactNode } from 'react';
 export type CreateOptionProps = {
   changeSnapPoints: (points: string[]) => void;
   handleBottomSheetClose?: () => void;
+  changeRoute?: () => void;
+};
+
+export type DashboardSortFilterProps = {
+  selectedSort?: number;
+  setSelectedSort?: (id: number) => void;
+  changeSnapPoints: (points: string[]) => void;
+  handleBottomSheetClose?: () => void;
+  changeRoute?: () => void;
 };
 
 export type CreateOptionItemProps = {
@@ -10,7 +19,22 @@ export type CreateOptionItemProps = {
   icon: ReactNode;
   route: string;
 };
-
+export interface LeadSortFilterItemProp {
+  id: number;
+  title: string;
+  filters: {
+    sort_order: number;
+    order_by: number;
+  };
+}
+export interface DashboardSortFilterItemProp {
+  id: number;
+  title: string;
+  filters: {
+    sort_order: number;
+    order_by: number;
+  };
+}
 export type ModifyLeadOptionProps = {
   changeSnapPoints: (points: string[]) => void;
   handleBottomSheetClose?: () => void;
@@ -19,6 +43,8 @@ export type ModifyLeadOptionProps = {
   optionType: ScreenOptionType;
   editRoute?: string;
   onDelete?: () => void;
+  assignLeadOnDelete?: boolean;
+  userId?: number;
 };
 
 export enum ScreenOptionType {
@@ -38,6 +64,8 @@ export type ModifyLeadOptionItemProps = {
 export type AssignedUsersListProps = {
   handleBottomSheetClose?: () => void;
   leadId?: number;
+  userId?: number;
+  assignLeadOnDelete?: boolean;
 };
 
 export type AssignedUsersListItemProps = {
@@ -100,3 +128,13 @@ export type LanguageListProps = {
   changeSnapPoints: (points: string[]) => void;
   handleBottomSheetClose?: () => void;
 };
+export type LeadsSortFilterProps = {
+  changeSnapPoints: (points: string[]) => void;
+  handleBottomSheetClose?: () => void;
+  changeRoute?: () => void;
+};
+export interface DropdownListingProps {
+  id: number;
+  title: string;
+  image?: string;
+}

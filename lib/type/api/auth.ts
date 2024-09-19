@@ -8,6 +8,9 @@ export interface LoginParams {
   email: string;
   password: string;
 }
+export interface ForgotPasswordParams {
+  email: string;
+}
 
 export interface LoginDataResponse {
   name: string;
@@ -27,6 +30,7 @@ export interface BasicInfoFormValuesType {
   lastName: string;
   email: string;
   phoneNumber: number;
+  countryCode: number;
 }
 export interface CompanyInformationFromValueTypes {
   companyName: string;
@@ -47,4 +51,7 @@ export interface LeadInformationFromValuesType {
   selectedStage: number;
   selectedServices: number[];
   assignTo?: number;
+  budgetCurrencyCode: number;
+  dealAmountCurrencyCode: number;
+  timeFrameType: number;
 }

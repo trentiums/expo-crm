@@ -1,4 +1,3 @@
-import { setAuthenticationToken } from '@api/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loginUserAction, logoutUserAction } from '@redux/actions/auth';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
@@ -18,8 +17,8 @@ export interface LanguageProps {
 }
 export enum LanguageEnum {
   english = 'English',
-  gujarati = 'Gujarati',
-  hindi = 'Hindi',
+  gujarati = 'ગુજરાતી',
+  hindi = 'हिन्दी',
 }
 
 const initialState: AuthState = {

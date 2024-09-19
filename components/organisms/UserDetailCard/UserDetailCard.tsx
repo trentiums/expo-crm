@@ -11,10 +11,12 @@ import { useAppDispatch } from '@redux/store';
 import { deleteUserAction, getAssignUserListAction } from '@redux/actions/user';
 import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { getLeadListAction } from '@redux/actions/lead';
 
 const UserDetailCard: React.FC<UserDetailCardProps> = ({
   data,
   isSocialMediaVisible,
+  assignLeadOnDelete,
 }) => {
   const { colors } = useAppTheme();
   const dispatch = useAppDispatch();
@@ -30,7 +32,8 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
           type: ToastTypeProps.Success,
         },
       });
-      await dispatch(getAssignUserListAction());
+      await dispatch(getAssignUserListAction({}));
+      await dispatch(getLeadListAction({})).unwrap();
     } catch (error: string) {
       toast.show(`${error}`, {
         type: ToastType.Custom,
@@ -49,6 +52,7 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
           optionType={ScreenOptionType.DEFAULT}
           editRoute={`/(protected)/add-user/${data.id}`}
           onDelete={handleDeleteUser}
+          assignLeadOnDelete={assignLeadOnDelete}
         />
         <Spacer size={8} />
         {data?.email && (

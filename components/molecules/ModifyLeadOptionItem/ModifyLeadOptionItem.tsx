@@ -22,7 +22,7 @@ const ModifyLeadOptionItem: React.FC<ModifyLeadOptionItemProps> = ({
       <Spacer size={15} />
       <OptionLabelContainer>
         <Flexed>
-          <OptionLabel>{label}</OptionLabel>
+          <OptionLabel variant="SF-Pro-Display-Medium_500">{label}</OptionLabel>
         </Flexed>
         {canNavigate && (
           <Pressable>

@@ -38,7 +38,6 @@ export const FlatListCon = styled(FlatList).attrs({
 `;
 export const IndicatorValue = styled(Text)`
   font-size: 14px;
-  font-weight: 500;
   color: ${({ theme }) => theme.colors.textDark};
 `;
 

@@ -3,6 +3,7 @@ import { UserRole } from './auth';
 export interface UserListParams {
   page?: number;
   search?: string;
+  user_id?: number;
 }
 export interface User {
   id: number;
@@ -71,4 +72,8 @@ export interface ChangePasswordParams {
   old_password: string;
   password: string;
   password_confirmation: string;
+}
+export interface AssignLeadToUserParams {
+  lead_id: number;
+  assign_to_user_id: number;
 }

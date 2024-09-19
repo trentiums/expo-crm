@@ -8,6 +8,7 @@ export const NoDataContainer = styled(View)`
   justify-content: center;
   align-items: center;
   flex-basis: auto;
+  flex: 1;
 `;
 
 export const NoDataImage = styled(Image)`
@@ -18,7 +19,6 @@ export const NoDataImage = styled(Image)`
 export const NoDataText = styled(Text)`
   font-size: 20px;
   color: ${({ theme }) => theme.colors.twilightZone};
-  font-weight: 600;
 `;
 export const NoDataDesc = styled(Text)`
   font-size: 16px;

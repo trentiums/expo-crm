@@ -1,4 +1,5 @@
 import {
+  AssignLeadToUserParams,
   AssignUserListResponse,
   ChangePasswordParams,
   DeleteUserParams,
@@ -38,8 +39,10 @@ export const userDetail = (
   return api.get('/company-user-details', { params: body });
 };
 
-export const assignUserList = (): AxiosPromise<AssignUserListResponse> => {
-  return api.get('/assign-company-user-list');
+export const assignUserList = (
+  body: UserListParams,
+): AxiosPromise<AssignUserListResponse> => {
+  return api.get('/assign-company-user-list', { params: body });
 };
 
 export const deleteAccount = (): AxiosPromise<ApiResponse> => {
@@ -49,3 +52,9 @@ export const deleteAccount = (): AxiosPromise<ApiResponse> => {
 export const changePassword = (
   body: ChangePasswordParams,
 ): AxiosPromise<ApiResponse> => api.post(`/change-password`, body);
+
+export const assignLeadToUserList = (
+  body: AssignLeadToUserParams,
+): AxiosPromise<ApiResponse> => {
+  return api.post('/assign-lead', body);
+};

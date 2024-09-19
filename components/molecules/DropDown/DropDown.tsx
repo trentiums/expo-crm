@@ -5,23 +5,28 @@ import {
   DropDownDataContainer,
   DropDownDataView,
   DropdownLeftView,
+  DropdownPlaceHolderText,
   DropDownSelectedView,
   DropDownTitleText,
-  FlatListCon,
   ImageView,
   MultipleSelectedText,
   PlaceHolderText,
   PressableView,
+  SearchFilterContainer,
   SelectedText,
+  ShowMultipleDataList,
 } from './DropDown.styles';
 import ArrowDownIcon from '@atoms/Illustrations/ArrowDown';
-import { DropdownBottomSheetSnapPoints } from '@constants/common';
 import { DropDownProps } from './DropDown.props';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
+import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
+import {
+  FilterIconView,
+  SearchTextInput,
+} from '@molecules/Search/Search.styles';
+import { useTranslation } from 'react-i18next';
+import Search from '@atoms/Illustrations/Search';
 import { useAppTheme } from '@constants/theme';
-import CheckMarkIcon from '@atoms/Illustrations/Check';
-import { View } from 'react-native';
+import { Keyboard } from 'react-native';
 
 const DropDown: React.FC<DropDownProps> = ({
   data,
@@ -29,60 +34,53 @@ const DropDown: React.FC<DropDownProps> = ({
   isMultiple,
   onChange,
   placeholder,
-  dropDownTitle,
-  dataToShow,
-  isDataToShow,
-  isLeadChange,
-  isFullWidth,
-  isStaff,
+  isShowSelected,
+  isSearch,
+  dropdownDataType,
+  heading,
 }) => {
-  const { colors } = useAppTheme();
-  const { top, bottom } = useSafeAreaInsets();
-  const bottomSheetRef = useRef<any>(null);
-  const renderMultipleData = ({ selectedData }) => (
-    <MultipleSelectedText>
-      {`${data?.filter((item) => item.id === +selectedData)?.[0]?.title}`}
-    </MultipleSelectedText>
-  );
-  const [showBottomSheet, setShowBottomSheet] = useState(false);
+  const searchInputRef = useRef(null);
+  const { t: ts } = useTranslation('drawer');
+  const colors = useAppTheme();
+  const [showDropList, setShowDropList] = useState(false);
+  const renderMultipleData = ({ selectedData }) => {
+    const isSelectedData = Array.isArray(value)
+      ? value.includes(selectedData.id)
+      : value === selectedData.id;
+    return (
+      <PressableView
+        onPress={() => handelSelectData(selectedData?.id)}
+        isSelected={isSelectedData}
+        key={selectedData.id}>
+        <MultipleSelectedText isSelected={isSelectedData}>
+          {selectedData.title}
+        </MultipleSelectedText>
+      </PressableView>
+    );
+  };
+
   const handelSelectData = (id) => {
     onChange(id);
     if (!isMultiple) {
-      setShowBottomSheet(false);
+      handleCloseDropList();
     }
   };
-  const renderDropdownData = ({ item }) => (
-    <DropDownDataView key={item.id} onPress={() => handelSelectData(item.id)}>
-      <DropDownDataContainer>
-        {item.image && <ImageView source={item.image} contentFit="cover" />}
-        <DataText>{item.title}</DataText>
-      </DropDownDataContainer>
-      {isMultiple && value?.includes(item.id) && <CheckMarkIcon />}
-      {!isMultiple && value === item.id && <CheckMarkIcon />}
-    </DropDownDataView>
-  );
-  const handleOpenBottomSheetOpen = () => {
-    bottomSheetRef.current?.present();
+  const handleCloseDropList = () => {
+    setShowDropList(false);
   };
   useEffect(() => {
-    if (showBottomSheet) {
-      handleOpenBottomSheetOpen();
+    if (showDropList && searchInputRef.current) {
+      searchInputRef.current.blur();
+      Keyboard.dismiss();
     }
-  }, [showBottomSheet]);
+  }, [showDropList]);
 
   return (
     <>
-      <DropDownContainer>
-        <PressableView
-          onPress={() => {
-            handleOpenBottomSheetOpen();
-            setShowBottomSheet(true);
-          }}
-          isLeadChange={isLeadChange}
-          isDisabled={isStaff}>
+      {isShowSelected ? (
+        <DropDownContainer onPress={() => setShowDropList(true)}>
           <DropdownLeftView
-            isImage={data?.filter((item) => item.id === value)[0]?.image}
-            isFullWidth={isFullWidth}>
+            isImage={data?.filter((item) => item.id === value)[0]?.image}>
             {
               <ImageView
                 source={data?.filter((item) => item.id === value)[0]?.image}
@@ -93,7 +91,7 @@ const DropDown: React.FC<DropDownProps> = ({
               {isMultiple && Array.isArray(value) ? (
                 <>
                   {value?.length > 0 ? (
-                    <FlatListCon
+                    <ShowMultipleDataList
                       data={value}
                       renderItem={({ item }) =>
                         renderMultipleData({ selectedData: item })
@@ -108,7 +106,11 @@ const DropDown: React.FC<DropDownProps> = ({
                 <>
                   {data?.filter((item) => item.id === value)?.[0]?.title ? (
                     <SelectedText numberOfLines={1}>
-                      {data?.filter((item) => item.id === value)?.[0]?.title}
+                      {
+                        data
+                          ?.filter((item) => item.id === value)?.[0]
+                          ?.title?.split(' ')?.[0]
+                      }
                     </SelectedText>
                   ) : (
                     <PlaceHolderText>{placeholder}</PlaceHolderText>
@@ -116,46 +118,47 @@ const DropDown: React.FC<DropDownProps> = ({
                 </>
               )}
             </DropDownSelectedView>
+            <ArrowDownIcon />
           </DropdownLeftView>
-          <ArrowDownIcon />
-        </PressableView>
-      </DropDownContainer>
-      {showBottomSheet && !isStaff && (
-        <BottomSheetModal
-          backgroundStyle={{
-            backgroundColor: colors.darkBackground,
+        </DropDownContainer>
+      ) : isSearch ? (
+        <SearchFilterContainer onPress={() => setShowDropList(true)}>
+          <SearchTextInput
+            mode="outlined"
+            placeholder={placeholder}
+            textColor={colors.textDark}
+            outlineColor="transparent"
+            outlineStyle={{ borderWidth: 0 }}
+            left={<Search />}
+            onFocus={() => setShowDropList(true)}
+            ref={searchInputRef}
+            onBlur={() => Keyboard.dismiss()}
+            disabled
+          />
+          <FilterIconView>
+            <Search />
+          </FilterIconView>
+          {/* <DropdownPlaceHolderText>{placeholder}</DropdownPlaceHolderText> */}
+        </SearchFilterContainer>
+      ) : (
+        <ShowMultipleDataList
+          data={data}
+          renderItem={({ item }) => renderMultipleData({ selectedData: item })}
+          keyExtractor={(item, index) => `${item.id} - ${index}`}
+        />
+      )}
+      {showDropList && (
+        <BottomSheetNavigator
+          initialRouteName="DropdownListing"
+          onClosePress={handleCloseDropList}
+          meta={{
+            selectedValue: value,
+            heading: heading,
+            dropdownData: data,
+            handelSelectData: (id) => handelSelectData(id),
+            dropdownDataType: dropdownDataType,
           }}
-          handleIndicatorStyle={{ backgroundColor: colors.white }}
-          ref={bottomSheetRef}
-          enablePanDownToClose={true}
-          topInset={top}
-          index={1}
-          snapPoints={DropdownBottomSheetSnapPoints}
-          onChange={(index) => {
-            if (index <= 0) {
-              bottomSheetRef.current?.close();
-              setShowBottomSheet(false);
-            }
-          }}>
-          <>
-            <View
-              style={{
-                borderBottomWidth: 1,
-                borderBottomColor: colors.transparent,
-                paddingBottom: 16,
-                paddingTop: 8,
-              }}>
-              <DropDownTitleText>{dropDownTitle}</DropDownTitleText>
-            </View>
-            <BottomSheetFlatList
-              keyboardShouldPersistTaps="always"
-              data={isDataToShow ? dataToShow : data}
-              renderItem={renderDropdownData}
-              keyExtractor={(item, index) => `${item.id} - ${index}`}
-              ListFooterComponent={<View style={{ paddingBottom: bottom }} />}
-            />
-          </>
-        </BottomSheetModal>
+        />
       )}
     </>
   );

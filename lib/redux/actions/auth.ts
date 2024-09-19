@@ -1,6 +1,11 @@
-import { login } from '@api/auth';
+import { forgotPassword, login, logoutAccount } from '@api/auth';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { LoginParams, LoginResponse } from '@type/api/auth';
+import { ApiResponse } from '@type/api/api';
+import {
+  ForgotPasswordParams,
+  LoginParams,
+  LoginResponse,
+} from '@type/api/auth';
 import { withToastForError } from '@utils/thunk';
 
 export const loginUserAction = createAsyncThunk(
@@ -13,7 +18,15 @@ export const loginUserAction = createAsyncThunk(
 
 export const logoutUserAction = createAsyncThunk(
   'auth/logout',
-  withToastForError<void, any>(() => {
-    return Promise.resolve({ status: true, data: true });
+  withToastForError<void, any>(async () => {
+    const response = await logoutAccount();
+    return { ...response.data };
+  }),
+);
+export const forgotPasswordAction = createAsyncThunk(
+  'auth/forgotPassword',
+  withToastForError<ForgotPasswordParams, ApiResponse>(async (data) => {
+    const response = await forgotPassword(data);
+    return response.data;
   }),
 );

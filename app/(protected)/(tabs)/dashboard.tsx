@@ -9,12 +9,11 @@ import {
   NameText,
   NoDataFoundText,
   TitleText,
-} from './tabs.style';
+} from '../tabs.style';
 import { FlatList } from 'react-native-gesture-handler';
 import { Spacer } from '@atoms/common/common.styles';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useToast } from 'react-native-toast-notifications';
 import { useAppTheme } from '@constants/theme';
 import {
   DashboardAdminLeadsProps,
@@ -37,31 +36,35 @@ import CompanyDashboardCard from '@molecules/CompanyDashboardCard/CompanyDashboa
 import QuickFilter from '@molecules/QuickFilter/QuickFilter';
 import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
 import { UserRole } from '@type/api/auth';
+import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
+import { dashboardQuickFilters } from '@utils/constant';
 
 const Dashboard = () => {
   const { colors } = useAppTheme();
   const { t } = useTranslation('dashBoard');
-  const { t: tm } = useTranslation('modalText');
   const { t: tr } = useTranslation('drawer');
   const { t: tl } = useTranslation('leadStage');
-  const toast = useToast();
   const user = useSelector((state: RootState) => state.auth.user);
-  const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [deleteLoading, setDeleteLoading] = useState(false);
-  const [deletedId, setDeletedId] = useState<number | undefined>();
   const dashboardLeadList = useSelector((state: RootState) => state.dashboard);
+  const isAdmin =
+    user.userRole === UserRole.Admin || user.userRole === UserRole.CompanyAdmin;
   const [leads, setLeads] = useState<
     DashboardLeadsProps[] | DashboardAdminLeadsProps[]
   >(dashboardLeadList.leadList);
+  const [visibleLeadsSortFilterSheet, setVisibleLeadsSortFilterSheet] =
+    useState(false);
+  const [selectedSort, setSelectedSort] = useState(
+    isAdmin && dashboardQuickFilters?.[0],
+  );
   const dispatch = useAppDispatch();
+
+  const handleChangeSortValue = (id) => {
+    setSelectedSort(id);
+  };
   const handelFetchLead = async () => {
     setLoading(true);
-    //TODO: here we are passing order_by and sort_by static until leads UI comes in master
-    if (
-      user.userRole === UserRole.Admin ||
-      user.userRole === UserRole.CompanyAdmin
-    ) {
+    if (isAdmin) {
       await dispatch(
         dashboardAdminLeadListAction({ order_by: 1, sort_order: 1 }),
       );
@@ -85,11 +88,7 @@ const Dashboard = () => {
       dashboardLeadList?.lastPage > 1 &&
       dashboardLeadList?.currentPage !== dashboardLeadList?.lastPage
     ) {
-      //TODO: here we are passing order_by and sort_by static until leads UI comes in master
-      if (
-        user.userRole === UserRole.Admin ||
-        user.userRole === UserRole.CompanyAdmin
-      ) {
+      if (isAdmin) {
         await dispatch(
           dashboardAdminLeadListAction({
             order_by: 1,
@@ -118,11 +117,6 @@ const Dashboard = () => {
   useEffect(() => {
     setLeads(dashboardLeadList.leadList);
   }, [dashboardLeadList]);
-
-  const handleDelete = (id: number) => {
-    setShowModal(true);
-    setDeletedId(id);
-  };
 
   const createLeadsArray = (lead, index) => {
     return [
@@ -186,7 +180,6 @@ const Dashboard = () => {
           }}>
           <DashBoardLeadCard
             key={`${lead?.id}-${index}`}
-            onDelete={() => handleDelete(lead?.id)}
             leadData={lead}
             isSocialMediaVisible
           />
@@ -194,15 +187,24 @@ const Dashboard = () => {
       )}
     </>
   );
-
+  const handleVisibleLeadsSortFilter = () => {
+    setVisibleLeadsSortFilterSheet(true);
+  };
+  const handleCloseVisibleSortFilter = () => {
+    setVisibleLeadsSortFilterSheet(false);
+  };
   return (
     <ScreenTemplate moreVisible>
       {loading && dashboardLeadList.leadStageCount.length === 0 ? (
         <Loader />
       ) : (
         <>
-          <GreetingText>{tr('welcome')}</GreetingText>
-          <NameText>{user?.name}</NameText>
+          <GreetingText variant="SF-Pro-Display-Semibold_600">
+            {tr('welcome')}
+          </GreetingText>
+          <NameText variant="SF-Pro-Display-Semibold_600">
+            {user?.name}
+          </NameText>
           <Spacer size={16} />
           {dashboardLeadList.leadStageCount?.every(
             (item) => item.leadCount === 0,
@@ -225,13 +227,16 @@ const Dashboard = () => {
                 })}
               />
               <Spacer size={16} />
-              <TitleText>{t('newLeads')}</TitleText>
+              <TitleText variant="SF-Pro-Display-Semibold_600">
+                {t('newLeads')}
+              </TitleText>
               <Spacer size={16} />
               <DashboardFilterView>
                 <DividerContainer />
                 <QuickFilter
                   filterTitle={tr('leadsCount')}
                   filterType={tr('sortBy')}
+                  onFilterPress={handleVisibleLeadsSortFilter}
                 />
               </DashboardFilterView>
               <Spacer size={16} />
@@ -267,6 +272,16 @@ const Dashboard = () => {
             </DashboardScreenContainer>
           )}
         </>
+      )}
+      {visibleLeadsSortFilterSheet && (
+        <BottomSheetNavigator
+          initialRouteName="DashboardSortFilter"
+          onClosePress={handleCloseVisibleSortFilter}
+          meta={{
+            setSelectedSort: (value) => handleChangeSortValue(value),
+            selectedSort: selectedSort,
+          }}
+        />
       )}
     </ScreenTemplate>
   );

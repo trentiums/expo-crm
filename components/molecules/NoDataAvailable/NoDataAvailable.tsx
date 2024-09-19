@@ -13,7 +13,7 @@ const NoDataAvailable: React.FC<NoDataProps> = ({ text, description }) => {
     <NoDataContainer>
       <NoDataIcon />
       <Spacer size={12} />
-      <NoDataText>{text}</NoDataText>
+      <NoDataText variant="SF-Pro-Display-Semibold_600">{text}</NoDataText>
       <Spacer size={6} />
       <NoDataDesc>{description}</NoDataDesc>
     </NoDataContainer>

@@ -26,6 +26,7 @@ import CircleDeleteIcon from '@atoms/Illustrations/CircleDelete';
 import { dashboardLeadListAction } from '@redux/actions/dashboard';
 import ChannelIcon from '@atoms/Illustrations/Channel';
 import AssignmentCardIcon from '@atoms/Illustrations/AssignmentCard';
+import AssignedUserList from './assignedUserList';
 
 const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
   changeSnapPoints,
@@ -35,12 +36,15 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
   optionType,
   editRoute,
   onDelete,
+  userId,
+  assignLeadOnDelete,
 }) => {
   const { t } = useTranslation('bottomSheetModifyLead');
   const { t: tm } = useTranslation('modalText');
   const dispatch = useAppDispatch();
   const toast = useToast();
   const [showModal, setShowModal] = useState(false);
+  const [showAssignLead, setAssignLead] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const onLayout = useCallback(() => {
     if (optionType === ScreenOptionType.DASHBOARD) {
@@ -135,11 +139,30 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
     }
   };
 
+  const handleRest = () => {
+    setShowModal(false);
+    handleBottomSheetClose?.();
+    setDeleteLoading(false);
+  };
+
+  const handleAssignUserOnDelete = () => {
+    if (onDelete) {
+      onDelete();
+      handleRest();
+    }
+  };
   const handleDeleteLead = async () => {
     setDeleteLoading(true);
     if (onDelete) {
-      onDelete();
-      setShowModal(false);
+      if (assignLeadOnDelete) {
+        changeSnapPoints(['50%', '90%']);
+        setShowModal(false);
+        setAssignLead(true);
+        setDeleteLoading(false);
+      } else {
+        onDelete();
+        handleRest();
+      }
     } else {
       try {
         const response = await dispatch(
@@ -160,10 +183,8 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
           },
         });
       }
+      handleRest();
     }
-    setShowModal(false);
-    handleBottomSheetClose?.();
-    setDeleteLoading(false);
   };
 
   const renderModifyLeadOption = ({
@@ -185,15 +206,23 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
   };
   return (
     <ModifyLeadOptionContainer onLayout={onLayout}>
-      <ModifyLeadOptionFlatList
-        data={modifyLeadOption}
-        keyExtractor={(item: ModifyLeadOptionItemProps, index: number) =>
-          `${item.label}-${index}`
-        }
-        renderItem={renderModifyLeadOption}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-      />
+      {showAssignLead ? (
+        <AssignedUserList
+          handleBottomSheetClose={handleAssignUserOnDelete}
+          userId={userId}
+          assignLeadOnDelete={assignLeadOnDelete}
+        />
+      ) : (
+        <ModifyLeadOptionFlatList
+          data={modifyLeadOption}
+          keyExtractor={(item: ModifyLeadOptionItemProps, index: number) =>
+            `${item.label}-${index}`
+          }
+          renderItem={renderModifyLeadOption}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+        />
+      )}
       {showModal && (
         <ActionModal
           isModal={showModal}

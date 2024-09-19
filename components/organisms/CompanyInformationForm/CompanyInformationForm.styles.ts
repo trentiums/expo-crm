@@ -7,7 +7,8 @@ import styled from 'styled-components';
 export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   height: 48px;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.blueChaos};
+  background-color: ${({ theme, valid }) =>
+    valid ? theme.colors.blueChaos : theme.colors.gray};
   border-radius: 50px;
 `;
 
@@ -32,7 +33,17 @@ export const SubContainerView = styled(View)`
 `;
 
 export const FormButtonText = styled(Text)<{ valid?: boolean }>`
-  font-weight: 700;
   color: ${({ valid, theme }) =>
-    valid ? theme.colors.white : theme.colors.gray};
+    valid ? theme.colors.white : theme.colors.textDark};
+`;
+export const BackButton = styled(Button)`
+  height: 48px;
+  justify-content: center;
+  border-width: 1px;
+  background-color: ${({ theme }) => theme.colors.white};
+  border-color: ${({ theme }) => theme.colors.lightGray};
+  border-radius: 50px;
+`;
+export const BackButtonText = styled(Text)`
+  color: ${({ theme }) => theme.colors.black};
 `;

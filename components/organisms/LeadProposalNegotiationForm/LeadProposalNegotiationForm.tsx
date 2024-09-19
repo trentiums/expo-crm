@@ -44,7 +44,7 @@ const LeadProposalNegotiationForm: React.FC<
           numberOfLines={5}
           style={{
             height: 85,
-            backgroundColor: colors?.transparent,
+            backgroundColor: colors?.iceWindDale,
           }}
           multiline
           contentStyle={{ marginTop: -10 }}
@@ -57,7 +57,10 @@ const LeadProposalNegotiationForm: React.FC<
           </CancelButtonView>
         </SubContainerView>
         <SubContainerView>
-          <ButtonSubmit onPress={form.submit} loading={loading} valid={valid}>
+          <ButtonSubmit
+            onPress={!loading && form.submit}
+            loading={loading}
+            variant={valid}>
             <FormButtonText valid={valid}>{tb('save')}</FormButtonText>
           </ButtonSubmit>
         </SubContainerView>

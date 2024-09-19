@@ -9,8 +9,8 @@ import {
   ProductsFlatList,
   HeadingText,
   HeadingView,
-  LoaderView,
-} from './tabs.style';
+  LoaderContainer,
+} from '../tabs.style';
 import { RefreshControl } from 'react-native';
 import { UserDetailCardProps } from '@organisms/UserDetailCard/UserDetailCard.props';
 import { getProductServiceListAction } from '@redux/actions/productService';
@@ -20,6 +20,7 @@ import ProductCard from '@molecules/ProductCard/ProductCard';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
 import { LoadingStatus } from '../../(public)/login/LoginScreen.props';
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 
 const products = () => {
   const { t: ts } = useTranslation('drawer');
@@ -42,7 +43,6 @@ const products = () => {
     item: UserDetailCardProps;
     index: number;
   }) => <ProductCard key={`${item.id}-${index}`} data={item} />;
-
   const handleGetMoreProductsData = async () => {
     if (products?.currentPage !== products?.lastPage) {
       try {
@@ -68,7 +68,7 @@ const products = () => {
     try {
       setLoadingStatus(LoadingStatus.SCREEN);
       await dispatch(
-        getProductServiceListAction({ search: productSearch }),
+        getProductServiceListAction({ search: productSearch || undefined }),
       ).unwrap();
     } catch (error: any) {
       toast.show(error, {
@@ -86,6 +86,7 @@ const products = () => {
         search={productSearch}
         setSearch={setProductUserSearch}
         handleSearch={handleSearchProducts}
+        dropdownDataType={DropdownDataType.SERVICES}
       />
     );
   };
@@ -109,9 +110,9 @@ const products = () => {
       </HeadingView>
       {renderHeader()}
       {loadingStatus === LoadingStatus.SCREEN ? (
-        <LoaderView>
+        <LoaderContainer>
           <Loader />
-        </LoaderView>
+        </LoaderContainer>
       ) : (
         <>
           {Array.isArray(products?.serviceList) &&
@@ -134,9 +135,9 @@ const products = () => {
               }
             />
           ) : (
-            <LoaderView>
+            <LoaderContainer>
               <NoDataAvailable text={t('noServices')} />
-            </LoaderView>
+            </LoaderContainer>
           )}
         </>
       )}

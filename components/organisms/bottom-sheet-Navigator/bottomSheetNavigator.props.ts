@@ -1,4 +1,5 @@
 import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 
 export type BottomSheetNavigatorProps = {
   initialRouteName: string;
@@ -6,8 +7,17 @@ export type BottomSheetNavigatorProps = {
   meta?: {
     leadId?: number;
     optionType?: ScreenOptionType;
+    dropdownData?: Dropdown[];
+    handelSelectData?: (id: number) => void;
+    selectedValue?: number[] | number | string;
+    dropdownDataType?: DropdownDataType;
+    heading?: string;
     editRoute?: string;
     onDelete?: () => void;
+    setSelectedSort?: (id: number) => void;
+    selectedSort: number;
+    assignLeadOnDelete?: boolean;
+    userId?: number;
   };
 };
 
@@ -17,3 +27,8 @@ export type BottomSheetHeaderProps = {
   backVisible?: boolean;
   onBackPress?: () => void;
 };
+export interface Dropdown {
+  id: number;
+  title: string;
+  image?: string;
+}

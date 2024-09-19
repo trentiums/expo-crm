@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   BottomSheetListContainer,
   BottomSheetFlatListContainer,
+  LoaderContainer,
 } from './screen.style';
 import { LeadStatusListItemProps, LeadStatusListProps } from './screen.props';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +19,9 @@ import {
   dashboardLeadListAction,
   dashboardLeadStageCountAction,
 } from '@redux/actions/dashboard';
+import { useToast } from 'react-native-toast-notifications';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import Loader from '@atoms/Loader/Loader';
 
 const LeadStatusList: React.FC<LeadStatusListProps> = ({
   handleBottomSheetClose,
@@ -26,6 +30,8 @@ const LeadStatusList: React.FC<LeadStatusListProps> = ({
 }) => {
   const { t } = useTranslation('bottomSheetModifyLead');
   const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
   const leadStatusList = useSelector(
     (state: RootState) => state.general.leadStatusList,
   );
@@ -52,19 +58,27 @@ const LeadStatusList: React.FC<LeadStatusListProps> = ({
         navigation.navigate('LeadStatusChange', slug);
     } else {
       if (leadStatusId !== statusId) {
+        setIsLoading(true);
         const updatedLeadStatusRequestParams: UpdateLeadStatusParams = {
           type: updateLeadStatusTypes.STATUS,
           lead_id: leadId,
           lead_status_id: statusId,
         };
-        await dispatch(
+        const response = await dispatch(
           updateLeadStatusAction(updatedLeadStatusRequestParams),
         ).unwrap();
         await dispatch(getLeadDetailsAction({ lead_id: leadId }));
         dispatch(dashboardLeadListAction({}));
         dispatch(dashboardLeadStageCountAction());
+        toast.show(response.message, {
+          type: ToastType.Custom,
+          data: {
+            type: ToastTypeProps.Success,
+          },
+        });
       }
       handleBottomSheetClose?.();
+      setIsLoading(false);
     }
   };
 
@@ -91,17 +105,23 @@ const LeadStatusList: React.FC<LeadStatusListProps> = ({
   };
   return (
     <BottomSheetListContainer>
-      <BottomSheetFlatListContainer
-        data={leadStatusList}
-        keyExtractor={(item: LeadStatusListItemProps, index: number) =>
-          `${item.id}-${index}`
-        }
-        renderItem={renderModifyLeadOption}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        refreshing={false}
-        onRefresh={handleRefresh}
-      />
+      {isLoading ? (
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
+      ) : (
+        <BottomSheetFlatListContainer
+          data={leadStatusList}
+          keyExtractor={(item: LeadStatusListItemProps, index: number) =>
+            `${item.id}-${index}`
+          }
+          renderItem={renderModifyLeadOption}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          refreshing={false}
+          onRefresh={handleRefresh}
+        />
+      )}
     </BottomSheetListContainer>
   );
 };

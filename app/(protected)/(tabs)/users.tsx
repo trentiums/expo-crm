@@ -10,7 +10,12 @@ import { useTranslation } from 'react-i18next';
 import { FlatList } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 import { useToast } from 'react-native-toast-notifications';
-import { CountsText, HeadingText, HeadingView, LoaderView } from './tabs.style';
+import {
+  CountsText,
+  HeadingText,
+  HeadingView,
+  LoaderContainer,
+} from '../tabs.style';
 import { ActivityIndicator } from 'react-native-paper';
 import Loader from '@atoms/Loader/Loader';
 import { Spacer } from '@atoms/common/common.styles';
@@ -73,7 +78,11 @@ const Users = () => {
     index: number;
   }) => (
     <>
-      <UserDetailCard key={`${item.id}-${index}`} data={item} />
+      <UserDetailCard
+        key={`${item.id}-${index}`}
+        data={item}
+        assignLeadOnDelete={true}
+      />
       <Spacer size={12} />
     </>
   );
@@ -81,7 +90,7 @@ const Users = () => {
   const handleSearch = async () => {
     try {
       setLoadingStatus(LoadingStatus.SCREEN);
-      await dispatch(getUserListAction({ search: userSearch }));
+      await dispatch(getUserListAction({ search: userSearch || undefined }));
     } catch (error) {
       console.log(error);
     }
@@ -100,7 +109,9 @@ const Users = () => {
   return (
     <ScreenTemplate moreVisible>
       <HeadingView>
-        <HeadingText>{ts('users')}</HeadingText>
+        <HeadingText variant="SF-Pro-Display-Semibold_600">
+          {ts('users')}
+        </HeadingText>
         <CountsText>
           {t('itemWithCount', { count: userList?.total })}
         </CountsText>
@@ -108,9 +119,9 @@ const Users = () => {
       {renderHeader()}
       <>
         {loadingStatus === LoadingStatus.SCREEN ? (
-          <LoaderView>
+          <LoaderContainer>
             <ActivityIndicator color={colors.blueChaos} />
-          </LoaderView>
+          </LoaderContainer>
         ) : (
           <>
             {userList?.users?.length > 0 ? (

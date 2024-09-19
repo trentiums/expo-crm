@@ -72,15 +72,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
           }}
         />
       )}
-      {visibleBottomSheet && (
-        <BottomSheetNavigator
-          initialRouteName="ModifyLeadOption"
-          onClosePress={closeBottomSheet}
-          meta={{
-            optionType: ScreenOptionType.DEFAULT,
-          }}
-        />
-      )}
     </DetailContainer>
   );
 };

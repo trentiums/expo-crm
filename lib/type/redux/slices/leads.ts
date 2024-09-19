@@ -21,4 +21,7 @@ export interface AddLeadState {
   dealCloseDate: Date | string;
   documents?: FileSystemProps[];
   assignTo?: number;
+  budgetCurrencyCode?: number;
+  dealAmountCurrencyCode?: number;
+  timeFrameType?: number;
 }

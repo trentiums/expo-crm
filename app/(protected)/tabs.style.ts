@@ -25,7 +25,6 @@ export const DashboardScreenContainer = styled(KeyboardAwareScrollView)`
 `;
 export const TitleText = styled(Text)`
   font-size: 22px;
-  font-weight: 700;
   color: ${({ theme }) => theme.colors.textDark};
 `;
 export const NoDataFoundText = styled(Text)`
@@ -52,7 +51,7 @@ export const CrossIconView = styled(Pressable)`
   align-items: flex-end;
 `;
 export const LoaderContainer = styled(View)`
-  height: 100%;
+  flex: 1;
   justify-content: center;
   align-items: center;
 `;
@@ -61,17 +60,19 @@ export const NoLeadsFoundContainer = styled(View)`
   align-items: center;
 `;
 export const AddLeadContainer = styled(View)`
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1;
+  flex-basis: auto;
 `;
 export const GreetingText = styled(Text)`
   font-size: 36px;
   color: ${({ theme }) => theme.colors.textDark};
-  font-weight: 600;
 `;
 export const NameText = styled(Text)`
   font-size: 36px;
   color: ${({ theme }) => theme.colors.blueChaos};
-  font-weight: 600;
 `;
 
 export const CreateOptionTabContainer = styled(Pressable)`
@@ -83,7 +84,6 @@ export const CreateOptionTabContainer = styled(Pressable)`
 export const TabLabel = styled(Text)<{ focused?: boolean }>`
   margin-top: 5px;
   font-size: 12px;
-  font-weight: ${({ focused }) => (focused ? 'bold' : 'lighter')};
   color: ${({ focused, theme }) =>
     focused ? theme.colors.englishHolly : theme.colors.laurelGarland};
 `;
@@ -96,12 +96,10 @@ export const HeadingView = styled(View)`
 `;
 export const HeadingText = styled(Text)`
   font-size: 36px;
-  font-weight: 600;
   color: ${({ theme }) => theme.colors.englishHolly};
 `;
 export const CountsText = styled(Text)`
   font-size: 16px;
-  font-weight: 400;
   color: ${({ theme }) => theme.colors.textGray};
 `;
 export const FilterIconView = styled(Pressable)`
@@ -124,9 +122,16 @@ export const DashboardFilterView = styled(View)`
 `;
 
 export const DividerContainer = styled(View)`
-  flex: 0.8;
-  height: 2px;
+  flex: 0.9;
+  height: 1.5px;
   background-color: ${({ theme }) => theme.colors.aria};
+`;
+export const LeadsHeadingView = styled(View)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0px 4px;
 `;
 export const LeadsFlatList = styled(FlatList).attrs({
   contentContainerStyle: {
