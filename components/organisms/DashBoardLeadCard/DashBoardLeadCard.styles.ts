@@ -8,7 +8,7 @@ export const LeadDetailCardContainer = styled(View)<{
 }>`
   border-radius: 16px;
   padding: 14px 16px 16px 16px;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.dugong};
 `;
 export const RequirementClubContainer = styled(View)`
   display: flex;

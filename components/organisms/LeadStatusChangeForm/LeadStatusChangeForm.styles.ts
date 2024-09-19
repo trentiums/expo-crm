@@ -15,12 +15,12 @@ export const CancelButtonView = styled(Pressable)`
   height: 48px;
   justify-content: center;
   border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.error};
-  border-radius: 8px;
+  border-color: ${({ theme }) => theme.colors.gray};
+  border-radius: 45px;
 `;
 
 export const CancelText = styled(Text)`
   font-size: 14px;
   text-align: center;
-  color: ${({ theme }) => theme.colors.error};
+  color: ${({ theme }) => theme.colors.black};
 `;

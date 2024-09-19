@@ -182,6 +182,7 @@ export const English = {
     next: 'Next',
     save: 'Save',
     cancel: 'Cancel',
+    complete: 'Complete',
   },
   companyInformation: {
     companyNameLabel: 'Company Name',
@@ -551,6 +552,7 @@ export const Gujarati = {
     next: 'આગળ',
     save: 'સાચવો',
     cancel: 'રદ કરો',
+    complete: 'પૂર્ણ',
   },
   companyInformation: {
     companyNameLabel: 'કંપની નામ',
@@ -914,6 +916,7 @@ export const Hindi = {
     next: 'अगला',
     save: 'सहेजें',
     cancel: 'रद्द करें',
+    complete: 'सम्पूर्ण',
   },
   companyInformation: {
     companyNameLabel: 'कंपनी का नाम',

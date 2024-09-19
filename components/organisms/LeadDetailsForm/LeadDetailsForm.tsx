@@ -74,9 +74,6 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   const currencyList = useSelector(
     (state: RootState) => state.general.currencyList,
   );
-  const productServiceListData = useSelector(
-    (state: RootState) => state.productService.productServiceList,
-  );
   const leadsData = useSelector(
     (state: RootState) => state.leads.leadList?.leads,
   );
@@ -508,7 +505,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             <FormButtonText
               valid={valid && values?.selectedServices?.length > 0}
               variant="SF-Pro-Display-Semibold_600">
-              {id ? tb('save') : tb('next')}
+              {id ? tb('save') : tb('complete')}
             </FormButtonText>
           </ButtonSubmit>
         </SubContainerView>

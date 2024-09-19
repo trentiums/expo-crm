@@ -36,7 +36,7 @@ export const leadsQuickFilters = [
     id: 1,
     title: 'Latest date',
     filters: {
-      sort_order: 1,
+      sort_order: 2,
       order_by: 1,
     },
   },
@@ -44,7 +44,7 @@ export const leadsQuickFilters = [
     id: 2,
     title: 'Oldest date',
     filters: {
-      sort_order: 2,
+      sort_order: 1,
       order_by: 1,
     },
   },

@@ -4,7 +4,7 @@ import { styled } from '@utils/styled';
 import { FlatList } from 'react-native-gesture-handler';
 
 export const CompanyDashboardCardContainer = styled(View)`
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.dugong};
   border-radius: 16px;
   padding: 16px;
 `;
