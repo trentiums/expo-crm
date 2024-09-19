@@ -228,7 +228,6 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       </SelectedUserData>
     );
   };
-  console.log(values?.selectedServices, 'values?.selectedServices', valid);
   return (
     <FormsView>
       <KeyboardAwareScrollView

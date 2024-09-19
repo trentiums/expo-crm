@@ -112,7 +112,7 @@ const AssignedUserList: React.FC<AssignedUsersListProps> = ({
         handlePress={() => handleItemPress(item.id)}
         label={t(`${item.title}`)}
         key={`${item.id}-${index}`}
-        isSelected={isStatusSelected}
+        isSelected={!assignLeadOnDelete && isStatusSelected}
       />
     );
   };
