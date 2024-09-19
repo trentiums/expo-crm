@@ -74,7 +74,7 @@ const DropdownListing = ({
             })}
             renderItem={renderDownListData}
             keyExtractor={(item) => item?.id?.toString()}
-            keyboardShouldPersistTaps
+            keyboardShouldPersistTaps="always"
           />
         )}
       </DropdownListingView>

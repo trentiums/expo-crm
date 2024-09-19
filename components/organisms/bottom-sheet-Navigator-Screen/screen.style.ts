@@ -60,6 +60,7 @@ export const DropdownListingView = styled(View)`
 export const DropdownListingText = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.black};
+  flex: 0.9;
 `;
 export const DropdownListView = styled(Pressable)<{ isBorder?: boolean }>`
   display: flex;

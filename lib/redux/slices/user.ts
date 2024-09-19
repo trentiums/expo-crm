@@ -91,6 +91,7 @@ const userSlice = createSlice({
         state.userList.users = state.userList.users?.filter(
           (item) => item?.id !== action.payload.body?.user_id,
         );
+        state.userList.total = state.userList.total - 1;
       },
     );
     builder.addCase(

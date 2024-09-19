@@ -146,6 +146,7 @@ const leadSlice = createSlice({
       state.leadList.leads = state.leadList.leads.filter(
         (item) => item.id !== action.payload.data.lead_id,
       );
+      state.leadList.total = state.leadList.total - 1;
     });
     builder.addCase(logoutUserAction.fulfilled, () => {
       return initialState;
