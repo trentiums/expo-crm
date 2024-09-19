@@ -103,6 +103,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
       snapPoints={snapPoints}
       enablePanDownToClose={true}
       handleComponent={null}
+      onDismiss={() => handleClosePress()}
       onClose={() => handleClosePress()}>
       <NavigationContainer independent={true}>
         <Stack.Navigator initialRouteName={initialRouteName}>

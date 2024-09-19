@@ -50,7 +50,6 @@ export const getLeadStatusPreparedData = async (
   });
 
   formData.append('company_name', values?.companyName || '');
-  console.log(values?.budgetCurrencyCode, 'values?.budgetCurrencyCode');
   if (values?.budget) {
     formData.append('budget', values?.budget);
     formData.append('budget_currency_id', values?.budgetCurrencyCode);
@@ -68,7 +67,6 @@ export const getLeadStatusPreparedData = async (
   }
   formData.append('description', values?.comments || '');
   if (values?.dealAmount || data?.dealAmount) {
-    console.log(data?.dealAmountCurrencyCode, 'data?.dealAmountCurrencyCode');
     formData.append('deal_amount_currency_id', data?.dealAmountCurrencyCode);
     formData.append('deal_amount', values?.dealAmount || data?.dealAmount);
   }

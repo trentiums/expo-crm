@@ -188,7 +188,6 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       'dealCloseDate',
       id ? leadsDetail?.dealCloseDate : addLeadFormData?.dealCloseDate,
     );
-    console.log(leadsDetail?.timeFrameType, 'leadsDetail?.timeFrameType');
     form.change(
       'timeFrameType',
       id ? `${leadsDetail?.timeFrameType}` : addLeadFormData?.timeFrameType,
