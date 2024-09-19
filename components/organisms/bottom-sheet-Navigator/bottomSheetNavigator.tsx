@@ -87,7 +87,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
   );
 
   const handleClosePress = async () => {
-    if (meta.userId) {
+    if (meta?.userId) {
       await dispatch(getAssignUserListAction({}));
     }
     bottomSheetRef.current?.close();
@@ -141,7 +141,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 optionType={meta.optionType}
                 editRoute={meta.editRoute}
                 onDelete={meta.onDelete}
-                userId={meta.userId}
+                userId={meta?.userId}
                 assignLeadOnDelete={meta.assignLeadOnDelete}
               />
             )}
