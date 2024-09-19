@@ -23,7 +23,7 @@ import { router, useNavigation } from 'expo-router';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
-import { AddLeadContainer } from '../(tabs)/tabs.style';
+import { AddLeadContainer } from '../tabs.style';
 import { useTranslation } from 'react-i18next';
 import Stepper from '@molecules/Stepper/Stepper';
 import { stepData } from '@utils/constant';

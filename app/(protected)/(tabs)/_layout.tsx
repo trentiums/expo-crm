@@ -3,7 +3,7 @@ import { Tabs } from 'expo-router';
 import DashboardIcon from '@atoms/Illustrations/Dashboard';
 import { useAppTheme } from '@constants/theme';
 import LeadsIcon from '@atoms/Illustrations/Leads';
-import { CreateOptionTabContainer, styles, TabLabel } from './tabs.style';
+import { CreateOptionTabContainer, styles, TabLabel } from '../tabs.style';
 import { RootState, useSelector } from '@redux/store';
 import UsersIcon from '@atoms/Illustrations/Users';
 import AddCircleIcon from '@atoms/Illustrations/addCircle';

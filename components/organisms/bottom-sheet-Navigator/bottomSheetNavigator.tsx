@@ -143,7 +143,7 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 optionType={meta.optionType}
                 editRoute={meta.editRoute}
                 onDelete={meta.onDelete}
-                userId={meta.userId}
+                userId={meta?.userId}
                 assignLeadOnDelete={meta.assignLeadOnDelete}
               />
             )}

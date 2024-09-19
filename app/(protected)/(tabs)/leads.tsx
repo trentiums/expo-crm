@@ -16,7 +16,7 @@ import {
   LoaderContainer,
   LeadsFlatList,
   HeadingText,
-} from './tabs.style';
+} from '../tabs.style';
 import Loader from '@atoms/Loader/Loader';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';

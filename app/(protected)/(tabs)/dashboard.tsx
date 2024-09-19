@@ -9,7 +9,7 @@ import {
   NameText,
   NoDataFoundText,
   TitleText,
-} from './tabs.style';
+} from '../tabs.style';
 import { FlatList } from 'react-native-gesture-handler';
 import { Spacer } from '@atoms/common/common.styles';
 import { useCallback, useEffect, useState } from 'react';
