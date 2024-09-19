@@ -27,7 +27,6 @@ export const HeaderTextCon = styled(View)`
 export const TextInHeader = styled(Text)`
   font-size: 17px;
   color: ${({ theme }) => theme.colors.black};
-  font-weight: 600;
 `;
 
 export const SkipText = styled(Text)`

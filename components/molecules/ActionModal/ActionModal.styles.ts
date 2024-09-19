@@ -16,7 +16,6 @@ export const ModalContainer = styled(View)`
 
 export const Header = styled(Text)<{ isIcon: boolean }>`
   font-size: 20px;
-  font-weight: 800;
   color: ${({ theme }) => theme.colors.twilightZone};
   text-align: center;
   margin-top: ${({ isIcon }) => (isIcon ? 16 : 0)}px;
@@ -24,7 +23,6 @@ export const Header = styled(Text)<{ isIcon: boolean }>`
 
 export const Description = styled(Text)`
   font-size: 16px;
-  font-weight: 400;
   color: ${({ theme }) => theme.colors.gray};
   text-align: center;
   align-self: center;
@@ -44,14 +42,12 @@ export const AllButtonView = styled(View)`
 export const PrimaryLabel = styled(Text)`
   color: ${({ theme }) => theme.colors.blueChaos};
   font-size: 17px;
-  font-weight: 600;
   justify-content: center;
   align-content: center;
 `;
 
 export const SecondaryLabel = styled(Text)`
   font-size: 17px;
-  font-weight: 600;
   color: ${({ theme }) => theme.colors.textGray};
 `;
 

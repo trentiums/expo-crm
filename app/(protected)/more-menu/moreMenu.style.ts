@@ -35,5 +35,4 @@ export const DeleteText = styled(Text)`
   color: ${({ theme }) => theme.colors.roseMadder};
   text-decoration: underline;
   text-decoration-thickness: 4px;
-  font-weight: bold;
 `;

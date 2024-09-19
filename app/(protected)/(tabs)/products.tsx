@@ -68,7 +68,7 @@ const products = () => {
     try {
       setLoadingStatus(LoadingStatus.SCREEN);
       await dispatch(
-        getProductServiceListAction({ search: productSearch }),
+        getProductServiceListAction({ search: productSearch || undefined }),
       ).unwrap();
     } catch (error: any) {
       toast.show(error, {

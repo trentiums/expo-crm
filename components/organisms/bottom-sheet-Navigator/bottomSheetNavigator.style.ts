@@ -16,5 +16,4 @@ export const BottomSheetHeaderTitle = styled(Text)`
   text-align: center;
   flex: 1;
   color: ${({ theme }) => theme.colors.englishHolly};
-  font-weight: bold;
 `;

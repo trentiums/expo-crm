@@ -23,7 +23,6 @@ export const DateContainer = styled(View)`
 `;
 
 export const FilterBtnText = styled(Text)`
-  font-weight: 700;
   color: ${({ theme }) => theme.colors.primaryColor};
   text-align: center;
 `;
@@ -34,7 +33,6 @@ export const FiltersDropDownViews = styled(View)`
   justify-content: flex-start;
 `;
 export const RemoveFilterBtnText = styled(Text)`
-  font-weight: 700;
   color: ${({ theme }) => theme.colors.errorText};
   text-align: center;
 `;

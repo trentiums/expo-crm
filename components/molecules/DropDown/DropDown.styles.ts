@@ -10,8 +10,6 @@ export const DropDownTitleText = styled(Text)`
   font-size: 18px;
   color: ${({ theme }) => theme.colors.white};
   text-align: center;
-
-  font-weight: bold;
 `;
 
 export const DropDownDataContainer = styled(View)`

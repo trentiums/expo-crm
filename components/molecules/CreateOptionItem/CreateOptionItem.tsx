@@ -14,7 +14,7 @@ const CreateOptionsItem: React.FC<CreateOptionItemProps> = ({
   return (
     <ItemContainer onPress={handlePress}>
       <IconContainer>{icon}</IconContainer>
-      <OptionLabel>{label}</OptionLabel>
+      <OptionLabel variant="SF-Pro-Display-Medium_500">{label}</OptionLabel>
     </ItemContainer>
   );
 };

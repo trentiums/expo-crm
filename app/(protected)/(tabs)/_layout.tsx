@@ -20,7 +20,11 @@ const TabsLayout = () => {
   const { t } = useTranslation('tabs');
 
   const renderTabBarLabel = (focused: boolean, label: string) => {
-    return <TabLabel focused={focused}>{label}</TabLabel>;
+    return (
+      <TabLabel focused={focused} variant="SF-Pro-Display-Semibold_600">
+        {label}
+      </TabLabel>
+    );
   };
 
   const handleAddLeadPress = () => {

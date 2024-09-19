@@ -84,7 +84,6 @@ export const CreateOptionTabContainer = styled(Pressable)`
 export const TabLabel = styled(Text)<{ focused?: boolean }>`
   margin-top: 5px;
   font-size: 12px;
-  font-weight: ${({ focused }) => (focused ? 'bold' : 'lighter')};
   color: ${({ focused, theme }) =>
     focused ? theme.colors.englishHolly : theme.colors.laurelGarland};
 `;
@@ -101,7 +100,6 @@ export const HeadingText = styled(Text)`
 `;
 export const CountsText = styled(Text)`
   font-size: 16px;
-  font-weight: 400;
   color: ${({ theme }) => theme.colors.textGray};
 `;
 export const FilterIconView = styled(Pressable)`

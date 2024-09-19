@@ -22,6 +22,5 @@ export const FilterTitle = styled(Text)`
 `;
 export const FilterType = styled(Text)`
   font-size: 16px;
-  font-weight: 400;
   color: ${({ theme }) => theme.colors.textGray};
 `;

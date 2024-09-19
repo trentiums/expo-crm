@@ -49,7 +49,9 @@ const LeadsSortFilter: React.FC<LeadsSortFilterProps> = ({
     item,
   }) => (
     <LeadsFilterContainer onPress={() => handleSelectSortFilter(item)}>
-      <LeadsSortFilterText>{item.title}</LeadsSortFilterText>
+      <LeadsSortFilterText variant="SF-Pro-Display-Medium_500">
+        {item.title}
+      </LeadsSortFilterText>
       <IconWrapper>
         {selectedSort?.id === item.id && <CircleCheckIcon />}
       </IconWrapper>
@@ -73,8 +75,8 @@ const LeadsSortFilter: React.FC<LeadsSortFilterProps> = ({
               leadsFilter?.startDate &&
               moment(leadsFilter?.startDate).format('YYYY-MM-DD'),
             end_date:
-              leadsFilter.endDate &&
-              moment(leadsFilter.endDate).format('YYYY-MM-DD'),
+              leadsFilter?.endDate &&
+              moment(leadsFilter?.endDate).format('YYYY-MM-DD'),
             lead_channel_id: leadsFilter?.selectedChannel,
             lead_conversion_id: leadsFilter?.selectedStage,
             lead_status_id: leadsFilter?.selectedStatus,
@@ -103,12 +105,16 @@ const LeadsSortFilter: React.FC<LeadsSortFilterProps> = ({
       />
       <LeadsFilterButton>
         <RemoveFilterButton onPress={handleRemoveFilters}>
-          <RemoveButtonText>{t('removeFilter')}</RemoveButtonText>
+          <RemoveButtonText variant="SF-Pro-Display-Semibold_600">
+            {t('removeFilter')}
+          </RemoveButtonText>
         </RemoveFilterButton>
         <FilterApplyButton
           loading={filterLoading}
           onPress={handleApplySortFilter}>
-          <FormButtonText valid={true}>{t('applyFilter')}</FormButtonText>
+          <FormButtonText valid={true} variant="SF-Pro-Display-Semibold_600">
+            {t('applyFilter')}
+          </FormButtonText>
         </FilterApplyButton>
       </LeadsFilterButton>
     </LeasFilterScreenContainer>

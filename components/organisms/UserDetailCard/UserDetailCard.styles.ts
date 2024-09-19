@@ -28,7 +28,6 @@ export const TouchableOpacityContainer = styled(TouchableOpacity)<{
 export const SwipeText = styled(Text)`
   color: ${({ theme }) => theme.colors.white};
   font-size: 14px;
-  font-weight: 700;
   text-align: center;
 `;
 
@@ -50,7 +49,6 @@ export const PhoneInfoView = styled(View)`
 `;
 export const EmailText = styled(Text)`
   font-size: 16px;
-  font-weight: 500;
   color: ${({ theme }) => theme.colors.darkText};
 `;
 export const ActionMenuContainer = styled(View)`

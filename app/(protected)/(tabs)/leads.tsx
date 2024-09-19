@@ -5,7 +5,7 @@ import { deleteLeadAction, getLeadListAction } from '@redux/actions/lead';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import ScreenTemplate from '@templates/ScreenTemplate/ScreenTemplate';
 import { LeadListState } from '@type/api/lead';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
@@ -115,7 +115,12 @@ const Leads = () => {
           }),
         ).unwrap();
       } catch (error) {
-        console.log(error);
+        toast.show(error, {
+          type: ToastType.Custom,
+          data: {
+            type: ToastTypeProps.Error,
+          },
+        });
       }
       setLoadingStatus(LoadingStatus.NONE);
     }
@@ -123,19 +128,29 @@ const Leads = () => {
   const onRefreshLeadList = async () => {
     try {
       setRefreshing(true);
-      await dispatch(getLeadListAction({}));
+      await dispatch(getLeadListAction({})).unwrap();
     } catch (error) {
-      console.log(error);
+      toast.show(error, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
     }
     setRefreshing(false);
   };
 
-  const handleSearchLead = async () => {
+  const handleSearch = async () => {
     try {
       setLoadingStatus(LoadingStatus.SCREEN);
-      // await dispatch(getLeadListAction({ search: leadSearch })).unwrap();
+      await dispatch(getLeadListAction({ search: leadSearch || undefined }));
     } catch (error) {
-      console.log(error);
+      toast.show(error, {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
     }
     setLoadingStatus(LoadingStatus.NONE);
   };
@@ -145,77 +160,83 @@ const Leads = () => {
       <SearchFilter
         search={leadSearch}
         setSearch={setLeadSearch}
-        handleSearch={handleSearchLead}
+        handleSearch={handleSearch}
         rightIcon={<FilterIcon />}
         onRightIconPress={handleVisibleLeadsFilter}
         dropdownDataType={DropdownDataType.LEADS}
       />
     );
   };
-  if (loadingStatus === LoadingStatus.SCREEN) {
-    return (
-      <ScreenTemplate moreVisible>
-        {renderHeader()}
-        <LoaderContainer>
-          <Loader color={colors.blueChaos} />
-        </LoaderContainer>
-      </ScreenTemplate>
-    );
-  }
+
   const handleVisibleLeadsFilter = () => {
     setVisibleLeadsFilterSheet(true);
+    handleCloseVisibleSortFilter();
   };
   const handleCloseVisibleFilter = () => {
     setVisibleLeadsFilterSheet(false);
   };
   const handleVisibleLeadsSortFilter = () => {
     setVisibleLeadsSortFilterSheet(true);
+    handleCloseVisibleFilter();
   };
   const handleCloseVisibleSortFilter = () => {
     setVisibleLeadsSortFilterSheet(false);
   };
-
   return (
     <ScreenTemplate moreVisible>
       <HeadingText variant="SF-Pro-Display-Semibold_600">
         {t('leads')}
       </HeadingText>
       {renderHeader()}
-      <LeadsHeadingView>
-        <CountsText>
-          {t('itemWithCount', { count: leadsData?.total })}
-        </CountsText>
-        <QuickFilter
-          filterTitle={tb('select')}
-          filterType={tb('sortBy')}
-          onFilterPress={handleVisibleLeadsSortFilter}
-        />
-      </LeadsHeadingView>
-      <Spacer size={16} />
-      {leadsData.leads.length > 0 ? (
-        <LeadsFlatList
-          data={leadsData?.leads}
-          keyExtractor={(item: any, index: number) => `${item.id}-${index}`}
-          renderItem={renderLeads}
-          showsVerticalScrollIndicator={false}
-          onEndReached={handleGetMoreData}
-          ListFooterComponent={
-            loadingStatus === LoadingStatus.MORE ? <Loader size={24} /> : null
-          }
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefreshLeadList}
-              colors={[colors.primaryColor]}
-            />
-          }
-        />
-      ) : (
-        <NoDataAvailable
-          text={td('noLeadsTitle')}
-          description={td('noLeadsDesc')}
-        />
-      )}
+      {
+        <>
+          {loadingStatus === LoadingStatus.SCREEN ? (
+            <Loader />
+          ) : (
+            <>
+              <LeadsHeadingView>
+                <CountsText>
+                  {t('itemWithCount', { count: leadsData?.total })}
+                </CountsText>
+                <QuickFilter
+                  filterTitle={tb('select')}
+                  filterType={tb('sortBy')}
+                  onFilterPress={handleVisibleLeadsSortFilter}
+                />
+              </LeadsHeadingView>
+              <Spacer size={16} />
+              {leadsData.leads.length > 0 ? (
+                <LeadsFlatList
+                  data={leadsData?.leads}
+                  keyExtractor={(item: any, index: number) =>
+                    `${item.id}-${index}`
+                  }
+                  renderItem={renderLeads}
+                  showsVerticalScrollIndicator={false}
+                  onEndReached={handleGetMoreData}
+                  ListFooterComponent={
+                    loadingStatus === LoadingStatus.MORE ? (
+                      <Loader size={24} />
+                    ) : null
+                  }
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefreshLeadList}
+                      colors={[colors.primaryColor]}
+                    />
+                  }
+                />
+              ) : (
+                <NoDataAvailable
+                  text={td('noLeadsTitle')}
+                  description={td('noLeadsDesc')}
+                />
+              )}
+            </>
+          )}
+        </>
+      }
 
       {showModal && (
         <ActionModal
@@ -235,7 +256,7 @@ const Leads = () => {
           }}
           onActionPress={() => onDeleteActionPress(deleteLeadId || 0)}
           icon={<TrashIcon color={colors?.deleteColor} />}
-          loading={loadingStatus === LoadingStatus.SCREEN}
+          loading={loadingStatus === LoadingStatus.DELETE}
         />
       )}
       {visibleLeadsFilterSheet && (

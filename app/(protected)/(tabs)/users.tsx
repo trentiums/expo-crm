@@ -90,7 +90,7 @@ const Users = () => {
   const handleSearch = async () => {
     try {
       setLoadingStatus(LoadingStatus.SCREEN);
-      await dispatch(getUserListAction({ search: userSearch }));
+      await dispatch(getUserListAction({ search: userSearch || undefined }));
     } catch (error) {
       console.log(error);
     }
