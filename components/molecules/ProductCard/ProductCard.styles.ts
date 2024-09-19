@@ -25,6 +25,7 @@ export const NameText = styled(Text)`
   font-size: 20px;
   padding-top: 8px;
   padding-bottom: 24px;
+  flex: 0.9;
 `;
 export const DetailContainer = styled(View)`
   display: flex;

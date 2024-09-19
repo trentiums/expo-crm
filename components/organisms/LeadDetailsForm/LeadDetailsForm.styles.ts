@@ -97,6 +97,9 @@ export const SelectedServiceData = styled(View)`
   border-radius: 19px;
   gap: 8px;
   margin-right: 8px;
+  flex: 1;
+  flex-basis: auto;
+  margin: 0px 8px;
 `;
 export const ServiceText = styled(Text)`
   font-size: 15px;

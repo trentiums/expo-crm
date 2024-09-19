@@ -20,7 +20,7 @@ import MenuOptionItem from '@molecules/MenuOptionItem/MenuOptionItem';
 import { Flexed, Spacer } from '@atoms/common/common.styles';
 import View from '@atoms/View/View';
 import Switch from '@atoms/Switch/Switch';
-import { Pressable } from 'react-native';
+import { Linking, Pressable } from 'react-native';
 import { changeTheme, ThemeTypes } from '@redux/slices/theme';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import MoreMenuBottom from '@organisms/MoreMenuBottom/MoreMenuBottom';
@@ -49,6 +49,9 @@ const MoreMenu = () => {
   const userRole = useSelector((state: RootState) => state.auth.user.userRole);
   const currentLanguage = useSelector(
     (state: RootState) => state.auth.currentLanguage,
+  );
+  const settingList = useSelector(
+    (state: RootState) => state?.general.settings,
   );
 
   const handleChangeTheme = () => {
@@ -100,6 +103,21 @@ const MoreMenu = () => {
       </Pressable>
     );
   };
+  const sendEmail = () => {
+    const email = settingList?.contactEmail;
+
+    if (!email) {
+      toast.show(t('noEmail'), {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+      return;
+    }
+    const url = `mailto:${email}`;
+    Linking.openURL(url);
+  };
 
   const menuOptions = [
     {
@@ -123,10 +141,12 @@ const MoreMenu = () => {
     {
       label: 'helpAndSupport',
       icon: <SupportAgentIcon />,
+      onPress: sendEmail,
     },
     {
       label: 'feedback',
       icon: <FeedbackIcon />,
+      onPress: sendEmail,
     },
   ];
 

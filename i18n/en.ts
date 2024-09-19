@@ -104,6 +104,7 @@ export const English = {
     leadStatusChange: 'Lead Status Change',
     leadStageChange: 'Lead Stage Change',
     moreMenu: 'More menu',
+    noEmail: 'No email present',
   },
   leadDetailList: {
     name: 'User Name',
@@ -465,6 +466,7 @@ export const Gujarati = {
     leadStatusChange: 'લીડ સ્થિતિમાં ફેરફાર',
     leadStageChange: 'લીડ સ્ટેજમાં ફેરફાર',
     moreMenu: 'વધુ મેનુ',
+    noEmail: 'ઇમેલ હાજર નથી',
   },
   leadDetailList: {
     name: 'યુઝર નામ',
@@ -826,6 +828,7 @@ export const Hindi = {
     leadStatusChange: 'लीड स्थिति बदलें',
     leadStageChange: 'लीड चरण बदलें',
     moreMenu: 'अधिक मेनू',
+    noEmail: 'कोई ईमेल मौजूद नहीं है',
   },
   leadDetailList: {
     name: 'उपयोगकर्ता नाम',

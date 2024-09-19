@@ -59,7 +59,6 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   const { t } = useTranslation('leadDetails');
   const { t: tb } = useTranslation('formButtonName');
   const { t: tl } = useTranslation('leadDetailList');
-  const { t: td } = useTranslation('drawer');
   const route = useRoute();
   const { values, valid } = useFormState();
   const { colors } = useAppTheme();
@@ -229,6 +228,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
       </SelectedUserData>
     );
   };
+  console.log(values?.selectedServices, 'values?.selectedServices', valid);
   return (
     <FormsView>
       <KeyboardAwareScrollView
@@ -497,10 +497,17 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
         </SubContainerView>
         <SubContainerView>
           <ButtonSubmit
-            onPress={!loading && form.submit}
+            onPress={
+              !loading &&
+              valid &&
+              values?.selectedServices?.length > 0 &&
+              form.submit
+            }
             loading={loading}
-            valid={valid}>
-            <FormButtonText valid={valid} variant="SF-Pro-Display-Semibold_600">
+            valid={valid && values?.selectedServices?.length > 0}>
+            <FormButtonText
+              valid={valid && values?.selectedServices?.length > 0}
+              variant="SF-Pro-Display-Semibold_600">
               {id ? tb('save') : tb('next')}
             </FormButtonText>
           </ButtonSubmit>

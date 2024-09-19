@@ -71,7 +71,7 @@ const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
       key: t('stage'),
       title: t('stage'),
       icon: <StageIcon />,
-      value: <LeadStage leadStage={leadDetail?.leadStatusId} />,
+      value: <LeadStage leadStage={leadDetail?.leadConversionId} />,
     },
     {
       key: t('channel'),

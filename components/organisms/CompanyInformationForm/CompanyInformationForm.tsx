@@ -109,8 +109,8 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
           <ButtonSubmit
             onPress={!loading && form.submit}
             loading={loading}
-            valid={valid}>
-            <FormButtonText valid={valid} variant="SF-Pro-Display-Semibold_600">
+            valid={true}>
+            <FormButtonText valid={true} variant="SF-Pro-Display-Semibold_600">
               {id ? tb('save') : tb('next')}
             </FormButtonText>
           </ButtonSubmit>
