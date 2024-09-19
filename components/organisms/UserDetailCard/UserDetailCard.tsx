@@ -11,6 +11,7 @@ import { useAppDispatch } from '@redux/store';
 import { deleteUserAction, getAssignUserListAction } from '@redux/actions/user';
 import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { getLeadListAction } from '@redux/actions/lead';
 
 const UserDetailCard: React.FC<UserDetailCardProps> = ({
   data,
@@ -32,6 +33,7 @@ const UserDetailCard: React.FC<UserDetailCardProps> = ({
         },
       });
       await dispatch(getAssignUserListAction({}));
+      await dispatch(getLeadListAction({})).unwrap();
     } catch (error: string) {
       toast.show(`${error}`, {
         type: ToastType.Custom,
