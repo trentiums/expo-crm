@@ -88,6 +88,7 @@ export const DefaultTheme = {
     distantCloud: '#e5e9e6',
     tarnishedSilver16: '#78788029',
     funGreen: '#0f6936',
+    funWhite: '#fff',
   },
 };
 
@@ -133,7 +134,7 @@ export const DarkTheme: AppTheme = {
     screenTemplateColor: '#222222',
     textDark: '#FFFFFF',
     textGray: '#BBBBBB',
-    lightGray: '#888888',
+    lightGray: '#b4b4b4',
     lightBlue: '#90CAF9',
     blue: '#2962FF',
     green: '#00C853',
@@ -142,7 +143,7 @@ export const DarkTheme: AppTheme = {
     lightYellow: '#FFEB3B50',
     red: '#E53935',
     lightRed: '#FFCDD2',
-    greenLight: '#C9F7D5',
+    greenLight: '#f1fdf5',
     yellowLight: '#FFE7B3',
     redLight: '#FFDBD2',
     blueLight: '#4A90E2',
@@ -159,7 +160,7 @@ export const DarkTheme: AppTheme = {
     englishHolly: '#dcdcdc',
     laurelGarland: '#8D8D8D',
     americanSilver: '#A5A5A5',
-    blueChaos: '#1976D2',
+    blueChaos: '#89b2ff',
     zhuBaiPearl: '#333333',
     namaraGrey: '#9E9E9E',
     modernLavender: '#A8AcB3',
@@ -175,6 +176,7 @@ export const DarkTheme: AppTheme = {
     distantCloud: '#616161',
     tarnishedSilver16: '#33333380',
     funGreen: '#66BB6A',
+    funWhite: '#fff',
   },
 };
 

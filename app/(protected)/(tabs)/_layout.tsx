@@ -30,7 +30,24 @@ const TabsLayout = () => {
   const handleAddLeadPress = () => {
     setVisibleCreateOptionSheet(!visibleCreateOptionSheet);
   };
-
+  const renderServices = () => {
+    return (
+      <Tabs.Screen
+        name="products"
+        options={{
+          title: t('services'),
+          headerTitle: t('services'),
+          tabBarLabel: ({ focused }) =>
+            renderTabBarLabel(focused, t('services')),
+          tabBarIcon: ({ focused }) => (
+            <ProductIcon
+              color={focused ? colors.englishHolly : colors.americanSilver}
+            />
+          ),
+        }}
+      />
+    );
+  };
   return (
     <>
       <Tabs
@@ -76,6 +93,7 @@ const TabsLayout = () => {
             ),
           }}
         />
+        {user.userRole === UserRole.CompanyStaff && renderServices()}
         <Tabs.Screen
           name="create-new"
           options={{
@@ -108,20 +126,7 @@ const TabsLayout = () => {
           }}
           redirect={user.userRole === UserRole.CompanyStaff}
         />
-        <Tabs.Screen
-          name="products"
-          options={{
-            title: t('services'),
-            headerTitle: t('services'),
-            tabBarLabel: ({ focused }) =>
-              renderTabBarLabel(focused, t('services')),
-            tabBarIcon: ({ focused }) => (
-              <ProductIcon
-                color={focused ? colors.englishHolly : colors.americanSilver}
-              />
-            ),
-          }}
-        />
+        {user.userRole !== UserRole.CompanyStaff && renderServices()}
       </Tabs>
 
       {visibleCreateOptionSheet && (
