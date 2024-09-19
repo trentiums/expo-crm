@@ -42,13 +42,10 @@ import { dashboardQuickFilters } from '@utils/constant';
 const Dashboard = () => {
   const { colors } = useAppTheme();
   const { t } = useTranslation('dashBoard');
-  const { t: tm } = useTranslation('modalText');
   const { t: tr } = useTranslation('drawer');
   const { t: tl } = useTranslation('leadStage');
   const user = useSelector((state: RootState) => state.auth.user);
-  const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [deletedId, setDeletedId] = useState<number | undefined>();
   const dashboardLeadList = useSelector((state: RootState) => state.dashboard);
   const isAdmin =
     user.userRole === UserRole.Admin || user.userRole === UserRole.CompanyAdmin;
@@ -121,11 +118,6 @@ const Dashboard = () => {
     setLeads(dashboardLeadList.leadList);
   }, [dashboardLeadList]);
 
-  const handleDelete = (id: number) => {
-    setShowModal(true);
-    setDeletedId(id);
-  };
-
   const createLeadsArray = (lead, index) => {
     return [
       {
@@ -188,7 +180,6 @@ const Dashboard = () => {
           }}>
           <DashBoardLeadCard
             key={`${lead?.id}-${index}`}
-            onDelete={() => handleDelete(lead?.id)}
             leadData={lead}
             isSocialMediaVisible
           />

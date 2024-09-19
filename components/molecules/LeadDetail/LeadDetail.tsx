@@ -130,13 +130,12 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
           )}
         </ContactBox>
       )}
-
       {visibleBottomSheet && (
         <BottomSheetNavigator
           initialRouteName="ModifyLeadOption"
           onClosePress={closeBottomSheet}
           meta={{
-            leadId: leadData?.leadId,
+            leadId: leadData?.leadId || leadData?.id,
             userId: leadData?.id,
             optionType: optionType || ScreenOptionType.DASHBOARD,
             onDelete: onDelete,

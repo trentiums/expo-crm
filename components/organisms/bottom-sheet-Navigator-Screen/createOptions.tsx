@@ -8,7 +8,8 @@ import { CreateOptionItemProps, CreateOptionProps } from './screen.props';
 import { useTranslation } from 'react-i18next';
 import { router } from 'expo-router';
 import { addLeadInformation } from '@redux/slices/leads';
-import { useAppDispatch } from '@redux/store';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
+import { UserRole } from '@type/api/auth';
 
 const CreateOptions: React.FC<CreateOptionProps> = ({
   changeSnapPoints,
@@ -20,12 +21,8 @@ const CreateOptions: React.FC<CreateOptionProps> = ({
     changeSnapPoints(['20%', '90%']);
   }, []);
 
+  const user = useSelector((state: RootState) => state.auth.user);
   const createOptions = [
-    {
-      label: 'user',
-      icon: <SingleUserIcon />,
-      route: '../../(protected)/add-user/add',
-    },
     {
       label: 'lead',
       icon: <LeadDocumentIcon />,
@@ -37,6 +34,17 @@ const CreateOptions: React.FC<CreateOptionProps> = ({
       route: '../../(protected)/add-product/add',
     },
   ];
+
+  if (
+    user.userRole === UserRole.Admin ||
+    user.userRole === UserRole.CompanyAdmin
+  ) {
+    createOptions.splice(1, 0, {
+      label: 'user',
+      icon: <SingleUserIcon />,
+      route: '../../(protected)/add-user/add',
+    });
+  }
 
   const handleRedirection = (route: string) => {
     handleBottomSheetClose?.();

@@ -92,7 +92,6 @@ const TabsLayout = () => {
               handleAddLeadPress();
             },
           }}
-          redirect={user.userRole === UserRole.CompanyStaff}
         />
         <Tabs.Screen
           name="users"
@@ -122,7 +121,6 @@ const TabsLayout = () => {
               />
             ),
           }}
-          redirect={user.userRole === UserRole.CompanyStaff}
         />
       </Tabs>
 
