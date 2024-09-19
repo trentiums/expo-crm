@@ -156,7 +156,7 @@ export const DarkTheme: AppTheme = {
     lightBlack: '#1E1E1E',
     snowflake: '#444444',
     roseMadder: '#D32F2F',
-    englishHolly: '#3D5A41',
+    englishHolly: '#dcdcdc',
     laurelGarland: '#8D8D8D',
     americanSilver: '#A5A5A5',
     blueChaos: '#1976D2',
