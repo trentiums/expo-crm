@@ -18,7 +18,7 @@ import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { router } from 'expo-router';
 
-const index = () => {
+const ForgotPasswordScreen = () => {
   const { t } = useTranslation('login');
   const dispatch = useAppDispatch();
   const toast = useToast();
@@ -65,4 +65,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default ForgotPasswordScreen;

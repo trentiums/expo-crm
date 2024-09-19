@@ -69,7 +69,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, loading }) => {
           secureTextEntry={secureTextEntry}
         />
         <ForgotPasswordContainer
-          onPress={() => router.navigate('/(public)/forgotPassword')}>
+          onPress={() =>
+            router.navigate('/(public)/forgotPassword/forgot-password')
+          }>
           <ForgotText>{t('forgotPassword')}</ForgotText>
         </ForgotPasswordContainer>
         <Spacer size={16} />
