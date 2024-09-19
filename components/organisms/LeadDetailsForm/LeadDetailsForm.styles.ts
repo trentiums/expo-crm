@@ -90,7 +90,7 @@ export const SelectedServiceData = styled(View)`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 12px;
+  padding: 8px 20px 8px 8px;
   background-color: ${({ theme }) => theme.colors.white};
   border-width: 1px;
   border-color: ${({ theme }) => theme.colors.lightGray};
