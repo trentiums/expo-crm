@@ -38,7 +38,7 @@ const CompanyDashboardCard: React.FC<CompanyDashboardCardProps> = ({
   return (
     <CompanyDashboardCardContainer>
       <UserInformationContainer>
-        <ProfileIcon />
+        <ProfileIcon color={colors.black} />
         <UserNameText numberOfLines={1} variant="SF-Pro-Display-Semibold_600">
           {name}
         </UserNameText>

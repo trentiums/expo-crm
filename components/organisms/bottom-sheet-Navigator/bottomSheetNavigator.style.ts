@@ -9,6 +9,7 @@ export const BottomSheetHeaderContainer = styled(View)`
   border-bottom-width: 1px;
   border-bottom-color: ${({ theme }) => theme.colors.black15};
   padding: 15px;
+  background-color: ${({ theme }) => theme.colors.snowflakeWhite};
 `;
 
 export const BottomSheetHeaderTitle = styled(Text)`

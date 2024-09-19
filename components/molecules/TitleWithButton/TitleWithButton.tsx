@@ -11,11 +11,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { TitleWithButtonProps } from './TitleWithButton.props';
 import Back from '@atoms/Illustrations/Back';
+import { useAppTheme } from '@constants/theme';
 
 const TitleWithButton: React.FC<TitleWithButtonProps> = ({
   text,
   onBackPress,
 }) => {
+  const { colors } = useAppTheme();
   const onBackPressed = () => {
     if (onBackPress) {
       onBackPress();
@@ -26,7 +28,7 @@ const TitleWithButton: React.FC<TitleWithButtonProps> = ({
     <HeaderWithTextContainer top={top}>
       <IconCon>
         <Pressable onPress={() => onBackPressed()}>
-          <Back />
+          <Back color={colors.black} />
         </Pressable>
       </IconCon>
       {!!text && (

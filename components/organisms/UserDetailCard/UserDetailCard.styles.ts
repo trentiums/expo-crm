@@ -49,7 +49,7 @@ export const PhoneInfoView = styled(View)`
 `;
 export const EmailText = styled(Text)`
   font-size: 16px;
-  color: ${({ theme }) => theme.colors.darkText};
+  color: ${({ theme }) => theme.colors.textDark};
 `;
 export const ActionMenuContainer = styled(View)`
   position: absolute;

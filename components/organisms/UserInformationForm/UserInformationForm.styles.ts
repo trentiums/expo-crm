@@ -42,7 +42,8 @@ export const PreviewImageView = styled(Image)`
 export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   height: 48px;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.blueChaos};
+  background-color: ${({ theme, valid }) =>
+    valid ? theme.colors.blueChaos : theme.colors.gray};
   border-radius: 50px;
   border-width: 1px;
   margin-bottom: -16px;
@@ -71,7 +72,7 @@ export const KeyboardAwareScrollViewContainer = styled(KeyboardAwareScrollView)`
 
 export const FormButtonText = styled(Text)<{ valid: boolean }>`
   color: ${({ valid, theme }) =>
-    valid ? theme.colors.white : theme.colors.gray};
+    valid ? theme.colors.funWhite : theme.colors.lightGray};
 `;
 
 export const MainProfileView = styled(View)`

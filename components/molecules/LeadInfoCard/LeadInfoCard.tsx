@@ -21,10 +21,14 @@ import LeadStage from '@molecules/LeadStage/LeadStage';
 import ProfileIcon from '@atoms/Illustrations/Profile';
 import { useTranslation } from 'react-i18next';
 import ServicesComputerIcon from '@atoms/Illustrations/ServicesComputer';
+import { ThemeTypes } from '@redux/slices/theme';
 
 const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
   const { t } = useTranslation('LeadInfoCard');
   const { colors } = useAppTheme();
+  const currentTheme = useSelector(
+    (state: RootState) => state.theme.currentTheme,
+  );
   const leads = useSelector((state: RootState) => state.leads.leadList.leads);
   const leadDetail = leads.find((item) => item.id === leadId);
   const generalLists = useSelector((state: RootState) => state.general);
@@ -85,7 +89,7 @@ const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
       icon: <AssignedToIcon />,
       value: leadDetail?.assignTo && (
         <LeadAssignedToContainer>
-          <ProfileIcon />
+          <ProfileIcon color={colors.black} />
           <LeadInfoValue>{assignedName}</LeadInfoValue>
         </LeadAssignedToContainer>
       ),

@@ -20,7 +20,6 @@ import {
 import { Spacer } from '@atoms/common/common.styles';
 import { useAppTheme } from '@constants/theme';
 import { UserInformationFormProps } from './UserInformationForm.props';
-import { useRoute } from '@react-navigation/native';
 import LockIcon from '@atoms/Illustrations/Lock';
 import { Pressable } from 'react-native';
 import EyeCloseIcon from '@atoms/Illustrations/EyeClose';

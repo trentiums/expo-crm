@@ -17,7 +17,7 @@ import SyncIcon from '@atoms/Illustrations/Sync';
 import StageIcon from '@atoms/Illustrations/Stage';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import { deleteLeadAction, getLeadDetailsAction } from '@redux/actions/lead';
-import { useAppDispatch } from '@redux/store';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import ActionModal from '@molecules/ActionModal/ActionModal';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import { useToast } from 'react-native-toast-notifications';
@@ -27,6 +27,7 @@ import { dashboardLeadListAction } from '@redux/actions/dashboard';
 import ChannelIcon from '@atoms/Illustrations/Channel';
 import AssignmentCardIcon from '@atoms/Illustrations/AssignmentCard';
 import AssignedUserList from './assignedUserList';
+import { UserRole } from '@type/api/auth';
 
 const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
   changeSnapPoints,
@@ -46,6 +47,8 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
   const [showModal, setShowModal] = useState(false);
   const [showAssignLead, setAssignLead] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const user = useSelector((state: RootState) => state.auth.user);
+  const isAdmin = user.userRole !== UserRole.CompanyStaff;
   const onLayout = useCallback(() => {
     if (optionType === ScreenOptionType.DASHBOARD) {
       changeSnapPoints(['31%', '90%']);
@@ -91,12 +94,13 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
   }
 
   if (optionType === ScreenOptionType.LEAD) {
-    modifyLeadOption.splice(1, 0, {
-      label: 'updateChannel',
-      icon: <ChannelIcon />,
-      route: '',
-      bottomSheetRoute: 'LeadChannelList',
-    });
+    isAdmin &&
+      modifyLeadOption.splice(1, 0, {
+        label: 'updateChannel',
+        icon: <ChannelIcon />,
+        route: '',
+        bottomSheetRoute: 'LeadChannelList',
+      });
     modifyLeadOption.splice(1, 0, {
       label: 'updateAssignedUsers',
       icon: <AssignmentCardIcon />,

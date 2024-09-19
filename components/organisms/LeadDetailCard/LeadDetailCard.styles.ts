@@ -11,7 +11,7 @@ export const LeadDetailCardContainer = styled(View)<{
   padding-right: 16px;
   padding-top: 14px;
   padding-bottom: 16px;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.dugong};
 `;
 export const RequirementClubContainer = styled(View)`
   display: flex;

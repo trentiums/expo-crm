@@ -123,33 +123,33 @@ const Dashboard = () => {
       {
         title: tl('initial'),
         value: lead.initial,
-        bgColor: colors.greenLight,
+        bgColor: colors.pickford,
         color: colors.green,
       },
       {
         title: tl('proposed'),
         value: lead.proposal,
-        bgColor: colors.yellowLight,
+        bgColor: colors.sunKissed,
         color: colors.yellow,
       },
       {
         title: tl('negotiation'),
         value: lead.negotiation,
-        bgColor: colors.redLight,
+        bgColor: colors.softOrange,
         color: colors.red,
       },
 
       {
         title: tl('closedWon'),
         value: lead.closedWon,
-        bgColor: colors.blueLight,
+        bgColor: colors.arcLight,
         color: colors.blue,
       },
       {
         title: tl('closedLost'),
         value: lead.closedLost,
-        bgColor: colors.grayLight,
-        color: colors.englishHolly,
+        bgColor: colors.orochimaru,
+        color: colors.grayHolly,
       },
     ];
   };

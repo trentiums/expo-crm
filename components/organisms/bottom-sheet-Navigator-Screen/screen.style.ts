@@ -141,6 +141,7 @@ export const DashboardSortFilterText = styled(Text)`
 export const LeadsFilterView = styled(View)`
   flex: 1;
   flex-basis: auto;
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 export const DashboardFilterApplyButton = styled(Button)`
