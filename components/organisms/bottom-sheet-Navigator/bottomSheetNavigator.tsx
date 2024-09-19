@@ -104,6 +104,8 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
       enablePanDownToClose={true}
       handleComponent={null}
       onDismiss={() => handleClosePress()}
+      keyboardBehavior="interactive"
+      keyboardBlurBehavior="restore"
       onClose={() => handleClosePress()}>
       <NavigationContainer independent={true}>
         <Stack.Navigator initialRouteName={initialRouteName}>
