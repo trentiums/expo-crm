@@ -256,7 +256,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             dropdownDataType={DropdownDataType.SERVICES}
             heading={t('selectService')}
             validate={requiredValidator}
-            isStaff={user.userRole === UserRole.CompanyStaff}
+            isStaff={id && user.userRole === UserRole.CompanyStaff}
           />
           <Spacer size={8} />
           {values?.selectedServices?.length > 0 && (
