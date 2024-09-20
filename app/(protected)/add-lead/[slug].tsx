@@ -166,7 +166,8 @@ const AddLead = () => {
       if (
         values?.timeFrameType ||
         selectedData?.timeFrameType ||
-        selectedData.timeLine
+        selectedData.timeLine ||
+        values?.timeFrame
       ) {
         formData.append(
           'timeline_timeframe',

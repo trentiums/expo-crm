@@ -89,6 +89,7 @@ export const English = {
     searchBudget: 'Search currency',
     searchTimeline: 'Search timeline',
     searchDealAmount: 'Search deal amount',
+    userChannelError: 'user can not update channel',
   },
   screenTitle: {
     notification: 'Notification',
@@ -460,6 +461,7 @@ export const Gujarati = {
     searchBudget: 'કરન્સી શોધો',
     searchTimeline: 'સમયસરખું શોધો',
     searchDealAmount: 'ડિલની રકમ શોધો',
+    userChannelError: 'વપરાશકર્તા ચેનલને અપડેટ કરી શકતો નથી',
   },
   screenTitle: {
     notification: 'સૂચના',
@@ -824,6 +826,7 @@ export const Hindi = {
     searchBudget: 'मुद्रा खोजें',
     searchTimeline: 'समय सीमा खोजें',
     searchDealAmount: 'डील की राशि खोजें',
+    userChannelError: 'उपयोगकर्ता चैनल को अपडेट नहीं कर सकता है',
   },
   screenTitle: {
     notification: 'सूचना',

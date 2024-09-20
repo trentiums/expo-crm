@@ -2,6 +2,9 @@ import React from 'react';
 import { FieldDropDownProps } from './FieldDropDown.props';
 import DropDown from '@molecules/DropDown/DropDown';
 import FormError from '@atoms/FormError/FormError';
+import { useToast } from 'react-native-toast-notifications';
+import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
+import { useTranslation } from 'react-i18next';
 
 const FieldDropDown: React.FC<FieldDropDownProps> = ({
   input,
@@ -18,9 +21,17 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
   heading,
   isStaff,
 }) => {
+  const toast = useToast();
+  const { t } = useTranslation('drawer');
   const handleSelect = (value: any) => {
-    if (isStaff) return;
-    else {
+    if (isStaff) {
+      toast.show(t('userChannelError'), {
+        type: ToastType.Custom,
+        data: {
+          type: ToastTypeProps.Error,
+        },
+      });
+    } else {
       if (isMultiple) {
         const multiValue: number[] = Array.isArray(input.value)
           ? input.value
