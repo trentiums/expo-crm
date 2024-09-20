@@ -73,6 +73,8 @@ const MoreMenu = () => {
           type: ToastTypeProps.Success,
         },
       });
+      setDeleteShowModal(false);
+      router.navigate('/(public)/login');
     } catch (error) {
       toast.show(error, {
         type: ToastType.Custom,

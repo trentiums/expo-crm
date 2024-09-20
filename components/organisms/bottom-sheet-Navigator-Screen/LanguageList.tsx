@@ -3,6 +3,9 @@ import {
   BottomSheetListContainer,
   BottomSheetFlatListContainer,
   LoaderContainer,
+  ButtonContainer,
+  ButtonSubmit,
+  ButtonUpdateText,
 } from './screen.style';
 import { LanguageListProps } from './screen.props';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +15,7 @@ import BottomSheetItemListing from '@molecules/BottomSheetItemListing/BottomShee
 import Loader from '@atoms/Loader/Loader';
 import { languageList } from '@utils/constant';
 import { changeLanguage, LanguageProps } from '@redux/slices/auth';
+import { Flexed } from '@atoms/common/common.styles';
 
 const LanguageList: React.FC<LanguageListProps> = ({
   handleBottomSheetClose,
@@ -24,9 +28,9 @@ const LanguageList: React.FC<LanguageListProps> = ({
     (state: RootState) => state.auth.currentLanguage,
   );
   const onLayout = useCallback(() => {
-    changeSnapPoints(['25%', '90%']);
+    changeSnapPoints(['50%', '50%']);
   }, []);
-
+  const [SelectedId, setSelectedId] = useState(currentLanguage.id);
   const handleItemPress = async (languageId: number) => {
     setIsLoading(true);
     const selectedLanguage = languageList.filter(
@@ -45,10 +49,10 @@ const LanguageList: React.FC<LanguageListProps> = ({
     item: LanguageProps;
     index: number;
   }) => {
-    const isStatusSelected = currentLanguage.id === item.id;
+    const isStatusSelected = SelectedId === item.id;
     return (
       <BottomSheetItemListing
-        handlePress={() => handleItemPress(item.id)}
+        handlePress={() => setSelectedId(item.id)}
         label={t(`${item.name}`)}
         key={`${item.id}-${index}`}
         isSelected={isStatusSelected}
@@ -62,15 +66,31 @@ const LanguageList: React.FC<LanguageListProps> = ({
           <Loader />
         </LoaderContainer>
       ) : (
-        <BottomSheetFlatListContainer
-          data={languageList}
-          keyExtractor={(item: LanguageProps, index: number) =>
-            `${item.id}-${index}`
-          }
-          renderItem={renderLanguageOption}
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-        />
+        <Flexed>
+          <Flexed>
+            <BottomSheetFlatListContainer
+              data={languageList}
+              keyExtractor={(item: LanguageProps, index: number) =>
+                `${item.id}-${index}`
+              }
+              renderItem={renderLanguageOption}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
+            />
+          </Flexed>
+          <ButtonContainer>
+            <ButtonSubmit
+              onPress={() => handleItemPress(SelectedId)}
+              loading={isLoading}
+              valid={SelectedId}>
+              <ButtonUpdateText
+                valid={SelectedId}
+                variant="SF-Pro-Display-Semibold_600">
+                {t('update')}
+              </ButtonUpdateText>
+            </ButtonSubmit>
+          </ButtonContainer>
+        </Flexed>
       )}
     </BottomSheetListContainer>
   );

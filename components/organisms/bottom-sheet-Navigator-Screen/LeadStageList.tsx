@@ -48,7 +48,7 @@ const LeadStageList: React.FC<LeadStageListProps> = ({
     await dispatch(leadConversionListAction());
   };
   const onLayout = useCallback(() => {
-    changeSnapPoints(['35%', '35%']);
+    changeSnapPoints(['50%', '50%']);
   }, []);
 
   const handleItemPress = async (conversionId: number) => {
