@@ -149,7 +149,7 @@ export const DarkTheme: AppTheme = {
     green: '#4fc984',
     lightGreen: '#9BB0A5',
     yellow: '#9d7800',
-    lightYellow: '#FFEB3B50',
+    lightYellow: '#FFF3D8',
     red: '#E53935',
     lightRed: '#FFCDD2',
     greenLight: '#9ff1b5',
