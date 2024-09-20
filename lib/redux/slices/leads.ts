@@ -47,7 +47,7 @@ const initialState: LeadsState = {
     winCloseReason: '',
     dealCloseDate: '',
     documents: [],
-    assignTo: 0,
+    assignTo: undefined,
     dealAmountCurrencyCode: undefined,
     budgetCurrencyCode: undefined,
     timeFrameType: undefined,

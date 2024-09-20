@@ -207,7 +207,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   const renderSelectedServices = ({ item }) => {
     return (
       <SelectedServiceData>
-        <ServiceText>{item.name}</ServiceText>
+        <ServiceText>{item?.name}</ServiceText>
         <Pressable onPress={() => handleDeleteService(item.id)}>
           <CrossSmallIcon />
         </Pressable>
@@ -216,15 +216,19 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   };
   const renderSelectedUsers = ({ item }) => {
     return (
-      <SelectedUserData>
-        <ProfileIcon color={colors?.black} />
-        <ServiceText>{item.title}</ServiceText>
-        {!id && (
-          <Pressable onPress={() => handleDeleteAssignedUser(item.id)}>
-            <CrossSmallIcon />
-          </Pressable>
+      <>
+        {!!item?.title && (
+          <SelectedUserData>
+            <ProfileIcon color={colors.black} />
+            <ServiceText>{`${item?.title}`}</ServiceText>
+            {!id && (
+              <Pressable onPress={() => handleDeleteAssignedUser(item?.id)}>
+                <CrossSmallIcon />
+              </Pressable>
+            )}
+          </SelectedUserData>
         )}
-      </SelectedUserData>
+      </>
     );
   };
 
@@ -342,7 +346,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 (item) => values?.assignTo === item.id,
               )}
               renderItem={renderSelectedUsers}
-              keyExtractor={(item, index) => `${item}-${index}`}
+              keyExtractor={(item, index) => `${item?.id}-${index}`}
               ItemSeparatorComponent={<Spacer size={8} />}
             />
           )}

@@ -37,6 +37,9 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
   const leadsFilter = useSelector(
     (state: RootState) => state.leads.leadsFilter,
   );
+  const leadsSortFilter = useSelector(
+    (state: RootState) => state.leads.leadsSort,
+  );
 
   useEffect(() => {
     form.change('startDate', leadsFilter?.startDate);
@@ -53,6 +56,11 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
     handleGetLeadList();
     dispatch(setLeadsFilters({}));
     changeRoute();
+    dispatch(
+      getLeadListAction({
+        ...(leadsSortFilter?.filters ? leadsSortFilter.filters : undefined),
+      }),
+    ).unwrap();
   };
   useEffect(() => {
     if (!values?.orderBy) {

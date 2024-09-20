@@ -73,7 +73,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
           searchRadius={searchRadius}
         />
         <FilterIconView>
-          <Search />
+          <Search color={colors.snowGray} />
         </FilterIconView>
         {rightIcon && onRightIconPress && (
           <FilterRightIconView onPress={onRightIconPress}>

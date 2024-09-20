@@ -64,6 +64,22 @@ const LeadsSortFilter: React.FC<LeadsSortFilterProps> = ({
   const handleRemoveFilters = () => {
     setSelectedSort(null);
     dispatch(setLeadsSort({}));
+    changeRoute();
+    dispatch(
+      getLeadListAction({
+        end_date:
+          (leadsFilter?.endDate &&
+            moment(leadsFilter?.endDate).format('YYYY-MM-DD')) ||
+          undefined,
+        start_date:
+          (leadsFilter?.startDate &&
+            moment(leadsFilter?.startDate).format('YYYY-MM-DD')) ||
+          undefined,
+        lead_channel_id: leadsFilter?.selectedChannel,
+        lead_conversion_id: leadsFilter?.selectedStage,
+        lead_status_id: leadsFilter?.selectedStatus,
+      }),
+    ).unwrap();
   };
   const handleApplySortFilter = async () => {
     if (!filterLoading) {

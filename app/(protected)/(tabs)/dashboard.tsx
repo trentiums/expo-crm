@@ -262,9 +262,10 @@ const Dashboard = () => {
                     mode="contained"
                     buttonColor={colors.primaryColor}
                     textColor={colors.white}
-                    onPress={() =>
-                      router.navigate(`/(protected)/add-lead/addLead`)
-                    }
+                    onPress={() => {
+                      dispatch(setLeadsInformation());
+                      router.navigate(`/(protected)/add-lead/addLead`);
+                    }}
                     uppercase={false}>
                     {t('addLeads')}
                   </Button>

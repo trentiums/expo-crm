@@ -161,7 +161,7 @@ const Leads = () => {
         search={leadSearch}
         setSearch={setLeadSearch}
         handleSearch={handleSearch}
-        rightIcon={<FilterIcon />}
+        rightIcon={<FilterIcon color={colors.black} />}
         onRightIconPress={handleVisibleLeadsFilter}
         dropdownDataType={DropdownDataType.LEADS}
       />

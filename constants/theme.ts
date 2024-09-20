@@ -98,6 +98,7 @@ export const DefaultTheme = {
     grayHolly: '#253E31',
     snowflakeBlack: '#F0F0F0',
     snowflakeWhite: '#fff',
+    snowGray: '#8D8D8D',
   },
 };
 
@@ -193,8 +194,9 @@ export const DarkTheme: AppTheme = {
     orochimaru: '#f0f0f0',
     dugong: '#7c7c7c',
     grayHolly: '#426e56',
-    snowflakeBlack: '#F0F0F0',
+    snowflakeBlack: '#ababab',
     snowflakeWhite: '#444444',
+    snowGray: '#fff',
   },
 };
 
