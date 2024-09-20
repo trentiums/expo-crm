@@ -16,22 +16,26 @@ const FieldDropDown: React.FC<FieldDropDownProps> = ({
   placeholder,
   dropdownDataType,
   heading,
+  isStaff,
 }) => {
   const handleSelect = (value: any) => {
-    if (isMultiple) {
-      const multiValue: number[] = Array.isArray(input.value)
-        ? input.value
-        : [];
-      if (multiValue?.includes(value)) {
-        input.onChange(multiValue.filter((id) => value !== id));
+    if (isStaff) return;
+    else {
+      if (isMultiple) {
+        const multiValue: number[] = Array.isArray(input.value)
+          ? input.value
+          : [];
+        if (multiValue?.includes(value)) {
+          input.onChange(multiValue.filter((id) => value !== id));
+        } else {
+          input.onChange(multiValue.concat(value));
+        }
       } else {
-        input.onChange(multiValue.concat(value));
-      }
-    } else {
-      if (input.value === value && isAllowDeselect) {
-        input.onChange(null);
-      } else {
-        input.onChange(value);
+        if (input.value === value && isAllowDeselect) {
+          input.onChange(null);
+        } else {
+          input.onChange(value);
+        }
       }
     }
   };
