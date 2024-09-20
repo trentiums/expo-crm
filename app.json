@@ -40,13 +40,6 @@
         {
           "origin": "https://crm.trentiums.com/api/v1/"
         }
-      ],
-      [
-        "@sentry/react-native/expo",
-        {
-          "organization": "Trentium Solutions",
-          "project": "crm"
-        }
       ]
     ],
     "extra": {
