@@ -186,7 +186,9 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
     );
     form.change(
       'timeFrameType',
-      id ? `${leadsDetail?.timeFrameType}` : addLeadFormData?.timeFrameType,
+      id
+        ? `${leadsDetail?.timeFrameType || ''}`
+        : addLeadFormData?.timeFrameType,
     );
   }, [id]);
   const handleGetLeadsServices = async () => {

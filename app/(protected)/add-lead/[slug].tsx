@@ -169,16 +169,16 @@ const AddLead = () => {
         selectedData.timeLine
       ) {
         formData.append(
+          'timeline_timeframe',
+          navigationType === AddLeadNavigationType.LEAD
+            ? values?.timeFrameType || undefined
+            : selectedData?.timeFrameType || undefined,
+        );
+        formData.append(
           'time_line',
           navigationType === AddLeadNavigationType.LEAD
             ? values?.timeFrame || ''
             : selectedData.timeLine || '',
-        );
-        formData.append(
-          'timeline_timeframe',
-          navigationType === AddLeadNavigationType.LEAD
-            ? values?.timeFrameType
-            : selectedData?.timeFrameType,
         );
       }
       formData.append(

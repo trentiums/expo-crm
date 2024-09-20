@@ -150,6 +150,8 @@ export interface LeadListState {
   webSite: string;
   documents: FileSystemProps[];
   assignTo?: number;
+  timeFrameType?: number;
+  budgetCurrencyCode?: number;
 }
 
 export interface LeadsFilterType {
