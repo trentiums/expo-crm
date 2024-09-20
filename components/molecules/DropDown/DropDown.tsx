@@ -27,6 +27,7 @@ import { useTranslation } from 'react-i18next';
 import Search from '@atoms/Illustrations/Search';
 import { useAppTheme } from '@constants/theme';
 import { Keyboard } from 'react-native';
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 
 const DropDown: React.FC<DropDownProps> = ({
   data,
@@ -61,7 +62,11 @@ const DropDown: React.FC<DropDownProps> = ({
 
   const handelSelectData = (id) => {
     onChange(id);
-    if (!isMultiple) {
+    if (
+      !isMultiple &&
+      dropdownDataType !== DropdownDataType.BUDGET &&
+      dropdownDataType !== DropdownDataType.TIMELINE
+    ) {
       handleCloseDropList();
     }
   };
@@ -138,7 +143,6 @@ const DropDown: React.FC<DropDownProps> = ({
           <FilterIconView>
             <Search />
           </FilterIconView>
-          {/* <DropdownPlaceHolderText>{placeholder}</DropdownPlaceHolderText> */}
         </SearchFilterContainer>
       ) : (
         <ShowMultipleDataList

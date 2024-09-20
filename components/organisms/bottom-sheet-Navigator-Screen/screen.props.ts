@@ -1,3 +1,4 @@
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 import { ReactNode } from 'react';
 
 export type CreateOptionProps = {
@@ -135,8 +136,20 @@ export type LeadsSortFilterProps = {
   handleBottomSheetClose?: () => void;
   changeRoute?: () => void;
 };
+
 export interface DropdownListingProps {
-  id: number;
+  dropdownData: Dropdown[];
+  handelSelectData: () => void;
+  selectedValue: number | number[];
+  dropdownDataType: DropdownDataType;
+  changeRoute?: () => void;
+  changeSnapPoints?: (points: string[]) => void;
+}
+export interface Dropdown {
   title: string;
+  id: number;
   image?: string;
+  flag?: string;
+  name?: string;
+  currencyCodeAlpha?: string;
 }
