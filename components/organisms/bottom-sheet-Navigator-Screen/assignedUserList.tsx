@@ -58,7 +58,6 @@ const AssignedUserList: React.FC<AssignedUsersListProps> = ({
   const getAssignUserList = async () => {
     if (assignLeadOnDelete) {
       await dispatch(getAssignUserListAction({ user_id: userId }));
-      changeSnapPoints?.(['50%', '50%']);
     } else {
       await dispatch(getAssignUserListAction({}));
     }

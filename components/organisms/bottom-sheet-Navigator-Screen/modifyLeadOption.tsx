@@ -55,7 +55,7 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
     } else if (optionType === ScreenOptionType.LEAD) {
       changeSnapPoints(['41%', '90%']);
     } else {
-      changeSnapPoints(['21%', '90%']);
+      changeSnapPoints(['21%', '50%']);
     }
   }, []);
   const modifyLeadOption = [
@@ -159,7 +159,7 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
     setDeleteLoading(true);
     if (onDelete) {
       if (assignLeadOnDelete) {
-        changeSnapPoints(['50%', '90%']);
+        changeSnapPoints(['50%', '50%']);
         setShowModal(false);
         setAssignLead(true);
         setDeleteLoading(false);
