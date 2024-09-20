@@ -112,6 +112,7 @@ const Dashboard = () => {
   );
   useEffect(() => {
     handelFetchLead();
+    dispatch(setLeadsInformation());
   }, []);
 
   useEffect(() => {
@@ -261,7 +262,9 @@ const Dashboard = () => {
                     mode="contained"
                     buttonColor={colors.primaryColor}
                     textColor={colors.white}
-                    onPress={() => router.navigate(`/(protected)/addLead`)}
+                    onPress={() =>
+                      router.navigate(`/(protected)/add-lead/addLead`)
+                    }
                     uppercase={false}>
                     {t('addLeads')}
                   </Button>

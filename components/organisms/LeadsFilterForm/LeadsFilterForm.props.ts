@@ -28,4 +28,5 @@ export type LeadFilterFormProps = FormRenderProps<LeadsFilterFormValues> & {
   setEndDate: (value: Date) => void;
   setFilterCount?: (value: number) => void;
   bottomSheetClose?: () => void;
+  changeRoute?: () => void;
 };

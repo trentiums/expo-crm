@@ -50,7 +50,7 @@ const AssignedUserList: React.FC<AssignedUsersListProps> = ({
     (state: RootState) => state.user.assignUserList.assignUsers,
   );
   const onLayout = useCallback(() => {
-    changeSnapPoints(['50%', '50%']);
+    changeSnapPoints?.(['50%', '50%']);
   }, []);
 
   const getAssignUserList = async () => {

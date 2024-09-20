@@ -12,6 +12,7 @@ import CheckCircleIcon from '@atoms/Illustrations/CheckCircle';
 import Loader from '@atoms/Loader/Loader';
 import { LoadingStatus } from '../../../app/(public)/login/LoginScreen.props';
 import { DropdownListingProps } from './screen.props';
+import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 
 const DropdownListing = ({
   dropdownData,
@@ -55,12 +56,15 @@ const DropdownListing = ({
   return (
     <LeasFilterScreenContainer>
       <DropdownListingView>
-        <SearchFilter
-          search={search}
-          setSearch={setSearch}
-          searchRadius={44}
-          dropdownDataType={dropdownDataType}
-        />
+        {dropdownDataType !== DropdownDataType.BUDGET &&
+          dropdownDataType !== DropdownDataType.TIMELINE && (
+            <SearchFilter
+              search={search}
+              setSearch={setSearch}
+              searchRadius={44}
+              dropdownDataType={dropdownDataType}
+            />
+          )}
         {loadingStatus === LoadingStatus?.SCREEN ? (
           <Loader />
         ) : (

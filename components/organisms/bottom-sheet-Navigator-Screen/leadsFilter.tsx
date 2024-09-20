@@ -60,6 +60,7 @@ const LeadsFilter: React.FC<CreateOptionProps> = ({
         Component={LeadsFilterForm}
         onSubmit={(values) => handleApplyFilter(values)}
         loading={filterLoading}
+        changeRoute={changeRoute}
       />
     </LeadsFilterView>
   );

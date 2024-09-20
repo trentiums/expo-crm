@@ -25,7 +25,11 @@ import { getLeadListAction } from '@redux/actions/lead';
 import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
 import { setLeadsFilters } from '@redux/slices/leads';
 
-const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({ form, loading }) => {
+const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({
+  form,
+  loading,
+  changeRoute,
+}) => {
   const { t } = useTranslation('leadsFilter');
   const { values } = useFormState();
   const general = useSelector((state: RootState) => state.general);
@@ -48,6 +52,7 @@ const LeadsFilterForm: React.FC<LeadFilterFormProps> = ({ form, loading }) => {
     form.reset();
     handleGetLeadList();
     dispatch(setLeadsFilters({}));
+    changeRoute();
   };
   useEffect(() => {
     if (!values?.orderBy) {

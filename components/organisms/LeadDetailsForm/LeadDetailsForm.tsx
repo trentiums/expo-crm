@@ -215,7 +215,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
   const renderSelectedUsers = ({ item }) => {
     return (
       <SelectedUserData>
-        <ProfileIcon />
+        <ProfileIcon color={colors?.black} />
         <ServiceText>{item.title}</ServiceText>
         {!id && (
           <Pressable onPress={() => handleDeleteAssignedUser(item.id)}>

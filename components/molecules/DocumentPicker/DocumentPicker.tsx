@@ -66,7 +66,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
       if (!res.canceled) {
         res.assets.forEach((file) => {
           if (file.size > MAX_FILE_SIZE) {
-            toast.show(t('fileSizeExceeded'), {
+            toast.show(tb('fileSizeExceeded'), {
               type: ToastType.Custom,
               data: {
                 type: ToastTypeProps.Error,
