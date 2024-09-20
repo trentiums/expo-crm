@@ -45,7 +45,9 @@ const AssignedUserList: React.FC<AssignedUsersListProps> = ({
   const dispatch = useAppDispatch();
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [SelectedId, setSelectedId] = useState(leadsDetail.assignTo);
+  const [SelectedId, setSelectedId] = useState(
+    !assignLeadOnDelete && leadsDetail.assignTo,
+  );
   const leadAssignToData = useSelector(
     (state: RootState) => state.user.assignUserList.assignUsers,
   );
@@ -123,7 +125,7 @@ const AssignedUserList: React.FC<AssignedUsersListProps> = ({
         handlePress={() => setSelectedId(item.id)}
         label={t(`${item.title}`)}
         key={`${item.id}-${index}`}
-        isSelected={!assignLeadOnDelete && isStatusSelected}
+        isSelected={isStatusSelected}
       />
     );
   };
