@@ -60,12 +60,12 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
             left={() => <LockIcon color={colors.gray} />}
             password={() => (
               <Pressable
-                onPress={() => setSecureOldTextEntry(!secureTextEntry)}>
+                onPress={() => setSecureOldTextEntry(!secureOldTextEntry)}>
                 {secureOldTextEntry ? <EyeCloseIcon /> : <EyeOpenIcon />}
               </Pressable>
             )}
             right
-            secureTextEntry={secureTextEntry}
+            secureTextEntry={secureOldTextEntry}
           />
           <Spacer size={16} />
           <Label>{`${t('password')} *`}</Label>
