@@ -215,6 +215,7 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
           handleBottomSheetClose={handleAssignUserOnDelete}
           userId={userId}
           assignLeadOnDelete={assignLeadOnDelete}
+          changeSnapPoints={changeSnapPoints}
         />
       ) : (
         <ModifyLeadOptionFlatList
