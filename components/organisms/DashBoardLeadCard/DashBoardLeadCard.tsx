@@ -8,7 +8,10 @@ import { useAppDispatch } from '@redux/store';
 import { deleteLeadAction } from '@redux/actions/lead';
 import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
-import { dashboardLeadListAction } from '@redux/actions/dashboard';
+import {
+  dashboardLeadListAction,
+  dashboardLeadStageCountAction,
+} from '@redux/actions/dashboard';
 
 const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
   leadData,
@@ -31,6 +34,7 @@ const DashBoardLeadCard: React.FC<DashBoardLeadCardProps> = ({
         },
       });
       await dispatch(dashboardLeadListAction({}));
+      await dispatch(dashboardLeadStageCountAction());
     } catch (error: any) {
       toast.show(error, {
         type: ToastType.Custom,
