@@ -16,7 +16,14 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.trentiums.crm",
-      "userInterfaceStyle": "light"
+      "userInterfaceStyle": "light",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "entitlements": {
+        "aps-environment": "production"
+      },
+      "infoPlist": {
+        "UIBackgroundModes": ["fetch", "remote-notification"]
+      }
     },
     "android": {
       "jsEngine": "hermes",
@@ -29,7 +36,8 @@
         "image": "./assets/splash.png",
         "resizeMode": "cover",
         "backgroundColor": "#000000"
-      }
+      },
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/icon.png"
