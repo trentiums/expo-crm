@@ -19,6 +19,7 @@ export interface LeadsState {
     currentPage: number;
     lastPage: number;
     perPage: number;
+    total: number;
     leads: LeadListState[];
   };
   leadsDetail: LeadListState;
@@ -51,6 +52,7 @@ const initialState: LeadsState = {
     currentPage: 0,
     lastPage: 0,
     perPage: 0,
+    total: 0,
     leads: [],
   },
   leadsDetail: {
@@ -119,6 +121,7 @@ const leadSlice = createSlice({
         state.leadList.currentPage = action.payload.data.current_page;
         state.leadList.lastPage = action.payload.data.last_page;
         state.leadList.perPage = action.payload.data.per_page;
+        state.leadList.total = action.payload.data.total;
       },
     );
     builder.addCase(
