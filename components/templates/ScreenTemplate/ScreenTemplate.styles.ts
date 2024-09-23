@@ -34,3 +34,6 @@ export const AddText = styled(Text)`
   text-align: center;
   color: ${({ theme }) => theme.colors.bgColor};
 `;
+export const SafeAriaContainer = styled(SafeAreaView)`
+  flex: 1;
+`;

@@ -39,7 +39,7 @@ export const formatLeadList = (data: LeadListData[]) => {
       id: item?.id,
       uri: item?.original_url,
       name: item?.file_name,
-      size: item?.size,
+      size: item?.file_size,
       type: item?.mime_type,
     })),
   }));
@@ -83,7 +83,7 @@ export const formatLeadDetails = (item: LeadListData) => {
       id: item?.id,
       uri: item?.original_url,
       name: item?.file_name,
-      size: item?.size,
+      size: item?.file_size,
       type: item?.mime_type,
     })),
   };

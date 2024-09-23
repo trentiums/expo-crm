@@ -12,7 +12,6 @@ import {
 import * as DocumentPicker from 'expo-document-picker';
 import UploadIcon from '@atoms/Illustrations/UploadCon';
 import * as MediaLibrary from 'expo-media-library';
-import { MAX_FILE_SIZE } from '@utils/constant';
 import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { useTranslation } from 'react-i18next';
@@ -23,7 +22,7 @@ import {
   deleteLeadDocumentsAction,
   getLeadDetailsAction,
 } from '@redux/actions/lead';
-import { useAppDispatch } from '@redux/store';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
 import { FlatList, Pressable } from 'react-native';
 import PlusIcon from '@atoms/Illustrations/Plus';
@@ -49,6 +48,7 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
   const dispatch = useAppDispatch();
   const toast = useToast();
   const { colors } = useAppTheme();
+  const settings = useSelector((state: RootState) => state.general.settings);
   const [deleteDocumentUrl, setDeleteDocumentUrl] = useState(null);
   const [visibleDeleteModal, setVisibleDeleteModal] = useState<Boolean>(false);
   const [deleteLoader, setDeleteLoader] = useState(false);
@@ -65,7 +65,20 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
 
       if (!res.canceled) {
         res.assets.forEach((file) => {
-          if (file.size > MAX_FILE_SIZE) {
+          const totalSize = documentArray.reduce(
+            (acc, currFile) => acc + currFile.size,
+            0,
+          );
+
+          const fileSizeLimit = settings?.fileSize?.totalFileSize * 1024;
+          if (file.size + totalSize > fileSizeLimit) {
+            toast.show(tb('totalFileSizeExceeded'), {
+              type: ToastType.Custom,
+              data: {
+                type: ToastTypeProps.Error,
+              },
+            });
+          } else if (file.size > settings?.fileSize?.general * 1024) {
             toast.show(tb('fileSizeExceeded'), {
               type: ToastType.Custom,
               data: {

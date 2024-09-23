@@ -9,7 +9,7 @@ export const formatServiceListData = (data: ProductService[]) => {
       id: item?.id,
       uri: item?.original_url,
       name: item?.file_name,
-      size: item?.size,
+      size: item?.file_size,
       type: item?.mime_type,
     })),
   }));
@@ -23,7 +23,7 @@ export const formatProductServiceDetail = (data: ProductService) => {
       id: item?.id,
       uri: item?.original_url,
       name: item?.file_name,
-      size: item?.size,
+      size: item?.file_size,
       type: item?.mime_type,
     })),
   };

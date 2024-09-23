@@ -99,6 +99,7 @@ export const DefaultTheme = {
     snowflakeBlack: '#F0F0F0',
     snowflakeWhite: '#fff',
     snowGray: '#8D8D8D',
+    datePickerBg: '#161B22',
   },
 };
 
@@ -197,6 +198,7 @@ export const DarkTheme: AppTheme = {
     snowflakeBlack: '#ababab',
     snowflakeWhite: '#444444',
     snowGray: '#fff',
+    datePickerBg: '#5d718e',
   },
 };
 

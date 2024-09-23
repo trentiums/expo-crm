@@ -17,6 +17,7 @@ import {
   CountryListType,
   CurrencyListType,
   GeneralList,
+  SettingType,
 } from '@type/redux/slices/general';
 import {
   convertKeysToCamelCase,
@@ -30,7 +31,7 @@ export interface GeneralState {
   leadConversionList: GeneralList[];
   leadStatusList: GeneralList[];
   countryList: CountryListType[];
-  settings: {};
+  settings: SettingType;
   currencyList: CurrencyListType[];
 }
 
