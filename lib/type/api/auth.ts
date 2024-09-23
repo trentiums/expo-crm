@@ -8,6 +8,9 @@ export interface LoginParams {
   email: string;
   password: string;
 }
+export interface ForgotPasswordParams {
+  email: string;
+}
 
 export interface LoginDataResponse {
   name: string;
