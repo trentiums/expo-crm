@@ -9,7 +9,7 @@ const MoreMenuButton = () => {
   const { top } = useSafeAreaInsets();
   return (
     <IconButton
-      onPress={() => router.navigate('/users')}
+      onPress={() => router.navigate('/(protected)/more-menu')}
       icon="menu"
       size={24}
       iconColor={colors.black}

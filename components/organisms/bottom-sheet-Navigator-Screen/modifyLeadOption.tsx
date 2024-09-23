@@ -33,6 +33,8 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
   navigation,
   leadId,
   optionType,
+  editRoute,
+  onDelete,
 }) => {
   const { t } = useTranslation('bottomSheetModifyLead');
   const { t: tm } = useTranslation('modalText');
@@ -53,7 +55,7 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
     {
       label: 'edit',
       icon: <NotebookEditIcon />,
-      route: `/(protected)/add-lead/${leadId}`,
+      route: editRoute || `/(protected)/add-lead/${leadId}`,
       bottomSheetRoute: '',
     },
 
@@ -100,7 +102,11 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
   }
 
   const getLeadDetails = async () => {
-    if (leadId) {
+    if (
+      leadId &&
+      (optionType === ScreenOptionType.DASHBOARD ||
+        optionType === ScreenOptionType.LEAD)
+    ) {
       try {
         await dispatch(getLeadDetailsAction({ lead_id: leadId })).unwrap();
       } catch (error) {
@@ -131,27 +137,32 @@ const ModifyLeadOption: React.FC<ModifyLeadOptionProps> = ({
 
   const handleDeleteLead = async () => {
     setDeleteLoading(true);
-    try {
-      const response = await dispatch(
-        deleteLeadAction({ lead_id: leadId }),
-      ).unwrap();
-      toast.show(response?.message, {
-        type: ToastType.Custom,
-        data: {
-          type: ToastTypeProps.Success,
-        },
-      });
+    if (onDelete) {
+      onDelete();
       setShowModal(false);
-      handleBottomSheetClose?.();
-      await dispatch(dashboardLeadListAction({}));
-    } catch (error: any) {
-      toast.show(error, {
-        type: ToastType.Custom,
-        data: {
-          type: ToastTypeProps.Error,
-        },
-      });
+    } else {
+      try {
+        const response = await dispatch(
+          deleteLeadAction({ lead_id: leadId }),
+        ).unwrap();
+        toast.show(response?.message, {
+          type: ToastType.Custom,
+          data: {
+            type: ToastTypeProps.Success,
+          },
+        });
+        await dispatch(dashboardLeadListAction({}));
+      } catch (error: any) {
+        toast.show(error, {
+          type: ToastType.Custom,
+          data: {
+            type: ToastTypeProps.Error,
+          },
+        });
+      }
     }
+    setShowModal(false);
+    handleBottomSheetClose?.();
     setDeleteLoading(false);
   };
 

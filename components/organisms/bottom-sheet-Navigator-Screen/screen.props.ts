@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 export type CreateOptionProps = {
   changeSnapPoints: (points: string[]) => void;
   handleBottomSheetClose?: () => void;
+  changeRoute?: () => void;
 };
 
 export type CreateOptionItemProps = {
@@ -25,6 +26,8 @@ export type ModifyLeadOptionProps = {
   navigation: any;
   leadId?: number;
   optionType: ScreenOptionType;
+  editRoute?: string;
+  onDelete?: () => void;
 };
 
 export enum ScreenOptionType {
@@ -100,4 +103,9 @@ export type LeadChannelListProps = {
   changeSnapPoints: (points: string[]) => void;
   handleBottomSheetClose?: () => void;
   leadId?: number;
+};
+
+export type LanguageListProps = {
+  changeSnapPoints: (points: string[]) => void;
+  handleBottomSheetClose?: () => void;
 };

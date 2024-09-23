@@ -2,6 +2,7 @@ import { UserRole } from './auth';
 
 export interface UserListParams {
   page?: number;
+  search?: string;
 }
 export interface User {
   id: number;
@@ -64,4 +65,10 @@ export interface AssignUser {
 export interface AssignUserState {
   id: number;
   title: string;
+}
+
+export interface ChangePasswordParams {
+  old_password: string;
+  password: string;
+  password_confirmation: string;
 }

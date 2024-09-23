@@ -1,3 +1,4 @@
+import { ScreenOptionType } from '@organisms/bottom-sheet-Navigator-Screen/screen.props';
 import { Lead } from '@organisms/DashBoardLeadCard/DashBoardLeadCard.props';
 
 export interface LeadDetailsProps {
@@ -7,7 +8,10 @@ export interface LeadDetailsProps {
   isDeleteLoading?: boolean;
   onChangeModalState?: (value: boolean) => void;
   showModal?: boolean;
+  isServices?: boolean;
   onChangeDeleteId?: (value: number) => void;
   isSocialMediaVisible?: boolean;
+  optionType?: ScreenOptionType;
+  editRoute?: string;
   isShowLeadInfo?: boolean;
 }

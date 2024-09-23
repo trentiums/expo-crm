@@ -9,6 +9,8 @@ export type BottomSheetNavigatorProps = {
     dropdownData?: Dropdown[];
     handelSelectData?: (id: number) => void;
     heading?: string;
+    editRoute?: string;
+    onDelete?: () => void;
   };
 };
 

@@ -8,7 +8,7 @@ export type BasicInfoFormValues = {
   countryCode: number;
 };
 
-export interface fileSystemProps {
+export interface FileSystemProps {
   id: any;
   mimeType: string;
   fileCopyUri: string;
@@ -23,6 +23,6 @@ export type BasicInfoFormProps = FormRenderProps<BasicInfoFormValues> & {
   isSave?: boolean;
   selectedCountryCodeValue: number;
   setSelectedCountryCodeValue: (values: number | string) => void;
-  documentArray: fileSystemProps[];
-  setDocumentArray: React.Dispatch<React.SetStateAction<fileSystemProps[]>>;
+  documentArray: FileSystemProps[];
+  setDocumentArray: React.Dispatch<React.SetStateAction<FileSystemProps[]>>;
 };

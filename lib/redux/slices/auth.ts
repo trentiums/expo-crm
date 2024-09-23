@@ -8,6 +8,18 @@ import { formatAuthUser } from '@utils/auth';
 
 export interface AuthState {
   user: User;
+  currentLanguage: LanguageProps;
+}
+
+export interface LanguageProps {
+  id: number;
+  name: LanguageEnum;
+  shortForm: string;
+}
+export enum LanguageEnum {
+  english = 'English',
+  gujarati = 'Gujarati',
+  hindi = 'Hindi',
 }
 
 const initialState: AuthState = {
@@ -18,6 +30,7 @@ const initialState: AuthState = {
     userId: 0,
     token: '',
   },
+  currentLanguage: { id: 1, name: LanguageEnum.english, shortForm: 'en' },
 };
 
 const authSlice = createSlice({
@@ -27,24 +40,25 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = initialState.user;
     },
+    changeLanguage: (state, action: PayloadAction<LanguageProps>) => {
+      state.currentLanguage = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
       loginUserAction.fulfilled,
       (state, action: PayloadAction<LoginResponse>) => {
         state.user = formatAuthUser(action.payload?.data);
-        setAuthenticationToken(state.user.token);
         AsyncStorage.setItem('token', state.user.token);
       },
     );
     builder.addCase(logoutUserAction.fulfilled, (state) => {
       state.user = initialState.user;
-      setAuthenticationToken('');
       AsyncStorage.removeItem('token');
     });
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, changeLanguage } = authSlice.actions;
 
 export default authSlice.reducer;

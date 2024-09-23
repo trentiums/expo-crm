@@ -1,13 +1,7 @@
 import * as React from 'react';
-import Svg, { Mask, Rect, G, Path } from 'react-native-svg';
-const AssignedToIcon = (props) => (
-  <Svg
-    width={24}
-    height={24}
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}>
+import Svg, { Mask, Rect, G, Path, SvgProps } from 'react-native-svg';
+const AssignedToIcon = (props: SvgProps) => (
+  <Svg width={24} height={24} viewBox="0 0 24 24" fill="none" {...props}>
     <Mask
       id="mask0_73_186"
       style={{

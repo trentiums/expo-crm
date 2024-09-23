@@ -1,7 +1,7 @@
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import AddProductForm from '@organisms/AddProductForm/AddProductForm';
 import { AddProductFormValues } from '@organisms/AddProductForm/AddProductForm.props';
-import { fileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
+import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
 import {
   addProductServiceAction,
   getProductServiceListAction,
@@ -15,7 +15,6 @@ import { useToast } from 'react-native-toast-notifications';
 import { AddProductContainer } from '../(tabs)/drawer.style';
 import { useTranslation } from 'react-i18next';
 import { useAppTheme } from '@constants/theme';
-import { Spacer } from '@atoms/common/common.styles';
 
 const addProducts = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +22,7 @@ const addProducts = () => {
   const navigation = useNavigation();
   const { t } = useTranslation('screenTitle');
   const [loading, setLoading] = useState(false);
-  const [documentArray, setDocumentArray] = useState<fileSystemProps[]>([]);
+  const [documentArray, setDocumentArray] = useState<FileSystemProps[]>([]);
   const { colors } = useAppTheme();
   const handleAddServices = async (values: AddProductFormValues) => {
     try {
@@ -31,16 +30,16 @@ const addProducts = () => {
       let formData = new FormData();
       formData.append('name', values?.name || '');
       formData.append('description', values?.description || '');
-      if (documentArray?.[0]?.uri) {
-        //here temporary extracting first index will change as api updated
-        //TODO: as api change send the array
-        formData.append('documents', {
-          uri: documentArray?.[0]?.uri,
-          name: documentArray?.[0]?.name,
-          type: documentArray?.[0]?.mimeType || documentArray?.[0]?.type,
+      const newDocumentsArray = documentArray?.filter((item) => !item.id);
+      if (newDocumentsArray?.length > 0) {
+        newDocumentsArray.forEach((document, index) => {
+          formData.append(`documents[${index}]`, {
+            uri: document.uri,
+            name: document.name,
+            type: document.mimeType,
+          });
         });
       }
-
       const response = await dispatch(
         addProductServiceAction(formData),
       ).unwrap();
@@ -77,7 +76,6 @@ const addProducts = () => {
   return (
     <ScreenTemplate title={t('addProduct')}>
       <AddProductContainer>
-        <Spacer size={32} />
         <FormTemplate
           Component={AddProductForm}
           onSubmit={(values: AddProductFormValues) => {
