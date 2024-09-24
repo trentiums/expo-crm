@@ -221,7 +221,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
           <SelectedUserData>
             <ProfileIcon color={colors.black} />
             <ServiceText>{`${item?.title}`}</ServiceText>
-            {!id && (
+            {!leadsDetail?.assignTo && (
               <Pressable onPress={() => handleDeleteAssignedUser(item?.id)}>
                 <CrossSmallIcon />
               </Pressable>
@@ -338,7 +338,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             isSearch
             dropdownDataType={DropdownDataType.USERS}
             heading={t('selectUser')}
-            isAllowDeselect
+            isAllowDeselect={!leadsDetail?.assignTo}
           />
           <Spacer size={8} />
           {values?.assignTo && (
