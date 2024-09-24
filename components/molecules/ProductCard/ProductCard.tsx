@@ -5,6 +5,7 @@ import {
   ProductDetailContainer,
   ProductInfoView,
 } from './ProductCard.styles';
+import ActionModal from '@molecules/ActionModal/ActionModal';
 import { useAppTheme } from '@constants/theme';
 import ServiceIcon from '@atoms/Illustrations/Service';
 import { ProductCardProps } from './ProductCard.props';

@@ -141,10 +141,10 @@ export const English = {
     noServices: 'no Services Available',
   },
   BasicInformation: {
-    firstNameLabel: 'Full Name',
+    firstNameLabel: 'Lead name',
     lastNameLabel: 'Last Name',
-    emailLabel: 'Email',
-    phoneNumberLabel: 'Phone Number',
+    emailLabel: 'Email address',
+    phoneNumberLabel: 'Phone number',
     uploadDocuments: 'Upload Document',
     documents: 'Documents',
     attachments: 'Documents',
@@ -161,6 +161,7 @@ export const English = {
     fileSizeExceeded: 'File size limit exceeded',
     samplePdf: 'This is a sample PDF generated using expo-print.',
     pdfContent: 'PDF Content',
+    countryCode: 'Country code',
   },
   formButtonName: {
     previous: 'Previous',
@@ -275,16 +276,12 @@ export const English = {
     channel: 'Channel',
     assignedTo: 'Assigned To',
   },
+
   bottomSheetNavigator: {
     ChooseOptionToAdd: 'Choose option to add',
     filter: 'Filter',
     sortBy: 'Sort by',
     select: 'Select',
-  },
-  bottomSheetCreatePotion: {
-    user: 'User',
-    lead: 'Lead',
-    service: 'Service',
     chooseOption: 'Choose option',
     updateAssignedUsers: 'Update assigned users',
     updateStatus: 'Update status',

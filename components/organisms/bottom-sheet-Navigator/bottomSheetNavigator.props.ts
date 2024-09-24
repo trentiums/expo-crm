@@ -6,6 +6,9 @@ export type BottomSheetNavigatorProps = {
   meta?: {
     leadId?: number;
     optionType?: ScreenOptionType;
+    dropdownData?: Dropdown[];
+    handelSelectData?: (id: number) => void;
+    heading?: string;
     editRoute?: string;
     onDelete?: () => void;
   };
@@ -17,3 +20,8 @@ export type BottomSheetHeaderProps = {
   backVisible?: boolean;
   onBackPress?: () => void;
 };
+export interface Dropdown {
+  id: number;
+  title: string;
+  image?: string;
+}

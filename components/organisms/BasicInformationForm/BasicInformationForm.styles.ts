@@ -97,13 +97,13 @@ export const HeaderText = styled(Text)`
 export const ButtonSubmit = styled(Button)<{ valid: boolean }>`
   height: 48px;
   justify-content: center;
-  background-color: ${({ theme }) => theme.colors.blueChaos};
+  background-color: ${({ theme, valid }) =>
+    valid ? theme.colors.blueChaos : theme.colors.gray};
   border-radius: 50px;
   border-width: 1px;
   margin-bottom: -16px;
   z-index: 10;
 `;
-
 export const KeyboardAwareScrollViewContainer = styled(KeyboardAwareScrollView)`
   min-height: 50%;
   z-index: 1;
@@ -195,11 +195,16 @@ export const PhoneNumberFieldView = styled(View)`
 `;
 
 export const CountryCodeInput = styled(View)`
-  flex: 0.4;
+  flex: 0.3;
+  padding: 18px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.iceWindDale};
 `;
 
 export const NumberInput = styled(View)`
   flex: 0.7;
+  border-radius: 20px;
+  background-color: ${({ theme }) => theme.colors.iceWindDale};
 `;
 
 export const DialCodeDropDownView = styled(View)`

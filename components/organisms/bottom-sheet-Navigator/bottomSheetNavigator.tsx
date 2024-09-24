@@ -22,6 +22,7 @@ import { useAppTheme } from '@constants/theme';
 import BottomSheetCloseIcon from '@atoms/Illustrations/BottomSheetClose';
 import LeadsFilter from '@organisms/bottom-sheet-Navigator-Screen/leadsFilter';
 import LeadsSortFilter from '@organisms/bottom-sheet-Navigator-Screen/leadsSortFilter';
+import DropdownListing from '@organisms/bottom-sheet-Navigator-Screen/dropdownListing';
 import AssignedUserList from '@organisms/bottom-sheet-Navigator-Screen/assignedUserList';
 import LeadStatusList from '@organisms/bottom-sheet-Navigator-Screen/LeadStatusList';
 import LeadStatusChange from '@organisms/bottom-sheet-Navigator-Screen/LeadStatusChange';
@@ -331,6 +332,26 @@ const BottomSheetNavigator: React.FC<BottomSheetNavigatorProps> = ({
                 {...props}
                 changeSnapPoints={changeSnapPoints}
                 changeRoute={handleClosePress}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="DropdownListing"
+            options={() => ({
+              header: () => (
+                <CustomHeader
+                  title={meta.heading || t('sortBy')}
+                  onClose={() => handleClosePress()}
+                />
+              ),
+            })}>
+            {(props) => (
+              <DropdownListing
+                {...props}
+                changeSnapPoints={changeSnapPoints}
+                changeRoute={handleClosePress}
+                dropdownData={meta.dropdownData}
+                handelSelectData={(id) => meta.handelSelectData(id)}
               />
             )}
           </Stack.Screen>

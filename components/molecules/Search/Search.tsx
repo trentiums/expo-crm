@@ -20,6 +20,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   handleSearch,
   rightIcon,
   onRightIconPress,
+  searchRadius,
 }) => {
   const { t: ts } = useTranslation('drawer');
   const { colors } = useAppTheme();
@@ -33,7 +34,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
     return filtersValue;
   }, [search, debouncedSearch]);
   useEffect(() => {
-    handleSearch(searchFilter);
+    handleSearch?.(searchFilter);
   }, [debouncedSearch]);
   return (
     <FilterContainer>
@@ -47,6 +48,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
           outlineColor="transparent"
           outlineStyle={{ borderWidth: 0 }}
           left={<Search />}
+          searchRadius={searchRadius}
         />
         <FilterIconView>
           <Search />

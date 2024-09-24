@@ -2,7 +2,6 @@ import { Spacer } from '@atoms/common/common.styles';
 import Loader from '@atoms/Loader/Loader';
 import { AddLeadTabBarData } from '@constants/dummyData';
 import { useAppTheme } from '@constants/theme';
-import TabBar from '@molecules/TabBar/TabBar';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import BasicInformationForm from '@organisms/BasicInformationForm/BasicInformationForm';
 import { FileSystemProps } from '@organisms/BasicInformationForm/BasicInformationForm.props';
@@ -26,13 +25,16 @@ import React, { useEffect, useState } from 'react';
 import { useToast } from 'react-native-toast-notifications';
 import { AddLeadContainer } from '../(tabs)/tabs.style';
 import { useTranslation } from 'react-i18next';
+import Stepper from '@molecules/Stepper/Stepper';
+import { stepData } from '@utils/constant';
+import View from '@atoms/View/View';
 
 const AddLead = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation('screenTitle');
   const navigation = useNavigation();
   const [selectedTabNav, setSelectedTabNav] = useState(
-    AddLeadTabBarData?.[0].title || '',
+    AddLeadTabBarData?.[0] || '',
   );
   const [selectedCountryCodeValue, setSelectedCountryCodeValue] =
     useState<string>('');
@@ -77,10 +79,10 @@ const AddLead = () => {
         fullName: values.firstName,
         email: values.email,
         phoneNumber: values.phoneNumber,
-        countryCode: selectedCountryCodeValue,
+        countryCode: values?.countryCode,
       }),
     );
-    setSelectedTabNav(AddLeadTabBarData?.[1].title);
+    setSelectedTabNav(AddLeadTabBarData?.[1]);
   };
   const handleSaveCompanyInformation = async (
     values: CompanyInformationFromValueTypes,
@@ -93,7 +95,7 @@ const AddLead = () => {
         webSite: values.webSite,
       }),
     );
-    setSelectedTabNav(AddLeadTabBarData?.[2].title);
+    setSelectedTabNav(AddLeadTabBarData?.[2]);
   };
 
   const handleSaveLeadDetailsInformation = async (
@@ -199,7 +201,7 @@ const AddLead = () => {
     setLoading(false);
   };
   const renderForm = () => {
-    switch (selectedTabNav) {
+    switch (selectedTabNav?.title) {
       case AddLeadTabBar.BASICINFO:
         return (
           <FormTemplate
@@ -224,7 +226,7 @@ const AddLead = () => {
               handleSaveCompanyInformation(values);
             }}
             onBackClick={() => {
-              setSelectedTabNav(AddLeadTabBarData?.[0].title);
+              setSelectedTabNav(AddLeadTabBarData?.[0]);
             }}
             isSave
           />
@@ -239,7 +241,7 @@ const AddLead = () => {
               handleSaveLeadDetailsInformation(values)
             }
             onBackClick={() => {
-              setSelectedTabNav(AddLeadTabBarData?.[1].title);
+              setSelectedTabNav(AddLeadTabBarData?.[1]);
             }}
             isSave
           />
@@ -260,20 +262,12 @@ const AddLead = () => {
     }
   };
   return (
-    <ScreenTemplate>
+    <ScreenTemplate title={t('addLead')}>
       <AddLeadContainer>
-        <TabBar
-          selectedActiveTab={selectedTabNav}
-          setSelectedTabNav={setSelectedTabNav}
-          tab={AddLeadTabBarData?.map(({ title }) => title)}
-          selectedTabColor={colors.selectedTabColor}
-          color={colors.primaryColor}
-          radius={20}
-          selectedTab={(val: any) => {
-            setSelectedTabNav(val);
-          }}
-        />
-        <Spacer size={32} />
+        <Spacer size={16} />
+        <View>
+          <Stepper stepData={stepData} currentId={selectedTabNav.id} />
+        </View>
         {leadsDetailLoading ? <Loader /> : renderForm()}
       </AddLeadContainer>
     </ScreenTemplate>
