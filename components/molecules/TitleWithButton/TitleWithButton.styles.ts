@@ -2,7 +2,7 @@ import { styled } from '@utils/styled';
 import Text from '@atoms/Text/Text';
 import { Pressable, View } from 'react-native';
 
-export const HeaderWithTextContainer = styled(View)<{ top?: number }>`
+export const HeaderWithTextContainer = styled(View)`
   display: flex;
   flex-direction: row;
   padding: 0px 16px;
@@ -10,10 +10,9 @@ export const HeaderWithTextContainer = styled(View)<{ top?: number }>`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-top: ${({ top }) => (top ? top - 20 : 0)}px;
   border-bottom-width: 1px;
+  margin-top: 16px;
   border-bottom-color: ${({ theme }) => theme.colors.lightBlack};
-  margin-bottom: 16px;
 `;
 
 export const HeaderTextCon = styled(View)`

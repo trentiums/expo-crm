@@ -17,6 +17,7 @@ import { forgotPasswordAction } from '@redux/actions/auth';
 import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 import { router } from 'expo-router';
+import { SafeAreaContainer } from '@templates/ScreenTemplate/ScreenTemplate.styles';
 
 const index = () => {
   const { t } = useTranslation('login');
@@ -47,23 +48,25 @@ const index = () => {
     setLoading(false);
   };
   return (
-    <ForgotScrollView keyboardShouldPersistTaps="always">
-      <ForgotScreenContainer>
-        <Container>
-          <ImageView source={images.loginImage} resizeMode="cover" />
-        </Container>
-        <ForgotFormContainer>
-          <ForgotText variant="SF-Pro-Display-Semibold_600">
-            {t('forgotPasswordTitle')}
-          </ForgotText>
-          <FormTemplate
-            Component={ForgotPasswordForm}
-            onSubmit={(values) => onForgotPress(values)}
-            loading={loading}
-          />
-        </ForgotFormContainer>
-      </ForgotScreenContainer>
-    </ForgotScrollView>
+    <SafeAreaContainer>
+      <ForgotScrollView keyboardShouldPersistTaps="always">
+        <ForgotScreenContainer>
+          <Container>
+            <ImageView source={images.loginImage} resizeMode="cover" />
+          </Container>
+          <ForgotFormContainer>
+            <ForgotText variant="SF-Pro-Display-Semibold_600">
+              {t('forgotPasswordTitle')}
+            </ForgotText>
+            <FormTemplate
+              Component={ForgotPasswordForm}
+              onSubmit={(values) => onForgotPress(values)}
+              loading={loading}
+            />
+          </ForgotFormContainer>
+        </ForgotScreenContainer>
+      </ForgotScrollView>
+    </SafeAreaContainer>
   );
 };
 

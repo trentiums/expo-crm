@@ -7,7 +7,6 @@ import {
   HeaderTextCon,
 } from './TitleWithButton.styles';
 import { Pressable } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { TitleWithButtonProps } from './TitleWithButton.props';
 import Back from '@atoms/Illustrations/Back';
@@ -23,9 +22,8 @@ const TitleWithButton: React.FC<TitleWithButtonProps> = ({
       onBackPress();
     } else router.back();
   };
-  const { top } = useSafeAreaInsets();
   return (
-    <HeaderWithTextContainer top={top}>
+    <HeaderWithTextContainer>
       <IconCon>
         <Pressable onPress={() => onBackPressed()}>
           <Back color={colors.black} />

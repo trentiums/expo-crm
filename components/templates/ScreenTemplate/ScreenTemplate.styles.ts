@@ -1,9 +1,10 @@
 import Text from '@atoms/Text/Text';
 import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
-import { SafeAreaView, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-export const Container = styled(SafeAreaView)<{
+export const Container = styled(View)<{
   backgroundColor?: string;
 }>`
   flex: 1;
@@ -34,6 +35,6 @@ export const AddText = styled(Text)`
   text-align: center;
   color: ${({ theme }) => theme.colors.bgColor};
 `;
-export const SafeAriaContainer = styled(SafeAreaView)`
+export const SafeAreaContainer = styled(SafeAreaView)`
   flex: 1;
 `;
