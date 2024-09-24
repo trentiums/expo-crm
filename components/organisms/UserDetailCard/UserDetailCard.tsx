@@ -14,11 +14,6 @@ import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
 
 const UserDetailCard: React.FC<UserDetailCardProps> = ({
   data,
-  onChangeModalState,
-  onEdit,
-  onDelete,
-  showModal,
-  loading,
   isSocialMediaVisible,
 }) => {
   const { colors } = useAppTheme();
