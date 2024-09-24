@@ -25,6 +25,10 @@ import {
 } from '@redux/actions/dashboard';
 import { Spacer } from '@atoms/common/common.styles';
 import { UserRole } from '@type/api/auth';
+import {
+  RemoveButtonText,
+  RemoveFilterButton,
+} from '@organisms/LeadsFilterForm/LeadsFilterForm.styles';
 
 const DashboardSortFilter: React.FC<DashboardSortFilterProps> = ({
   changeRoute,
@@ -78,6 +82,11 @@ const DashboardSortFilter: React.FC<DashboardSortFilterProps> = ({
     setFilterLoading(false);
     changeRoute();
   };
+  const handleRemoveFilters = () => {
+    setSelectedSort(null);
+    dispatch(dashboardLeadListAction({}));
+    changeRoute();
+  };
   return (
     <DashboardFilterScreenContainer onLayout={onLayout}>
       <FlatList
@@ -88,9 +97,17 @@ const DashboardSortFilter: React.FC<DashboardSortFilterProps> = ({
       />
       <Spacer size={32} />
       <DashboardFilterButton>
+        {!isAdmin && (
+          <RemoveFilterButton onPress={handleRemoveFilters}>
+            <RemoveButtonText variant="SF-Pro-Display-Semibold_600">
+              {t('removeFilter')}
+            </RemoveButtonText>
+          </RemoveFilterButton>
+        )}
         <DashboardFilterApplyButton
           loading={filterLoading}
-          onPress={handleApplySortFilter}>
+          onPress={handleApplySortFilter}
+          isAdmin={isAdmin}>
           <FormButtonText valid={true}>{t('applyFilter')}</FormButtonText>
         </DashboardFilterApplyButton>
       </DashboardFilterButton>

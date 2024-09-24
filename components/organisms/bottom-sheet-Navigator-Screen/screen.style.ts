@@ -144,10 +144,10 @@ export const LeadsFilterView = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
-export const DashboardFilterApplyButton = styled(Button)`
+export const DashboardFilterApplyButton = styled(Button)<{ isAdmin?: boolean }>`
   background-color: ${({ theme }) => theme.colors.blueChaos};
   border-radius: 50px;
-  width: 100%;
+  width: ${({ isAdmin }) => (isAdmin ? 100 : 50)}%;
 `;
 export const LeasSortFilterScreenContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.white};
