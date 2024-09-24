@@ -101,6 +101,7 @@ export interface DocumentTye {
   id: number;
   file_name: string;
   file_size: number;
+  url?: string;
 }
 export interface LeadListResponse {
   status: boolean;

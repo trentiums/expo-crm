@@ -24,7 +24,7 @@ import {
 } from '@redux/actions/lead';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import { Actions } from '@molecules/ActionModal/ActionModal.props';
-import { FlatList, Pressable } from 'react-native';
+import { FlatList, Linking, Pressable } from 'react-native';
 import PlusIcon from '@atoms/Illustrations/Plus';
 import TrashIcon from '@atoms/Illustrations/Trash';
 import TaskIcon from '@atoms/Illustrations/Task';
@@ -106,7 +106,11 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
   const renderFilePreview = (file: FileSystemProps) => {
     return (
       <DocumentDetailContainer>
-        <DocumentInfoContainer>
+        <DocumentInfoContainer
+          onPress={() =>
+            file?.id &&
+            Linking.openURL(file?.uri || file?.fileCopyUri || file?.name)
+          }>
           <TaskIcon />
           <DocumentName numberOfLines={1}>{file?.name}</DocumentName>
         </DocumentInfoContainer>
@@ -195,14 +199,13 @@ const DocumentPick: React.FC<DocumentPickerProps> = ({
             keyExtractor={(item, index) => index.toString()}
           />
           <Spacer size={8} />
-          <Pressable onPress={pickFile}>
-            <DocumentInfoContainer>
-              <PlusIcon />
-              <UploadAnotherDocumentText>
-                {t('uploadAnotherDocument')}
-              </UploadAnotherDocumentText>
-            </DocumentInfoContainer>
-          </Pressable>
+
+          <DocumentInfoContainer onPress={pickFile}>
+            <PlusIcon />
+            <UploadAnotherDocumentText>
+              {t('uploadAnotherDocument')}
+            </UploadAnotherDocumentText>
+          </DocumentInfoContainer>
         </>
       ) : (
         <PickerContainer onPress={pickFile}>

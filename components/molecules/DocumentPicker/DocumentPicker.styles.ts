@@ -53,7 +53,7 @@ export const DocumentDetailContainer = styled(View)`
   align-items: center;
   margin-bottom: 16px;
 `;
-export const DocumentInfoContainer = styled(View)`
+export const DocumentInfoContainer = styled(Pressable)`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

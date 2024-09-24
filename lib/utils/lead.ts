@@ -37,7 +37,7 @@ export const formatLeadList = (data: LeadListData[]) => {
     })),
     documents: item?.documents?.map((item) => ({
       id: item?.id,
-      uri: item?.original_url,
+      uri: item?.original_url || item?.url,
       name: item?.file_name,
       size: item?.file_size,
       type: item?.mime_type,
@@ -81,7 +81,7 @@ export const formatLeadDetails = (item: LeadListData) => {
     })),
     documents: item?.documents?.map((item) => ({
       id: item?.id,
-      uri: item?.original_url,
+      uri: item?.original_url || item?.url,
       name: item?.file_name,
       size: item?.file_size,
       type: item?.mime_type,
