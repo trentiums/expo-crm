@@ -231,15 +231,17 @@ const Dashboard = () => {
               <TitleText variant="SF-Pro-Display-Semibold_600">
                 {t('newLeads')}
               </TitleText>
-              <Spacer size={16} />
-              <DashboardFilterView>
-                <DividerContainer />
-                <QuickFilter
-                  filterTitle={tr('leadsCount')}
-                  filterType={tr('sortBy')}
-                  onFilterPress={handleVisibleLeadsSortFilter}
-                />
-              </DashboardFilterView>
+              {isAdmin && (
+                <DashboardFilterView>
+                  <DividerContainer />
+                  <QuickFilter
+                    filterTitle={tr('leadsCount')}
+                    filterType={tr('sortBy')}
+                    onFilterPress={handleVisibleLeadsSortFilter}
+                  />
+                  <Spacer size={16} />
+                </DashboardFilterView>
+              )}
               <Spacer size={16} />
               {leads?.length > 0 ? (
                 <FlatList

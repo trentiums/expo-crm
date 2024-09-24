@@ -11,6 +11,7 @@ import ThemeProvider from '../containers/ThemeProvider';
 import ToastProviderContainer from '@molecules/Toast/Toast';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
+import { Flexed } from '@atoms/common/common.styles';
 
 const RootStack = () => {
   const [fontsLoaded] = useFonts({
@@ -38,20 +39,20 @@ const RootStack = () => {
   return (
     <BottomSheetModalProvider>
       <GestureHandlerRootContainer>
-        <StatusBar style="light" />
+        <StatusBar style="auto" />
         <ReduxProvider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <ThemeProvider>
               <ToastProviderContainer>
                 <BottomSheetModalProvider>
-                  <View style={{ flex: 1 }}>
+                  <Flexed>
                     <Stack
                       initialRouteName="(public)/login/index"
                       screenOptions={{ headerShown: false }}>
                       <Stack.Screen name="(public)/login/index" />
                       <Stack.Screen name="(protected)/(tabs)/dashboard" />
                     </Stack>
-                  </View>
+                  </Flexed>
                 </BottomSheetModalProvider>
               </ToastProviderContainer>
             </ThemeProvider>
