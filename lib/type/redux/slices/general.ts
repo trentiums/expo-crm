@@ -22,4 +22,8 @@ export interface SettingType {
     general?: number;
     totalFileSize?: number;
   };
+  companySize: CompanySize;
+}
+interface CompanySize {
+  [key: string]: string;
 }

@@ -3,6 +3,7 @@ export interface DashBoardLeadCardProps {
   isSocialMediaVisible?: boolean;
 }
 export interface Lead {
+  leadStatusId: number;
   id?: number;
   name: string;
   phone: number;

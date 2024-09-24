@@ -90,6 +90,7 @@ const LeadDetail: React.FC<LeadDetailsProps> = ({
             </NameText>
             <LeadStatus
               leadStatus={
+                leadData?.leadStatusId ||
                 leads?.filter(
                   (item) => item?.id === (leadData?.id || leadData?.leadId),
                 )[0]?.leadStatusId

@@ -15,4 +15,5 @@ export interface LeadDetailsProps {
   editRoute?: string;
   isShowLeadInfo?: boolean;
   assignLeadOnDelete?: boolean;
+  leadStatusId?: number;
 }
