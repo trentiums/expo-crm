@@ -16,11 +16,15 @@ import {
 import CircleCheckIcon from '@atoms/Illustrations/CircleCheck';
 import { FormButtonText } from '@organisms/UserInformationForm/UserInformationForm.styles';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '@redux/store';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
-import { dashboardAdminLeadListAction } from '@redux/actions/dashboard';
+import {
+  dashboardAdminLeadListAction,
+  dashboardLeadListAction,
+} from '@redux/actions/dashboard';
 import { Spacer } from '@atoms/common/common.styles';
+import { UserRole } from '@type/api/auth';
 
 const DashboardSortFilter: React.FC<DashboardSortFilterProps> = ({
   changeRoute,
@@ -31,7 +35,10 @@ const DashboardSortFilter: React.FC<DashboardSortFilterProps> = ({
   const { t } = useTranslation('leadsFilter');
   const dispatch = useAppDispatch();
   const toast = useToast();
+  const user = useSelector((state: RootState) => state.auth.user);
   const [filterLoading, setFilterLoading] = useState(false);
+  const isAdmin =
+    user.userRole === UserRole.Admin || user.userRole === UserRole.CompanyAdmin;
   const renderLeadsSortFilter: ListRenderItem<DashboardSortFilterItemProp> = ({
     item,
   }) => (
@@ -52,9 +59,13 @@ const DashboardSortFilter: React.FC<DashboardSortFilterProps> = ({
     if (!filterLoading) {
       try {
         setFilterLoading(true);
-        await dispatch(
-          dashboardAdminLeadListAction(selectedSort.filters),
-        ).unwrap();
+        if (isAdmin) {
+          await dispatch(
+            dashboardAdminLeadListAction(selectedSort.filters),
+          ).unwrap();
+        } else {
+          await dispatch(dashboardLeadListAction(selectedSort.filters));
+        }
       } catch (error) {
         toast.show(error, {
           type: ToastType.Custom,

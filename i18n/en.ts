@@ -178,7 +178,7 @@ export const English = {
     pdfContent: 'PDF Content',
     countryCode: 'Country code',
     totalFileSizeExceeded:
-      'The total size of selected files exceeds the 10 MB limit. Please remove some files or upload smaller files.',
+      'The total size of selected files exceeds the total limit. Please remove some files or upload smaller files.',
   },
   formButtonName: {
     previous: 'Back',
@@ -552,7 +552,7 @@ export const Gujarati = {
     pdfContent: 'PDF સામગ્રી',
     countryCode: 'દેશ કોડ',
     totalFileSizeExceeded:
-      'ચોકલસ ફાઇલોનો કુલ કદ 10 MB મર્યાદા કરતાં વધુ છે. કૃપા કરીને કેટલીક ફાઈલો દૂર કરો અથવા નાની ફાઈલો અપલોડ કરો.',
+      'ચોકલસ ફાઇલોનો કુલ કદ મર્યાદા કરતાં વધુ છે. કૃપા કરીને કેટલીક ફાઈલો દૂર કરો અથવા નાની ફાઈલો અપલોડ કરો.',
   },
   formButtonName: {
     previous: 'પાછળ',
@@ -920,7 +920,7 @@ export const Hindi = {
     pdfContent: 'पीडीएफ सामग्री',
     countryCode: 'देश कोड',
     totalFileSizeExceeded:
-      'चुनी गई फाइलों का कुल आकार 10 MB की सीमा से अधिक है। कृपया कुछ फाइलें हटाएं या छोटी फाइलें अपलोड करें।',
+      'चुनी गई फाइलों का कुल आकार की सीमा से अधिक है। कृपया कुछ फाइलें हटाएं या छोटी फाइलें अपलोड करें।',
   },
   formButtonName: {
     previous: 'पीछे',

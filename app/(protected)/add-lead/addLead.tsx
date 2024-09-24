@@ -215,6 +215,7 @@ const AddLead = () => {
         },
       });
       router.navigate('/(protected)/(tabs)/leads');
+      await dispatch(getLeadListAction({}));
       setDocumentArray([]);
     } catch (error: string | any) {
       toast.show(error, {
@@ -224,7 +225,6 @@ const AddLead = () => {
         },
       });
     }
-    await dispatch(getLeadListAction({}));
     setLoading(false);
   };
   const renderForm = () => {

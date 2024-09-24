@@ -338,6 +338,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
             isSearch
             dropdownDataType={DropdownDataType.USERS}
             heading={t('selectUser')}
+            isAllowDeselect
           />
           <Spacer size={8} />
           {values?.assignTo && (
@@ -367,6 +368,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 dropdownDataType={DropdownDataType.BUDGET}
                 placeholder={t('budget')}
                 heading={t('selectBudget')}
+                isAllowDeselect
               />
             </DropdownView>
             <InputView>
@@ -399,6 +401,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                 placeholder={t('time')}
                 dropdownDataType={DropdownDataType.TIMELINE}
                 heading={t('selectTimeline')}
+                isAllowDeselect
               />
             </DropdownView>
             <InputView>
@@ -470,6 +473,7 @@ const LeadDetailsForm: React.FC<LeadDetailsFormProps> = ({
                     placeholder={t('Amount')}
                     dropdownDataType={DropdownDataType.BUDGET}
                     heading={t('selectDealAmount')}
+                    isAllowDeselect
                   />
                 </DropdownView>
                 <InputView>
