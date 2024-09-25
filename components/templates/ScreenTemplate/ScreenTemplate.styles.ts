@@ -1,7 +1,5 @@
-import Text from '@atoms/Text/Text';
 import View from '@atoms/View/View';
 import { styled } from '@utils/styled';
-import { TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const Container = styled(View)<{
@@ -17,24 +15,6 @@ export const ScreenTemplateView = styled(View)`
   flex: 1;
 `;
 
-export const AddButton = styled(TouchableOpacity)`
-  position: absolute;
-  bottom: 30px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  border-radius: 30px;
-  background-color: ${({ theme }) => theme.colors.lightGreen};
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-`;
-
-export const AddText = styled(Text)`
-  font-size: 12px;
-  text-align: center;
-  color: ${({ theme }) => theme.colors.bgColor};
-`;
 export const SafeAreaContainer = styled(SafeAreaView)`
   flex: 1;
 `;

@@ -89,6 +89,7 @@ export const ShowMultipleDataList = styled(FlatList).attrs({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
+  scrollEnabled: false,
 })``;
 export const SearchFilterContainer = styled(Pressable)`
   position: relative;

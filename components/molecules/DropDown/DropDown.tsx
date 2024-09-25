@@ -28,6 +28,7 @@ import Search from '@atoms/Illustrations/Search';
 import { useAppTheme } from '@constants/theme';
 import { Keyboard } from 'react-native';
 import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
+import View from '@atoms/View/View';
 
 const DropDown: React.FC<DropDownProps> = ({
   data,
@@ -104,7 +105,9 @@ const DropDown: React.FC<DropDownProps> = ({
                       keyExtractor={(item, index) => `${item} - ${index}`}
                     />
                   ) : (
-                    <PlaceHolderText>{placeholder}</PlaceHolderText>
+                    <PlaceHolderText numberOfLines={1}>
+                      {placeholder}
+                    </PlaceHolderText>
                   )}
                 </>
               ) : (
@@ -118,7 +121,9 @@ const DropDown: React.FC<DropDownProps> = ({
                       }
                     </SelectedText>
                   ) : (
-                    <PlaceHolderText>{placeholder}</PlaceHolderText>
+                    <PlaceHolderText numberOfLines={1}>
+                      {placeholder}
+                    </PlaceHolderText>
                   )}
                 </>
               )}
@@ -128,18 +133,20 @@ const DropDown: React.FC<DropDownProps> = ({
         </DropDownContainer>
       ) : isSearch ? (
         <SearchFilterContainer onPress={() => setShowDropList(true)}>
-          <SearchTextInput
-            mode="outlined"
-            placeholder={placeholder}
-            textColor={colors.textDark}
-            outlineColor="transparent"
-            outlineStyle={{ borderWidth: 0 }}
-            left={<Search color={colors.snowGray} />}
-            onFocus={() => setShowDropList(true)}
-            ref={searchInputRef}
-            onBlur={() => Keyboard.dismiss()}
-            disabled
-          />
+          <View pointerEvents="none">
+            <SearchTextInput
+              mode="outlined"
+              placeholder={placeholder}
+              textColor={colors.textDark}
+              outlineColor="transparent"
+              outlineStyle={{ borderWidth: 0 }}
+              left={<Search color={colors.snowGray} />}
+              onFocus={() => setShowDropList(true)}
+              ref={searchInputRef}
+              onBlur={() => Keyboard.dismiss()}
+              disabled
+            />
+          </View>
           <FilterIconView>
             <Search color={colors.snowGray} />
           </FilterIconView>

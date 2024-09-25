@@ -22,7 +22,11 @@
         "aps-environment": "production"
       },
       "infoPlist": {
-        "UIBackgroundModes": ["fetch", "remote-notification"]
+        "UIBackgroundModes": ["fetch", "remote-notification"],
+        "NSPhotoLibraryUsageDescription": "This app requires access to your photo library to upload and select documents.",
+        "NSCameraUsageDescription": "This app requires access to your camera to take photos for document uploads.",
+        "photosPermission": "Allow CRM to access your photos.",
+        "LSApplicationQueriesSchemes": ["whatsapp"]
       }
     },
     "android": {

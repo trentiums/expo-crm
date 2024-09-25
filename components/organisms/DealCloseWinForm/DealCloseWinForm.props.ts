@@ -4,6 +4,7 @@ export type DealWinCloseFormValues = {
   dealAmount: number | string;
   description: string;
   reason: string;
+  dealAmountCurrencyCode?: number;
 };
 
 export type DealWinCloseFormProps = FormRenderProps<DealWinCloseFormValues> & {

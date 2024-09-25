@@ -34,16 +34,20 @@ export const LeadAssignedToContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.plaster};
   padding: 4px 8px 4px 8px;
   border-radius: 15px;
+  align-items: center;
 `;
-export const LeadServicesText = styled(Text)`
-  font-size: 16px;
+
+export const LeadServiceContainer = styled(View)`
   background-color: ${({ theme }) => theme.colors.plaster};
-  padding: 2px 8px;
   border-radius: 15px;
-  color: ${({ theme }) => theme.colors.textDark};
   flex: 1;
   width: fit-content;
   align-self: flex-start;
+`;
+export const LeadServicesText = styled(Text)`
+  font-size: 16px;
+  padding: 2px 8px;
+  color: ${({ theme }) => theme.colors.textDark};
 `;
 export const ServiceListContainer = styled(FlatList).attrs({
   contentContainerStyle: {

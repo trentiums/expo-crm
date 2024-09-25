@@ -5,6 +5,7 @@ import {
   LeadInfoContainer,
   LeadInfoTitle,
   LeadInfoValue,
+  LeadServiceContainer,
   LeadServicesText,
   ServiceListContainer,
 } from './LeadInfoCard.styles';
@@ -21,7 +22,6 @@ import LeadStage from '@molecules/LeadStage/LeadStage';
 import ProfileIcon from '@atoms/Illustrations/Profile';
 import { useTranslation } from 'react-i18next';
 import ServicesComputerIcon from '@atoms/Illustrations/ServicesComputer';
-import { ThemeTypes } from '@redux/slices/theme';
 
 const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
   const { t } = useTranslation('LeadInfoCard');
@@ -66,7 +66,11 @@ const LeadInfoCard: React.FC<LeadInfoProps> = ({ leadId }) => {
       value: (
         <ServiceListContainer
           data={servicesTitle}
-          renderItem={({ item }) => <LeadServicesText>{item}</LeadServicesText>}
+          renderItem={({ item }) => (
+            <LeadServiceContainer>
+              <LeadServicesText>{item}</LeadServicesText>
+            </LeadServiceContainer>
+          )}
           keyExtractor={(item, index) => index.toString()}
         />
       ),

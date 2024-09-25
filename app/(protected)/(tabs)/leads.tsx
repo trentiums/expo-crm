@@ -103,7 +103,7 @@ const Leads = () => {
   );
   const handleGetMoreData = async () => {
     if (
-      leadListData &&
+      loadingStatus !== LoadingStatus.MORE &&
       leadListData?.lastPage > 1 &&
       leadListData?.currentPage !== leadListData?.lastPage
     ) {
