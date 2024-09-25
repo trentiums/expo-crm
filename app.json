@@ -52,8 +52,9 @@
       [
         "@sentry/react-native/expo",
         {
-          "organization": "Trentium Solutions",
-          "project": "crm"
+          "url": "https://sentry.io/",
+          "project": "expo-crm",
+          "organization": "trentium-solution-fn"
         }
       ]
     ],
