@@ -6,6 +6,7 @@ import {
   LeadsCountContainer,
   LeadsStatusDetailContainer,
   LeadTitle,
+  LeadTitleView,
   TotalLeadsCountContainer,
   TotalLeadTitle,
   UserInformationContainer,
@@ -27,9 +28,9 @@ const CompanyDashboardCard: React.FC<CompanyDashboardCardProps> = ({
   const renderLeads = ({ item }: { item: Leads }) => {
     return (
       <LeadsCountContainer>
-        <LeadTitle bgColor={item.bgColor} color={item.color}>
-          {item.title}
-        </LeadTitle>
+        <LeadTitleView bgColor={item.bgColor}>
+          <LeadTitle color={item.color}>{item.title}</LeadTitle>
+        </LeadTitleView>
         <LeadCount>{item.value}</LeadCount>
       </LeadsCountContainer>
     );

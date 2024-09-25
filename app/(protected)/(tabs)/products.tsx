@@ -44,7 +44,10 @@ const products = () => {
     index: number;
   }) => <ProductCard key={`${item.id}-${index}`} data={item} />;
   const handleGetMoreProductsData = async () => {
-    if (products?.currentPage !== products?.lastPage) {
+    if (
+      loadingStatus !== LoadingStatus.MORE &&
+      products?.currentPage !== products?.lastPage
+    ) {
       try {
         setLoadingStatus(LoadingStatus.MORE);
         await dispatch(

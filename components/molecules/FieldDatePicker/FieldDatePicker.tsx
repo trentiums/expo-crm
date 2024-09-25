@@ -43,7 +43,7 @@ const FieldDatePicker: React.FC<FieldDatePickerProps> = ({
       <Pressable onPress={() => onDatePickerPress(input.value)}>
         <Container>
           <DateView>
-            <DateText input={input?.value}>
+            <DateText input={input?.value} numberOfLines={1}>
               {input && input.value
                 ? moment(input.value).format(
                     showMonth ? dateMonthWordFormate : dateFormate,

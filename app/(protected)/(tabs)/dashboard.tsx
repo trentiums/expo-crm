@@ -39,6 +39,7 @@ import { UserRole } from '@type/api/auth';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
 import { dashboardQuickFilters } from '@utils/constant';
 import { logoutUserAction } from '@redux/actions/auth';
+import { LoadingStatus } from '../../(public)/login/LoginScreen.props';
 
 const Dashboard = () => {
   const { colors } = useAppTheme();
@@ -48,6 +49,9 @@ const Dashboard = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const [loading, setLoading] = useState(false);
   const dashboardLeadList = useSelector((state: RootState) => state.dashboard);
+  const [loadingStatus, setLoadingStatus] = useState<LoadingStatus>(
+    LoadingStatus.NONE,
+  );
   const isAdmin =
     user.userRole === UserRole.Admin || user.userRole === UserRole.CompanyAdmin;
   const [leads, setLeads] = useState<
@@ -96,6 +100,7 @@ const Dashboard = () => {
       dashboardLeadList?.lastPage > 1 &&
       dashboardLeadList?.currentPage !== dashboardLeadList?.lastPage
     ) {
+      setLoadingStatus(LoadingStatus.MORE);
       if (isAdmin) {
         await dispatch(
           dashboardAdminLeadListAction({
@@ -112,6 +117,7 @@ const Dashboard = () => {
         );
       }
     }
+    setLoadingStatus(LoadingStatus.NONE);
   };
   useFocusEffect(
     useCallback(() => {
@@ -240,15 +246,17 @@ const Dashboard = () => {
                 {t('newLeads')}
               </TitleText>
               {isAdmin && (
-                <DashboardFilterView>
-                  <DividerContainer />
-                  <QuickFilter
-                    filterTitle={tr('leadsCount')}
-                    filterType={tr('sortBy')}
-                    onFilterPress={handleVisibleLeadsSortFilter}
-                  />
+                <>
                   <Spacer size={16} />
-                </DashboardFilterView>
+                  <DashboardFilterView>
+                    <DividerContainer />
+                    <QuickFilter
+                      filterTitle={tr('leadsCount')}
+                      filterType={tr('sortBy')}
+                      onFilterPress={handleVisibleLeadsSortFilter}
+                    />
+                  </DashboardFilterView>
+                </>
               )}
               <Spacer size={16} />
               {leads?.length > 0 ? (
@@ -263,6 +271,11 @@ const Dashboard = () => {
                   showsHorizontalScrollIndicator={false}
                   showsVerticalScrollIndicator={false}
                   onEndReached={() => handleMoreData()}
+                  ListFooterComponent={
+                    loadingStatus === LoadingStatus.MORE ? (
+                      <Loader size={24} />
+                    ) : null
+                  }
                 />
               ) : (
                 <>

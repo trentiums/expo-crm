@@ -36,12 +36,18 @@ export const LeadCount = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.textDark};
 `;
-export const LeadTitle = styled(Text)<{ bgColor?: string; color?: string }>`
+
+export const LeadTitleView = styled(View)<{
+  bgColor?: string;
+}>`
   background-color: ${({ bgColor, theme }) =>
     bgColor || theme.colors.zhuBaiPearl};
+  border-radius: 100px;
+`;
+export const LeadTitle = styled(Text)<{ bgColor?: string; color?: string }>`
   color: ${({ theme, color }) => color || theme.colors.textDark};
   font-size: 16px;
-  border-radius: 100px;
+
   padding: 4px 12px;
 `;
 export const LeadFlatListCon = styled(FlatList).attrs({

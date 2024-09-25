@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  IconWrapper,
   ItemContainer,
   OptionLabel,
   OptionLabelContainer,
@@ -17,7 +18,11 @@ const BottomSheetItemListing: React.FC<BottomSheetItemListingProps> = ({
       <OptionLabelContainer>
         <OptionLabel>{label}</OptionLabel>
       </OptionLabelContainer>
-      {isSelected && <CircleCheckIcon />}
+      {isSelected && (
+        <IconWrapper>
+          <CircleCheckIcon />
+        </IconWrapper>
+      )}
     </ItemContainer>
   );
 };

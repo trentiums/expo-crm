@@ -1,12 +1,14 @@
 import * as React from 'react';
 import Svg, { Mask, Rect, G, Path, SvgProps } from 'react-native-svg';
 const ProfileIcon = ({ color, ...props }: SvgProps) => (
-  <Svg width={24} height={25} viewBox="0 0 24 25" fill="none" {...props}>
+  <Svg
+    width={24}
+    height={25}
+    viewBox="0 0 24 25"
+    fill={color || 'none'}
+    {...props}>
     <Mask
       id="mask0_328_1220"
-      style={{
-        maskType: 'alpha',
-      }}
       maskUnits="userSpaceOnUse"
       x={0}
       y={0}

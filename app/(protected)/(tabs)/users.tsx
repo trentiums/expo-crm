@@ -39,7 +39,10 @@ const Users = () => {
   const [userSearch, setUserSearch] = useState('');
 
   const handleGetMoreUserData = async () => {
-    if (userList?.currentPage !== userList?.lastPage) {
+    if (
+      loadingStatus !== LoadingStatus.MORE &&
+      userList?.currentPage !== userList?.lastPage
+    ) {
       try {
         setLoadingStatus(LoadingStatus.MORE);
         await dispatch(

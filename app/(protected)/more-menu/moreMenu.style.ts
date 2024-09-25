@@ -33,6 +33,5 @@ export const LanguageText = styled(Text)`
 export const DeleteText = styled(Text)`
   font-size: 16px;
   color: ${({ theme }) => theme.colors.roseMadder};
-  text-decoration: underline;
   text-decoration-thickness: 4px;
 `;
