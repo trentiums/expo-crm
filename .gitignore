@@ -47,3 +47,5 @@ Android/
 
 #ios certificate
 certs/
+.env.local
+.env

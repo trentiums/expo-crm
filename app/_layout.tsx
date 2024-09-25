@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SplashScreen, Stack } from 'expo-router';
-import { View } from 'react-native';
-import { GestureHandlerRootContainer } from '../App.styles';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import store, { persistor } from '@redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
@@ -12,6 +11,36 @@ import ToastProviderContainer from '@molecules/Toast/Toast';
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import { Flexed } from '@atoms/common/common.styles';
+import * as Sentry from '@sentry/react-native';
+import { useNavigationContainerRef } from 'expo-router';
+import NetInfo from '@react-native-community/netinfo';
+import NoInternet from '../components/molecules/NoInternet/NoInternet';
+
+const routingInstrumentation = new Sentry.ReactNavigationInstrumentation({
+  enableTimeToInitialDisplay: true,
+  routeChangeTimeoutMs: 1000,
+});
+
+Sentry.init({
+  dsn: process.env.EXPO_PUBLIC_SENTRY_DNS,
+  debug: __DEV__ ? false : true,
+  maxBreadcrumbs: 50,
+  enableSpotlight: __DEV__ ? false : true,
+  tracesSampleRate: 1.0,
+  enableAutoSessionTracking: __DEV__ ? false : true,
+  enableAutoPerformanceTracing: __DEV__ ? false : true,
+  _experiments: {
+    profilesSampleRate: 1.0,
+  },
+  enableTracing: __DEV__ ? false : true,
+  autoSessionTracking: __DEV__ ? false : true,
+  integrations: [
+    new Sentry.ReactNativeTracing({
+      routingInstrumentation,
+      tracingOrigins: ['localhost', /^\//],
+    }),
+  ],
+});
 
 const RootStack = () => {
   const [fontsLoaded] = useFonts({
@@ -26,7 +55,29 @@ const RootStack = () => {
     'SF-Pro-Display-Black_900': require('../assets/fonts/SF-Pro-Display-Black.ttf'),
   });
 
-  React.useEffect(() => {
+  const [isConnected, setIsConnected] = useState<boolean>(true);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(
+      (state: { isConnected: boolean | null }) => {
+        return setIsConnected(state?.isConnected);
+      },
+    );
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const ref = useNavigationContainerRef();
+
+  useEffect(() => {
+    if (ref) {
+      routingInstrumentation.registerNavigationContainer(ref);
+    }
+  }, [ref]);
+
+  useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
@@ -38,7 +89,7 @@ const RootStack = () => {
 
   return (
     <BottomSheetModalProvider>
-      <GestureHandlerRootContainer>
+      <GestureHandlerRootView style={{ flex: 1 }}>
         <StatusBar style="auto" />
         <ReduxProvider store={store}>
           <PersistGate loading={null} persistor={persistor}>
@@ -46,21 +97,25 @@ const RootStack = () => {
               <ToastProviderContainer>
                 <BottomSheetModalProvider>
                   <Flexed>
-                    <Stack
-                      initialRouteName="(public)/login/index"
-                      screenOptions={{ headerShown: false }}>
-                      <Stack.Screen name="(public)/login/index" />
-                      <Stack.Screen name="(protected)/(tabs)/dashboard" />
-                    </Stack>
+                    {isConnected ? (
+                      <Stack
+                        initialRouteName="(public)/login/index"
+                        screenOptions={{ headerShown: false }}>
+                        <Stack.Screen name="(public)/login/index" />
+                        <Stack.Screen name="(protected)/(tabs)/dashboard" />
+                      </Stack>
+                    ) : (
+                      <NoInternet />
+                    )}
                   </Flexed>
                 </BottomSheetModalProvider>
               </ToastProviderContainer>
             </ThemeProvider>
           </PersistGate>
         </ReduxProvider>
-      </GestureHandlerRootContainer>
+      </GestureHandlerRootView>
     </BottomSheetModalProvider>
   );
 };
 
-export default RootStack;
+export default Sentry.wrap(RootStack);

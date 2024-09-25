@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Field, useFormState } from 'react-final-form';
 import { LoginFormProps } from './LoginForm.props';
-
 import {
   ButtonSubmit,
   ForgotPasswordContainer,
