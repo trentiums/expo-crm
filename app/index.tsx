@@ -28,5 +28,4 @@ const App = () => {
     </>
   );
 };
-
 export default Sentry.wrap(App);
