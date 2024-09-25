@@ -108,13 +108,14 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
     await dispatch(getLeadDetailsAction({ lead_id: leadCardId }));
     setLeadLoading(false);
   };
+
   useEffect(() => {
     handleGetLeadDetails();
   }, [leadCardId]);
   useEffect(() => {
     setDocuments(leadDetails?.documents);
     form.change('budgetCurrencyCode', leadDetails?.budgetCurrencyCode);
-    form.change('timeFrameType', `${leadDetails?.timeFrameType}`);
+    form.change('timeFrameType', `${leadDetails?.timeFrameType || ''}`);
     form.change('budget', leadDetails.budget);
     form.change('budget', `${leadDetails.budget || ''}`);
     form.change('companyName', leadDetails.companyName || '');
@@ -257,6 +258,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
                   placeholder={t('budget')}
                   dropdownDataType={DropdownDataType.BUDGET}
                   heading={tl('selectBudget')}
+                  isAllowDeselect
                 />
               </DropdownView>
               <InputView>
@@ -289,6 +291,7 @@ const LeadStatusChangeForm: React.FC<LeadStatusChangeFormProps> = ({
                   placeholder={t('time')}
                   dropdownDataType={DropdownDataType.TIMELINE}
                   heading={tl('selectTimeline')}
+                  isAllowDeselect
                 />
               </DropdownView>
               <InputView>

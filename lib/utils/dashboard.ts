@@ -18,6 +18,7 @@ export const formatDashboardLeadList = (
     phone: item?.phone,
     createdAt: item?.created_at,
     updatedAt: item?.created_at,
+    leadStatusId: item?.lead_status_id,
   }));
 };
 export const formatDashboardAdminLeadList = (

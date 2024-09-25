@@ -42,7 +42,7 @@ const DropDown: React.FC<DropDownProps> = ({
 }) => {
   const searchInputRef = useRef(null);
   const { t: ts } = useTranslation('drawer');
-  const colors = useAppTheme();
+  const { colors } = useAppTheme();
   const [showDropList, setShowDropList] = useState(false);
   const renderMultipleData = ({ selectedData }) => {
     const isSelectedData = Array.isArray(value)
@@ -134,14 +134,14 @@ const DropDown: React.FC<DropDownProps> = ({
             textColor={colors.textDark}
             outlineColor="transparent"
             outlineStyle={{ borderWidth: 0 }}
-            left={<Search />}
+            left={<Search color={colors.snowGray} />}
             onFocus={() => setShowDropList(true)}
             ref={searchInputRef}
             onBlur={() => Keyboard.dismiss()}
             disabled
           />
           <FilterIconView>
-            <Search />
+            <Search color={colors.snowGray} />
           </FilterIconView>
         </SearchFilterContainer>
       ) : (

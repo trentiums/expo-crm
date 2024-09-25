@@ -5,6 +5,7 @@ export interface DashboardLeadsProps {
   phone: number;
   createdAt: string;
   updatedAt: string;
+  leadStatusId: number;
 }
 export interface DashboardAdminLeadsProps {
   id: number;

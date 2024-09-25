@@ -31,6 +31,7 @@ import {
   getAssignUserListAction,
   getUserListAction,
 } from '@redux/actions/user';
+import { SafeAreaContainer } from '@templates/ScreenTemplate/ScreenTemplate.styles';
 
 const LoginScreen = () => {
   const { t } = useTranslation('login');
@@ -73,23 +74,25 @@ const LoginScreen = () => {
   };
 
   return (
-    <LoginScrollView keyboardShouldPersistTaps="always">
-      <LoginScreenContainer>
-        <Container>
-          <ImageView source={images.loginImage} resizeMode="cover" />
-        </Container>
-        <LoginFormContainer>
-          <IntroText variant="SF-Pro-Display-Semibold_600">
-            {t('welcomeBack')} 👋
-          </IntroText>
-          <FormTemplate
-            Component={LoginForm}
-            onSubmit={(values) => onLoginPress(values)}
-            loading={loading}
-          />
-        </LoginFormContainer>
-      </LoginScreenContainer>
-    </LoginScrollView>
+    <SafeAreaContainer>
+      <LoginScrollView keyboardShouldPersistTaps="always">
+        <LoginScreenContainer>
+          <Container>
+            <ImageView source={images.loginImage} resizeMode="cover" />
+          </Container>
+          <LoginFormContainer>
+            <IntroText variant="SF-Pro-Display-Semibold_600">
+              {t('welcomeBack')} 👋
+            </IntroText>
+            <FormTemplate
+              Component={LoginForm}
+              onSubmit={(values) => onLoginPress(values)}
+              loading={loading}
+            />
+          </LoginFormContainer>
+        </LoginScreenContainer>
+      </LoginScrollView>
+    </SafeAreaContainer>
   );
 };
 

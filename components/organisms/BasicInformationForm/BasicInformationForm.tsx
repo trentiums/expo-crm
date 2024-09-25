@@ -3,6 +3,7 @@ import { Field, useFormState } from 'react-final-form';
 import {
   ButtonSubmit,
   CountryCodeInput,
+  ErrorText,
   FormButtonText,
   FormsView,
   KeyboardAwareScrollViewContainer,
@@ -237,6 +238,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
               placeholder={t('selectCountry')}
               heading={t('countryCode')}
               dropdownDataType={DropdownDataType.COUNTRY}
+              isAllowDeselect
             />
           </CountryCodeInput>
           <NumberInput>
@@ -252,6 +254,7 @@ const BasicInformationForm: React.FC<BasicInfoFormProps> = ({
             />
           </NumberInput>
         </PhoneNumberFieldView>
+        {!!countryCodeError && <ErrorText>{countryCodeError}</ErrorText>}
         <Spacer size={24} />
         {documentArray?.length === 0 && <Label>{t('documents')}</Label>}
         <DocumentPick

@@ -38,6 +38,7 @@ import NoDataAvailable from '@molecules/NoDataAvailable/NoDataAvailable';
 import { UserRole } from '@type/api/auth';
 import BottomSheetNavigator from '@organisms/bottom-sheet-Navigator/bottomSheetNavigator';
 import { dashboardQuickFilters } from '@utils/constant';
+import { logoutUserAction } from '@redux/actions/auth';
 
 const Dashboard = () => {
   const { colors } = useAppTheme();
@@ -81,6 +82,13 @@ const Dashboard = () => {
     colors.blueLight,
     colors.grayLight,
   ];
+
+  useEffect(() => {
+    if (!user?.token || !user?.name) {
+      dispatch(logoutUserAction());
+      router.navigate('/(public)/login');
+    }
+  }, [user]);
 
   const handleMoreData = async () => {
     if (
@@ -231,15 +239,17 @@ const Dashboard = () => {
               <TitleText variant="SF-Pro-Display-Semibold_600">
                 {t('newLeads')}
               </TitleText>
-              <Spacer size={16} />
-              <DashboardFilterView>
-                <DividerContainer />
-                <QuickFilter
-                  filterTitle={tr('leadsCount')}
-                  filterType={tr('sortBy')}
-                  onFilterPress={handleVisibleLeadsSortFilter}
-                />
-              </DashboardFilterView>
+              {isAdmin && (
+                <DashboardFilterView>
+                  <DividerContainer />
+                  <QuickFilter
+                    filterTitle={tr('leadsCount')}
+                    filterType={tr('sortBy')}
+                    onFilterPress={handleVisibleLeadsSortFilter}
+                  />
+                  <Spacer size={16} />
+                </DashboardFilterView>
+              )}
               <Spacer size={16} />
               {leads?.length > 0 ? (
                 <FlatList

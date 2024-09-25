@@ -16,11 +16,19 @@ import {
 import CircleCheckIcon from '@atoms/Illustrations/CircleCheck';
 import { FormButtonText } from '@organisms/UserInformationForm/UserInformationForm.styles';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '@redux/store';
+import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import { useToast } from 'react-native-toast-notifications';
 import { ToastType, ToastTypeProps } from '@molecules/Toast/Toast.props';
-import { dashboardAdminLeadListAction } from '@redux/actions/dashboard';
+import {
+  dashboardAdminLeadListAction,
+  dashboardLeadListAction,
+} from '@redux/actions/dashboard';
 import { Spacer } from '@atoms/common/common.styles';
+import { UserRole } from '@type/api/auth';
+import {
+  RemoveButtonText,
+  RemoveFilterButton,
+} from '@organisms/LeadsFilterForm/LeadsFilterForm.styles';
 
 const DashboardSortFilter: React.FC<DashboardSortFilterProps> = ({
   changeRoute,
@@ -31,7 +39,10 @@ const DashboardSortFilter: React.FC<DashboardSortFilterProps> = ({
   const { t } = useTranslation('leadsFilter');
   const dispatch = useAppDispatch();
   const toast = useToast();
+  const user = useSelector((state: RootState) => state.auth.user);
   const [filterLoading, setFilterLoading] = useState(false);
+  const isAdmin =
+    user.userRole === UserRole.Admin || user.userRole === UserRole.CompanyAdmin;
   const renderLeadsSortFilter: ListRenderItem<DashboardSortFilterItemProp> = ({
     item,
   }) => (
@@ -52,9 +63,13 @@ const DashboardSortFilter: React.FC<DashboardSortFilterProps> = ({
     if (!filterLoading) {
       try {
         setFilterLoading(true);
-        await dispatch(
-          dashboardAdminLeadListAction(selectedSort.filters),
-        ).unwrap();
+        if (isAdmin) {
+          await dispatch(
+            dashboardAdminLeadListAction(selectedSort.filters),
+          ).unwrap();
+        } else {
+          await dispatch(dashboardLeadListAction(selectedSort.filters));
+        }
       } catch (error) {
         toast.show(error, {
           type: ToastType.Custom,
@@ -67,6 +82,11 @@ const DashboardSortFilter: React.FC<DashboardSortFilterProps> = ({
     setFilterLoading(false);
     changeRoute();
   };
+  const handleRemoveFilters = () => {
+    setSelectedSort(null);
+    dispatch(dashboardLeadListAction({}));
+    changeRoute();
+  };
   return (
     <DashboardFilterScreenContainer onLayout={onLayout}>
       <FlatList
@@ -77,9 +97,17 @@ const DashboardSortFilter: React.FC<DashboardSortFilterProps> = ({
       />
       <Spacer size={32} />
       <DashboardFilterButton>
+        {!isAdmin && (
+          <RemoveFilterButton onPress={handleRemoveFilters}>
+            <RemoveButtonText variant="SF-Pro-Display-Semibold_600">
+              {t('removeFilter')}
+            </RemoveButtonText>
+          </RemoveFilterButton>
+        )}
         <DashboardFilterApplyButton
           loading={filterLoading}
-          onPress={handleApplySortFilter}>
+          onPress={handleApplySortFilter}
+          isAdmin={isAdmin}>
           <FormButtonText valid={true}>{t('applyFilter')}</FormButtonText>
         </DashboardFilterApplyButton>
       </DashboardFilterButton>

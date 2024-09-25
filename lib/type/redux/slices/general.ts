@@ -17,3 +17,13 @@ export interface CurrencyListType {
   currencyCodeAlpha: string;
   currencySymbol: string;
 }
+export interface SettingType {
+  fileSize?: {
+    general?: number;
+    totalFileSize?: number;
+  };
+  companySize: CompanySize;
+}
+interface CompanySize {
+  [key: string]: string;
+}

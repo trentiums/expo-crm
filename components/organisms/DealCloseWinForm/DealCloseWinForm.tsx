@@ -98,6 +98,7 @@ const DealCloseWinForm: React.FC<DealWinCloseFormProps> = ({
                   placeholder={t('budget')}
                   heading={tl('selectBudget')}
                   dropdownDataType={DropdownDataType.BUDGET}
+                  isAllowDeselect
                 />
               </DropdownView>
               <InputView>

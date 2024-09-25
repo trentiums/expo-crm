@@ -15,6 +15,7 @@ export interface DashboardLeadListItem {
   phone: number;
   updated_at?: string;
   created_at: string;
+  lead_status_id: number;
 }
 export interface DashboardAdminLeadListItem {
   user_id: number;

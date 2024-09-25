@@ -3,6 +3,7 @@ import {
   AddButton,
   AddText,
   Container,
+  SafeAreaContainer,
   ScreenTemplateView,
 } from './ScreenTemplate.styles';
 import { ScreenTemplateProps } from './ScreenTemplate.props';
@@ -21,21 +22,14 @@ const ScreenTemplate: React.FC<ScreenTemplateProps> = ({
   title,
   onBackPress,
 }) => {
-  const { colors } = useAppTheme();
   return (
-    <Container {...safeAreaProps} backgroundColor={backgroundColor}>
-      {!!title && <TitleWithButton text={title} onBackPress={onBackPress} />}
-      {moreVisible && <MoreMenuButton />}
-      <ScreenTemplateView>
-        {children}
-        {!!addButtonText && (
-          <AddButton onPress={() => onAddButtonPress?.()}>
-            <PlusIcon color={colors.bgColor} />
-            <AddText>{addButtonText}</AddText>
-          </AddButton>
-        )}
-      </ScreenTemplateView>
-    </Container>
+    <SafeAreaContainer>
+      <Container backgroundColor={backgroundColor}>
+        {!!title && <TitleWithButton text={title} onBackPress={onBackPress} />}
+        {moreVisible && <MoreMenuButton />}
+        <ScreenTemplateView>{children}</ScreenTemplateView>
+      </Container>
+    </SafeAreaContainer>
   );
 };
 

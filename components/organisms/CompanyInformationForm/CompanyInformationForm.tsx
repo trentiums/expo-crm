@@ -18,7 +18,6 @@ import { FormsView } from '@organisms/LeadDetailsForm/LeadDetailsForm.styles';
 import { RootState, useAppDispatch, useSelector } from '@redux/store';
 import { useRoute } from '@react-navigation/native';
 import { addLeadInformation } from '@redux/slices/leads';
-import { companySizes } from '@utils/constant';
 import FieldDropDown from '@organisms/FieldDropDown/FieldDropdown';
 
 const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
@@ -32,13 +31,17 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
   const dispatch = useAppDispatch();
   const route = useRoute();
   const [id] = useState(route?.params?.slug);
-
+  const settings = useSelector((state: RootState) => state.general.settings);
   const addLeadFormData = useSelector(
     (state: RootState) => state.leads.addLead,
   );
   const leadsDetail = useSelector(
     (state: RootState) => state.leads.leadsDetail,
   );
+  const companySizes = Object.keys(settings?.companySize).map((key) => ({
+    id: Number(key),
+    title: settings?.companySize[key],
+  }));
 
   useEffect(() => {
     form.change(
@@ -54,6 +57,7 @@ const CompanyInformationForm: React.FC<CompanyInfoFormProps> = ({
       id ? leadsDetail?.webSite || '' : addLeadFormData.webSite || '',
     );
   }, [id]);
+
   useEffect(() => {
     dispatch(
       addLeadInformation({

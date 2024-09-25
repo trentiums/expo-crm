@@ -207,7 +207,6 @@ const AddLead = () => {
         });
       }
       const response = await dispatch(saveLeadAction(formData)).unwrap();
-      await dispatch(getLeadListAction({}));
       await dispatch(setLeadsInformation());
       toast.show(response.message, {
         type: ToastType.Custom,
@@ -216,6 +215,7 @@ const AddLead = () => {
         },
       });
       router.navigate('/(protected)/(tabs)/leads');
+      await dispatch(getLeadListAction({}));
       setDocumentArray([]);
     } catch (error: string | any) {
       toast.show(error, {

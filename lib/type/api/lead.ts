@@ -100,7 +100,8 @@ export interface DocumentTye {
   mime_type: string;
   id: number;
   file_name: string;
-  size: number;
+  file_size: number;
+  url?: string;
 }
 export interface LeadListResponse {
   status: boolean;
