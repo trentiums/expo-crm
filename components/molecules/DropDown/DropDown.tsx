@@ -29,6 +29,7 @@ import { useAppTheme } from '@constants/theme';
 import { Keyboard } from 'react-native';
 import { DropdownDataType } from '@organisms/FieldDropDown/FieldDropDown.props';
 import View from '@atoms/View/View';
+import { Spacer } from '@atoms/common/common.styles';
 
 const DropDown: React.FC<DropDownProps> = ({
   data,
@@ -87,12 +88,16 @@ const DropDown: React.FC<DropDownProps> = ({
         <DropDownContainer onPress={() => setShowDropList(true)}>
           <DropdownLeftView
             isImage={data?.filter((item) => item.id === value)[0]?.image}>
-            {
-              <ImageView
-                source={data?.filter((item) => item.id === value)[0]?.image}
-                contentFit="cover"
-              />
-            }
+            <>
+              {value ? (
+                <ImageView
+                  source={data?.filter((item) => item.id === value)[0]?.image}
+                  contentFit="cover"
+                />
+              ) : (
+                <Spacer size={16} />
+              )}
+            </>
             <DropDownSelectedView>
               {isMultiple && Array.isArray(value) ? (
                 <>

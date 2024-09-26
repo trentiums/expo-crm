@@ -67,12 +67,11 @@ const Dashboard = () => {
   const handleChangeSortValue = (id) => {
     setSelectedSort(id);
   };
+
   const handelFetchLead = async () => {
     setLoading(true);
     if (isAdmin) {
-      await dispatch(
-        dashboardAdminLeadListAction({ order_by: 1, sort_order: 1 }),
-      );
+      await dispatch(dashboardAdminLeadListAction(selectedSort.filters));
     } else {
       await dispatch(dashboardLeadListAction({}));
     }
@@ -104,8 +103,8 @@ const Dashboard = () => {
       if (isAdmin) {
         await dispatch(
           dashboardAdminLeadListAction({
-            order_by: 1,
-            sort_order: 1,
+            order_by: selectedSort.filters.order_by,
+            sort_order: selectedSort.filters.sort_order,
             page: dashboardLeadList?.currentPage + 1,
           }),
         );

@@ -48,7 +48,7 @@ const index = () => {
     setLoading(false);
   };
   return (
-    <SafeAreaContainer>
+    <SafeAreaContainer edges={['left', 'right']}>
       <ForgotScrollView keyboardShouldPersistTaps="always">
         <ForgotScreenContainer>
           <Container>

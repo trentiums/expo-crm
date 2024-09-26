@@ -74,7 +74,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <SafeAreaContainer>
+    <SafeAreaContainer edges={['left', 'right']}>
       <LoginScrollView keyboardShouldPersistTaps="always">
         <LoginScreenContainer>
           <Container>
