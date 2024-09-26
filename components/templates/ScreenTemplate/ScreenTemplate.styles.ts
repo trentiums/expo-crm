@@ -17,4 +17,5 @@ export const ScreenTemplateView = styled(View)`
 
 export const SafeAreaContainer = styled(SafeAreaView)`
   flex: 1;
+  background-color: ${({ theme }) => theme.colors.doctor};
 `;

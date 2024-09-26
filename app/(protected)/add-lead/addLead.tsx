@@ -295,6 +295,7 @@ const AddLead = () => {
         <View>
           <Stepper stepData={stepData} currentId={selectedTabNav.id} />
         </View>
+        <Spacer size={16} />
         {leadsDetailLoading ? <Loader /> : renderForm()}
       </AddLeadContainer>
     </ScreenTemplate>

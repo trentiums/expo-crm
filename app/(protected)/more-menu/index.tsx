@@ -47,6 +47,9 @@ const MoreMenu = () => {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [deleteShowModal, setDeleteShowModal] = useState(false);
   const { currentTheme } = useSelector((state: RootState) => state.theme);
+  const [themeManager, setThemeManager] = useState(
+    currentTheme !== ThemeTypes.light,
+  );
   const userRole = useSelector((state: RootState) => state.auth.user.userRole);
   const currentLanguage = useSelector(
     (state: RootState) => state.auth.currentLanguage,
@@ -57,8 +60,10 @@ const MoreMenu = () => {
 
   const handleChangeTheme = () => {
     if (currentTheme === ThemeTypes.light) {
+      setThemeManager(true);
       dispatch(changeTheme(ThemeTypes.dark));
     } else if (currentTheme === ThemeTypes.dark) {
+      setThemeManager(false);
       dispatch(changeTheme(ThemeTypes.light));
     }
   };
@@ -91,12 +96,7 @@ const MoreMenu = () => {
   };
 
   const switchTheme = () => {
-    return (
-      <Switch
-        toggle={currentTheme !== ThemeTypes.light}
-        onToggle={handleChangeTheme}
-      />
-    );
+    return <Switch toggle={themeManager} onToggle={handleChangeTheme} />;
   };
 
   const changeLanguage = () => {
@@ -174,7 +174,7 @@ const MoreMenu = () => {
 
   return (
     <ScreenTemplate title={t('moreMenu')}>
-      <MainMenuContainer spacing={top}>
+      <MainMenuContainer>
         <Flexed>
           <View>
             <SettingText>{tm('setting')}</SettingText>

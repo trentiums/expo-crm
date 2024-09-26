@@ -11,8 +11,11 @@ import ProductIcon from '@atoms/Illustrations/Product';
 import { useTranslation } from 'react-i18next';
 import BottomSheetNavigator from '../../../components/organisms/bottom-sheet-Navigator/bottomSheetNavigator';
 import { UserRole } from '@type/api/auth';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BottomSpacer, SafeAreaContainer } from '../drawer.style';
 
 const TabsLayout = () => {
+  const { bottom } = useSafeAreaInsets();
   const { colors } = useAppTheme();
   const user = useSelector((state: RootState) => state.auth.user);
   const [visibleCreateOptionSheet, setVisibleCreateOptionSheet] =
@@ -49,7 +52,7 @@ const TabsLayout = () => {
     );
   };
   return (
-    <>
+    <SafeAreaContainer edges={['top', 'left', 'right']}>
       <Tabs
         initialRouteName="dashboard"
         screenOptions={{
@@ -135,7 +138,8 @@ const TabsLayout = () => {
           onClosePress={handleAddLeadPress}
         />
       )}
-    </>
+      <BottomSpacer bottomPadding={bottom} />
+    </SafeAreaContainer>
   );
 };
 

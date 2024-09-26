@@ -8,6 +8,7 @@ import {
   Pressable,
   TouchableOpacity,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const DrawerNavigationView = styled(View)`
   display: flex;
@@ -123,4 +124,16 @@ export const ActionBtnView = styled(View)`
 export const SeparatorComponent = styled(View)`
   height: 1px;
   background-color: ${({ theme }) => theme.colors.lightBorder};
+`;
+
+export const SafeAreaContainer = styled(SafeAreaView)`
+  background-color: ${({ theme }) => theme.colors.doctor};
+  flex: 1;
+`;
+
+export const BottomSpacer = styled(View)<{
+  bottomPadding?: number;
+}>`
+  padding-bottom: ${({ bottomPadding }) => bottomPadding}px;
+  background-color: ${({ theme }) => theme.colors.white};
 `;

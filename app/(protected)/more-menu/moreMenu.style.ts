@@ -6,7 +6,7 @@ import { FlatList } from 'react-native';
 export const MainMenuContainer = styled(View)<{ spacing: number }>`
   background-color: ${({ theme }) => theme.colors.doctor};
   flex: 1;
-  margin-top: ${({ spacing }) => spacing}px;
+  margin-top: 16px;
 `;
 
 export const SettingText = styled(Text)`

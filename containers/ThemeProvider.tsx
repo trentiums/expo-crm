@@ -15,6 +15,7 @@ import merge from 'deepmerge';
 import { RootState, useSelector } from '@redux/store';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components/native';
 import { ThemeTypes } from '@redux/slices/theme';
+import { StatusBar } from 'expo-status-bar';
 
 const { LightTheme, DarkTheme } = adaptNavigationTheme({
   reactNavigationLight: NavigationDefaultTheme,
@@ -36,8 +37,12 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = memo(
       return theme;
     }, [currentTheme]);
 
+    console.log('currentThemes', currentTheme);
     return (
       <StyledThemeProvider theme={currentThemes}>
+        <StatusBar
+          style={currentTheme === ThemeTypes.light ? 'dark' : 'light'}
+        />
         <PaperProvider theme={currentThemes} children={children} />
       </StyledThemeProvider>
     );

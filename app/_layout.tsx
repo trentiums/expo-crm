@@ -90,7 +90,6 @@ const RootStack = () => {
   return (
     <BottomSheetModalProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style="auto" />
         <ReduxProvider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <ThemeProvider>

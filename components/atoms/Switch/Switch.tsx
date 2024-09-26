@@ -12,29 +12,27 @@ const Switch: React.FC<CustomSwitchProps> = ({
 }) => {
   const { colors } = useAppTheme();
   return (
-    <SwitchContainer toggle={toggle}>
-      <CustomSwitch
-        value={toggle}
-        onValueChange={onToggle}
-        disabled={false}
-        circleSize={28}
-        barHeight={30}
-        circleBorderWidth={2}
-        circleBorderActiveColor={colors.blueChaos}
-        circleBorderInactiveColor={colors.tarnishedSilver16}
-        backgroundActive={colors.blueChaos}
-        backgroundInactive={colors.tarnishedSilver16}
-        circleActiveColor={colors.white}
-        circleInActiveColor={colors.white}
-        renderInsideCircle={circleIcon}
-        changeValueImmediately={true}
-        renderActiveText={false}
-        renderInActiveText={false}
-        switchWidthMultiplier={2}
-        switchBorderRadius={18}
-        {...props}
-      />
-    </SwitchContainer>
+    <CustomSwitch
+      value={toggle}
+      onValueChange={onToggle}
+      disabled={false}
+      circleSize={28}
+      barHeight={30}
+      circleBorderWidth={2}
+      circleBorderActiveColor={colors.blueChaos}
+      circleBorderInactiveColor={colors.tarnishedSilver16}
+      backgroundActive={colors.blueChaos}
+      backgroundInactive={colors.tarnishedSilver16}
+      circleActiveColor={colors.white}
+      circleInActiveColor={colors.white}
+      renderInsideCircle={circleIcon}
+      changeValueImmediately={true}
+      renderActiveText={false}
+      renderInActiveText={false}
+      switchWidthMultiplier={2}
+      switchBorderRadius={18}
+      {...props}
+    />
   );
 };
 
