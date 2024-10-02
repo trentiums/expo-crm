@@ -2,12 +2,13 @@
   "expo": {
     "name": "CRM",
     "slug": "crm-manage-leads",
-    "scheme": "CRM",
+    "scheme": "crm",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "platforms": ["android", "ios"],
     "owner": "trentium-solution",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
@@ -16,7 +17,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.trentiums.crm",
-      "userInterfaceStyle": "light",
+      "userInterfaceStyle": "automatic",
       "googleServicesFile": "./GoogleService-Info.plist",
       "entitlements": {
         "aps-environment": "production"
@@ -24,8 +25,6 @@
       "infoPlist": {
         "UIBackgroundModes": ["fetch", "remote-notification"],
         "NSPhotoLibraryUsageDescription": "This app requires access to your photo library to upload and select documents.",
-        "NSCameraUsageDescription": "This app requires access to your camera to take photos for document uploads.",
-        "photosPermission": "Allow CRM to access your photos.",
         "LSApplicationQueriesSchemes": ["whatsapp"]
       }
     },
@@ -43,14 +42,15 @@
       },
       "googleServicesFile": "./google-services.json"
     },
-    "web": {
-      "favicon": "./assets/icon.png"
-    },
     "plugins": [
+      "expo-router",
       [
-        "expo-router",
+        "expo-build-properties",
         {
-          "origin": "https://crm.trentiums.com/api/v1/"
+          "ios": {
+            "useFrameworks": "dynamic",
+            "deploymentTarget": "14.0"
+          }
         }
       ],
       [
@@ -64,17 +64,8 @@
     ],
     "extra": {
       "router": {
-        "origin": "https://crm.trentiums.com/api/v1/"
-      },
-      "eas": {
-        "projectId": "0d412a02-3387-4418-8868-c6dbe7f049ab"
+        "origin": true
       }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/0d412a02-3387-4418-8868-c6dbe7f049ab"
     }
   }
 }
